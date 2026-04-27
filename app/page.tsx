@@ -272,7 +272,8 @@ export default function HomePage() {
         symptoms: trimmedSymptoms,
         severity,
         durationValue,
-        durationUnit
+        durationUnit,
+        outputLanguage: copy.name
       });
 
       sessionStorage.setItem(
@@ -282,7 +283,9 @@ export default function HomePage() {
             symptoms: trimmedSymptoms,
             severity,
             durationValue,
-            durationUnit
+            durationUnit,
+            languageCode,
+            languageName: copy.name
           },
           response: result
         })

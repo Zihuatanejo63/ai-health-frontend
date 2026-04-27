@@ -7,6 +7,7 @@ export type AnalyzeSymptomsRequest = {
   severity: Severity;
   durationValue: number;
   durationUnit: DurationUnit;
+  outputLanguage?: string;
 };
 
 export type AnalyzeSymptomsResponse = {
