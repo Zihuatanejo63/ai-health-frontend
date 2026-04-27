@@ -6,7 +6,7 @@ import type {
 } from "./types";
 
 const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL?.replace(/\/$/, "") ?? "http://127.0.0.1:8787";
+  process.env.NEXT_PUBLIC_API_BASE_URL?.replace(/\/$/, "") ?? "https://api.healthmatchai.com";
 
 export async function analyzeSymptoms(
   payload: AnalyzeSymptomsRequest
