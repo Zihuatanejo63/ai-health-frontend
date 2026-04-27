@@ -12,6 +12,7 @@ export function SiteFooter() {
           <Link href="/terms">Terms</Link>
           <Link href="/medical-disclaimer">Medical Disclaimer</Link>
           <Link href="/emergency">Emergency Notice</Link>
+          <Link href="/cookies">Cookie Policy</Link>
         </nav>
       </div>
     </footer>

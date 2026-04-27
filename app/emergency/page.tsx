@@ -9,12 +9,16 @@ export default function EmergencyPage() {
         {
           heading: "Not an emergency service",
           body:
-            "AI Health Match is not designed for emergency response, urgent care dispatch, ambulance routing, or real-time clinical monitoring."
+            "AI Health Match is not designed for emergency response, urgent care dispatch, ambulance routing, crisis response, poison control, suicide prevention, or real-time clinical monitoring."
         },
         {
           heading: "When to seek immediate help",
-          body:
-            "Seek emergency care immediately for symptoms such as chest pain, difficulty breathing, severe allergic reaction, stroke-like symptoms, major injury, severe bleeding, suicidal thoughts, or loss of consciousness."
+          body: [
+            "Chest pain, pressure, or symptoms of heart attack.",
+            "Difficulty breathing, blue lips, severe allergic reaction, or choking.",
+            "Stroke-like symptoms, severe confusion, seizure, fainting, or loss of consciousness.",
+            "Major injury, severe bleeding, burns, poisoning, overdose, or suicidal thoughts."
+          ]
         },
         {
           heading: "United States users",
@@ -25,6 +29,11 @@ export default function EmergencyPage() {
           heading: "Other countries",
           body:
             "If you are outside the United States, contact your local emergency number or nearest emergency medical service."
+        },
+        {
+          heading: "Do not wait for AI output",
+          body:
+            "Do not enter symptoms into AI Health Match or wait for an AI response when urgent help may be needed. Contact emergency services first."
         }
       ]}
     />

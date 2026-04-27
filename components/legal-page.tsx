@@ -3,7 +3,7 @@ type LegalPageProps = {
   updated: string;
   sections: Array<{
     heading: string;
-    body: string;
+    body: string | string[];
   }>;
 };
 
@@ -15,7 +15,15 @@ export function LegalPage({ title, updated, sections }: LegalPageProps) {
       {sections.map((section) => (
         <section className="legal-section" key={section.heading}>
           <h2>{section.heading}</h2>
-          <p>{section.body}</p>
+          {Array.isArray(section.body) ? (
+            <ul>
+              {section.body.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          ) : (
+            <p>{section.body}</p>
+          )}
         </section>
       ))}
     </section>
