@@ -1,20 +1,8 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useLanguage } from "@/components/language-provider";
 import { doctors } from "@/lib/mock-doctors";
-
-const LANGUAGES = [
-  { code: "en", name: "English" },
-  { code: "zh", name: "中文" },
-  { code: "es", name: "Español" },
-  { code: "hi", name: "हिन्दी" },
-  { code: "ar", name: "العربية" },
-  { code: "pt", name: "Português" },
-  { code: "fr", name: "Français" },
-  { code: "de", name: "Deutsch" },
-  { code: "ja", name: "日本語" },
-  { code: "ko", name: "한국어" }
-] as const;
 
 const COPY = {
   en: {
@@ -249,12 +237,10 @@ const COPY = {
   }
 } as const;
 
-type LanguageCode = (typeof LANGUAGES)[number]["code"];
-
 const unique = (values: string[]) => Array.from(new Set(values)).sort((a, b) => a.localeCompare(b));
 
 export default function DoctorsPage() {
-  const [languageCode, setLanguageCode] = useState<LanguageCode>("en");
+  const { languageCode } = useLanguage();
   const [specialty, setSpecialty] = useState("All");
   const [country, setCountry] = useState("All");
   const [doctorLanguage, setDoctorLanguage] = useState("All");
@@ -279,19 +265,6 @@ export default function DoctorsPage() {
 
   return (
     <section>
-      <div className="language-toolbar" aria-label="Language selector">
-        {LANGUAGES.map((language) => (
-          <button
-            className={language.code === languageCode ? "language-chip active" : "language-chip"}
-            key={language.code}
-            onClick={() => setLanguageCode(language.code)}
-            type="button"
-          >
-            {language.name}
-          </button>
-        ))}
-      </div>
-
       <h1 className="page-title">{copy.title}</h1>
       <p className="page-subtitle">{copy.subtitle}</p>
 

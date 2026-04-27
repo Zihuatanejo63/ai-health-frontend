@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { DisclaimerBanner, DEFAULT_DISCLAIMER } from "@/components/disclaimer-banner";
+import { useLanguage } from "@/components/language-provider";
 import type { AnalyzeSymptomsResponse, RiskLevel } from "@/lib/types";
 
 const SESSION_RESULT_KEY = "ai-health-match-result";
@@ -162,7 +163,8 @@ function riskClassName(riskLevel: RiskLevel): string {
 
 export default function ResultPage() {
   const [analysis, setAnalysis] = useState<StoredAnalysis | null>(null);
-  const copy = getResultCopy(analysis?.request?.languageCode);
+  const { languageCode } = useLanguage();
+  const copy = getResultCopy(languageCode);
 
   useEffect(() => {
     const rawValue = sessionStorage.getItem(SESSION_RESULT_KEY);

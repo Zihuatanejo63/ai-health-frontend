@@ -2,11 +2,12 @@
 
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useLanguage } from "@/components/language-provider";
 import { analyzeSymptoms } from "@/lib/api";
 import type { DurationUnit, Severity } from "@/lib/types";
 
 const SESSION_RESULT_KEY = "ai-health-match-result";
-const LANGUAGES = [
+const HOME_COPY = [
   {
     code: "en",
     name: "English",
@@ -239,18 +240,16 @@ const LANGUAGES = [
   }
 ] as const;
 
-type LanguageCode = (typeof LANGUAGES)[number]["code"];
-
 export default function HomePage() {
   const router = useRouter();
-  const [languageCode, setLanguageCode] = useState<LanguageCode>("en");
+  const { languageCode } = useLanguage();
   const [symptoms, setSymptoms] = useState("");
   const [severity, setSeverity] = useState<Severity>("mild");
   const [durationValue, setDurationValue] = useState<number>(1);
   const [durationUnit, setDurationUnit] = useState<DurationUnit>("days");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const copy = LANGUAGES.find((language) => language.code === languageCode) ?? LANGUAGES[0];
+  const copy = HOME_COPY.find((language) => language.code === languageCode) ?? HOME_COPY[0];
 
   async function onSubmit(event: FormEvent) {
     event.preventDefault();
@@ -301,22 +300,6 @@ export default function HomePage() {
 
   return (
     <section>
-      <div className="language-toolbar" aria-label="Language selector">
-        {LANGUAGES.map((language) => (
-          <button
-            className={language.code === languageCode ? "language-chip active" : "language-chip"}
-            key={language.code}
-            onClick={() => {
-              setLanguageCode(language.code);
-              setError("");
-            }}
-            type="button"
-          >
-            {language.name}
-          </button>
-        ))}
-      </div>
-
       <h1 className="page-title">{copy.title}</h1>
       <p className="page-subtitle">{copy.subtitle}</p>
 
