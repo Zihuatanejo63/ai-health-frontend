@@ -90,6 +90,28 @@ a {
   color: var(--muted);
 }
 
+.language-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.language-chip {
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.84);
+  color: var(--muted);
+  padding: 8px 10px;
+  border-radius: 999px;
+  font-size: 13px;
+}
+
+.language-chip.active {
+  border-color: var(--primary);
+  background: var(--primary);
+  color: #fff;
+}
+
 .panel {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -238,6 +260,10 @@ button:disabled {
   .grid-2,
   .doctor-grid {
     grid-template-columns: 1fr;
+  }
+
+  .language-chip {
+    flex: 1 1 30%;
   }
 
   .nav-links {
