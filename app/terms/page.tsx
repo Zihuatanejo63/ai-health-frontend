@@ -33,7 +33,10 @@ export default function TermsPage() {
           heading: "Paid services",
           body: [
             "Payments, if enabled, are processed by a hosted merchant-of-record provider such as Paddle or Lemon Squeezy.",
+            "AI Health Match may collect consultation request payments as the platform operator.",
+            "Provider assignment, availability, and any final care relationship are not guaranteed until confirmed.",
             "A payment does not guarantee a medical outcome, appointment availability, prescription, diagnosis, or doctor-patient relationship.",
+            "If AI Health Match cannot match an appropriate provider, refunds are handled according to the applicable refund policy.",
             "Refunds, scheduling, cancellation, provider qualifications, and jurisdiction-specific rules must be finalized before offering real consultations."
           ]
         },

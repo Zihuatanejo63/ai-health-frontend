@@ -29,6 +29,11 @@ export default function MedicalDisclaimerPage() {
             "Always consult a licensed medical professional for medical advice, diagnosis, treatment decisions, and follow-up care."
         },
         {
+          heading: "Provider matching and payments",
+          body:
+            "AI Health Match may collect consultation request payments as platform operator. Provider assignment, availability, and any final care relationship are not guaranteed until confirmed."
+        },
+        {
           heading: "Image and report uploads",
           body:
             "If image or report analysis is enabled, AI review is still limited and should not be treated as a radiology, pathology, dermatology, or specialist interpretation."

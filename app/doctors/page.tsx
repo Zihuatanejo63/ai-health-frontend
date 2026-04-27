@@ -27,16 +27,17 @@ const COPY = {
     country: "Country",
     language: "Doctor language",
     price: "Max price",
+    requestFee: "Consultation request fee",
     availability: "Availability",
     availableOnly: "Available now only",
     rating: "Rating",
     session: "session",
     available: "Available now",
     unavailable: "Next availability required",
-    book: "Book Consultation",
+    book: "Request Consultation",
     booking: "Opening secure payment...",
     noResults: "No doctors match these filters.",
-    paymentNotice: "AI Health Match collects the consultation request payment, records a 30% platform fee and a 70% manual doctor payout."
+    paymentNotice: "Platform-collected payment: the doctor is arranged after confirmation. If we cannot match an appropriate provider, refunds are handled according to policy."
   },
   zh: {
     title: "医生列表",
@@ -47,16 +48,17 @@ const COPY = {
     country: "国家",
     language: "医生语言",
     price: "最高价格",
+    requestFee: "咨询预约费",
     availability: "可预约状态",
     availableOnly: "仅显示现在可预约",
     rating: "评分",
     session: "次咨询",
     available: "现在可预约",
     unavailable: "需查看下次可预约时间",
-    book: "预约咨询",
+    book: "提交咨询请求",
     booking: "正在打开安全支付...",
     noResults: "没有符合筛选条件的医生。",
-    paymentNotice: "AI Health Match 平台统一收取咨询预约费，系统记账为平台服务费 30%、医生人工结算 70%。"
+    paymentNotice: "平台代收款：医生确认后安排服务；若无法匹配合适医生，将按退款政策处理。"
   },
   es: {
     title: "Lista de doctores",
@@ -67,16 +69,17 @@ const COPY = {
     country: "País",
     language: "Idioma",
     price: "Precio máximo",
+    requestFee: "Tarifa de solicitud de consulta",
     availability: "Disponibilidad",
     availableOnly: "Solo disponibles ahora",
     rating: "Calificación",
     session: "sesión",
     available: "Disponible ahora",
     unavailable: "Requiere próxima disponibilidad",
-    book: "Reservar consulta",
+    book: "Solicitar consulta",
     booking: "Abriendo pago seguro...",
     noResults: "No hay doctores con estos filtros.",
-    paymentNotice: "AI Health Match cobra la solicitud, registra 30% de comisión de plataforma y 70% para pago manual al médico."
+    paymentNotice: "Pago cobrado por la plataforma: el médico se coordina tras la confirmación. Si no podemos encontrar un proveedor adecuado, el reembolso se gestiona según la política."
   },
   hi: {
     title: "डॉक्टर सूची",
@@ -87,16 +90,17 @@ const COPY = {
     country: "देश",
     language: "भाषा",
     price: "अधिकतम कीमत",
+    requestFee: "परामर्श अनुरोध शुल्क",
     availability: "उपलब्धता",
     availableOnly: "केवल अभी उपलब्ध",
     rating: "रेटिंग",
     session: "सत्र",
     available: "अभी उपलब्ध",
     unavailable: "अगली उपलब्धता आवश्यक",
-    book: "परामर्श बुक करें",
+    book: "परामर्श अनुरोध भेजें",
     booking: "सुरक्षित भुगतान खुल रहा है...",
     noResults: "इन फ़िल्टर से कोई डॉक्टर नहीं मिला।",
-    paymentNotice: "AI Health Match भुगतान लेता है, 30% platform fee और 70% manual doctor payout दर्ज करता है।"
+    paymentNotice: "Platform-collected payment: पुष्टि के बाद डॉक्टर की व्यवस्था की जाती है। उपयुक्त provider न मिलने पर refund policy के अनुसार 처리 होगा।"
   },
   ar: {
     title: "قائمة الأطباء",
@@ -107,16 +111,17 @@ const COPY = {
     country: "البلد",
     language: "اللغة",
     price: "أعلى سعر",
+    requestFee: "رسوم طلب الاستشارة",
     availability: "التوفر",
     availableOnly: "المتاحون الآن فقط",
     rating: "التقييم",
     session: "جلسة",
     available: "متاح الآن",
     unavailable: "يتطلب موعدا لاحقا",
-    book: "حجز استشارة",
+    book: "إرسال طلب استشارة",
     booking: "جار فتح الدفع الآمن...",
     noResults: "لا يوجد أطباء يطابقون هذه الفلاتر.",
-    paymentNotice: "تجمع AI Health Match رسوم طلب الاستشارة وتسجل 30٪ للمنصة و70٪ كدفعة يدوية للطبيب."
+    paymentNotice: "دفع يتم تحصيله عبر المنصة: يتم ترتيب الطبيب بعد التأكيد. إذا تعذر匹配 مزود مناسب، تتم معالجة الاسترداد حسب السياسة."
   },
   pt: {
     title: "Lista de médicos",
@@ -127,16 +132,17 @@ const COPY = {
     country: "País",
     language: "Idioma",
     price: "Preço máximo",
+    requestFee: "Taxa de solicitação de consulta",
     availability: "Disponibilidade",
     availableOnly: "Apenas disponíveis agora",
     rating: "Avaliação",
     session: "sessão",
     available: "Disponível agora",
     unavailable: "Próxima disponibilidade necessária",
-    book: "Agendar consulta",
+    book: "Solicitar consulta",
     booking: "Abrindo pagamento seguro...",
     noResults: "Nenhum médico corresponde aos filtros.",
-    paymentNotice: "AI Health Match cobra a solicitação, registra 30% de taxa da plataforma e 70% para repasse manual ao médico."
+    paymentNotice: "Pagamento cobrado pela plataforma: o médico é organizado após confirmação. Se não for possível encontrar um provedor adequado, o reembolso segue a política."
   },
   fr: {
     title: "Liste des médecins",
@@ -147,16 +153,17 @@ const COPY = {
     country: "Pays",
     language: "Langue",
     price: "Prix max",
+    requestFee: "Frais de demande de consultation",
     availability: "Disponibilité",
     availableOnly: "Disponibles maintenant seulement",
     rating: "Note",
     session: "séance",
     available: "Disponible maintenant",
     unavailable: "Prochaine disponibilité requise",
-    book: "Réserver une consultation",
+    book: "Demander une consultation",
     booking: "Ouverture du paiement sécurisé...",
     noResults: "Aucun médecin ne correspond aux filtres.",
-    paymentNotice: "AI Health Match encaisse la demande, comptabilise 30 % de frais plateforme et 70 % à reverser manuellement au médecin."
+    paymentNotice: "Paiement collecté par la plateforme : le médecin est organisé après confirmation. Si aucun prestataire adapté ne peut être trouvé, le remboursement suit la politique."
   },
   de: {
     title: "Ärzteliste",
@@ -167,16 +174,17 @@ const COPY = {
     country: "Land",
     language: "Sprache",
     price: "Maximalpreis",
+    requestFee: "Gebühr für Beratungsanfrage",
     availability: "Verfügbarkeit",
     availableOnly: "Nur jetzt verfügbar",
     rating: "Bewertung",
     session: "Sitzung",
     available: "Jetzt verfügbar",
     unavailable: "Nächste Verfügbarkeit erforderlich",
-    book: "Beratung buchen",
+    book: "Beratung anfragen",
     booking: "Sichere Zahlung wird geöffnet...",
     noResults: "Keine Ärzte passen zu diesen Filtern.",
-    paymentNotice: "AI Health Match kassiert die Anfrage, verbucht 30 % Plattformgebühr und 70 % manuelle Arztauszahlung."
+    paymentNotice: "Von der Plattform eingezogene Zahlung: Der Arzt wird nach Bestätigung koordiniert. Wenn kein passender Anbieter gefunden wird, erfolgt die Erstattung gemäß Richtlinie."
   },
   ja: {
     title: "医師リスト",
@@ -187,16 +195,17 @@ const COPY = {
     country: "国",
     language: "言語",
     price: "上限価格",
+    requestFee: "相談依頼料",
     availability: "空き状況",
     availableOnly: "現在予約可能のみ",
     rating: "評価",
     session: "回",
     available: "現在予約可能",
     unavailable: "次回の空き確認が必要",
-    book: "相談を予約",
+    book: "相談を依頼",
     booking: "安全な決済を開いています...",
     noResults: "条件に一致する医師がいません。",
-    paymentNotice: "AI Health Match が相談依頼料を受け取り、30% を平台手数料、70% を医師への手動精算として記録します。"
+    paymentNotice: "プラットフォームが代金を回収します。医師は確認後に手配され、適切な提供者を手配できない場合は返金ポリシーに従います。"
   },
   ko: {
     title: "의사 목록",
@@ -207,16 +216,17 @@ const COPY = {
     country: "국가",
     language: "언어",
     price: "최대 가격",
+    requestFee: "상담 요청 수수료",
     availability: "예약 가능 여부",
     availableOnly: "지금 가능한 의사만",
     rating: "평점",
     session: "회",
     available: "지금 가능",
     unavailable: "다음 가능 시간 확인 필요",
-    book: "상담 예약",
+    book: "상담 요청",
     booking: "보안 결제를 여는 중...",
     noResults: "조건에 맞는 의사가 없습니다.",
-    paymentNotice: "AI Health Match가 상담 요청 결제를 수령하고 30% 플랫폼 수수료와 70% 의사 수동 정산을 기록합니다."
+    paymentNotice: "플랫폼이 결제를 수령합니다. 의사는 확인 후 배정되며, 적절한 제공자를 매칭할 수 없는 경우 환불 정책에 따라 처리됩니다."
   }
 } as const;
 
@@ -350,7 +360,7 @@ export default function DoctorsPage() {
               {doctor.specialty} · {doctor.country}
             </p>
             <p className="doctor-meta">
-              {copy.rating} {doctor.rating} · ${doctor.feeUsd}/{copy.session} ·{" "}
+              {copy.rating} {doctor.rating} · {copy.requestFee}: ${doctor.feeUsd}/{copy.session} ·{" "}
               {doctor.available ? copy.available : copy.unavailable}
             </p>
             <p className="doctor-meta">{doctor.languages.join(", ")}</p>

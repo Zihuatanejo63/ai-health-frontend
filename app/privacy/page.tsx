@@ -20,7 +20,8 @@ export default function PrivacyPage() {
             "Generate AI-assisted triage support and suggested doctor categories.",
             "Store anonymous case history so the MVP can show a reference ID, support follow-up, and improve reliability.",
             "Operate, debug, secure, monitor, and improve AI Health Match.",
-            "Process payments or consultation requests if paid features are enabled."
+            "Process consultation request payments as platform operator if paid features are enabled.",
+            "Coordinate provider matching, confirmation, refund handling, and manual doctor payout bookkeeping."
           ]
         },
         {
@@ -34,6 +35,7 @@ export default function PrivacyPage() {
             "Submitted symptoms may be processed by AI model providers to generate triage support.",
             "Cloudflare may process hosting, database, security, analytics, and logging data.",
             "A merchant-of-record payment provider such as Paddle or Lemon Squeezy may process payment-related data if paid checkout is used.",
+            "Provider assignment, availability, and any final care relationship are not guaranteed until confirmed.",
             "We do not sell personal health information."
           ]
         },
