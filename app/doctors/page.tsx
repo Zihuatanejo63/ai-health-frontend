@@ -36,7 +36,7 @@ const COPY = {
     book: "Book Consultation",
     booking: "Opening secure payment...",
     noResults: "No doctors match these filters.",
-    paymentNotice: "Payments use a hosted merchant-of-record checkout link such as Paddle or Lemon Squeezy."
+    paymentNotice: "AI Health Match collects the consultation request payment, records a 30% platform fee and a 70% manual doctor payout."
   },
   zh: {
     title: "医生列表",
@@ -56,7 +56,7 @@ const COPY = {
     book: "预约咨询",
     booking: "正在打开安全支付...",
     noResults: "没有符合筛选条件的医生。",
-    paymentNotice: "支付将使用 Paddle 或 Lemon Squeezy 这类代收款平台的托管付款链接。"
+    paymentNotice: "AI Health Match 平台统一收取咨询预约费，系统记账为平台服务费 30%、医生人工结算 70%。"
   },
   es: {
     title: "Lista de doctores",
@@ -76,7 +76,7 @@ const COPY = {
     book: "Reservar consulta",
     booking: "Abriendo pago seguro...",
     noResults: "No hay doctores con estos filtros.",
-    paymentNotice: "Los pagos usan un enlace alojado de un proveedor merchant-of-record como Paddle o Lemon Squeezy."
+    paymentNotice: "AI Health Match cobra la solicitud, registra 30% de comisión de plataforma y 70% para pago manual al médico."
   },
   hi: {
     title: "डॉक्टर सूची",
@@ -96,7 +96,7 @@ const COPY = {
     book: "परामर्श बुक करें",
     booking: "सुरक्षित भुगतान खुल रहा है...",
     noResults: "इन फ़िल्टर से कोई डॉक्टर नहीं मिला।",
-    paymentNotice: "भुगतान Paddle या Lemon Squeezy जैसे merchant-of-record hosted payment link से होगा।"
+    paymentNotice: "AI Health Match भुगतान लेता है, 30% platform fee और 70% manual doctor payout दर्ज करता है।"
   },
   ar: {
     title: "قائمة الأطباء",
@@ -116,7 +116,7 @@ const COPY = {
     book: "حجز استشارة",
     booking: "جار فتح الدفع الآمن...",
     noResults: "لا يوجد أطباء يطابقون هذه الفلاتر.",
-    paymentNotice: "تستخدم المدفوعات رابط دفع مستضافا من مزود مثل Paddle أو Lemon Squeezy."
+    paymentNotice: "تجمع AI Health Match رسوم طلب الاستشارة وتسجل 30٪ للمنصة و70٪ كدفعة يدوية للطبيب."
   },
   pt: {
     title: "Lista de médicos",
@@ -136,7 +136,7 @@ const COPY = {
     book: "Agendar consulta",
     booking: "Abrindo pagamento seguro...",
     noResults: "Nenhum médico corresponde aos filtros.",
-    paymentNotice: "Os pagamentos usam um link hospedado por um merchant of record, como Paddle ou Lemon Squeezy."
+    paymentNotice: "AI Health Match cobra a solicitação, registra 30% de taxa da plataforma e 70% para repasse manual ao médico."
   },
   fr: {
     title: "Liste des médecins",
@@ -156,7 +156,7 @@ const COPY = {
     book: "Réserver une consultation",
     booking: "Ouverture du paiement sécurisé...",
     noResults: "Aucun médecin ne correspond aux filtres.",
-    paymentNotice: "Les paiements utilisent un lien hébergé par un merchant of record comme Paddle ou Lemon Squeezy."
+    paymentNotice: "AI Health Match encaisse la demande, comptabilise 30 % de frais plateforme et 70 % à reverser manuellement au médecin."
   },
   de: {
     title: "Ärzteliste",
@@ -176,7 +176,7 @@ const COPY = {
     book: "Beratung buchen",
     booking: "Sichere Zahlung wird geöffnet...",
     noResults: "Keine Ärzte passen zu diesen Filtern.",
-    paymentNotice: "Zahlungen nutzen einen gehosteten Merchant-of-Record-Link wie Paddle oder Lemon Squeezy."
+    paymentNotice: "AI Health Match kassiert die Anfrage, verbucht 30 % Plattformgebühr und 70 % manuelle Arztauszahlung."
   },
   ja: {
     title: "医師リスト",
@@ -196,7 +196,7 @@ const COPY = {
     book: "相談を予約",
     booking: "安全な決済を開いています...",
     noResults: "条件に一致する医師がいません。",
-    paymentNotice: "支払いは Paddle や Lemon Squeezy などの代行販売者によるホスト型決済リンクを使用します。"
+    paymentNotice: "AI Health Match が相談依頼料を受け取り、30% を平台手数料、70% を医師への手動精算として記録します。"
   },
   ko: {
     title: "의사 목록",
@@ -216,7 +216,7 @@ const COPY = {
     book: "상담 예약",
     booking: "보안 결제를 여는 중...",
     noResults: "조건에 맞는 의사가 없습니다.",
-    paymentNotice: "결제는 Paddle 또는 Lemon Squeezy 같은 merchant-of-record 호스팅 결제 링크를 사용합니다."
+    paymentNotice: "AI Health Match가 상담 요청 결제를 수령하고 30% 플랫폼 수수료와 70% 의사 수동 정산을 기록합니다."
   }
 } as const;
 

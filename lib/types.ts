@@ -42,4 +42,10 @@ export type CreateCheckoutRequest = {
 export type CreateCheckoutResponse = {
   checkoutUrl: string;
   sessionId: string;
+  accounting: {
+    grossAmountUsd: number;
+    platformFeeRateBps: number;
+    platformFeeUsd: number;
+    doctorPayoutUsd: number;
+  };
 };
