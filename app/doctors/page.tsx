@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { createCheckoutSession } from "@/lib/api";
 import { doctors } from "@/lib/mock-doctors";
 
 const LANGUAGES = [
@@ -36,6 +35,8 @@ const COPY = {
     unavailable: "Next availability required",
     book: "Request Consultation",
     booking: "Opening secure payment...",
+    paused: "Consultation requests are temporarily paused while provider verification, pricing, and refund workflows are finalized.",
+    pausedButton: "Requests Paused",
     noResults: "No doctors match these filters.",
     paymentNotice: "Platform-collected payment: the doctor is arranged after confirmation. If we cannot match an appropriate provider, refunds are handled according to policy."
   },
@@ -57,6 +58,8 @@ const COPY = {
     unavailable: "需查看下次可预约时间",
     book: "提交咨询请求",
     booking: "正在打开安全支付...",
+    paused: "医生咨询请求暂时暂停开放，我们正在完善医生资质审核、价格和退款流程。",
+    pausedButton: "请求暂未开放",
     noResults: "没有符合筛选条件的医生。",
     paymentNotice: "平台代收款：医生确认后安排服务；若无法匹配合适医生，将按退款政策处理。"
   },
@@ -78,6 +81,8 @@ const COPY = {
     unavailable: "Requiere próxima disponibilidad",
     book: "Solicitar consulta",
     booking: "Abriendo pago seguro...",
+    paused: "Las solicitudes de consulta están pausadas mientras finalizamos verificación, precios y reembolsos.",
+    pausedButton: "Solicitudes pausadas",
     noResults: "No hay doctores con estos filtros.",
     paymentNotice: "Pago cobrado por la plataforma: el médico se coordina tras la confirmación. Si no podemos encontrar un proveedor adecuado, el reembolso se gestiona según la política."
   },
@@ -99,6 +104,8 @@ const COPY = {
     unavailable: "अगली उपलब्धता आवश्यक",
     book: "परामर्श अनुरोध भेजें",
     booking: "सुरक्षित भुगतान खुल रहा है...",
+    paused: "Provider verification, pricing और refund workflow पूरा होने तक consultation requests अस्थायी रूप से रुकी हैं।",
+    pausedButton: "Requests paused",
     noResults: "इन फ़िल्टर से कोई डॉक्टर नहीं मिला।",
     paymentNotice: "Platform-collected payment: पुष्टि के बाद डॉक्टर की व्यवस्था की जाती है। उपयुक्त provider न मिलने पर refund policy के अनुसार 처리 होगा।"
   },
@@ -120,6 +127,8 @@ const COPY = {
     unavailable: "يتطلب موعدا لاحقا",
     book: "إرسال طلب استشارة",
     booking: "جار فتح الدفع الآمن...",
+    paused: "طلبات الاستشارة متوقفة مؤقتا حتى اكتمال التحقق من مقدمي الخدمة والتسعير وسياسة الاسترداد.",
+    pausedButton: "الطلبات متوقفة مؤقتا",
     noResults: "لا يوجد أطباء يطابقون هذه الفلاتر.",
     paymentNotice: "دفع يتم تحصيله عبر المنصة: يتم ترتيب الطبيب بعد التأكيد. إذا تعذر匹配 مزود مناسب، تتم معالجة الاسترداد حسب السياسة."
   },
@@ -141,6 +150,8 @@ const COPY = {
     unavailable: "Próxima disponibilidade necessária",
     book: "Solicitar consulta",
     booking: "Abrindo pagamento seguro...",
+    paused: "As solicitações de consulta estão pausadas enquanto finalizamos verificação, preços e reembolsos.",
+    pausedButton: "Solicitações pausadas",
     noResults: "Nenhum médico corresponde aos filtros.",
     paymentNotice: "Pagamento cobrado pela plataforma: o médico é organizado após confirmação. Se não for possível encontrar um provedor adequado, o reembolso segue a política."
   },
@@ -162,6 +173,8 @@ const COPY = {
     unavailable: "Prochaine disponibilité requise",
     book: "Demander une consultation",
     booking: "Ouverture du paiement sécurisé...",
+    paused: "Les demandes de consultation sont temporairement suspendues pendant la finalisation de la vérification, des prix et des remboursements.",
+    pausedButton: "Demandes suspendues",
     noResults: "Aucun médecin ne correspond aux filtres.",
     paymentNotice: "Paiement collecté par la plateforme : le médecin est organisé après confirmation. Si aucun prestataire adapté ne peut être trouvé, le remboursement suit la politique."
   },
@@ -183,6 +196,8 @@ const COPY = {
     unavailable: "Nächste Verfügbarkeit erforderlich",
     book: "Beratung anfragen",
     booking: "Sichere Zahlung wird geöffnet...",
+    paused: "Beratungsanfragen sind vorübergehend pausiert, während Verifizierung, Preise und Erstattungen finalisiert werden.",
+    pausedButton: "Anfragen pausiert",
     noResults: "Keine Ärzte passen zu diesen Filtern.",
     paymentNotice: "Von der Plattform eingezogene Zahlung: Der Arzt wird nach Bestätigung koordiniert. Wenn kein passender Anbieter gefunden wird, erfolgt die Erstattung gemäß Richtlinie."
   },
@@ -204,6 +219,8 @@ const COPY = {
     unavailable: "次回の空き確認が必要",
     book: "相談を依頼",
     booking: "安全な決済を開いています...",
+    paused: "医師確認、価格、返金フローの確定まで相談依頼は一時停止中です。",
+    pausedButton: "依頼は一時停止中",
     noResults: "条件に一致する医師がいません。",
     paymentNotice: "プラットフォームが代金を回収します。医師は確認後に手配され、適切な提供者を手配できない場合は返金ポリシーに従います。"
   },
@@ -225,6 +242,8 @@ const COPY = {
     unavailable: "다음 가능 시간 확인 필요",
     book: "상담 요청",
     booking: "보안 결제를 여는 중...",
+    paused: "의료 제공자 검증, 가격, 환불 절차가 확정될 때까지 상담 요청은 일시 중지됩니다.",
+    pausedButton: "요청 일시 중지",
     noResults: "조건에 맞는 의사가 없습니다.",
     paymentNotice: "플랫폼이 결제를 수령합니다. 의사는 확인 후 배정되며, 적절한 제공자를 매칭할 수 없는 경우 환불 정책에 따라 처리됩니다."
   }
@@ -241,8 +260,6 @@ export default function DoctorsPage() {
   const [doctorLanguage, setDoctorLanguage] = useState("All");
   const [maxPrice, setMaxPrice] = useState("200");
   const [availableOnly, setAvailableOnly] = useState(false);
-  const [checkoutDoctorId, setCheckoutDoctorId] = useState<string | null>(null);
-  const [error, setError] = useState("");
   const copy = COPY[languageCode];
 
   const specialties = useMemo(() => unique(doctors.map((doctor) => doctor.specialty)), []);
@@ -259,22 +276,6 @@ export default function DoctorsPage() {
     if (availableOnly && !doctor.available) return false;
     return doctor.feeUsd <= Number(maxPrice);
   });
-
-  async function startCheckout(doctor: (typeof doctors)[number]) {
-    setError("");
-    setCheckoutDoctorId(doctor.id);
-    try {
-      const response = await createCheckoutSession({
-        doctorId: doctor.id,
-        doctorName: doctor.name,
-        amountUsd: doctor.feeUsd
-      });
-      window.location.href = response.checkoutUrl;
-    } catch (checkoutError) {
-      setError(checkoutError instanceof Error ? checkoutError.message : "Unable to start checkout.");
-      setCheckoutDoctorId(null);
-    }
-  }
 
   return (
     <section>
@@ -350,7 +351,7 @@ export default function DoctorsPage() {
       </div>
 
       <p className="page-subtitle payment-note">{copy.paymentNotice}</p>
-      {error ? <p className="inline-error">{error}</p> : null}
+      <p className="inline-error">{copy.paused}</p>
 
       <div className="doctor-grid" style={{ marginTop: 18 }}>
         {filteredDoctors.map((doctor) => (
@@ -373,11 +374,10 @@ export default function DoctorsPage() {
             </div>
             <button
               className="btn-primary"
-              disabled={checkoutDoctorId === doctor.id}
-              onClick={() => startCheckout(doctor)}
+              disabled
               type="button"
             >
-              {checkoutDoctorId === doctor.id ? copy.booking : copy.book}
+              {copy.pausedButton}
             </button>
           </article>
         ))}
