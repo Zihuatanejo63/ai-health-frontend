@@ -21,10 +21,16 @@ type StoredAnalysis = {
 const demoResult: AnalyzeSymptomsResponse = {
   referenceId: "HM-DEMO-RESULT",
   riskLevel: "medium",
-  redFlags: ["Chest pain: not selected", "Trouble breathing: not selected", "Confusion: not selected", "Severe dehydration: not selected"],
+  redFlags: [
+    "No chest pain reported",
+    "No trouble breathing reported",
+    "No confusion reported",
+    "No severe dehydration reported",
+    "No stiff neck reported"
+  ],
   recommendedCareLevel: "Primary Care",
-  possibleCauses: ["a viral respiratory infection", "seasonal flu or COVID-like illness", "an irritation or infection that should be reviewed if symptoms worsen"],
-  whatToMonitor: ["Breathing effort", "Fever trend", "Hydration", "Chest discomfort", "Symptoms lasting longer than expected"],
+  possibleCauses: ["Common cold", "Flu-like illness", "COVID-like respiratory infection", "Throat infection"],
+  whatToMonitor: ["Monitor temperature, breathing, hydration, worsening fatigue, and symptom duration."],
   doctorReadySummary: "Fever and cough for 2 days. Temperature around 101°F. Pain score 3/10. No emergency red flags selected in this demo. Questions to ask: when to seek urgent care, what tests may be useful, and what symptoms should trigger reassessment.",
   insuranceNavigation: ["Is urgent care covered?", "Is the provider in-network?", "What is your copay?", "Does your deductible apply?", "Is telehealth covered?"],
   disclaimer: "HealthMatchAI does not diagnose, prescribe, treat, or replace professional medical care. Insurance information is educational only."
@@ -35,14 +41,6 @@ function formatRiskKey(riskLevel: RiskLevel, recommendedCareLevel?: string): "Lo
   if (riskLevel === "low") return "Low";
   if (riskLevel === "high") return "High";
   return "Moderate";
-}
-
-function formatPossibleCause(item: string, prefix: string): string {
-  const trimmed = item.trim();
-  if (trimmed.toLowerCase().startsWith("your symptoms may be consistent with")) {
-    return trimmed;
-  }
-  return `${prefix} ${trimmed.charAt(0).toLowerCase()}${trimmed.slice(1)}.`;
 }
 
 export default function ResultPage() {
@@ -70,11 +68,12 @@ export default function ResultPage() {
 
   const displayedRisk = formatRiskKey(result.riskLevel, result.recommendedCareLevel);
   const careDescription =
-    resultCopy.careDescriptions[result.recommendedCareLevel as keyof typeof resultCopy.careDescriptions] ??
-    resultCopy.fallbackCare;
-  const whyText = resultCopy.whyText
-    .replace("{risk}", resultCopy.risk[displayedRisk])
-    .replace("{care}", result.recommendedCareLevel);
+    result.recommendedCareLevel === "Primary Care"
+      ? "Primary Care within 24–72 hours"
+      : resultCopy.careDescriptions[result.recommendedCareLevel as keyof typeof resultCopy.careDescriptions] ??
+        resultCopy.fallbackCare;
+  const whyText =
+    "Based on your reported symptoms, duration, severity, and no emergency red flags.";
 
   return (
     <section className="result-page">
@@ -96,16 +95,21 @@ export default function ResultPage() {
         </article>
       ) : null}
 
-      <div className="risk-band">
-        {["Low", "Moderate", "High", "Emergency"].map((level) => (
-          <RiskLevelCard
-            key={level}
-            level={resultCopy.risk[level as keyof typeof resultCopy.risk]}
-            tone={level.toLowerCase() as "low" | "moderate" | "high" | "emergency"}
-            description={level === displayedRisk ? resultCopy.current : undefined}
-          />
-        ))}
-      </div>
+      <article className="panel result-hero-card">
+        <RiskLevelCard
+          level={resultCopy.risk[displayedRisk]}
+          tone={displayedRisk.toLowerCase() as "low" | "moderate" | "high" | "emergency"}
+          description="Recommended next step: Primary care or urgent care if symptoms worsen."
+        />
+        <div>
+          <span className="preview-kicker">Recommended next step</span>
+          <h2>{careDescription}</h2>
+          <p>
+            Use this result to prepare questions and choose a care setting. A licensed clinician
+            should make care decisions with your full history and exam.
+          </p>
+        </div>
+      </article>
 
       <section className="result-section">
         <SectionHeader title={resultCopy.recommended} />
@@ -138,9 +142,10 @@ export default function ResultPage() {
       <section className="result-section">
         <SectionHeader title={resultCopy.causes} />
         <article className="panel result-card">
+          <p>Your symptoms may be consistent with:</p>
           <ul>
             {result.possibleCauses.map((item) => (
-              <li key={item}>{formatPossibleCause(item, resultCopy.possiblePrefix)}</li>
+              <li key={item}>{item}</li>
             ))}
           </ul>
         </article>

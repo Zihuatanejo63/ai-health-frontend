@@ -24,8 +24,8 @@ export default function HealthRecordsPage() {
 
       <div className="feature-grid">
         {features.map((feature) => (
-          <article className="panel feature-card" key={feature}>
-            <span>Coming soon</span>
+          <article className="panel record-card" key={feature}>
+            <span className="feature-status">Coming soon</span>
             <h3>{feature}</h3>
             <p>Designed for organized, shareable health decision records.</p>
           </article>

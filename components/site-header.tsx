@@ -23,6 +23,9 @@ export function SiteHeader() {
           <Link href="/health-records">{records}</Link>
           <Link href="/pricing">{pricing}</Link>
         </nav>
+        <Link className="nav-cta" href="/symptom-check">
+          {symptoms}
+        </Link>
         <LanguageSelect />
       </div>
     </header>

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { PricingCard } from "@/components/pricing-card";
 import { SectionHeader } from "@/components/section-header";
 
 const plans = [
@@ -14,7 +14,8 @@ const plans = [
     price: "$4.99",
     features: ["Doctor-ready PDF", "Symptom timeline", "Red flags checked", "Questions to ask"],
     cta: "Create Report",
-    href: "/payment-success"
+    href: "/payment-success",
+    featured: true
   },
   {
     name: "Plus",
@@ -36,18 +37,7 @@ export default function PricingPage() {
 
       <div className="pricing-grid">
         {plans.map((plan) => (
-          <article className="panel pricing-panel" key={plan.name}>
-            <h2>{plan.name}</h2>
-            <strong>{plan.price}</strong>
-            <ul>
-              {plan.features.map((feature) => (
-                <li key={feature}>{feature}</li>
-              ))}
-            </ul>
-            <Link className="btn-primary" href={plan.href}>
-              {plan.cta}
-            </Link>
-          </article>
+          <PricingCard key={plan.name} {...plan} />
         ))}
       </div>
     </section>
