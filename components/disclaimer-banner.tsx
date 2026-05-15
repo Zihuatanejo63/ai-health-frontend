@@ -1,6 +1,7 @@
 "use client";
 
 import { useLanguage } from "@/components/language-provider";
+import { getCopy } from "@/lib/i18n";
 
 type DisclaimerBannerProps = {
   text?: string;
@@ -9,20 +10,7 @@ type DisclaimerBannerProps = {
 export const DEFAULT_DISCLAIMER =
   "HealthMatchAI does not diagnose, prescribe, or replace professional medical care. Insurance information is educational only. For plan enrollment, speak with a licensed insurance agent or broker.";
 
-const DISCLAIMER_COPY = {
-  en: DEFAULT_DISCLAIMER,
-  zh: "HealthMatchAI 不提供诊断、处方，也不能替代专业医疗服务。保险信息仅供教育参考。投保请咨询持牌保险代理人或经纪人。",
-  es: "Aviso médico: AI Health Match no proporciona diagnósticos médicos. Esta información solo apoya el triaje y no reemplaza el consejo profesional. Si tienes síntomas graves, busca atención de emergencia.",
-  hi: "चिकित्सा अस्वीकरण: AI Health Match चिकित्सा निदान नहीं देता। यह जानकारी केवल ट्रायेज सहायता है और पेशेवर सलाह का विकल्प नहीं है। गंभीर लक्षण हों तो आपातकालीन देखभाल लें।",
-  ar: "تنبيه طبي: لا يقدم AI Health Match تشخيصا طبيا. هذه المعلومات لدعم الفرز فقط ولا تغني عن استشارة مختص. إذا كانت الأعراض شديدة فاطلب رعاية طارئة.",
-  pt: "Aviso médico: AI Health Match não fornece diagnóstico médico. Esta informação é apenas apoio de triagem e não substitui aconselhamento profissional. Em sintomas graves, procure emergência.",
-  fr: "Avertissement médical : AI Health Match ne fournit pas de diagnostic médical. Ces informations servent uniquement au triage et ne remplacent pas un avis professionnel. En cas de symptômes graves, contactez les urgences.",
-  de: "Medizinischer Hinweis: AI Health Match stellt keine medizinische Diagnose. Diese Informationen dienen nur der Triage und ersetzen keine professionelle Beratung. Bei schweren Symptomen suchen Sie Notfallhilfe.",
-  ja: "医療上の免責事項：AI Health Match は診断を提供しません。この情報はトリアージ支援のみを目的とし、専門家の助言に代わるものではありません。重い症状がある場合は救急医療を受けてください。",
-  ko: "의료 고지: AI Health Match는 의학적 진단을 제공하지 않습니다. 이 정보는 분류 지원용이며 전문 의료 조언을 대체하지 않습니다. 심각한 증상이 있으면 응급 진료를 받으세요."
-};
-
 export function DisclaimerBanner({ text }: DisclaimerBannerProps) {
   const { languageCode } = useLanguage();
-  return <p className="disclaimer-banner">{text ?? DISCLAIMER_COPY[languageCode]}</p>;
+  return <p className="disclaimer-banner">{text ?? getCopy(languageCode).banner}</p>;
 }

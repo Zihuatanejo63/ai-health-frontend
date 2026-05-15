@@ -3,11 +3,13 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { CareLevelCard } from "@/components/care-level-card";
-import { DisclaimerBox, SAFETY_DISCLAIMER } from "@/components/disclaimer-box";
+import { DisclaimerBox } from "@/components/disclaimer-box";
 import { DoctorSummaryPreview } from "@/components/doctor-summary-preview";
 import { InsuranceChecklist } from "@/components/insurance-checklist";
+import { useLanguage } from "@/components/language-provider";
 import { RiskLevelCard } from "@/components/risk-level-card";
 import { SectionHeader } from "@/components/section-header";
+import { getCopy } from "@/lib/i18n";
 import type { AnalyzeSymptomsResponse, RiskLevel } from "@/lib/types";
 
 const SESSION_RESULT_KEY = "ai-health-match-result";
@@ -16,45 +18,25 @@ type StoredAnalysis = {
   response: AnalyzeSymptomsResponse;
 };
 
-const CARE_LEVEL_DESCRIPTIONS: Record<string, string> = {
-  Emergency: "Seek emergency care now",
-  "Urgent Care": "Get care today",
-  "Primary Care": "See a clinician soon",
-  Telehealth: "Start with virtual care",
-  "Pharmacy/Self-care": "Ask a pharmacist or use self-care when appropriate",
-  "Monitor at home": "Track symptoms and reassess if things change"
-};
-
-const INSURANCE_ITEMS = [
-  "Is urgent care covered?",
-  "Is the provider in-network?",
-  "What is your copay?",
-  "Does your deductible apply?",
-  "Is telehealth covered?"
-];
-
-function formatRiskLevel(riskLevel: RiskLevel, recommendedCareLevel?: string): string {
+function formatRiskKey(riskLevel: RiskLevel, recommendedCareLevel?: string): "Low" | "Moderate" | "High" | "Emergency" {
   if (recommendedCareLevel === "Emergency") return "Emergency";
   if (riskLevel === "low") return "Low";
   if (riskLevel === "high") return "High";
   return "Moderate";
 }
 
-function explainResult(result: AnalyzeSymptomsResponse): string {
-  const risk = formatRiskLevel(result.riskLevel, result.recommendedCareLevel).toLowerCase();
-  const care = result.recommendedCareLevel;
-  return `This ${risk} result is based on the symptoms, severity, duration, red flags, and care level signals you provided. The recommended care level is ${care}, but a licensed clinician should make care decisions with your full history and exam.`;
-}
-
-function formatPossibleCause(item: string): string {
+function formatPossibleCause(item: string, prefix: string): string {
   const trimmed = item.trim();
   if (trimmed.toLowerCase().startsWith("your symptoms may be consistent with")) {
     return trimmed;
   }
-  return `Your symptoms may be consistent with ${trimmed.charAt(0).toLowerCase()}${trimmed.slice(1)}.`;
+  return `${prefix} ${trimmed.charAt(0).toLowerCase()}${trimmed.slice(1)}.`;
 }
 
 export default function ResultPage() {
+  const { languageCode } = useLanguage();
+  const copy = getCopy(languageCode);
+  const resultCopy = copy.result;
   const [analysis, setAnalysis] = useState<StoredAnalysis | null>(null);
 
   useEffect(() => {
@@ -71,49 +53,53 @@ export default function ResultPage() {
   }, []);
 
   const result = analysis?.response;
-  const disclaimer = useMemo(() => result?.disclaimer || SAFETY_DISCLAIMER, [result?.disclaimer]);
+  const disclaimer = useMemo(() => result?.disclaimer || copy.safety, [copy.safety, result?.disclaimer]);
 
   if (!result) {
     return (
       <section className="panel legal-page">
-        <h1 className="page-title">Your symptom check result</h1>
+        <h1 className="page-title">{resultCopy.title}</h1>
         <p className="page-subtitle">
-          Start a symptom check first to create your care level, Doctor-ready Summary, and insurance
-          checklist.
+          {resultCopy.unavailableText}
         </p>
         <div style={{ marginTop: 18 }}>
           <Link className="btn-primary" href="/#symptom-check">
-            Start Symptom Check
+            {copy.home.start}
           </Link>
         </div>
       </section>
     );
   }
 
-  const displayedRisk = formatRiskLevel(result.riskLevel, result.recommendedCareLevel);
+  const displayedRisk = formatRiskKey(result.riskLevel, result.recommendedCareLevel);
   const careDescription =
-    CARE_LEVEL_DESCRIPTIONS[result.recommendedCareLevel] ?? "Choose the care setting that matches your symptoms.";
+    resultCopy.careDescriptions[result.recommendedCareLevel as keyof typeof resultCopy.careDescriptions] ??
+    resultCopy.fallbackCare;
+  const whyText = resultCopy.whyText
+    .replace("{risk}", resultCopy.risk[displayedRisk])
+    .replace("{care}", result.recommendedCareLevel);
 
   return (
     <section className="result-page">
       <p className="eyebrow">Symptom Triage</p>
-      <h1 className="page-title">Your symptom check result</h1>
+      <h1 className="page-title">{resultCopy.title}</h1>
       <p className="page-subtitle">
-        Reference ID: <strong>{result.referenceId}</strong>
+        {resultCopy.reference}: <strong>{result.referenceId}</strong>
       </p>
 
       <div className="risk-band">
         {["Low", "Moderate", "High", "Emergency"].map((level) => (
           <RiskLevelCard
             key={level}
-            level={level}
-            description={level === displayedRisk ? "Current result" : undefined}
+            level={resultCopy.risk[level as keyof typeof resultCopy.risk]}
+            tone={level.toLowerCase() as "low" | "moderate" | "high" | "emergency"}
+            description={level === displayedRisk ? resultCopy.current : undefined}
           />
         ))}
       </div>
 
       <section className="result-section">
-        <SectionHeader title="Recommended Care Level" />
+        <SectionHeader title={resultCopy.recommended} />
         <CareLevelCard
           active
           title={result.recommendedCareLevel}
@@ -123,14 +109,14 @@ export default function ResultPage() {
       </section>
 
       <section className="result-section">
-        <SectionHeader title="Why this result?" />
+        <SectionHeader title={resultCopy.why} />
         <article className="panel result-card">
-          <p>{explainResult(result)}</p>
+          <p>{whyText}</p>
         </article>
       </section>
 
       <section className="result-section">
-        <SectionHeader title="Red Flags Checked" />
+        <SectionHeader title={resultCopy.redFlags} />
         <article className="panel result-card">
           <ul>
             {result.redFlags.map((item) => (
@@ -141,18 +127,18 @@ export default function ResultPage() {
       </section>
 
       <section className="result-section">
-        <SectionHeader title="Possible Causes" />
+        <SectionHeader title={resultCopy.causes} />
         <article className="panel result-card">
           <ul>
             {result.possibleCauses.map((item) => (
-              <li key={item}>{formatPossibleCause(item)}</li>
+              <li key={item}>{formatPossibleCause(item, resultCopy.possiblePrefix)}</li>
             ))}
           </ul>
         </article>
       </section>
 
       <section className="result-section">
-        <SectionHeader title="What to Monitor" />
+        <SectionHeader title={resultCopy.monitor} />
         <article className="panel result-card">
           <ul>
             {result.whatToMonitor.map((item) => (
@@ -164,19 +150,28 @@ export default function ResultPage() {
 
       <section className="result-section">
         <SectionHeader
-          title="Doctor-ready Summary"
-          description="Free preview. Download the full PDF report when you want a shareable visit note."
+          title={copy.summary.title}
+          description={resultCopy.summaryDescription}
         />
         <DoctorSummaryPreview
-          cta="Download Full PDF Report"
+          eyebrow={copy.summary.eyebrow}
+          title={copy.summary.title}
+          fields={[...copy.summary.fields]}
+          cta={copy.summary.fullCta}
           previewOnly
           summary={result.doctorReadySummary}
         />
       </section>
 
       <section className="result-section">
-        <SectionHeader title="Insurance Checklist" />
-        <InsuranceChecklist items={INSURANCE_ITEMS} cta="Understand My Coverage Options" />
+        <SectionHeader title={resultCopy.insurance} />
+        <InsuranceChecklist
+          eyebrow={copy.insurance.eyebrow}
+          title={copy.insurance.title}
+          description={copy.insurance.description}
+          items={[...copy.insurance.items]}
+          cta={copy.insurance.cta}
+        />
       </section>
 
       <section className="result-section">

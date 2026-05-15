@@ -3,6 +3,7 @@ type RiskTone = "low" | "moderate" | "high" | "emergency";
 type RiskLevelCardProps = {
   level: string;
   description?: string;
+  tone?: RiskTone;
 };
 
 function getRiskTone(level: string): RiskTone {
@@ -13,8 +14,7 @@ function getRiskTone(level: string): RiskTone {
   return "moderate";
 }
 
-export function RiskLevelCard({ level, description }: RiskLevelCardProps) {
-  const tone = getRiskTone(level);
+export function RiskLevelCard({ level, description, tone = getRiskTone(level) }: RiskLevelCardProps) {
 
   return (
     <article className={`risk-level-card risk-${tone}`}>

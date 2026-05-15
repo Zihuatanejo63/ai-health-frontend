@@ -1,4 +1,5 @@
 type InsuranceChecklistProps = {
+  eyebrow?: string;
   title?: string;
   description?: string;
   items?: string[];
@@ -14,6 +15,7 @@ export const DEFAULT_INSURANCE_CHECKLIST = [
 ];
 
 export function InsuranceChecklist({
+  eyebrow = "Insurance Navigation",
   title = "Insurance Checklist",
   description = "Educational checklist only. For plan-specific decisions, speak with a licensed insurance agent or broker.",
   items = DEFAULT_INSURANCE_CHECKLIST,
@@ -22,7 +24,7 @@ export function InsuranceChecklist({
   return (
     <article className="panel insurance-checklist">
       <div>
-        <p className="eyebrow">Insurance Navigation</p>
+        <p className="eyebrow">{eyebrow}</p>
         <h3>{title}</h3>
         <p>{description}</p>
       </div>

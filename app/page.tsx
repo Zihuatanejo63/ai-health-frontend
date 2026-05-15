@@ -5,64 +5,22 @@ import { useRouter } from "next/navigation";
 import { CareLevelCard } from "@/components/care-level-card";
 import { DisclaimerBox } from "@/components/disclaimer-box";
 import { DoctorSummaryPreview } from "@/components/doctor-summary-preview";
+import { useLanguage } from "@/components/language-provider";
 import { SectionHeader } from "@/components/section-header";
 import { SymptomButton } from "@/components/symptom-button";
 import { analyzeSymptoms } from "@/lib/api";
+import { getCopy } from "@/lib/i18n";
 import type { DurationUnit, Severity } from "@/lib/types";
 
 const SESSION_RESULT_KEY = "ai-health-match-result";
 
-const COMMON_SYMPTOMS = [
-  "Fever",
-  "Cough",
-  "Headache",
-  "Stomach pain",
-  "Rash",
-  "Chest discomfort",
-  "Urinary pain",
-  "Diarrhea"
-];
-
-const CARE_LEVELS = [
-  { title: "Emergency", description: "Seek emergency care now", tone: "danger" as const },
-  { title: "Urgent Care", description: "Get care today", tone: "warning" as const },
-  { title: "Primary Care", description: "See a clinician soon", tone: "primary" as const },
-  { title: "Telehealth", description: "Start with virtual care", tone: "secondary" as const },
-  { title: "Self-care", description: "Monitor at home", tone: "success" as const }
-];
-
-const INSURANCE_TOPICS = [
-  "Urgent care vs ER",
-  "Deductible",
-  "Copay",
-  "Out-of-pocket maximum",
-  "In-network vs out-of-network",
-  "Talk to a licensed insurance partner"
-];
-
-const COPY = {
-  title: "Know what care you need — and how to pay for it.",
-  subtitle:
-    "Check your symptoms, understand your risk level, choose the right care option, and prepare a clear summary for a clinician.",
-  symptomsLabel: "Primary symptoms",
-  symptomsPlaceholder:
-    "Example: fever and cough for 2 days, temperature 101°F, worse at night.",
-  severityLabel: "Current severity",
-  durationLabel: "Duration",
-  analyze: "Start Symptom Check",
-  analyzing: "Checking symptoms...",
-  careCta: "Find My Care Option",
-  errors: {
-    symptoms: "Please provide symptom details.",
-    duration: "Duration must be greater than 0.",
-    unexpected: "Unexpected error."
-  },
-  severity: { mild: "Mild", moderate: "Moderate", severe: "Severe" },
-  units: { hours: "Hours", days: "Days", weeks: "Weeks", months: "Months" }
-};
+const CARE_TONES = ["danger", "warning", "primary", "secondary", "success"] as const;
 
 export default function HomePage() {
   const router = useRouter();
+  const { languageCode } = useLanguage();
+  const copy = getCopy(languageCode);
+  const home = copy.home;
   const [symptoms, setSymptoms] = useState("");
   const [severity, setSeverity] = useState<Severity>("mild");
   const [durationValue, setDurationValue] = useState<number>(1);
@@ -83,11 +41,11 @@ export default function HomePage() {
 
     const trimmedSymptoms = symptoms.trim();
     if (!trimmedSymptoms) {
-      setError(COPY.errors.symptoms);
+      setError(home.errors.symptoms);
       return;
     }
     if (!Number.isFinite(durationValue) || durationValue <= 0) {
-      setError(COPY.errors.duration);
+      setError(home.errors.duration);
       return;
     }
 
@@ -98,7 +56,7 @@ export default function HomePage() {
         severity,
         durationValue,
         durationUnit,
-        outputLanguage: "English"
+        outputLanguage: copy.languageName
       });
 
       if (typeof window !== "undefined" && window.sessionStorage) {
@@ -110,8 +68,8 @@ export default function HomePage() {
               severity,
               durationValue,
               durationUnit,
-              languageCode: "en",
-              languageName: "English"
+              languageCode,
+              languageName: copy.languageName
             },
             response: result
           })
@@ -119,7 +77,7 @@ export default function HomePage() {
       }
       router.push("/result");
     } catch (requestError) {
-      const message = requestError instanceof Error ? requestError.message : COPY.errors.unexpected;
+      const message = requestError instanceof Error ? requestError.message : home.errors.unexpected;
       setError(message);
     } finally {
       setLoading(false);
@@ -130,77 +88,75 @@ export default function HomePage() {
     <section className="home-page">
       <div className="hero-layout">
         <div className="hero-copy">
-          <p className="eyebrow">Symptom Triage · Care Level Finder · Insurance Navigation</p>
-          <h1>{COPY.title}</h1>
-          <p>{COPY.subtitle}</p>
+          <p className="eyebrow">{home.eyebrow}</p>
+          <h1>{home.title}</h1>
+          <p>{home.subtitle}</p>
           <div className="hero-actions">
             <a className="btn-primary" href="#symptom-check">
-              {COPY.analyze}
+              {home.start}
             </a>
             <a className="btn-secondary" href="#care-options">
-              {COPY.careCta}
+              {home.careCta}
             </a>
           </div>
         </div>
 
         <aside className="triage-preview-card" aria-label="AI triage result preview">
           <div>
-            <span className="preview-kicker">AI triage result preview</span>
-            <h2>Symptom: Fever + cough</h2>
+            <span className="preview-kicker">{home.previewKicker}</span>
+            <h2>{home.previewSymptom}</h2>
           </div>
           <div className="preview-row">
-            <span>Risk level</span>
-            <strong className="preview-risk">Moderate</strong>
+            <span>{home.riskLevel}</span>
+            <strong className="preview-risk">{home.moderate}</strong>
           </div>
           <div className="preview-row">
-            <span>Recommended care</span>
-            <strong>Primary care / urgent care if worsening</strong>
+            <span>{home.recommendedCare}</span>
+            <strong>{home.previewCare}</strong>
           </div>
-          <div className="preview-note">
-            Insurance note: Check urgent care vs ER coverage before going
-          </div>
+          <div className="preview-note">{home.insuranceNote}</div>
         </aside>
       </div>
 
       <section className="home-section" id="symptom-check">
         <SectionHeader
-          eyebrow="Symptom Triage"
-          title="Start with what you feel"
-          description="Choose common symptoms or describe your own. The result helps you think through risk level, possible causes, and care options."
+          eyebrow={copy.nav[0]}
+          title={home.symptomTitle}
+          description={home.symptomDescription}
         />
 
         <div className="symptom-grid">
-          {COMMON_SYMPTOMS.map((symptom) => (
+          {home.symptoms.map((symptom) => (
             <SymptomButton key={symptom} label={symptom} onClick={addSymptom} />
           ))}
         </div>
 
         <form className="panel triage-form" onSubmit={onSubmit}>
           <div>
-            <label htmlFor="symptoms">{COPY.symptomsLabel}</label>
+            <label htmlFor="symptoms">{home.symptomsLabel}</label>
             <textarea
               id="symptoms"
               value={symptoms}
               onChange={(event) => setSymptoms(event.target.value)}
-              placeholder={COPY.symptomsPlaceholder}
+              placeholder={home.symptomsPlaceholder}
             />
           </div>
 
           <div className="grid-2">
             <div>
-              <label htmlFor="severity">{COPY.severityLabel}</label>
+              <label htmlFor="severity">{home.severityLabel}</label>
               <select
                 id="severity"
                 value={severity}
                 onChange={(event) => setSeverity(event.target.value as Severity)}
               >
-                <option value="mild">{COPY.severity.mild}</option>
-                <option value="moderate">{COPY.severity.moderate}</option>
-                <option value="severe">{COPY.severity.severe}</option>
+                <option value="mild">{home.severity.mild}</option>
+                <option value="moderate">{home.severity.moderate}</option>
+                <option value="severe">{home.severity.severe}</option>
               </select>
             </div>
             <div>
-              <label htmlFor="durationValue">{COPY.durationLabel}</label>
+              <label htmlFor="durationValue">{home.durationLabel}</label>
               <div className="grid-2 compact-grid">
                 <input
                   id="durationValue"
@@ -213,10 +169,10 @@ export default function HomePage() {
                   value={durationUnit}
                   onChange={(event) => setDurationUnit(event.target.value as DurationUnit)}
                 >
-                  <option value="hours">{COPY.units.hours}</option>
-                  <option value="days">{COPY.units.days}</option>
-                  <option value="weeks">{COPY.units.weeks}</option>
-                  <option value="months">{COPY.units.months}</option>
+                  <option value="hours">{home.units.hours}</option>
+                  <option value="days">{home.units.days}</option>
+                  <option value="weeks">{home.units.weeks}</option>
+                  <option value="months">{home.units.months}</option>
                 </select>
               </div>
             </div>
@@ -225,24 +181,24 @@ export default function HomePage() {
           {error && <p className="inline-error">{error}</p>}
 
           <button className="btn-primary" disabled={loading} type="submit">
-            {loading ? COPY.analyzing : COPY.analyze}
+            {loading ? home.analyzing : home.start}
           </button>
         </form>
       </section>
 
       <section className="home-section" id="care-options">
         <SectionHeader
-          eyebrow="Care Level Finder"
-          title="Choose the right care setting"
-          description="Compare common care routes before you spend time or money in the wrong place."
+          eyebrow={copy.nav[1]}
+          title={home.careTitle}
+          description={home.careDescription}
         />
         <div className="care-card-grid">
-          {CARE_LEVELS.map((level) => (
+          {home.careLevels.map(([title, description], index) => (
             <CareLevelCard
-              key={level.title}
-              title={level.title}
-              description={level.description}
-              tone={level.tone}
+              key={title}
+              title={title}
+              description={description}
+              tone={CARE_TONES[index] ?? "primary"}
             />
           ))}
         </div>
@@ -250,21 +206,26 @@ export default function HomePage() {
 
       <section className="home-section" id="health-records">
         <SectionHeader
-          eyebrow="Doctor Visit Prep"
-          title="Prepare a clearer clinician conversation"
-          description="Turn scattered symptom notes into a structured Doctor-ready Summary."
+          eyebrow={copy.summary.eyebrow}
+          title={home.prepTitle}
+          description={home.prepDescription}
         />
-        <DoctorSummaryPreview />
+        <DoctorSummaryPreview
+          eyebrow={copy.summary.eyebrow}
+          title={copy.summary.title}
+          fields={[...copy.summary.fields]}
+          cta={copy.summary.cta}
+        />
       </section>
 
       <section className="home-section" id="insurance-guide">
         <SectionHeader
-          eyebrow="Insurance Navigation"
-          title="Know what coverage questions to ask"
-          description="Educational guidance only. HealthMatchAI does not sell insurance or recommend a specific plan."
+          eyebrow={copy.insurance.eyebrow}
+          title={home.insuranceTitle}
+          description={home.insuranceDescription}
         />
         <div className="insurance-topic-grid">
-          {INSURANCE_TOPICS.map((topic) => (
+          {home.insuranceTopics.map((topic) => (
             <article className="insurance-topic-card" key={topic}>
               {topic}
             </article>
@@ -274,22 +235,22 @@ export default function HomePage() {
 
       <section className="home-section" id="pricing">
         <SectionHeader
-          eyebrow="Pricing"
-          title="Paid tools when you need a shareable record"
-          description="Start free, then download structured reports or coverage checklists when useful."
+          eyebrow={copy.nav[4]}
+          title={home.pricingTitle}
+          description={home.pricingDescription}
         />
         <div className="pricing-panel panel">
-          <span>Free symptom check</span>
-          <strong>Optional paid PDF reports and insurance checklists</strong>
+          <span>{home.free}</span>
+          <strong>{home.paid}</strong>
           <a className="btn-secondary" href="/payment-success">
-            View paid tools
+            {home.paidCta}
           </a>
         </div>
       </section>
 
       <section className="home-section">
-        <SectionHeader eyebrow="Safety Disclaimer" title="Use this as a guide, not a final answer" />
-        <DisclaimerBox />
+        <SectionHeader eyebrow={copy.legal[2]} title={home.safetyTitle} />
+        <DisclaimerBox text={copy.safety} />
       </section>
     </section>
   );

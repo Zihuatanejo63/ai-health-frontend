@@ -2,19 +2,13 @@
 
 import Link from "next/link";
 import { LanguageSelect } from "@/components/language-select";
-
-const HEADER_COPY = {
-  en: {
-    symptoms: "Symptom Check",
-    care: "Care Options",
-    insurance: "Insurance Guide",
-    records: "Health Records",
-    pricing: "Pricing"
-  }
-};
+import { useLanguage } from "@/components/language-provider";
+import { getCopy } from "@/lib/i18n";
 
 export function SiteHeader() {
-  const copy = HEADER_COPY.en;
+  const { languageCode } = useLanguage();
+  const copy = getCopy(languageCode);
+  const [symptoms, care, insurance, records, pricing] = copy.nav;
 
   return (
     <header className="top-nav">
@@ -23,11 +17,11 @@ export function SiteHeader() {
           HealthMatchAI
         </Link>
         <nav className="nav-links">
-          <Link href="/#symptom-check">{copy.symptoms}</Link>
-          <Link href="/#care-options">{copy.care}</Link>
-          <Link href="/#insurance-guide">{copy.insurance}</Link>
-          <Link href="/#health-records">{copy.records}</Link>
-          <Link href="/#pricing">{copy.pricing}</Link>
+          <Link href="/#symptom-check">{symptoms}</Link>
+          <Link href="/#care-options">{care}</Link>
+          <Link href="/#insurance-guide">{insurance}</Link>
+          <Link href="/#health-records">{records}</Link>
+          <Link href="/#pricing">{pricing}</Link>
         </nav>
         <LanguageSelect />
       </div>
