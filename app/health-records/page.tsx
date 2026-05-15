@@ -1,36 +1,46 @@
+import Link from "next/link";
 import { SectionHeader } from "@/components/section-header";
 import { VisualCard } from "@/components/visual-card";
 
-const features = [
-  "Saved symptom checks",
-  "Doctor-ready PDF reports",
-  "Family profiles",
-  "Medication list",
-  "Allergy list",
-  "Insurance checklist history"
+const summaryItems = [
+  "Doctor-ready Summary",
+  "Symptoms",
+  "Timeline",
+  "Medications Taken",
+  "Red Flags Checked",
+  "Questions to Ask",
+  "Save as PDF"
 ];
 
 export default function HealthRecordsPage() {
   return (
-    <section className="stack-page">
+    <section className="app-page">
       <div className="page-hero-grid">
         <SectionHeader
-          eyebrow="Health Records"
-          title="Keep your health decisions organized"
-          description="A clean workspace for symptom timelines, visit preparation, family context, and coverage questions."
+          eyebrow="Health Summary"
+          title="Health Summary"
+          description="Review a structured, shareable summary before a clinician visit."
         />
-        <VisualCard src="/images/illustration-doctor-summary.png" alt="Health records and PDF report preview" />
+        <VisualCard src="/images/illustration-doctor-summary.png" alt="Doctor-ready summary app screen" />
       </div>
 
-      <div className="feature-grid">
-        {features.map((feature) => (
-          <article className="panel record-card" key={feature}>
-            <span className="feature-status">Coming soon</span>
-            <h3>{feature}</h3>
-            <p>Designed for organized, shareable health decision records.</p>
+      <section className="summary-dashboard-grid">
+        {summaryItems.map((item, index) => (
+          <article className="panel summary-dashboard-card" key={item}>
+            <span>{index + 1}</span>
+            <h2>{item}</h2>
+            <p>
+              {item === "Save as PDF"
+                ? "Export a clean report when you are ready."
+                : "Organized details for your visit preparation."}
+            </p>
           </article>
         ))}
-      </div>
+      </section>
+
+      <Link className="btn-primary section-cta" href="/payment-success">
+        Save as PDF
+      </Link>
     </section>
   );
 }

@@ -19,7 +19,7 @@ export default function InsuranceGuidePage() {
       <div className="page-hero-grid">
         <SectionHeader
           eyebrow="Insurance Navigation"
-          title="Understand your coverage before choosing care"
+          title="Insurance Navigation"
           description="Learn the insurance questions to ask before a non-emergency visit."
         />
         <VisualCard src="/images/illustration-insurance-checklist.png" alt="Insurance checklist product illustration" />

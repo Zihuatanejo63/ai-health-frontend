@@ -1192,3 +1192,516 @@ button:disabled {
     border-radius: 18px;
   }
 }
+
+/* App dashboard shell */
+html,
+body {
+  overflow-x: hidden;
+}
+
+.site-shell {
+  display: block;
+}
+
+.app-sidebar {
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 240px;
+  height: 100vh;
+  border-right: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.96);
+  padding: 24px 16px;
+  backdrop-filter: blur(16px);
+}
+
+.sidebar-top {
+  display: grid;
+  gap: 28px;
+}
+
+.sidebar-brand {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+.sidebar-nav {
+  display: grid;
+  gap: 8px;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 46px;
+  border-radius: 14px;
+  padding: 10px 12px;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 750;
+}
+
+.sidebar-link span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 10px;
+  background: #f1f5f9;
+  color: #475569;
+  font-size: 15px;
+}
+
+.sidebar-link:hover,
+.sidebar-link.active {
+  background: #eef4ff;
+  color: var(--primary);
+}
+
+.sidebar-link:hover span,
+.sidebar-link.active span {
+  background: #dbeafe;
+  color: var(--primary);
+}
+
+.sidebar-settings {
+  margin-top: auto;
+}
+
+.page-main {
+  min-height: 100vh;
+  margin-left: 240px;
+  padding: 34px 0 64px;
+}
+
+.page-main .container {
+  width: min(1180px, calc(100vw - 300px));
+}
+
+.footer {
+  margin-left: 240px;
+}
+
+.footer .container {
+  width: min(1180px, calc(100vw - 300px));
+}
+
+.app-page,
+.dashboard-page {
+  display: grid;
+  gap: 24px;
+}
+
+.dashboard-header,
+.app-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.dashboard-header h1,
+.app-page-header h1 {
+  margin: 0;
+  font-size: clamp(34px, 5vw, 52px);
+  line-height: 1.08;
+}
+
+.dashboard-header p:not(.eyebrow),
+.app-page-header p:not(.eyebrow) {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 17px;
+}
+
+.app-page-header {
+  display: grid;
+  grid-template-columns: minmax(0, 0.78fr) minmax(320px, 0.72fr);
+}
+
+.app-page-header .visual-card img,
+.dashboard-visual .visual-card img,
+.page-hero-grid .visual-card img {
+  width: 100%;
+  max-width: 100%;
+}
+
+.symptom-command-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 18px;
+}
+
+.command-input {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.command-input > span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 15px;
+  background: #eef4ff;
+  color: var(--primary);
+  font-weight: 900;
+}
+
+.command-input h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.command-input p {
+  margin: 5px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.72fr);
+  gap: 20px;
+  align-items: start;
+}
+
+.dashboard-card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.dashboard-metric {
+  min-height: 190px;
+  padding: 22px;
+  border-top: 5px solid var(--primary);
+}
+
+.dashboard-metric span {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 850;
+}
+
+.dashboard-metric strong {
+  display: block;
+  margin-top: 10px;
+  color: var(--primary);
+  font-size: 30px;
+  line-height: 1.1;
+}
+
+.dashboard-metric p {
+  margin: 10px 0 24px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.dashboard-metric a {
+  color: var(--primary);
+  font-size: 13px;
+  font-weight: 850;
+}
+
+.metric-warning {
+  border-top-color: var(--warning);
+}
+
+.metric-warning strong {
+  color: #ea580c;
+}
+
+.metric-success {
+  border-top-color: var(--success);
+}
+
+.metric-success strong {
+  color: #0f766e;
+}
+
+.metric-secondary {
+  border-top-color: var(--secondary);
+}
+
+.metric-secondary strong {
+  color: #0f766e;
+}
+
+.dashboard-visual {
+  position: sticky;
+  top: 34px;
+}
+
+.triage-workflow {
+  display: grid;
+  gap: 16px;
+}
+
+.workflow-step {
+  display: grid;
+  gap: 16px;
+  padding: 22px;
+}
+
+.workflow-step > span {
+  color: var(--primary);
+  font-size: 13px;
+  font-weight: 850;
+}
+
+.workflow-step h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.choice-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.compact-choice-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.choice-pill,
+.choice-card {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 48px;
+  margin: 0;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 10px 12px;
+  background: #fff;
+  color: #334155;
+  font-weight: 800;
+}
+
+.choice-card {
+  min-height: 82px;
+  align-items: flex-start;
+}
+
+.choice-pill input,
+.choice-card input {
+  width: auto;
+}
+
+.workflow-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.summary-dashboard-grid,
+.history-grid,
+.settings-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.summary-dashboard-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.summary-dashboard-card,
+.history-card,
+.settings-card {
+  padding: 22px;
+}
+
+.summary-dashboard-card span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+  background: #eef4ff;
+  color: var(--primary);
+  font-weight: 900;
+}
+
+.summary-dashboard-card h2,
+.history-card h2,
+.settings-card h2 {
+  margin: 12px 0 8px;
+  font-size: 20px;
+}
+
+.summary-dashboard-card p,
+.history-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.history-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.history-card {
+  display: grid;
+  gap: 10px;
+}
+
+.history-card > span {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.history-card strong {
+  color: var(--primary);
+}
+
+.history-card a {
+  width: fit-content;
+}
+
+.settings-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.settings-card ul {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.settings-card li {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 10px 12px;
+  background: #f8fafc;
+  color: #334155;
+  font-weight: 750;
+}
+
+.settings-safety {
+  display: grid;
+  gap: 10px;
+}
+
+@media (max-width: 980px) {
+  .app-sidebar {
+    inset: auto 0 0 0;
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 4px;
+    width: 100%;
+    height: 76px;
+    border-top: 1px solid var(--border);
+    border-right: 0;
+    padding: 8px;
+  }
+
+  .sidebar-brand {
+    display: none;
+  }
+
+  .sidebar-top {
+    display: block;
+    grid-column: 1 / 7;
+  }
+
+  .sidebar-nav {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 4px;
+  }
+
+  .sidebar-settings {
+    grid-column: 7;
+    margin: 0;
+  }
+
+  .sidebar-link {
+    justify-content: center;
+    min-height: 58px;
+    padding: 6px 4px;
+    gap: 3px;
+    flex-direction: column;
+    font-size: 10px;
+  }
+
+  .sidebar-link span {
+    width: 24px;
+    height: 24px;
+    font-size: 13px;
+  }
+
+  .sidebar-link strong {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .page-main {
+    margin-left: 0;
+    padding: 22px 0 98px;
+  }
+
+  .page-main .container {
+    width: min(100% - 28px, 1180px);
+  }
+
+  .footer {
+    display: none;
+  }
+
+  .dashboard-grid,
+  .app-page-header,
+  .page-hero-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-visual {
+    position: static;
+  }
+}
+
+@media (max-width: 720px) {
+  .dashboard-header,
+  .symptom-command-card,
+  .workflow-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .dashboard-card-grid,
+  .choice-grid,
+  .compact-choice-grid,
+  .summary-dashboard-grid,
+  .history-grid,
+  .settings-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-header .btn-primary,
+  .symptom-command-card .btn-primary,
+  .workflow-actions button,
+  .history-card a {
+    width: 100%;
+  }
+
+  .app-page-header .visual-card {
+    display: none;
+  }
+}

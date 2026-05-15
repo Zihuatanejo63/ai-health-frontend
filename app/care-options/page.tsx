@@ -52,8 +52,8 @@ export default function CareOptionsPage() {
       <div className="page-hero-grid">
         <SectionHeader
           eyebrow="Care Level Finder"
-          title="Choose the right care setting"
-          description="Compare common care routes before you spend time or money in the wrong place."
+          title="Care Guidance"
+          description="Compare emergency care, urgent care, primary care, telehealth, and self-care before choosing where to go."
         />
         <VisualCard src="/images/illustration-care-levels.png" alt="Five care level paths" />
       </div>
