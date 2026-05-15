@@ -1,6 +1,13 @@
 export type Severity = "mild" | "moderate" | "severe";
 export type DurationUnit = "hours" | "days" | "weeks" | "months";
 export type RiskLevel = "low" | "medium" | "high";
+export type CareLevel =
+  | "Emergency"
+  | "Urgent Care"
+  | "Primary Care"
+  | "Telehealth"
+  | "Pharmacy/Self-care"
+  | "Monitor at home";
 
 export type AnalyzeSymptomsRequest = {
   symptoms: string;
@@ -12,28 +19,19 @@ export type AnalyzeSymptomsRequest = {
 
 export type AnalyzeSymptomsResponse = {
   riskLevel: RiskLevel;
-  summary: string;
-  recommendedDepartments: string[];
-  nextSteps: string[];
+  redFlags: string[];
+  recommendedCareLevel: CareLevel;
+  possibleCauses: string[];
+  whatToMonitor: string[];
+  doctorReadySummary: string;
+  insuranceNavigation: string[];
   disclaimer: string;
   referenceId: string;
 };
 
-export type Doctor = {
-  id: string;
-  name: string;
-  specialty: string;
-  country: string;
-  languages: string[];
-  rating: number;
-  feeUsd: number;
-  available: boolean;
-  tags: string[];
-};
-
 export type CreateCheckoutRequest = {
-  doctorId: string;
-  doctorName: string;
+  toolId: "doctor-ready-pdf" | "insurance-checklist" | "symptom-timeline";
+  toolName: string;
   amountUsd: number;
   patientEmail?: string;
   caseReferenceId?: string;
@@ -46,6 +44,6 @@ export type CreateCheckoutResponse = {
     grossAmountUsd: number;
     platformFeeRateBps: number;
     platformFeeUsd: number;
-    doctorPayoutUsd: number;
+    productDeliveryReserveUsd: number;
   };
 };

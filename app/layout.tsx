@@ -6,8 +6,8 @@ import { SiteHeader } from "@/components/site-header";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "AI Health Match",
-  description: "AI-assisted symptom triage and doctor matching"
+  title: "HealthMatchAI",
+  description: "AI Health Triage & Insurance Navigation"
 };
 
 export default function RootLayout({

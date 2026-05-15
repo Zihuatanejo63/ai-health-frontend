@@ -7,13 +7,11 @@ type DisclaimerBannerProps = {
 };
 
 export const DEFAULT_DISCLAIMER =
-  "Medical disclaimer: AI Health Match does not provide medical diagnosis. " +
-  "This information is for triage support only and does not replace professional medical advice. " +
-  "If you are in danger or have severe symptoms, seek emergency care immediately.";
+  "HealthMatchAI does not diagnose, prescribe, or replace professional medical care. Insurance information is educational only. For plan enrollment, speak with a licensed insurance agent or broker.";
 
 const DISCLAIMER_COPY = {
   en: DEFAULT_DISCLAIMER,
-  zh: "医疗免责声明：AI Health Match 不提供医疗诊断。本信息仅用于分诊辅助，不能替代专业医疗建议。如有危险或严重症状，请立即寻求急救。",
+  zh: "HealthMatchAI 不提供诊断、处方，也不能替代专业医疗服务。保险信息仅供教育参考。投保请咨询持牌保险代理人或经纪人。",
   es: "Aviso médico: AI Health Match no proporciona diagnósticos médicos. Esta información solo apoya el triaje y no reemplaza el consejo profesional. Si tienes síntomas graves, busca atención de emergencia.",
   hi: "चिकित्सा अस्वीकरण: AI Health Match चिकित्सा निदान नहीं देता। यह जानकारी केवल ट्रायेज सहायता है और पेशेवर सलाह का विकल्प नहीं है। गंभीर लक्षण हों तो आपातकालीन देखभाल लें।",
   ar: "تنبيه طبي: لا يقدم AI Health Match تشخيصا طبيا. هذه المعلومات لدعم الفرز فقط ولا تغني عن استشارة مختص. إذا كانت الأعراض شديدة فاطلب رعاية طارئة.",

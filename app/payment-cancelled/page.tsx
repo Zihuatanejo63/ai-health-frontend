@@ -6,12 +6,12 @@ export default function PaymentCancelledPage() {
       <p className="page-subtitle">Hosted payment</p>
       <h1 className="page-title">Payment Cancelled</h1>
       <p className="page-subtitle">
-        No consultation request was completed. You can return to the doctor list and choose another
+        No paid tool access was completed. You can return to your care summary and choose another
         option.
       </p>
       <div style={{ marginTop: 18 }}>
-        <Link className="btn-secondary" href="/doctors">
-          Back to doctors
+        <Link className="btn-secondary" href="/result">
+          Back to care summary
         </Link>
       </div>
     </section>

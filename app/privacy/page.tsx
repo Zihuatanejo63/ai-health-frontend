@@ -9,25 +9,24 @@ export default function PrivacyPage() {
         {
           heading: "Information we collect",
           body: [
-            "Symptom descriptions, severity, duration, selected language, AI triage output, suggested departments, and reference IDs.",
-            "Optional contact information you choose to provide, such as email for doctor requests or payment follow-up.",
+            "Symptom descriptions, severity, duration, selected language, AI triage output, care level guidance, insurance navigation checklist items, and reference IDs.",
+            "Optional contact information you choose to provide for support or paid tool access.",
             "Technical data such as device, browser, approximate region, logs, error events, and security signals needed to operate and protect the service."
           ]
         },
         {
           heading: "How we use information",
           body: [
-            "Generate AI-assisted triage support and suggested doctor categories.",
-            "Store anonymous case history so the MVP can show a reference ID, support follow-up, and improve reliability.",
-            "Operate, debug, secure, monitor, and improve AI Health Match.",
-            "Process consultation request payments as platform operator if paid features are enabled.",
-            "Coordinate provider matching, confirmation, refund handling, and manual doctor payout bookkeeping."
+            "Generate AI-assisted symptom triage, care level guidance, doctor visit preparation, and educational insurance navigation.",
+            "Store minimized case history so the MVP can show a reference ID, support follow-up, and improve reliability.",
+            "Operate, debug, secure, monitor, and improve HealthMatchAI.",
+            "Process payments for paid tools such as PDF reports, insurance coverage checklists, or symptom timeline saving if paid features are enabled."
           ]
         },
         {
           heading: "Medical and sensitive information",
           body:
-            "Symptom text may include sensitive health information. Do not submit information you do not want processed by the service. This MVP is not a hospital, insurer, medical record system, covered clinical provider, or emergency service."
+            "Symptom text may include sensitive health information. Do not submit information you do not want processed by the service. This MVP is not a hospital, insurer, insurance agency, medical record system, covered clinical provider, pharmacy, or emergency service."
         },
         {
           heading: "Third-party processors",
@@ -35,7 +34,6 @@ export default function PrivacyPage() {
             "Submitted symptoms may be processed by AI model providers to generate triage support.",
             "Cloudflare may process hosting, database, security, analytics, and logging data.",
             "A merchant-of-record payment provider such as Paddle or Lemon Squeezy may process payment-related data if paid checkout is used.",
-            "Provider assignment, availability, and any final care relationship are not guaranteed until confirmed.",
             "We do not sell personal health information."
           ]
         },
@@ -47,7 +45,7 @@ export default function PrivacyPage() {
         {
           heading: "Your choices",
           body:
-            "You can avoid submitting directly identifying information in symptom text. Before public launch, AI Health Match should provide a dedicated support email for access, correction, deletion, and privacy requests."
+            "You can avoid submitting directly identifying information in symptom text. Before public launch, HealthMatchAI should provide a dedicated support email for access, correction, deletion, and privacy requests."
         },
         {
           heading: "International users",
@@ -57,7 +55,7 @@ export default function PrivacyPage() {
         {
           heading: "Contact",
           body:
-            "For privacy requests, contact the AI Health Match operator. A dedicated support address should be added before public launch."
+            "For privacy requests, contact the HealthMatchAI operator. A dedicated support address should be added before public launch."
         }
       ]}
     />

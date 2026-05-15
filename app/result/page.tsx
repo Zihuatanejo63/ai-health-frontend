@@ -2,172 +2,64 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { DisclaimerBanner, DEFAULT_DISCLAIMER } from "@/components/disclaimer-banner";
-import { useLanguage } from "@/components/language-provider";
+import { CareLevelCard } from "@/components/care-level-card";
+import { DisclaimerBox, SAFETY_DISCLAIMER } from "@/components/disclaimer-box";
+import { DoctorSummaryPreview } from "@/components/doctor-summary-preview";
+import { InsuranceChecklist } from "@/components/insurance-checklist";
+import { RiskLevelCard } from "@/components/risk-level-card";
+import { SectionHeader } from "@/components/section-header";
 import type { AnalyzeSymptomsResponse, RiskLevel } from "@/lib/types";
 
 const SESSION_RESULT_KEY = "ai-health-match-result";
 
 type StoredAnalysis = {
-  request?: {
-    languageCode?: string;
-    languageName?: string;
-  };
   response: AnalyzeSymptomsResponse;
 };
 
-const RESULT_COPY = {
-  en: {
-    unavailable: "AI result unavailable",
-    unavailableText: "Submit your symptoms on the home page first to generate an assessment summary.",
-    input: "Go to Symptom Input",
-    title: "AI Assessment Summary",
-    reference: "Reference ID",
-    risk: "Risk Level",
-    clinical: "Clinical understanding",
-    departments: "Recommended departments",
-    steps: "Suggested next steps",
-    doctors: "Find Matching Doctors",
-    restart: "Start New Assessment"
-  },
-  zh: {
-    unavailable: "暂无 AI 结果",
-    unavailableText: "请先在首页提交症状，生成评估摘要。",
-    input: "返回症状输入",
-    title: "AI 评估摘要",
-    reference: "参考编号",
-    risk: "风险等级",
-    clinical: "临床理解",
-    departments: "建议科室",
-    steps: "建议下一步",
-    doctors: "查找匹配医生",
-    restart: "重新评估"
-  },
-  es: {
-    unavailable: "Resultado de IA no disponible",
-    unavailableText: "Envía tus síntomas en la página principal para generar un resumen.",
-    input: "Ir al formulario",
-    title: "Resumen de evaluación de IA",
-    reference: "ID de referencia",
-    risk: "Nivel de riesgo",
-    clinical: "Comprensión clínica",
-    departments: "Departamentos recomendados",
-    steps: "Próximos pasos sugeridos",
-    doctors: "Buscar doctores",
-    restart: "Nueva evaluación"
-  },
-  hi: {
-    unavailable: "AI परिणाम उपलब्ध नहीं",
-    unavailableText: "पहले होम पेज पर अपने लक्षण भेजें।",
-    input: "लक्षण इनपुट पर जाएं",
-    title: "AI मूल्यांकन सारांश",
-    reference: "संदर्भ ID",
-    risk: "जोखिम स्तर",
-    clinical: "क्लिनिकल समझ",
-    departments: "सुझाए गए विभाग",
-    steps: "सुझाए गए अगले कदम",
-    doctors: "मेल खाते डॉक्टर खोजें",
-    restart: "नया मूल्यांकन"
-  },
-  ar: {
-    unavailable: "نتيجة الذكاء الاصطناعي غير متاحة",
-    unavailableText: "أرسل الأعراض من الصفحة الرئيسية أولا.",
-    input: "اذهب إلى إدخال الأعراض",
-    title: "ملخص تقييم الذكاء الاصطناعي",
-    reference: "رقم المرجع",
-    risk: "مستوى الخطر",
-    clinical: "الفهم السريري",
-    departments: "الأقسام المقترحة",
-    steps: "الخطوات التالية",
-    doctors: "ابحث عن أطباء مناسبين",
-    restart: "تقييم جديد"
-  },
-  pt: {
-    unavailable: "Resultado de IA indisponível",
-    unavailableText: "Envie seus sintomas na página inicial primeiro.",
-    input: "Ir para sintomas",
-    title: "Resumo da avaliação de IA",
-    reference: "ID de referência",
-    risk: "Nível de risco",
-    clinical: "Compreensão clínica",
-    departments: "Departamentos recomendados",
-    steps: "Próximos passos sugeridos",
-    doctors: "Encontrar médicos",
-    restart: "Nova avaliação"
-  },
-  fr: {
-    unavailable: "Résultat IA indisponible",
-    unavailableText: "Envoyez d'abord vos symptômes depuis l'accueil.",
-    input: "Saisir les symptômes",
-    title: "Résumé d'évaluation IA",
-    reference: "ID de référence",
-    risk: "Niveau de risque",
-    clinical: "Compréhension clinique",
-    departments: "Services recommandés",
-    steps: "Prochaines étapes",
-    doctors: "Trouver des médecins",
-    restart: "Nouvelle évaluation"
-  },
-  de: {
-    unavailable: "KI-Ergebnis nicht verfügbar",
-    unavailableText: "Senden Sie zuerst Ihre Symptome auf der Startseite.",
-    input: "Zur Symptomeingabe",
-    title: "KI-Bewertungsübersicht",
-    reference: "Referenz-ID",
-    risk: "Risikostufe",
-    clinical: "Klinische Einschätzung",
-    departments: "Empfohlene Fachbereiche",
-    steps: "Empfohlene nächste Schritte",
-    doctors: "Passende Ärzte finden",
-    restart: "Neue Bewertung"
-  },
-  ja: {
-    unavailable: "AI 結果がありません",
-    unavailableText: "まずホームで症状を送信してください。",
-    input: "症状入力へ",
-    title: "AI 評価サマリー",
-    reference: "参照 ID",
-    risk: "リスクレベル",
-    clinical: "臨床的な理解",
-    departments: "推奨診療科",
-    steps: "推奨される次のステップ",
-    doctors: "合う医師を探す",
-    restart: "新しい評価"
-  },
-  ko: {
-    unavailable: "AI 결과가 없습니다",
-    unavailableText: "먼저 홈에서 증상을 제출하세요.",
-    input: "증상 입력으로 이동",
-    title: "AI 평가 요약",
-    reference: "참조 ID",
-    risk: "위험도",
-    clinical: "임상적 이해",
-    departments: "추천 진료과",
-    steps: "권장 다음 단계",
-    doctors: "맞는 의사 찾기",
-    restart: "새 평가"
-  }
+const CARE_LEVEL_DESCRIPTIONS: Record<string, string> = {
+  Emergency: "Seek emergency care now",
+  "Urgent Care": "Get care today",
+  "Primary Care": "See a clinician soon",
+  Telehealth: "Start with virtual care",
+  "Pharmacy/Self-care": "Ask a pharmacist or use self-care when appropriate",
+  "Monitor at home": "Track symptoms and reassess if things change"
 };
 
-type ResultCopy = (typeof RESULT_COPY)["en"];
+const INSURANCE_ITEMS = [
+  "Is urgent care covered?",
+  "Is the provider in-network?",
+  "What is your copay?",
+  "Does your deductible apply?",
+  "Is telehealth covered?"
+];
 
-function getResultCopy(languageCode?: string): ResultCopy {
-  return RESULT_COPY[languageCode as keyof typeof RESULT_COPY] ?? RESULT_COPY.en;
+function formatRiskLevel(riskLevel: RiskLevel, recommendedCareLevel?: string): string {
+  if (recommendedCareLevel === "Emergency") return "Emergency";
+  if (riskLevel === "low") return "Low";
+  if (riskLevel === "high") return "High";
+  return "Moderate";
 }
 
-function riskClassName(riskLevel: RiskLevel): string {
-  if (riskLevel === "low") return "chip risk-low";
-  if (riskLevel === "high") return "chip risk-high";
-  return "chip risk-medium";
+function explainResult(result: AnalyzeSymptomsResponse): string {
+  const risk = formatRiskLevel(result.riskLevel, result.recommendedCareLevel).toLowerCase();
+  const care = result.recommendedCareLevel;
+  return `This ${risk} result is based on the symptoms, severity, duration, red flags, and care level signals you provided. The recommended care level is ${care}, but a licensed clinician should make care decisions with your full history and exam.`;
+}
+
+function formatPossibleCause(item: string): string {
+  const trimmed = item.trim();
+  if (trimmed.toLowerCase().startsWith("your symptoms may be consistent with")) {
+    return trimmed;
+  }
+  return `Your symptoms may be consistent with ${trimmed.charAt(0).toLowerCase()}${trimmed.slice(1)}.`;
 }
 
 export default function ResultPage() {
   const [analysis, setAnalysis] = useState<StoredAnalysis | null>(null);
-  const { languageCode } = useLanguage();
-  const copy = getResultCopy(languageCode);
 
   useEffect(() => {
-    const rawValue = sessionStorage.getItem(SESSION_RESULT_KEY);
+    if (typeof window === "undefined" || !window.sessionStorage) return;
+    const rawValue = window.sessionStorage.getItem(SESSION_RESULT_KEY);
     if (!rawValue) return;
 
     try {
@@ -179,69 +71,117 @@ export default function ResultPage() {
   }, []);
 
   const result = analysis?.response;
-  const disclaimer = useMemo(
-    () => result?.disclaimer || DEFAULT_DISCLAIMER,
-    [result?.disclaimer]
-  );
+  const disclaimer = useMemo(() => result?.disclaimer || SAFETY_DISCLAIMER, [result?.disclaimer]);
 
   if (!result) {
     return (
-      <section className="panel" style={{ padding: 18 }}>
-        <h1 className="page-title" style={{ fontSize: 28 }}>
-          {copy.unavailable}
-        </h1>
-        <p className="page-subtitle" style={{ marginBottom: 14 }}>
-          {copy.unavailableText}
+      <section className="panel legal-page">
+        <h1 className="page-title">Your symptom check result</h1>
+        <p className="page-subtitle">
+          Start a symptom check first to create your care level, Doctor-ready Summary, and insurance
+          checklist.
         </p>
-        <Link className="btn-primary" href="/" style={{ display: "inline-block" }}>
-          {copy.input}
-        </Link>
+        <div style={{ marginTop: 18 }}>
+          <Link className="btn-primary" href="/#symptom-check">
+            Start Symptom Check
+          </Link>
+        </div>
       </section>
     );
   }
 
+  const displayedRisk = formatRiskLevel(result.riskLevel, result.recommendedCareLevel);
+  const careDescription =
+    CARE_LEVEL_DESCRIPTIONS[result.recommendedCareLevel] ?? "Choose the care setting that matches your symptoms.";
+
   return (
-    <section>
-      <h1 className="page-title">{copy.title}</h1>
+    <section className="result-page">
+      <p className="eyebrow">Symptom Triage</p>
+      <h1 className="page-title">Your symptom check result</h1>
       <p className="page-subtitle">
-        {copy.reference}: <strong>{result.referenceId}</strong>
+        Reference ID: <strong>{result.referenceId}</strong>
       </p>
 
-      <div className="panel" style={{ marginTop: 18, padding: 18 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <span className={riskClassName(result.riskLevel)}>
-            {copy.risk}: {result.riskLevel.toUpperCase()}
-          </span>
-        </div>
-
-        <h2 style={{ marginTop: 16, marginBottom: 6, fontSize: 22 }}>{copy.clinical}</h2>
-        <p style={{ marginTop: 0, lineHeight: 1.7 }}>{result.summary}</p>
-
-        <h3 style={{ marginTop: 16, marginBottom: 8, fontSize: 18 }}>{copy.departments}</h3>
-        <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.8 }}>
-          {result.recommendedDepartments.map((department) => (
-            <li key={department}>{department}</li>
-          ))}
-        </ul>
-
-        <h3 style={{ marginTop: 16, marginBottom: 8, fontSize: 18 }}>{copy.steps}</h3>
-        <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.8 }}>
-          {result.nextSteps.map((step) => (
-            <li key={step}>{step}</li>
-          ))}
-        </ul>
-
-        <DisclaimerBanner text={disclaimer} />
-
-        <div style={{ marginTop: 14, display: "flex", gap: 10 }}>
-          <Link className="btn-primary" href="/doctors">
-            {copy.doctors}
-          </Link>
-          <Link className="btn-secondary" href="/">
-            {copy.restart}
-          </Link>
-        </div>
+      <div className="risk-band">
+        {["Low", "Moderate", "High", "Emergency"].map((level) => (
+          <RiskLevelCard
+            key={level}
+            level={level}
+            description={level === displayedRisk ? "Current result" : undefined}
+          />
+        ))}
       </div>
+
+      <section className="result-section">
+        <SectionHeader title="Recommended Care Level" />
+        <CareLevelCard
+          active
+          title={result.recommendedCareLevel}
+          description={careDescription}
+          tone={displayedRisk === "Emergency" ? "danger" : displayedRisk === "High" ? "warning" : "primary"}
+        />
+      </section>
+
+      <section className="result-section">
+        <SectionHeader title="Why this result?" />
+        <article className="panel result-card">
+          <p>{explainResult(result)}</p>
+        </article>
+      </section>
+
+      <section className="result-section">
+        <SectionHeader title="Red Flags Checked" />
+        <article className="panel result-card">
+          <ul>
+            {result.redFlags.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </article>
+      </section>
+
+      <section className="result-section">
+        <SectionHeader title="Possible Causes" />
+        <article className="panel result-card">
+          <ul>
+            {result.possibleCauses.map((item) => (
+              <li key={item}>{formatPossibleCause(item)}</li>
+            ))}
+          </ul>
+        </article>
+      </section>
+
+      <section className="result-section">
+        <SectionHeader title="What to Monitor" />
+        <article className="panel result-card">
+          <ul>
+            {result.whatToMonitor.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </article>
+      </section>
+
+      <section className="result-section">
+        <SectionHeader
+          title="Doctor-ready Summary"
+          description="Free preview. Download the full PDF report when you want a shareable visit note."
+        />
+        <DoctorSummaryPreview
+          cta="Download Full PDF Report"
+          previewOnly
+          summary={result.doctorReadySummary}
+        />
+      </section>
+
+      <section className="result-section">
+        <SectionHeader title="Insurance Checklist" />
+        <InsuranceChecklist items={INSURANCE_ITEMS} cta="Understand My Coverage Options" />
+      </section>
+
+      <section className="result-section">
+        <DisclaimerBox text={disclaimer} />
+      </section>
     </section>
   );
 }

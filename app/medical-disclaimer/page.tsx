@@ -7,9 +7,9 @@ export default function MedicalDisclaimerPage() {
       updated="April 27, 2026"
       sections={[
         {
-          heading: "Not a diagnosis",
+          heading: "Medical boundaries",
           body:
-            "AI Health Match provides AI-generated triage support only. It does not diagnose, treat, prescribe, interpret medical images as a clinician, or replace evaluation by a licensed clinician."
+            "HealthMatchAI provides AI-generated triage support only. It does not diagnose, treat, prescribe, interpret medical images as a clinician, or replace evaluation by a licensed clinician."
         },
         {
           heading: "Emergency warning",
@@ -26,12 +26,17 @@ export default function MedicalDisclaimerPage() {
         {
           heading: "Professional care",
           body:
-            "Always consult a licensed medical professional for medical advice, diagnosis, treatment decisions, and follow-up care."
+            "Always consult a licensed medical professional for medical advice, care decisions, and follow-up care."
         },
         {
-          heading: "Provider matching and payments",
+          heading: "Insurance information",
           body:
-            "AI Health Match may collect consultation request payments as platform operator. Provider assignment, availability, and any final care relationship are not guaranteed until confirmed."
+            "Insurance information is educational only and is not insurance advice. For plan enrollment, subsidies, eligibility, or plan-specific coverage questions, speak with a licensed insurance agent or broker."
+        },
+        {
+          heading: "Paid tools",
+          body:
+            "Paid tools such as PDF reports, coverage checklists, or symptom timelines are organizational aids only. They do not create a clinician relationship, guarantee coverage, or replace professional medical or insurance guidance."
         },
         {
           heading: "Image and report uploads",
