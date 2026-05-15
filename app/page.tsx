@@ -231,21 +231,9 @@ export default function HomePage() {
             </article>
           ))}
         </div>
-      </section>
-
-      <section className="home-section" id="pricing">
-        <SectionHeader
-          eyebrow={copy.nav[4]}
-          title={home.pricingTitle}
-          description={home.pricingDescription}
-        />
-        <div className="pricing-panel panel">
-          <span>{home.free}</span>
-          <strong>{home.paid}</strong>
-          <a className="btn-secondary" href="/payment-success">
-            {home.paidCta}
-          </a>
-        </div>
+        <a className="btn-secondary section-cta" href="/payment-success">
+          {copy.insurance.cta}
+        </a>
       </section>
 
       <section className="home-section">

@@ -9,31 +9,31 @@ export default function PrivacyPage() {
         {
           heading: "Information we collect",
           body: [
-            "Symptom descriptions, severity, duration, selected language, AI triage output, care level guidance, insurance navigation checklist items, and reference IDs.",
-            "Optional contact information you choose to provide for support or paid tool access.",
+            "Symptom descriptions, severity, duration, selected language, AI symptom triage output, care guidance, doctor-ready summary fields, insurance education checklist items, and reference IDs.",
+            "Optional contact information you choose to provide for support, account access, or paid report delivery.",
             "Technical data such as device, browser, approximate region, logs, error events, and security signals needed to operate and protect the service."
           ]
         },
         {
           heading: "How we use information",
           body: [
-            "Generate AI-assisted symptom triage, care level guidance, doctor visit preparation, and educational insurance navigation.",
-            "Store minimized case history so the MVP can show a reference ID, support follow-up, and improve reliability.",
+            "Generate AI-assisted symptom triage, care guidance, doctor-ready summaries, and educational insurance navigation.",
+            "Store minimized case history so the service can show a reference ID, support follow-up, and improve reliability.",
             "Operate, debug, secure, monitor, and improve HealthMatchAI.",
-            "Process payments for paid tools such as PDF reports, insurance coverage checklists, or symptom timeline saving if paid features are enabled."
+            "Process payments for paid tools such as PDF reports, coverage education checklists, or symptom timeline saving if paid features are enabled."
           ]
         },
         {
           heading: "Medical and sensitive information",
           body:
-            "Symptom text may include sensitive health information. Do not submit information you do not want processed by the service. This MVP is not a hospital, insurer, insurance agency, medical record system, covered clinical provider, pharmacy, or emergency service."
+            "Symptom text may include sensitive health information. Do not submit information you do not want processed by the service. HealthMatchAI is not a medical institution, healthcare provider, insurer, insurance broker, insurance agency, telemedicine platform, pharmacy, medical record system, or emergency service."
         },
         {
           heading: "Third-party processors",
           body: [
             "Submitted symptoms may be processed by AI model providers to generate triage support.",
             "Cloudflare may process hosting, database, security, analytics, and logging data.",
-            "A merchant-of-record payment provider such as Paddle or Lemon Squeezy may process payment-related data if paid checkout is used.",
+            "A merchant-of-record payment provider may process payment-related data if paid report or checklist features are used.",
             "We do not sell personal health information."
           ]
         },

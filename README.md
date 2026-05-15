@@ -24,7 +24,6 @@ npm run build
 
 - `/` AI symptom triage, care level finder, and insurance navigation
 - `/result` care decision summary with paid tool entry points
-- `/doctors` redirects to `/`
 - `/privacy` Privacy Policy
 - `/terms` Terms of Service
 - `/medical-disclaimer` Medical Disclaimer

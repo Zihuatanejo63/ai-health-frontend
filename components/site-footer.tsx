@@ -13,7 +13,7 @@ export function SiteFooter() {
     <footer className="footer">
       <div className="container footer-inner">
         <span>
-          <strong>HealthMatchAI</strong> · {copy.footerSummary}
+          <strong>AI Health Match</strong> · {copy.footerSummary}
         </span>
         <p className="footer-disclaimer">{copy.footerSafety}</p>
         <nav className="footer-links">

@@ -456,8 +456,13 @@ button:disabled {
 }
 
 .summary-cta,
-.insurance-cta {
+.insurance-cta,
+.section-cta {
   width: fit-content;
+}
+
+.section-cta {
+  margin-top: 16px;
 }
 
 .insurance-topic-grid {

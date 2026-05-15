@@ -9,17 +9,17 @@ export default function TermsPage() {
         {
           heading: "Service scope",
           body:
-            "HealthMatchAI is an MVP that provides AI-assisted symptom triage, care level guidance, doctor visit preparation, and educational insurance navigation. It is not a healthcare provider, clinic, insurer, insurance agency, telemedicine practice, hospital, pharmacy, or emergency response service."
+            "HealthMatchAI provides AI-assisted symptom triage, care guidance, doctor-ready summaries, and educational insurance navigation. It is not a medical institution, healthcare provider, insurer, insurance broker, insurance agency, telemedicine platform, hospital, pharmacy, or emergency response service."
         },
         {
           heading: "Medical boundaries",
           body:
-            "The service must not be used as a substitute for professional medical advice, clinician care, emergency care, or clinical decision making."
+            "The service does not diagnose, prescribe, treat, or replace professional medical care. It must not be used as a substitute for professional medical advice, clinician care, emergency care, or clinical decision making."
         },
         {
-          heading: "No insurance advice",
+          heading: "Insurance education only",
           body:
-            "Insurance information is educational only. HealthMatchAI does not recommend, sell, underwrite, or enroll users in specific insurance plans. For plan enrollment or plan-specific advice, speak with a licensed insurance agent or broker."
+            "Insurance information is educational only and does not constitute insurance advice. HealthMatchAI does not recommend, sell, underwrite, broker, or enroll users in specific insurance plans. For insurance enrollment or plan-specific advice, speak with a licensed insurance agent or broker."
         },
         {
           heading: "User responsibility",
@@ -37,10 +37,10 @@ export default function TermsPage() {
         {
           heading: "Paid services",
           body: [
-            "Payments, if enabled, are processed by a hosted merchant-of-record provider such as Paddle or Lemon Squeezy.",
-            "HealthMatchAI may collect payments for tools such as doctor-ready PDF reports, insurance coverage checklists, or symptom timeline saving.",
+            "Payments, if enabled, are processed by a hosted merchant-of-record provider.",
+            "HealthMatchAI may collect payments for tools such as doctor-ready PDF reports, insurance education checklists, or symptom timeline saving.",
             "A payment does not guarantee a medical outcome, appointment availability, insurance coverage, plan eligibility, enrollment, or clinician relationship.",
-            "Refunds, cancellation, support, and jurisdiction-specific rules must be finalized before offering paid tools publicly."
+            "Refunds, cancellation, support, and jurisdiction-specific rules apply to paid report or checklist features."
           ]
         },
         {
