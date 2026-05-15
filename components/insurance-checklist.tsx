@@ -4,6 +4,7 @@ type InsuranceChecklistProps = {
   description?: string;
   items?: string[];
   cta?: string;
+  href?: string;
 };
 
 export const DEFAULT_INSURANCE_CHECKLIST = [
@@ -19,7 +20,8 @@ export function InsuranceChecklist({
   title = "Insurance Checklist",
   description = "Educational checklist only. For plan-specific decisions, speak with a licensed insurance agent or broker.",
   items = DEFAULT_INSURANCE_CHECKLIST,
-  cta = "Understand My Coverage Options"
+  cta = "Understand My Coverage Options",
+  href = "/insurance-guide"
 }: InsuranceChecklistProps) {
   return (
     <article className="panel insurance-checklist">
@@ -33,7 +35,7 @@ export function InsuranceChecklist({
           <li key={item}>{item}</li>
         ))}
       </ul>
-      <a className="btn-secondary insurance-cta" href="/payment-success">
+      <a className="btn-secondary insurance-cta" href={href}>
         {cta}
       </a>
     </article>

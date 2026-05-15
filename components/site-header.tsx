@@ -8,7 +8,7 @@ import { getCopy } from "@/lib/i18n";
 export function SiteHeader() {
   const { languageCode } = useLanguage();
   const copy = getCopy(languageCode);
-  const [symptoms, care, insurance, records] = copy.nav;
+  const [symptoms, care, insurance, records, pricing] = copy.nav;
 
   return (
     <header className="top-nav">
@@ -17,10 +17,11 @@ export function SiteHeader() {
           HealthMatchAI
         </Link>
         <nav className="nav-links">
-          <Link href="/#symptom-check">{symptoms}</Link>
-          <Link href="/#care-options">{care}</Link>
-          <Link href="/#insurance-guide">{insurance}</Link>
-          <Link href="/#health-records">{records}</Link>
+          <Link href="/symptom-check">{symptoms}</Link>
+          <Link href="/care-options">{care}</Link>
+          <Link href="/insurance-guide">{insurance}</Link>
+          <Link href="/health-records">{records}</Link>
+          <Link href="/pricing">{pricing}</Link>
         </nav>
         <LanguageSelect />
       </div>

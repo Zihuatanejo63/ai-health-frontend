@@ -1,7 +1,7 @@
 import type { LanguageCode } from "@/lib/language";
 
 const safety = {
-  en: "HealthMatchAI does not diagnose, prescribe, treat, or replace professional medical care. If you have severe symptoms such as chest pain, trouble breathing, confusion, severe dehydration, or other emergency signs, seek urgent medical help.",
+  en: "HealthMatchAI does not diagnose, prescribe, treat, or replace professional medical care. For severe symptoms such as chest pain, trouble breathing, confusion, severe dehydration, or other emergency signs, seek urgent medical help.",
   zh: "HealthMatchAI 不诊断、不处方，也不能替代专业医疗服务。如果出现胸痛、呼吸困难、意识混乱、严重脱水或其他急症信号，请立即寻求紧急医疗帮助。",
   es: "HealthMatchAI no diagnostica, no receta ni reemplaza la atención médica profesional. Si tienes dolor de pecho, dificultad para respirar, confusión, deshidratación grave u otros signos de emergencia, busca ayuda médica urgente.",
   hi: "HealthMatchAI निदान या दवा नहीं देता और पेशेवर चिकित्सा देखभाल का विकल्प नहीं है। सीने में दर्द, सांस लेने में कठिनाई, भ्रम, गंभीर निर्जलीकरण या अन्य आपात संकेत हों तो तुरंत चिकित्सा सहायता लें।",
@@ -16,9 +16,9 @@ const safety = {
 export const copy = {
   en: {
     languageName: "English",
-    nav: ["Symptom Check", "Care Options", "Insurance Guide", "Health Records"],
+    nav: ["Symptom Check", "Care Options", "Insurance Guide", "Health Records", "Pricing"],
     footerSummary: "AI-assisted symptom triage, care guidance, and insurance navigation.",
-    footerSafety: "HealthMatchAI does not diagnose, prescribe, treat, or replace professional medical care. Insurance information is educational only and does not constitute insurance advice. For insurance enrollment, speak with a licensed insurance agent or broker.",
+    footerSafety: "HealthMatchAI does not diagnose, treat, prescribe, or sell insurance.",
     legal: ["Privacy", "Terms", "Medical Disclaimer", "Emergency Notice", "Cookie Policy"],
     banner: "HealthMatchAI does not diagnose, prescribe, treat, or replace professional medical care. Insurance information is educational only and does not constitute insurance advice. For insurance enrollment, speak with a licensed insurance agent or broker.",
     safety: safety.en,
@@ -98,9 +98,9 @@ export const copy = {
   },
   zh: {
     languageName: "中文",
-    nav: ["症状检查", "就医选择", "保险指南", "健康记录"],
+    nav: ["症状检查", "就医选择", "保险指南", "健康记录", "价格"],
     footerSummary: "AI 辅助症状分诊、就医指导和保险导航。",
-    footerSafety: "HealthMatchAI 不诊断、不处方、不治疗，也不能替代专业医疗服务。保险信息仅供教育参考，不构成保险建议。投保请咨询持牌保险代理人或经纪人。",
+    footerSafety: "HealthMatchAI 不诊断、不治疗、不处方，也不销售保险。",
     legal: ["隐私", "条款", "医疗免责声明", "急救提示", "Cookie 政策"],
     banner: "HealthMatchAI 不诊断、不处方、不治疗，也不能替代专业医疗服务。保险信息仅供教育参考，不构成保险建议。投保请咨询持牌保险代理人或经纪人。",
     safety: safety.zh,
@@ -263,7 +263,7 @@ type DeepPartial<T> = {
 const overrides: Partial<Record<Exclude<LanguageCode, "en" | "zh">, DeepPartial<Copy>>> = {
   es: {
     languageName: "Español",
-    nav: ["Síntomas", "Opciones", "Seguro", "Registros"],
+    nav: ["Síntomas", "Opciones", "Seguro", "Registros", "Precios"],
     footerSummary: "Triaje de síntomas, opciones de atención, preparación para la consulta y navegación de seguros.",
     footerSafety: "HealthMatchAI no diagnostica, no receta, no reemplaza atención médica profesional ni vende seguros.",
     legal: ["Privacidad", "Términos", "Aviso médico", "Emergencia", "Cookies"],
@@ -275,7 +275,7 @@ const overrides: Partial<Record<Exclude<LanguageCode, "en" | "zh">, DeepPartial<
   },
   pt: {
     languageName: "Português",
-    nav: ["Sintomas", "Opções", "Seguro", "Registros"],
+    nav: ["Sintomas", "Opções", "Seguro", "Registros", "Preços"],
     footerSummary: "Triagem de sintomas, opções de cuidado, preparo para consulta e navegação de seguros.",
     footerSafety: "HealthMatchAI não diagnostica, não prescreve, não substitui cuidados médicos e não vende seguros.",
     legal: ["Privacidade", "Termos", "Aviso médico", "Emergência", "Cookies"],
@@ -287,7 +287,7 @@ const overrides: Partial<Record<Exclude<LanguageCode, "en" | "zh">, DeepPartial<
   },
   fr: {
     languageName: "Français",
-    nav: ["Symptômes", "Options", "Assurance", "Dossier"],
+    nav: ["Symptômes", "Options", "Assurance", "Dossier", "Prix"],
     footerSummary: "Triage des symptômes, choix de soins, préparation de consultation et navigation assurance.",
     footerSafety: "HealthMatchAI ne diagnostique pas, ne prescrit pas, ne remplace pas les soins médicaux et ne vend pas d'assurance.",
     legal: ["Confidentialité", "Conditions", "Avis médical", "Urgence", "Cookies"],
@@ -299,7 +299,7 @@ const overrides: Partial<Record<Exclude<LanguageCode, "en" | "zh">, DeepPartial<
   },
   de: {
     languageName: "Deutsch",
-    nav: ["Symptome", "Optionen", "Versicherung", "Unterlagen"],
+    nav: ["Symptome", "Optionen", "Versicherung", "Unterlagen", "Preise"],
     footerSummary: "Symptom-Triage, Versorgungsoptionen, Arztgespräch-Vorbereitung und Versicherungsnavigation.",
     footerSafety: "HealthMatchAI diagnostiziert nicht, verschreibt nichts, ersetzt keine medizinische Versorgung und verkauft keine Versicherung.",
     legal: ["Datenschutz", "Bedingungen", "Medizinischer Hinweis", "Notfall", "Cookies"],
@@ -311,7 +311,7 @@ const overrides: Partial<Record<Exclude<LanguageCode, "en" | "zh">, DeepPartial<
   },
   ja: {
     languageName: "日本語",
-    nav: ["症状チェック", "受診選択", "保険ガイド", "健康記録"],
+    nav: ["症状チェック", "受診選択", "保険ガイド", "健康記録", "料金"],
     footerSummary: "症状トリアージ、受診レベル選択、受診準備、保険ナビゲーション。",
     footerSafety: "HealthMatchAI は診断・処方を行わず、専門医療の代替ではなく、保険販売もしません。",
     legal: ["プライバシー", "規約", "医療免責", "緊急時", "Cookie"],
@@ -323,7 +323,7 @@ const overrides: Partial<Record<Exclude<LanguageCode, "en" | "zh">, DeepPartial<
   },
   ko: {
     languageName: "한국어",
-    nav: ["증상 확인", "진료 선택", "보험 안내", "건강 기록"],
+    nav: ["증상 확인", "진료 선택", "보험 안내", "건강 기록", "요금"],
     footerSummary: "증상 분류, 진료 단계 선택, 진료 준비, 보험 안내.",
     footerSafety: "HealthMatchAI는 진단하거나 처방하지 않으며 전문 의료를 대체하거나 보험을 판매하지 않습니다.",
     legal: ["개인정보", "약관", "의료 고지", "응급", "쿠키"],
@@ -335,7 +335,7 @@ const overrides: Partial<Record<Exclude<LanguageCode, "en" | "zh">, DeepPartial<
   },
   hi: {
     languageName: "हिन्दी",
-    nav: ["लक्षण जांच", "देखभाल विकल्प", "बीमा गाइड", "रिकॉर्ड"],
+    nav: ["लक्षण जांच", "देखभाल विकल्प", "बीमा गाइड", "रिकॉर्ड", "मूल्य"],
     footerSummary: "लक्षण ट्रायेज, देखभाल स्तर, डॉक्टर विजिट तैयारी और बीमा नेविगेशन.",
     footerSafety: "HealthMatchAI निदान/दवा नहीं देता, चिकित्सा देखभाल का विकल्प नहीं है और बीमा नहीं बेचता.",
     legal: ["गोपनीयता", "शर्तें", "चिकित्सा सूचना", "आपात", "कुकी"],
@@ -348,7 +348,7 @@ const overrides: Partial<Record<Exclude<LanguageCode, "en" | "zh">, DeepPartial<
   },
   ar: {
     languageName: "العربية",
-    nav: ["فحص الأعراض", "خيارات الرعاية", "دليل التأمين", "السجلات"],
+    nav: ["فحص الأعراض", "خيارات الرعاية", "دليل التأمين", "السجلات", "الأسعار"],
     footerSummary: "فرز الأعراض، اختيار مستوى الرعاية، التحضير للطبيب، وتوجيه التأمين.",
     footerSafety: "لا يشخص HealthMatchAI ولا يصف ولا يحل محل الرعاية الطبية ولا يبيع التأمين.",
     legal: ["الخصوصية", "الشروط", "تنبيه طبي", "الطوارئ", "ملفات الارتباط"],

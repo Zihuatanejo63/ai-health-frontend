@@ -183,11 +183,27 @@ a {
 .care-card,
 .risk-level-card,
 .insurance-topic-card,
-.disclaimer-box {
+.disclaimer-box,
+.visual-card,
+.feature-card {
   border: 1px solid var(--border);
-  border-radius: 22px;
+  border-radius: 20px;
   background: var(--surface);
   box-shadow: var(--shadow);
+}
+
+.visual-card {
+  margin: 0;
+  overflow: hidden;
+  background: linear-gradient(135deg, #ffffff, #f0fdfa);
+}
+
+.visual-card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 280px;
+  object-fit: cover;
 }
 
 .triage-preview-card {
@@ -240,6 +256,19 @@ a {
 .home-section,
 .result-section {
   scroll-margin-top: 110px;
+}
+
+.stack-page {
+  display: grid;
+  gap: 28px;
+}
+
+.page-hero-grid,
+.section-media-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.7fr);
+  gap: 24px;
+  align-items: center;
 }
 
 .section-header {
@@ -479,8 +508,14 @@ button:disabled {
 
 .pricing-panel {
   display: grid;
-  gap: 10px;
-  padding: 22px;
+  align-content: start;
+  gap: 14px;
+  padding: 24px;
+}
+
+.pricing-panel h2 {
+  margin: 0;
+  font-size: 22px;
 }
 
 .pricing-panel span {
@@ -488,11 +523,140 @@ button:disabled {
 }
 
 .pricing-panel strong {
-  font-size: 22px;
+  font-size: 30px;
 }
 
 .pricing-panel a {
   width: fit-content;
+}
+
+.pricing-panel ul,
+.feature-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.75;
+}
+
+.pricing-grid,
+.feature-grid,
+.care-detail-grid,
+.paid-action-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.pricing-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.feature-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.feature-card {
+  padding: 22px;
+}
+
+.feature-card span,
+.form-step > span {
+  color: var(--secondary);
+  font-size: 13px;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.feature-card h3 {
+  margin: 12px 0 8px;
+  font-size: 20px;
+}
+
+.care-detail-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.detail-card {
+  display: grid;
+  gap: 16px;
+  padding: 16px;
+}
+
+.detail-card .care-card {
+  box-shadow: none;
+}
+
+.detail-card dl {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+}
+
+.detail-card dt {
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 850;
+}
+
+.detail-card dd {
+  margin: 0 0 8px;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.multi-step-form {
+  display: grid;
+  gap: 16px;
+}
+
+.form-step {
+  display: grid;
+  gap: 16px;
+  padding: 22px;
+}
+
+.checkbox-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.check-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 46px;
+  margin: 0;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 10px 12px;
+  background: #fff;
+  color: #334155;
+  font-weight: 800;
+}
+
+.check-row input {
+  width: auto;
+}
+
+.form-submit {
+  width: fit-content;
+}
+
+.guide-grid .insurance-topic-card {
+  display: grid;
+  gap: 8px;
+  min-height: 180px;
+}
+
+.insurance-topic-card h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.insurance-topic-card p {
+  margin: 0;
+  color: var(--muted);
+  font-weight: 600;
+  line-height: 1.65;
 }
 
 .disclaimer-box,
@@ -512,6 +676,26 @@ button:disabled {
 
 .result-page {
   max-width: 980px;
+}
+
+.empty-state-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-top: 18px;
+  padding: 20px;
+}
+
+.empty-state-card h2 {
+  margin: 0 0 6px;
+  font-size: 22px;
+}
+
+.empty-state-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
 }
 
 .risk-band {
@@ -562,6 +746,13 @@ button:disabled {
   padding: 20px;
 }
 
+.result-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 14px;
+}
+
 .result-card ul,
 .insurance-checklist ul {
   margin: 0;
@@ -606,6 +797,17 @@ button:disabled {
   padding: 24px;
 }
 
+.paid-tools-page {
+  display: grid;
+  gap: 16px;
+  padding: 28px;
+}
+
+.paid-action-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 6px;
+}
+
 .legal-section {
   margin-top: 20px;
 }
@@ -635,9 +837,14 @@ button:disabled {
 
 @media (max-width: 980px) {
   .hero-layout,
+  .page-hero-grid,
+  .section-media-grid,
   .care-card-grid,
   .insurance-topic-grid,
-  .risk-band {
+  .risk-band,
+  .pricing-grid,
+  .feature-grid,
+  .care-detail-grid {
     grid-template-columns: 1fr 1fr;
   }
 }
@@ -668,12 +875,19 @@ button:disabled {
   }
 
   .hero-layout,
+  .page-hero-grid,
+  .section-media-grid,
   .symptom-grid,
   .grid-2,
   .care-card-grid,
   .summary-field-grid,
   .insurance-topic-grid,
-  .risk-band {
+  .risk-band,
+  .pricing-grid,
+  .feature-grid,
+  .care-detail-grid,
+  .checkbox-grid,
+  .paid-action-grid {
     grid-template-columns: 1fr;
   }
 
@@ -688,7 +902,10 @@ button:disabled {
   .hero-actions,
   .summary-cta,
   .insurance-cta,
-  .pricing-panel a {
+  .pricing-panel a,
+  .form-submit,
+  .result-actions a,
+  .empty-state-card a {
     width: 100%;
   }
 
@@ -698,5 +915,14 @@ button:disabled {
 
   .care-card {
     min-height: auto;
+  }
+
+  .empty-state-card {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .visual-card img {
+    min-height: 220px;
   }
 }

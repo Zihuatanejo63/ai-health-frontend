@@ -8,6 +8,7 @@ import { DoctorSummaryPreview } from "@/components/doctor-summary-preview";
 import { useLanguage } from "@/components/language-provider";
 import { SectionHeader } from "@/components/section-header";
 import { SymptomButton } from "@/components/symptom-button";
+import { VisualCard } from "@/components/visual-card";
 import { analyzeSymptoms } from "@/lib/api";
 import { getCopy } from "@/lib/i18n";
 import type { DurationUnit, Severity } from "@/lib/types";
@@ -92,43 +93,40 @@ export default function HomePage() {
           <h1>{home.title}</h1>
           <p>{home.subtitle}</p>
           <div className="hero-actions">
-            <a className="btn-primary" href="#symptom-check">
+            <a className="btn-primary" href="/symptom-check">
               {home.start}
             </a>
-            <a className="btn-secondary" href="#care-options">
+            <a className="btn-secondary" href="/care-options">
               {home.careCta}
             </a>
           </div>
         </div>
 
-        <aside className="triage-preview-card" aria-label="AI triage result preview">
-          <div>
-            <span className="preview-kicker">{home.previewKicker}</span>
-            <h2>{home.previewSymptom}</h2>
-          </div>
-          <div className="preview-row">
-            <span>{home.riskLevel}</span>
-            <strong className="preview-risk">{home.moderate}</strong>
-          </div>
-          <div className="preview-row">
-            <span>{home.recommendedCare}</span>
-            <strong>{home.previewCare}</strong>
-          </div>
-          <div className="preview-note">{home.insuranceNote}</div>
-        </aside>
+        <VisualCard
+          src="/images/hero-care-dashboard.png"
+          alt="Health decision dashboard showing risk level, recommended care, red flags, insurance note, and doctor-ready summary"
+        />
       </div>
 
       <section className="home-section" id="symptom-check">
-        <SectionHeader
-          eyebrow={copy.nav[0]}
-          title={home.symptomTitle}
-          description={home.symptomDescription}
-        />
+        <div className="section-media-grid">
+          <div>
+            <SectionHeader
+              eyebrow={copy.nav[0]}
+              title={home.symptomTitle}
+              description={home.symptomDescription}
+            />
 
-        <div className="symptom-grid">
-          {home.symptoms.map((symptom) => (
-            <SymptomButton key={symptom} label={symptom} onClick={addSymptom} />
-          ))}
+            <div className="symptom-grid">
+              {home.symptoms.map((symptom) => (
+                <SymptomButton key={symptom} label={symptom} onClick={addSymptom} />
+              ))}
+            </div>
+          </div>
+          <VisualCard
+            src="/images/illustration-symptom-triage.png"
+            alt="Product illustration of common symptom buttons including fever, cough, and headache"
+          />
         </div>
 
         <form className="panel triage-form" onSubmit={onSubmit}>
@@ -187,11 +185,17 @@ export default function HomePage() {
       </section>
 
       <section className="home-section" id="care-options">
-        <SectionHeader
-          eyebrow={copy.nav[1]}
-          title={home.careTitle}
-          description={home.careDescription}
-        />
+        <div className="section-media-grid">
+          <SectionHeader
+            eyebrow={copy.nav[1]}
+            title={home.careTitle}
+            description={home.careDescription}
+          />
+          <VisualCard
+            src="/images/illustration-care-levels.png"
+            alt="Product illustration showing emergency, urgent care, primary care, telehealth, and self-care paths"
+          />
+        </div>
         <div className="care-card-grid">
           {home.careLevels.map(([title, description], index) => (
             <CareLevelCard
@@ -205,33 +209,49 @@ export default function HomePage() {
       </section>
 
       <section className="home-section" id="health-records">
-        <SectionHeader
-          eyebrow={copy.summary.eyebrow}
-          title={home.prepTitle}
-          description={home.prepDescription}
-        />
-        <DoctorSummaryPreview
-          eyebrow={copy.summary.eyebrow}
-          title={copy.summary.title}
-          fields={[...copy.summary.fields]}
-          cta={copy.summary.cta}
-        />
+        <div className="section-media-grid">
+          <div>
+            <SectionHeader
+              eyebrow={copy.summary.eyebrow}
+              title={home.prepTitle}
+              description={home.prepDescription}
+            />
+            <DoctorSummaryPreview
+              eyebrow={copy.summary.eyebrow}
+              title={copy.summary.title}
+              fields={[...copy.summary.fields]}
+              cta={copy.summary.cta}
+            />
+          </div>
+          <VisualCard
+            src="/images/illustration-doctor-summary.png"
+            alt="Product illustration of a doctor-ready PDF report with symptoms, timeline, red flags, and questions"
+          />
+        </div>
       </section>
 
       <section className="home-section" id="insurance-guide">
-        <SectionHeader
-          eyebrow={copy.insurance.eyebrow}
-          title={home.insuranceTitle}
-          description={home.insuranceDescription}
-        />
-        <div className="insurance-topic-grid">
-          {home.insuranceTopics.map((topic) => (
-            <article className="insurance-topic-card" key={topic}>
-              {topic}
-            </article>
-          ))}
+        <div className="section-media-grid">
+          <div>
+            <SectionHeader
+              eyebrow={copy.insurance.eyebrow}
+              title={home.insuranceTitle}
+              description={home.insuranceDescription}
+            />
+            <div className="insurance-topic-grid">
+              {home.insuranceTopics.map((topic) => (
+                <article className="insurance-topic-card" key={topic}>
+                  {topic}
+                </article>
+              ))}
+            </div>
+          </div>
+          <VisualCard
+            src="/images/illustration-insurance-checklist.png"
+            alt="Product illustration of insurance card, medical bill, copay, deductible, and in-network checklist"
+          />
         </div>
-        <a className="btn-secondary section-cta" href="/payment-success">
+        <a className="btn-secondary section-cta" href="/insurance-guide">
           {copy.insurance.cta}
         </a>
       </section>

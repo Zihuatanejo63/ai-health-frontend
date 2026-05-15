@@ -2,18 +2,25 @@ import Link from "next/link";
 
 export default function PaymentSuccessPage() {
   return (
-    <section className="panel legal-page">
-      <p className="page-subtitle">Hosted payment</p>
-      <h1 className="page-title">Paid Tool Access Started</h1>
+    <section className="panel paid-tools-page">
+      <p className="eyebrow">Paid tools</p>
+      <h1 className="page-title">Your paid tools are ready</h1>
       <p className="page-subtitle">
-        If this was a live hosted checkout, your payment status will be confirmed by the payment
-        provider. Paid tools may include a doctor-ready PDF report, insurance coverage checklist, or
-        saved symptom timeline. They do not include clinician care, medication orders, or insurance
+        Paid tools do not include clinician care, medication orders, diagnosis, or insurance
         recommendations.
       </p>
-      <div style={{ marginTop: 18 }}>
+      <div className="paid-action-grid">
+        <Link className="btn-primary" href="/result">
+          Download Doctor-ready PDF
+        </Link>
+        <Link className="btn-secondary" href="/insurance-guide">
+          View Insurance Checklist
+        </Link>
         <Link className="btn-secondary" href="/result">
-          Back to care summary
+          Save Symptom Timeline
+        </Link>
+        <Link className="btn-secondary" href="/result">
+          Back to Result
         </Link>
       </div>
     </section>
