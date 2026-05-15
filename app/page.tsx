@@ -1,85 +1,62 @@
-import Link from "next/link";
+import {
+  Card,
+  IconCircle,
+  PageHeader,
+  PrimaryButton,
+  StatCard,
+  StatusBadge
+} from "@/components/app-ui";
 import { VisualCard } from "@/components/visual-card";
 
-const dashboardCards = [
-  {
-    kicker: "Risk Level",
-    value: "Moderate",
-    detail: "Based on your symptoms",
-    tone: "warning"
-  },
-  {
-    kicker: "Recommended Care",
-    value: "Primary Care",
-    detail: "Best place to start",
-    tone: "primary"
-  },
-  {
-    kicker: "Red Flags",
-    value: "Checked",
-    detail: "No immediate red flags detected",
-    tone: "success"
-  },
-  {
-    kicker: "Insurance Note",
-    value: "Check urgent care coverage",
-    detail: "Compare urgent care vs ER benefits",
-    tone: "secondary"
-  },
-  {
-    kicker: "Doctor-ready Summary",
-    value: "Ready",
-    detail: "Prepared to share with a clinician",
-    tone: "secondary"
-  }
-];
+const stats = [
+  ["Risk Level", "Moderate", "Based on your symptoms", "warning"],
+  ["Recommended Care", "Primary Care", "Best place to start", "primary"],
+  ["Red Flags", "Checked", "No immediate red flags detected", "success"],
+  ["Insurance Note", "Check urgent care coverage", "Before choosing care", "purple"],
+  ["Doctor-ready Summary", "Ready", "Prepared to share", "teal"]
+] as const;
 
 export default function HomePage() {
   return (
     <section className="app-page dashboard-page">
-      <div className="dashboard-header">
-        <div>
-          <p className="eyebrow">Dashboard</p>
-          <h1>Welcome back</h1>
-          <p>How can we help you today?</p>
-        </div>
-        <Link className="btn-primary" href="/symptom-check">
-          Start Symptom Check
-        </Link>
-      </div>
+      <PageHeader
+        title="Welcome back"
+        description="How can we help you today?"
+        action={<span className="notification-dot">⌁</span>}
+      />
 
-      <section className="panel symptom-command-card">
+      <Card className="symptom-command-card">
         <div className="command-input">
-          <span aria-hidden="true">☤</span>
+          <IconCircle>Q</IconCircle>
           <div>
             <h2>What symptoms are you experiencing?</h2>
-            <p>e.g., fever, cough, headache, sore throat, fatigue...</p>
+            <input placeholder="Describe your symptoms..." />
           </div>
         </div>
-        <Link className="btn-primary" href="/symptom-check">
-          Start Symptom Check
-        </Link>
-      </section>
+        <PrimaryButton href="/symptom-check">Start Symptom Check</PrimaryButton>
+      </Card>
 
       <div className="dashboard-grid">
-        <section className="dashboard-card-grid">
-          {dashboardCards.map((card) => (
-            <article className={`panel dashboard-metric metric-${card.tone}`} key={card.kicker}>
-              <span>{card.kicker}</span>
-              <strong>{card.value}</strong>
-              <p>{card.detail}</p>
-              <Link href={card.kicker === "Insurance Note" ? "/insurance-guide" : "/result"}>
-                View details
-              </Link>
-            </article>
+        <div className="dashboard-card-grid">
+          {stats.map(([label, value, detail, tone]) => (
+            <StatCard key={label} label={label} value={value} detail={detail} tone={tone} />
           ))}
-        </section>
+          <Card className="recent-activity-card">
+            <div>
+              <IconCircle tone="primary">H</IconCircle>
+              <StatusBadge tone="primary">Recent Activity</StatusBadge>
+            </div>
+            <h2>Symptom Check</h2>
+            <p>Headache, fatigue, mild fever</p>
+            <time>May 19, 2025 · 10:24 AM</time>
+          </Card>
+        </div>
 
         <aside className="dashboard-visual">
           <VisualCard
             priority
-            src="/images/hero-care-dashboard.png"
-            alt="HealthMatchAI app dashboard preview"
+            src="/images/design-home-dashboard.png"
+            alt="HealthMatchAI dashboard design preview"
           />
         </aside>
       </div>

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { AppLayout } from "@/components/app-ui";
 import { LanguageProvider } from "@/components/language-provider";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
@@ -18,13 +19,15 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <LanguageProvider>
-          <div className="site-shell">
+          <AppLayout>
+            <div className="site-shell">
             <SiteHeader />
             <main className="page-main">
               <div className="container">{children}</div>
             </main>
             <SiteFooter />
-          </div>
+            </div>
+          </AppLayout>
         </LanguageProvider>
       </body>
     </html>

@@ -55,7 +55,7 @@ export default function CareOptionsPage() {
           title="Care Guidance"
           description="Compare emergency care, urgent care, primary care, telehealth, and self-care before choosing where to go."
         />
-        <VisualCard src="/images/illustration-care-levels.png" alt="Five care level paths" />
+        <VisualCard src="/images/design-care-guidance.png" alt="Care guidance design reference" />
       </div>
 
       <div className="care-detail-grid">

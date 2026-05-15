@@ -1,0 +1,74 @@
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+export const sidebarItems = [
+  { label: "Home", href: "/", icon: "⌂" },
+  { label: "Symptom Check", href: "/symptom-check", icon: "☤" },
+  { label: "Care Guidance", href: "/care-options", icon: "♡" },
+  { label: "Insurance", href: "/insurance-guide", icon: "♢" },
+  { label: "Health Summary", href: "/health-records", icon: "▣" },
+  { label: "History", href: "/history", icon: "◷" }
+];
+
+const settingsItem = { label: "Settings", href: "/settings", icon: "⚙" };
+
+function isActive(pathname: string, href: string) {
+  if (href === "/") return pathname === "/";
+  return pathname.startsWith(href);
+}
+
+export function SidebarItem({
+  href,
+  icon,
+  label,
+  active = false,
+  className = ""
+}: {
+  href: string;
+  icon: string;
+  label: string;
+  active?: boolean;
+  className?: string;
+}) {
+  return (
+    <Link className={`sidebar-link${active ? " active" : ""}${className ? ` ${className}` : ""}`} href={href}>
+      <span aria-hidden="true">{icon}</span>
+      <strong>{label}</strong>
+    </Link>
+  );
+}
+
+export function Sidebar() {
+  const pathname = usePathname();
+
+  return (
+    <aside className="app-sidebar" aria-label="HealthMatchAI app navigation">
+      <div className="sidebar-top">
+        <Link className="brand sidebar-brand" href="/">
+          HealthMatchAI
+        </Link>
+        <nav className="sidebar-nav">
+          {sidebarItems.map((item) => (
+            <SidebarItem
+              active={isActive(pathname, item.href)}
+              href={item.href}
+              icon={item.icon}
+              key={item.href}
+              label={item.label}
+            />
+          ))}
+        </nav>
+      </div>
+
+      <SidebarItem
+        active={isActive(pathname, settingsItem.href)}
+        className="sidebar-settings"
+        href={settingsItem.href}
+        icon={settingsItem.icon}
+        label={settingsItem.label}
+      />
+    </aside>
+  );
+}

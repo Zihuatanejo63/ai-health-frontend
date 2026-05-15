@@ -1,205 +1,106 @@
-"use client";
-
-import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
-import { CareLevelCard } from "@/components/care-level-card";
+import {
+  Card,
+  IconCircle,
+  PageHeader,
+  PrimaryButton,
+  SecondaryButton,
+  StatCard,
+  StatusBadge
+} from "@/components/app-ui";
 import { DisclaimerBox } from "@/components/disclaimer-box";
-import { DoctorSummaryPreview } from "@/components/doctor-summary-preview";
-import { InsuranceChecklist } from "@/components/insurance-checklist";
-import { useLanguage } from "@/components/language-provider";
-import { RiskLevelCard } from "@/components/risk-level-card";
-import { SectionHeader } from "@/components/section-header";
-import { getCopy } from "@/lib/i18n";
-import type { AnalyzeSymptomsResponse, RiskLevel } from "@/lib/types";
+import { VisualCard } from "@/components/visual-card";
 
-const SESSION_RESULT_KEY = "ai-health-match-result";
-
-type StoredAnalysis = {
-  response: AnalyzeSymptomsResponse;
-};
-
-const demoResult: AnalyzeSymptomsResponse = {
-  referenceId: "HM-DEMO-RESULT",
-  riskLevel: "medium",
-  redFlags: [
-    "No chest pain reported",
-    "No trouble breathing reported",
-    "No confusion reported",
-    "No severe dehydration reported",
-    "No stiff neck reported"
-  ],
-  recommendedCareLevel: "Primary Care",
-  possibleCauses: ["Common cold", "Flu-like illness", "COVID-like respiratory infection", "Throat infection"],
-  whatToMonitor: ["Monitor temperature, breathing, hydration, worsening fatigue, and symptom duration."],
-  doctorReadySummary: "Fever and cough for 2 days. Temperature around 101°F. Pain score 3/10. No emergency red flags selected in this demo. Questions to ask: when to seek urgent care, what tests may be useful, and what symptoms should trigger reassessment.",
-  insuranceNavigation: ["Is urgent care covered?", "Is the provider in-network?", "What is your copay?", "Does your deductible apply?", "Is telehealth covered?"],
-  disclaimer: "HealthMatchAI does not diagnose, prescribe, treat, or replace professional medical care. Insurance information is educational only."
-};
-
-function formatRiskKey(riskLevel: RiskLevel, recommendedCareLevel?: string): "Low" | "Moderate" | "High" | "Emergency" {
-  if (recommendedCareLevel === "Emergency") return "Emergency";
-  if (riskLevel === "low") return "Low";
-  if (riskLevel === "high") return "High";
-  return "Moderate";
-}
+const redFlags = ["No chest pain", "No trouble breathing", "No confusion", "No severe dehydration"];
+const causes = ["Common cold", "Flu-like illness", "Viral respiratory infection"];
+const monitor = ["Fever", "Breathing", "Hydration", "Energy", "Symptoms lasting >7 days"];
+const checklist = ["Is urgent care covered?", "Is the provider in-network?", "What is your copay?", "Does your deductible apply?"];
 
 export default function ResultPage() {
-  const { languageCode } = useLanguage();
-  const copy = getCopy(languageCode);
-  const resultCopy = copy.result;
-  const [analysis, setAnalysis] = useState<StoredAnalysis | null>(null);
-
-  useEffect(() => {
-    if (typeof window === "undefined" || !window.sessionStorage) return;
-    const rawValue = window.sessionStorage.getItem(SESSION_RESULT_KEY);
-    if (!rawValue) return;
-
-    try {
-      const parsed = JSON.parse(rawValue) as StoredAnalysis;
-      if (parsed.response) setAnalysis(parsed);
-    } catch {
-      setAnalysis(null);
-    }
-  }, []);
-
-  const hasStoredResult = Boolean(analysis?.response);
-  const result = analysis?.response ?? demoResult;
-  const disclaimer = useMemo(() => result?.disclaimer || copy.safety, [copy.safety, result?.disclaimer]);
-
-  const displayedRisk = formatRiskKey(result.riskLevel, result.recommendedCareLevel);
-  const careDescription =
-    result.recommendedCareLevel === "Primary Care"
-      ? "Primary Care within 24–72 hours"
-      : resultCopy.careDescriptions[result.recommendedCareLevel as keyof typeof resultCopy.careDescriptions] ??
-        resultCopy.fallbackCare;
-  const whyText =
-    "Based on your reported symptoms, duration, severity, and no emergency red flags.";
-
   return (
-    <section className="result-page">
-      <p className="eyebrow">Symptom Triage</p>
-      <h1 className="page-title">{resultCopy.title}</h1>
-      <p className="page-subtitle">
-        {resultCopy.reference}: <strong>{result.referenceId}</strong>
-      </p>
+    <section className="app-page result-page">
+      <PageHeader title="Your symptom check result" description="Reference HM-2025-0519-1024" />
 
-      {!hasStoredResult ? (
-        <article className="panel empty-state-card">
-          <div>
-            <h2>Start a symptom check first</h2>
-            <p>{resultCopy.unavailableText}</p>
-          </div>
-          <Link className="btn-primary" href="/symptom-check">
-            {copy.home.start}
-          </Link>
-        </article>
-      ) : null}
-
-      <article className="panel result-hero-card">
-        <RiskLevelCard
-          level={resultCopy.risk[displayedRisk]}
-          tone={displayedRisk.toLowerCase() as "low" | "moderate" | "high" | "emergency"}
-          description="Recommended next step: Primary care or urgent care if symptoms worsen."
+      <div className="result-top-grid">
+        <StatCard
+          label="Risk Level"
+          value="Moderate"
+          detail="Your symptoms are not likely to be serious."
+          tone="warning"
         />
-        <div>
-          <span className="preview-kicker">Recommended next step</span>
-          <h2>{careDescription}</h2>
-          <p>
-            Use this result to prepare questions and choose a care setting. A licensed clinician
-            should make care decisions with your full history and exam.
-          </p>
+        <StatCard
+          label="Recommended Care"
+          value="Primary Care within 24–72 hours"
+          detail="See a primary care provider within the next 1–3 days."
+          tone="primary"
+        />
+      </div>
+
+      <div className="result-content-grid">
+        <div className="result-column">
+          <Card>
+            <h2>Why this result?</h2>
+            <p>Your symptoms are consistent with non-urgent conditions that are commonly treated in primary care.</p>
+          </Card>
+
+          <Card>
+            <h2>Red Flags Checked</h2>
+            <div className="check-list">
+              {redFlags.map((item) => (
+                <span key={item}>✓ {item}</span>
+              ))}
+            </div>
+          </Card>
+
+          <Card>
+            <h2>Possible Causes</h2>
+            <p>Your symptoms may be consistent with:</p>
+            <div className="chip-row">
+              {causes.map((item) => (
+                <StatusBadge key={item} tone="primary">{item}</StatusBadge>
+              ))}
+            </div>
+          </Card>
+
+          <Card>
+            <h2>What to Monitor</h2>
+            <div className="chip-row">
+              {monitor.map((item) => (
+                <StatusBadge key={item} tone="teal">{item}</StatusBadge>
+              ))}
+            </div>
+          </Card>
         </div>
-      </article>
 
-      <section className="result-section">
-        <SectionHeader title={resultCopy.recommended} />
-        <CareLevelCard
-          active
-          title={result.recommendedCareLevel}
-          description={careDescription}
-          tone={displayedRisk === "Emergency" ? "danger" : displayedRisk === "High" ? "warning" : "primary"}
-        />
-      </section>
+        <div className="result-column">
+          <Card className="doctor-summary-card">
+            <div className="card-title-row">
+              <h2>Doctor-ready Summary</h2>
+              <IconCircle tone="teal">✓</IconCircle>
+            </div>
+            <div className="summary-mini-grid">
+              <span>Symptoms <strong>5</strong></span>
+              <span>Duration <strong>3 days</strong></span>
+              <span>Checks <strong>Completed</strong></span>
+              <span>Risk Level <strong>Moderate</strong></span>
+            </div>
+            <PrimaryButton href="/payment-success">Download Full PDF Report</PrimaryButton>
+          </Card>
 
-      <section className="result-section">
-        <SectionHeader title={resultCopy.why} />
-        <article className="panel result-card">
-          <p>{whyText}</p>
-        </article>
-      </section>
+          <Card>
+            <h2>Insurance Checklist</h2>
+            <div className="check-list">
+              {checklist.map((item) => (
+                <span key={item}>□ {item}</span>
+              ))}
+            </div>
+            <SecondaryButton href="/insurance-guide">Understand Coverage Options</SecondaryButton>
+          </Card>
 
-      <section className="result-section">
-        <SectionHeader title={resultCopy.redFlags} />
-        <article className="panel result-card">
-          <ul>
-            {result.redFlags.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        </article>
-      </section>
-
-      <section className="result-section">
-        <SectionHeader title={resultCopy.causes} />
-        <article className="panel result-card">
-          <p>Your symptoms may be consistent with:</p>
-          <ul>
-            {result.possibleCauses.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        </article>
-      </section>
-
-      <section className="result-section">
-        <SectionHeader title={resultCopy.monitor} />
-        <article className="panel result-card">
-          <ul>
-            {result.whatToMonitor.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        </article>
-      </section>
-
-      <section className="result-section">
-        <SectionHeader
-          title={copy.summary.title}
-          description={resultCopy.summaryDescription}
-        />
-        <DoctorSummaryPreview
-          eyebrow={copy.summary.eyebrow}
-          title={copy.summary.title}
-          fields={[...copy.summary.fields]}
-          cta={copy.summary.fullCta}
-          previewOnly
-          summary={result.doctorReadySummary}
-        />
-        <div className="result-actions">
-          <Link className="btn-primary" href="/payment-success">
-            Download Full PDF Report
-          </Link>
-          <Link className="btn-secondary" href="/payment-success">
-            Save Symptom Timeline
-          </Link>
+          <VisualCard src="/images/design-result.png" alt="Result page design reference" />
         </div>
-      </section>
+      </div>
 
-      <section className="result-section">
-        <SectionHeader title={resultCopy.insurance} />
-        <InsuranceChecklist
-          eyebrow={copy.insurance.eyebrow}
-          title={copy.insurance.title}
-          description={copy.insurance.description}
-          items={[...copy.insurance.items]}
-          cta={copy.insurance.cta}
-          href="/insurance-guide"
-        />
-      </section>
-
-      <section className="result-section">
-        <DisclaimerBox text={disclaimer} />
-      </section>
+      <DisclaimerBox text="HealthMatchAI does not diagnose, prescribe, treat, or replace professional medical care. Insurance information is educational only." />
     </section>
   );
 }

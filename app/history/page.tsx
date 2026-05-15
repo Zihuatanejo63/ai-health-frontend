@@ -1,37 +1,45 @@
-import Link from "next/link";
-import { SectionHeader } from "@/components/section-header";
+import { HistoryItem, PageHeader, PrimaryButton, StatusBadge } from "@/components/app-ui";
 
-const demoHistory = [
-  {
-    symptoms: "Fever + cough",
-    risk: "Moderate risk",
-    care: "Primary Care",
-    created: "Created May 12, 2025"
-  }
-];
+const history = [
+  ["Fever + cough", "Moderate", "Primary Care", "May 19, 2025 10:24 AM", "warning"],
+  ["Headache", "Low", "Self Care", "May 16, 2025 08:15 PM", "success"],
+  ["Stomach pain", "Moderate", "Primary Care", "May 14, 2025 11:47 AM", "warning"],
+  ["Sore throat", "Low", "Self Care", "May 10, 2025 09:02 AM", "teal"],
+  ["Fatigue", "Moderate", "Primary Care", "May 7, 2025 04:30 PM", "warning"]
+] as const;
 
 export default function HistoryPage() {
   return (
-    <section className="app-page">
-      <SectionHeader
-        eyebrow="History"
-        title="History"
-        description="No saved symptom checks yet."
-      />
+    <section className="app-page history-page">
+      <PageHeader title="History" description="Your past symptom checks and results." />
 
-      <div className="history-grid">
-        {demoHistory.map((item) => (
-          <article className="panel history-card" key={item.symptoms}>
-            <span>{item.created}</span>
-            <h2>{item.symptoms}</h2>
-            <p>{item.risk}</p>
-            <strong>{item.care}</strong>
-            <Link className="btn-secondary" href="/result">
-              View result
-            </Link>
-          </article>
+      <div className="filter-chip-row">
+        {["All", "Recent", "Saved", "Flagged"].map((item, index) => (
+          <StatusBadge key={item} tone={index === 0 ? "primary" : "teal"}>
+            {item}
+          </StatusBadge>
         ))}
       </div>
+
+      <div className="history-list">
+        {history.map(([symptom, risk, care, date, tone]) => (
+          <HistoryItem
+            key={`${symptom}-${date}`}
+            symptom={symptom}
+            risk={risk}
+            care={care}
+            date={date}
+            tone={tone}
+          />
+        ))}
+      </div>
+
+      <section className="panel history-empty-card">
+        <div className="empty-icon">◷</div>
+        <h2>No more history yet</h2>
+        <p>Your symptom checks will appear here. Start a new check anytime.</p>
+        <PrimaryButton href="/symptom-check">Start Symptom Check</PrimaryButton>
+      </section>
     </section>
   );
 }

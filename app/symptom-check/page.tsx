@@ -92,7 +92,7 @@ export default function SymptomCheckPage() {
           <p>Step 1 of 5</p>
         </div>
         <VisualCard
-          src="/images/illustration-symptom-triage.png"
+          src="/images/design-symptom-check.png"
           alt="Symptom triage app screen"
         />
       </div>
@@ -158,11 +158,8 @@ export default function SymptomCheckPage() {
           <button className="btn-secondary" type="button">
             Back
           </button>
-          <button className="btn-secondary" type="button">
-            Continue
-          </button>
           <button className="btn-primary" type="submit">
-            Get My Care Guidance
+            Continue
           </button>
         </div>
       </form>

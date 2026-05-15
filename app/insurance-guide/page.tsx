@@ -1,40 +1,68 @@
+import {
+  Card,
+  IconCircle,
+  InsuranceConceptCard,
+  PageHeader,
+  StatusBadge
+} from "@/components/app-ui";
 import { DisclaimerBox } from "@/components/disclaimer-box";
-import { SectionHeader } from "@/components/section-header";
 import { VisualCard } from "@/components/visual-card";
 
-const topics = [
-  ["Urgent care vs ER", "Urgent care is often designed for same-day non-emergency needs. ER care is for emergencies and can involve different facility charges."],
-  ["Copay", "A fixed amount you may pay for a covered visit or service."],
-  ["Deductible", "The amount you may need to pay before some benefits begin."],
-  ["Coinsurance", "A percentage of covered costs you may owe after deductible rules apply."],
-  ["Out-of-pocket maximum", "A plan limit on certain covered costs during a plan year."],
-  ["In-network vs out-of-network", "Network status can change what is covered and how much you may owe."],
-  ["Questions to ask your insurer", "Ask whether the location is covered, whether the provider is in-network, and what copay or deductible rules apply."],
-  ["Talk to a licensed insurance partner", "For plan enrollment or plan-specific recommendations, speak with a licensed insurance agent or broker."]
-];
+const concepts = [
+  ["Copay", "Fixed amount paid at a visit", "warning"],
+  ["Deductible", "Amount before your plan pays", "primary"],
+  ["Out-of-pocket max", "Yearly limit for covered costs", "teal"],
+  ["In-network", "Providers with lower negotiated cost", "success"],
+  ["Urgent care vs ER", "Compare cost and urgency before going", "purple"],
+  ["Questions to ask your insurer", "Confirm coverage before non-emergency care", "primary"]
+] as const;
 
 export default function InsuranceGuidePage() {
   return (
-    <section className="stack-page">
-      <div className="page-hero-grid">
-        <SectionHeader
-          eyebrow="Insurance Navigation"
-          title="Insurance Navigation"
-          description="Learn the insurance questions to ask before a non-emergency visit."
-        />
-        <VisualCard src="/images/illustration-insurance-checklist.png" alt="Insurance checklist product illustration" />
+    <section className="app-page">
+      <PageHeader
+        eyebrow="Insurance Navigation"
+        title="Insurance Navigation"
+        description="Understand your coverage. Make informed care decisions."
+      />
+
+      <div className="insurance-dashboard-grid">
+        <Card className="insurance-hero-card">
+          <div>
+            <IconCircle tone="teal">I</IconCircle>
+            <h2>Your coverage, made clear</h2>
+            <p>
+              We break down key concepts so you can estimate costs, compare care options, and avoid surprises.
+            </p>
+          </div>
+          <VisualCard src="/images/design-insurance-navigation.png" alt="Insurance navigation design reference" />
+        </Card>
+
+        <Card className="coverage-snapshot">
+          <h2>Coverage snapshot</h2>
+          {[
+            ["Plan active", "Active"],
+            ["In-network benefits", "In-network"],
+            ["Urgent care copay", "$35"],
+            ["Deductible remaining", "$1,250 / $2,000"]
+          ].map(([label, value]) => (
+            <div className="snapshot-row" key={label}>
+              <span>{label}</span>
+              <StatusBadge tone={value === "Active" || value === "In-network" ? "success" : "primary"}>
+                {value}
+              </StatusBadge>
+            </div>
+          ))}
+        </Card>
       </div>
 
-      <div className="insurance-topic-grid guide-grid">
-        {topics.map(([title, description]) => (
-          <article className="insurance-topic-card" key={title}>
-            <h3>{title}</h3>
-            <p>{description}</p>
-          </article>
+      <div className="concept-grid">
+        {concepts.map(([title, description, tone]) => (
+          <InsuranceConceptCard key={title} title={title} description={description} tone={tone} />
         ))}
       </div>
 
-      <DisclaimerBox text="HealthMatchAI does not sell insurance or recommend a specific plan. Insurance information is educational only." />
+      <DisclaimerBox text="HealthMatchAI provides educational information only. We do not sell insurance and do not recommend any specific plan, provider, or treatment. Always verify benefits with your insurer." />
     </section>
   );
 }
