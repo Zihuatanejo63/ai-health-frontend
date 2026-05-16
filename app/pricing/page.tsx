@@ -1,38 +1,42 @@
+"use client";
+
 import { PricingCard } from "@/components/pricing-card";
 import { PageHeader } from "@/components/app-ui";
-
-const plans = [
-  {
-    name: "Free",
-    price: "$0",
-    features: ["Basic symptom check", "Risk level", "Care level guidance"],
-    cta: "Start Symptom Check",
-    href: "/symptom-check"
-  },
-  {
-    name: "One-time Report",
-    price: "$4.99",
-    features: ["Doctor-ready PDF", "Symptom timeline", "Red flags checked", "Questions to ask"],
-    cta: "Create Report",
-    href: "/payment-success",
-    featured: true
-  },
-  {
-    name: "Plus",
-    price: "$9.99/month",
-    features: ["Unlimited reports", "Family profiles", "Saved health records", "Insurance checklist history"],
-    cta: "View Plus",
-    href: "/payment-success"
-  }
-];
+import { useI18n } from "@/components/i18n-provider";
 
 export default function PricingPage() {
+  const { t } = useI18n();
+  const plans = [
+    {
+      name: t("pricing.free"),
+      price: "$0",
+      features: [t("pricing.basic"), t("pricing.risk"), t("pricing.care")],
+      cta: t("home.start"),
+      href: "/symptom-check"
+    },
+    {
+      name: t("pricing.oneTime"),
+      price: "$4.99",
+      features: [t("pricing.pdf"), t("pricing.timeline"), t("pricing.redFlags"), t("pricing.questions")],
+      cta: t("pricing.createReport"),
+      href: "/payment-success",
+      featured: true
+    },
+    {
+      name: t("pricing.plus"),
+      price: "$9.99/month",
+      features: [t("pricing.unlimited"), t("pricing.family"), t("pricing.savedRecords"), t("pricing.insuranceHistory")],
+      cta: t("pricing.viewPlus"),
+      href: "/payment-success"
+    }
+  ];
+
   return (
     <section className="app-page">
       <PageHeader
-        eyebrow="Pricing"
-        title="Choose the support level you need"
-        description="Paid options unlock more complete reports, saved records, and shareable summaries."
+        eyebrow={t("nav.pricing")}
+        title={t("pricing.title")}
+        description={t("pricing.description")}
       />
 
       <div className="pricing-grid">

@@ -1,38 +1,50 @@
+"use client";
+
+import { useEffect } from "react";
 import { Card, IconCircle, PageHeader, PrimaryButton, SecondaryButton } from "@/components/app-ui";
+import { useI18n } from "@/components/i18n-provider";
+import { useSettings } from "@/components/settings-provider";
 
 export default function PaymentSuccessPage() {
+  const { t } = useI18n();
+  const { updateSettings } = useSettings();
+
+  useEffect(() => {
+    updateSettings((current) => ({ ...current, subscription: { plan: "Premium" } }));
+  }, [updateSettings]);
+
   return (
     <section className="app-page">
       <PageHeader
-        eyebrow="Paid tools"
-        title="Your paid tools are ready"
-        description="Paid tools do not include clinician care, medication orders, diagnosis, or insurance recommendations."
+        eyebrow={t("payment.eyebrow")}
+        title={t("payment.title")}
+        description={t("payment.description")}
       />
 
       <div className="paid-tool-grid">
         <Card className="paid-tool-card">
           <IconCircle tone="primary">PDF</IconCircle>
-          <h2>Download Doctor-ready PDF</h2>
-          <p>Shareable visit summary.</p>
-          <PrimaryButton href="/result">Download Full PDF Report</PrimaryButton>
+          <h2>{t("payment.downloadPdf")}</h2>
+          <p>{t("payment.summary")}</p>
+          <PrimaryButton href="/result">{t("result.download")}</PrimaryButton>
         </Card>
         <Card className="paid-tool-card">
           <IconCircle tone="teal">I</IconCircle>
-          <h2>View Insurance Checklist</h2>
-          <p>Coverage questions before care.</p>
-          <SecondaryButton href="/insurance-guide">View Checklist</SecondaryButton>
+          <h2>{t("payment.viewChecklist")}</h2>
+          <p>{t("payment.coverage")}</p>
+          <SecondaryButton href="/insurance-guide">{t("payment.viewChecklist")}</SecondaryButton>
         </Card>
         <Card className="paid-tool-card">
           <IconCircle tone="success">T</IconCircle>
-          <h2>Save Symptom Timeline</h2>
-          <p>Keep your symptom history organized.</p>
-          <SecondaryButton href="/result">Save Timeline</SecondaryButton>
+          <h2>{t("payment.saveTimeline")}</h2>
+          <p>{t("payment.timelineText")}</p>
+          <SecondaryButton href="/result">{t("payment.saveTimeline")}</SecondaryButton>
         </Card>
         <Card className="paid-tool-card">
           <IconCircle tone="purple">↩</IconCircle>
-          <h2>Back to Result</h2>
-          <p>Return to your care guidance.</p>
-          <SecondaryButton href="/result">Back to Result</SecondaryButton>
+          <h2>{t("payment.backResult")}</h2>
+          <p>{t("payment.return")}</p>
+          <SecondaryButton href="/result">{t("payment.backResult")}</SecondaryButton>
         </Card>
       </div>
     </section>

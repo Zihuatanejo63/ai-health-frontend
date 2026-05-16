@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ReactNode } from "react";
 
-type Tone = "primary" | "teal" | "success" | "warning" | "danger" | "purple";
+export type Tone = "primary" | "teal" | "success" | "warning" | "danger" | "purple";
 
 export function AppLayout({ children }: { children: ReactNode }) {
   return <>{children}</>;
@@ -125,15 +125,23 @@ export function InsuranceConceptCard({
   );
 }
 
-export function SummaryPreview() {
+export function SummaryPreview({
+  generated = "Generated on May 19, 2025 · 10:24 AM",
+  rows = ["Patient Overview", "Symptoms", "Timeline", "Red Flags Checked", "Medications Taken", "Questions to Ask"],
+  ready = "Ready"
+}: {
+  generated?: string;
+  rows?: string[];
+  ready?: string;
+}) {
   return (
     <Card className="summary-preview-card">
       <div className="summary-preview-brand">HealthMatchAI</div>
-      <p>Generated on May 19, 2025 · 10:24 AM</p>
-      {["Patient Overview", "Symptoms", "Timeline", "Red Flags Checked", "Medications Taken", "Questions to Ask"].map((item) => (
+      <p>{generated}</p>
+      {rows.map((item) => (
         <div className="summary-preview-row" key={item}>
           <strong>{item}</strong>
-          <span>Ready</span>
+          <span>{ready}</span>
         </div>
       ))}
     </Card>
@@ -145,12 +153,16 @@ export function HistoryItem({
   risk,
   care,
   date,
+  riskLabel = "Risk Level",
+  careLabel = "Recommended Care",
   tone = "warning"
 }: {
   symptom: string;
   risk: string;
   care: string;
   date: string;
+  riskLabel?: string;
+  careLabel?: string;
   tone?: Tone;
 }) {
   return (
@@ -159,9 +171,9 @@ export function HistoryItem({
       <div>
         <h2>{symptom}</h2>
         <div className="history-meta">
-          <span>Risk Level</span>
+          <span>{riskLabel}</span>
           <strong>{risk}</strong>
-          <span>Recommended Care</span>
+          <span>{careLabel}</span>
           <strong>{care}</strong>
         </div>
       </div>

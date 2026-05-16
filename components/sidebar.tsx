@@ -2,18 +2,19 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useI18n } from "@/components/i18n-provider";
 
 export const sidebarItems = [
-  { label: "Home", href: "/", icon: "⌂" },
-  { label: "Symptom Check", href: "/symptom-check", icon: "☤" },
-  { label: "Care Guidance", href: "/care-options", icon: "♡" },
-  { label: "Insurance", href: "/insurance-guide", icon: "♢" },
-  { label: "Health Summary", href: "/health-records", icon: "▣" },
-  { label: "History", href: "/history", icon: "◷" },
-  { label: "Pricing", href: "/pricing", icon: "$" }
+  { labelKey: "nav.home", href: "/", icon: "⌂" },
+  { labelKey: "nav.symptomCheck", href: "/symptom-check", icon: "☤" },
+  { labelKey: "nav.careGuidance", href: "/care-options", icon: "♡" },
+  { labelKey: "nav.insurance", href: "/insurance-guide", icon: "♢" },
+  { labelKey: "nav.healthSummary", href: "/health-records", icon: "▣" },
+  { labelKey: "nav.history", href: "/history", icon: "◷" },
+  { labelKey: "nav.pricing", href: "/pricing", icon: "$" }
 ];
 
-const settingsItem = { label: "Settings", href: "/settings", icon: "⚙" };
+const settingsItem = { labelKey: "nav.settings", href: "/settings", icon: "⚙" };
 
 function isActive(pathname: string, href: string) {
   if (pathname === "/result" && href === "/symptom-check") return true;
@@ -45,6 +46,7 @@ export function SidebarItem({
 
 export function Sidebar() {
   const pathname = usePathname();
+  const { t } = useI18n();
 
   return (
     <aside className="app-sidebar" aria-label="HealthMatchAI app navigation">
@@ -59,7 +61,7 @@ export function Sidebar() {
               href={item.href}
               icon={item.icon}
               key={item.href}
-              label={item.label}
+              label={t(item.labelKey)}
             />
           ))}
         </nav>
@@ -70,7 +72,7 @@ export function Sidebar() {
         className="sidebar-settings"
         href={settingsItem.href}
         icon={settingsItem.icon}
-        label={settingsItem.label}
+        label={t(settingsItem.labelKey)}
       />
     </aside>
   );

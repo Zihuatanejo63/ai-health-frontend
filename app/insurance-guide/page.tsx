@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Card,
   IconCircle,
@@ -6,45 +8,49 @@ import {
   StatusBadge
 } from "@/components/app-ui";
 import { DisclaimerBox } from "@/components/disclaimer-box";
+import { useI18n } from "@/components/i18n-provider";
+import { useSettings } from "@/components/settings-provider";
 import { VisualCard } from "@/components/visual-card";
 
 const concepts = [
-  ["Copay", "Fixed amount paid at a visit", "warning"],
-  ["Deductible", "Amount before your plan pays", "primary"],
-  ["Out-of-pocket max", "Yearly limit for covered costs", "teal"],
-  ["In-network", "Providers with lower negotiated cost", "success"],
-  ["Urgent care vs ER", "Compare cost and urgency before going", "purple"],
-  ["Questions to ask your insurer", "Confirm coverage before non-emergency care", "primary"]
+  ["insurance.copay", "insurance.copayDesc", "warning"],
+  ["insurance.deductible", "insurance.deductibleDesc", "primary"],
+  ["insurance.outOfPocket", "insurance.outOfPocketDesc", "teal"],
+  ["insurance.inNetwork", "insurance.inNetworkDesc", "success"],
+  ["insurance.urgentVsEr", "insurance.urgentVsErDesc", "purple"],
+  ["insurance.questions", "insurance.questionsDesc", "primary"]
 ] as const;
 
 export default function InsuranceGuidePage() {
+  const { t } = useI18n();
+  const { settings } = useSettings();
+  const insurance = settings.insuranceProfile;
+
   return (
     <section className="app-page">
       <PageHeader
-        eyebrow="Insurance Navigation"
-        title="Insurance Navigation"
-        description="Understand your coverage. Make informed care decisions."
+        eyebrow={t("insurance.title")}
+        title={t("insurance.title")}
+        description={t("insurance.description")}
       />
 
       <div className="insurance-dashboard-grid">
         <Card className="insurance-hero-card">
           <div>
             <IconCircle tone="teal">I</IconCircle>
-            <h2>Your coverage, made clear</h2>
-            <p>
-              We break down key concepts so you can estimate costs, compare care options, and avoid surprises.
-            </p>
+            <h2>{t("insurance.coverageClear")}</h2>
+            <p>{t("insurance.coverageText")}</p>
           </div>
           <VisualCard src="/images/design-insurance-navigation.png" alt="Insurance navigation design reference" />
         </Card>
 
         <Card className="coverage-snapshot">
-          <h2>Coverage snapshot</h2>
+          <h2>{t("insurance.snapshot")}</h2>
           {[
-            ["Plan active", "Active"],
-            ["In-network benefits", "In-network"],
-            ["Urgent care copay", "$35"],
-            ["Deductible remaining", "$1,250 / $2,000"]
+            [t("insurance.planActive"), insurance.status],
+            [t("insurance.networkBenefits"), insurance.inNetworkPreference],
+            [t("insurance.urgentCopay"), insurance.copay],
+            [t("insurance.deductibleRemaining"), insurance.deductible]
           ].map(([label, value]) => (
             <div className="snapshot-row" key={label}>
               <span>{label}</span>
@@ -58,11 +64,11 @@ export default function InsuranceGuidePage() {
 
       <div className="concept-grid">
         {concepts.map(([title, description, tone]) => (
-          <InsuranceConceptCard key={title} title={title} description={description} tone={tone} />
+          <InsuranceConceptCard key={title} title={t(title)} description={t(description)} tone={tone} />
         ))}
       </div>
 
-      <DisclaimerBox text="HealthMatchAI provides educational information only. We do not sell insurance and do not recommend any specific plan, provider, or treatment. Always verify benefits with your insurer." />
+      <DisclaimerBox text={t("safety.insurance")} />
     </section>
   );
 }

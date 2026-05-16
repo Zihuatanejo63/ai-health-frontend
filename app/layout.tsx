@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { AppLayout } from "@/components/app-ui";
-import { LanguageProvider } from "@/components/language-provider";
+import { I18nProvider } from "@/components/i18n-provider";
+import { SettingsProvider } from "@/components/settings-provider";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import "./globals.css";
@@ -18,17 +19,19 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <LanguageProvider>
-          <AppLayout>
-            <div className="site-shell">
-            <SiteHeader />
-            <main className="page-main">
-              <div className="container">{children}</div>
-            </main>
-            <SiteFooter />
-            </div>
-          </AppLayout>
-        </LanguageProvider>
+        <SettingsProvider>
+          <I18nProvider>
+            <AppLayout>
+              <div className="site-shell">
+                <SiteHeader />
+                <main className="page-main">
+                  <div className="container">{children}</div>
+                </main>
+                <SiteFooter />
+              </div>
+            </AppLayout>
+          </I18nProvider>
+        </SettingsProvider>
       </body>
     </html>
   );

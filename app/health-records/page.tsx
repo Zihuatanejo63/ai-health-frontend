@@ -1,31 +1,36 @@
+"use client";
+
 import { Card, IconCircle, PageHeader, PrimaryButton, StatusBadge, SummaryPreview } from "@/components/app-ui";
+import { useI18n } from "@/components/i18n-provider";
 import { VisualCard } from "@/components/visual-card";
 
 const items = [
-  ["Symptoms", "4", "Headache, fatigue, mild fever, body aches", "primary"],
-  ["Timeline", "5 days", "May 15 – May 19, 2025", "teal"],
-  ["Red Flags Checked", "0", "No red flags detected", "danger"],
-  ["Medications Taken", "2", "Acetaminophen, cough syrup", "teal"],
-  ["Questions to Ask", "3", "Personalized questions for your visit", "primary"]
+  ["summary.symptoms", "4", "Headache, fatigue, mild fever, body aches", "primary"],
+  ["summary.timeline", "5 days", "May 15 – May 19, 2025", "teal"],
+  ["summary.redFlags", "0", "No red flags detected", "danger"],
+  ["summary.medications", "2", "Acetaminophen, cough syrup", "teal"],
+  ["summary.questions", "3", "Personalized questions for your visit", "primary"]
 ] as const;
 
 export default function HealthRecordsPage() {
+  const { t } = useI18n();
+
   return (
     <section className="app-page">
       <PageHeader
-        title="Doctor-ready Summary"
-        description="A shareable overview of your health information."
-        action={<PrimaryButton href="/payment-success">Save as PDF</PrimaryButton>}
+        title={t("summary.title")}
+        description={t("summary.description")}
+        action={<PrimaryButton href="/payment-success">{t("summary.savePdf")}</PrimaryButton>}
       />
 
       <div className="health-summary-layout">
         <div className="health-summary-list">
           {items.map(([title, count, detail, tone]) => (
             <Card className="summary-dashboard-card" key={title}>
-              <IconCircle tone={tone}>{title.charAt(0)}</IconCircle>
+              <IconCircle tone={tone}>{t(title).charAt(0)}</IconCircle>
               <div>
                 <div className="card-title-row">
-                  <h2>{title}</h2>
+                  <h2>{t(title)}</h2>
                   <StatusBadge tone={tone}>{count}</StatusBadge>
                 </div>
                 <p>{detail}</p>
@@ -35,7 +40,11 @@ export default function HealthRecordsPage() {
         </div>
 
         <div className="health-summary-preview">
-          <SummaryPreview />
+          <SummaryPreview
+            generated={t("summary.generated")}
+            ready={t("common.ready")}
+            rows={[t("summary.preview"), t("summary.symptoms"), t("summary.timeline"), t("summary.redFlags"), t("summary.medications"), t("summary.questions")]}
+          />
           <VisualCard src="/images/design-health-summary.png" alt="Health summary design reference" />
         </div>
       </div>
@@ -43,8 +52,8 @@ export default function HealthRecordsPage() {
       <Card className="privacy-card">
         <IconCircle tone="primary">L</IconCircle>
         <div>
-          <h2>Your privacy is our priority</h2>
-          <p>Your data is encrypted and never shared without your consent.</p>
+          <h2>{t("summary.privacyTitle")}</h2>
+          <p>{t("summary.privacyText")}</p>
         </div>
       </Card>
     </section>

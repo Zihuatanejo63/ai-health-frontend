@@ -1,44 +1,50 @@
-import { HistoryItem, PageHeader, PrimaryButton, StatusBadge } from "@/components/app-ui";
+"use client";
 
-const history = [
-  ["Fever + cough", "Moderate", "Primary Care", "May 19, 2025 10:24 AM", "warning"],
-  ["Headache", "Low", "Self Care", "May 16, 2025 08:15 PM", "success"],
-  ["Stomach pain", "Moderate", "Primary Care", "May 14, 2025 11:47 AM", "warning"],
-  ["Sore throat", "Low", "Self Care", "May 10, 2025 09:02 AM", "teal"],
-  ["Fatigue", "Moderate", "Primary Care", "May 7, 2025 04:30 PM", "warning"]
-] as const;
+import { useEffect, useState } from "react";
+import { HistoryItem, PageHeader, PrimaryButton, StatusBadge, type Tone } from "@/components/app-ui";
+import { useI18n } from "@/components/i18n-provider";
+import { defaultHistory, readHistory, type SymptomHistoryItem } from "@/lib/settings";
 
 export default function HistoryPage() {
+  const { t } = useI18n();
+  const [history, setHistory] = useState<SymptomHistoryItem[]>(defaultHistory);
+
+  useEffect(() => {
+    setHistory(readHistory());
+  }, []);
+
   return (
     <section className="app-page history-page">
-      <PageHeader title="History" description="Your past symptom checks and results." />
+      <PageHeader title={t("history.title")} description={t("history.description")} />
 
       <div className="filter-chip-row">
-        {["All", "Recent", "Saved", "Flagged"].map((item, index) => (
+        {["history.all", "history.recent", "history.saved", "history.flagged"].map((item, index) => (
           <StatusBadge key={item} tone={index === 0 ? "primary" : "teal"}>
-            {item}
+            {t(item)}
           </StatusBadge>
         ))}
       </div>
 
       <div className="history-list">
-        {history.map(([symptom, risk, care, date, tone]) => (
+        {history.map(({ symptom, risk, care, date, tone }) => (
           <HistoryItem
             key={`${symptom}-${date}`}
             symptom={symptom}
             risk={risk}
             care={care}
             date={date}
-            tone={tone}
+            tone={(tone ?? "warning") as Tone}
+            riskLabel={t("common.riskLevel")}
+            careLabel={t("home.recommendedCare")}
           />
         ))}
       </div>
 
       <section className="panel history-empty-card">
         <div className="empty-icon">◷</div>
-        <h2>No more history yet</h2>
-        <p>Your symptom checks will appear here. Start a new check anytime.</p>
-        <PrimaryButton href="/symptom-check">Start Symptom Check</PrimaryButton>
+        <h2>{t("history.emptyTitle")}</h2>
+        <p>{t("history.emptyText")}</p>
+        <PrimaryButton href="/symptom-check">{t("home.start")}</PrimaryButton>
       </section>
     </section>
   );

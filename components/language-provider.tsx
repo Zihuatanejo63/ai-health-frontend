@@ -3,12 +3,11 @@
 import {
   createContext,
   useContext,
-  useEffect,
   useMemo,
-  useState,
   type ReactNode
 } from "react";
-import { LANGUAGE_STORAGE_KEY, type LanguageCode, isLanguageCode } from "@/lib/language";
+import { type LanguageCode } from "@/lib/settings";
+import { useSettings } from "@/components/settings-provider";
 
 type LanguageContextValue = {
   languageCode: LanguageCode;
@@ -18,28 +17,15 @@ type LanguageContextValue = {
 const LanguageContext = createContext<LanguageContextValue | null>(null);
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [languageCode, setLanguageCodeState] = useState<LanguageCode>("en");
-
-  useEffect(() => {
-    const stored = window.localStorage.getItem(LANGUAGE_STORAGE_KEY);
-    if (stored && isLanguageCode(stored)) setLanguageCodeState(stored);
-  }, []);
+  const { settings, setLanguage } = useSettings();
 
   const value = useMemo<LanguageContextValue>(
     () => ({
-      languageCode,
-      setLanguageCode(nextLanguageCode) {
-        setLanguageCodeState(nextLanguageCode);
-        window.localStorage.setItem(LANGUAGE_STORAGE_KEY, nextLanguageCode);
-        document.documentElement.lang = nextLanguageCode;
-      }
+      languageCode: settings.language,
+      setLanguageCode: setLanguage
     }),
-    [languageCode]
+    [settings.language, setLanguage]
   );
-
-  useEffect(() => {
-    document.documentElement.lang = languageCode;
-  }, [languageCode]);
 
   return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>;
 }

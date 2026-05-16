@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Card,
   IconCircle,
@@ -6,22 +8,25 @@ import {
   StatCard,
   StatusBadge
 } from "@/components/app-ui";
+import { useI18n } from "@/components/i18n-provider";
 import { VisualCard } from "@/components/visual-card";
 
 const stats = [
-  ["Risk Level", "Moderate", "Based on your symptoms", "warning"],
-  ["Recommended Care", "Primary Care", "Best place to start", "primary"],
-  ["Red Flags", "Checked", "No immediate red flags detected", "success"],
-  ["Insurance Note", "Check urgent care coverage", "Before choosing care", "purple"],
-  ["Doctor-ready Summary", "Ready", "Prepared to share", "teal"]
+  ["common.riskLevel", "common.moderate", "home.riskDetail", "warning"],
+  ["home.recommendedCare", "common.primaryCare", "home.recommendedDetail", "primary"],
+  ["home.redFlags", "home.checked", "home.redFlagsDetail", "success"],
+  ["home.insuranceNote", "home.insuranceValue", "home.insuranceDetail", "purple"],
+  ["home.doctorSummary", "common.ready", "home.summaryDetail", "teal"]
 ] as const;
 
 export default function HomePage() {
+  const { t } = useI18n();
+
   return (
     <section className="app-page dashboard-page">
       <PageHeader
-        title="Welcome back"
-        description="How can we help you today?"
+        title={t("home.title")}
+        description={t("home.description")}
         action={<span className="notification-dot">⌁</span>}
       />
 
@@ -29,25 +34,25 @@ export default function HomePage() {
         <div className="command-input">
           <IconCircle>Q</IconCircle>
           <div>
-            <h2>What symptoms are you experiencing?</h2>
-            <input placeholder="Describe your symptoms..." />
+            <h2>{t("home.symptomQuestion")}</h2>
+            <input placeholder={t("home.placeholder")} />
           </div>
         </div>
-        <PrimaryButton href="/symptom-check">Start Symptom Check</PrimaryButton>
+        <PrimaryButton href="/symptom-check">{t("home.start")}</PrimaryButton>
       </Card>
 
       <div className="dashboard-grid">
         <div className="dashboard-card-grid">
           {stats.map(([label, value, detail, tone]) => (
-            <StatCard key={label} label={label} value={value} detail={detail} tone={tone} />
+            <StatCard key={label} label={t(label)} value={t(value)} detail={t(detail)} tone={tone} />
           ))}
           <Card className="recent-activity-card">
             <div>
               <IconCircle tone="primary">H</IconCircle>
-              <StatusBadge tone="primary">Recent Activity</StatusBadge>
+              <StatusBadge tone="primary">{t("home.recentActivity")}</StatusBadge>
             </div>
-            <h2>Symptom Check</h2>
-            <p>Headache, fatigue, mild fever</p>
+            <h2>{t("home.recentType")}</h2>
+            <p>{t("home.recentSymptoms")}</p>
             <time>May 19, 2025 · 10:24 AM</time>
           </Card>
         </div>

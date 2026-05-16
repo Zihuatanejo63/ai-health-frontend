@@ -3,43 +3,45 @@
 import { FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { DisclaimerBox } from "@/components/disclaimer-box";
+import { useI18n } from "@/components/i18n-provider";
 import { VisualCard } from "@/components/visual-card";
 
 const SESSION_RESULT_KEY = "ai-health-match-result";
 
 const symptoms = [
-  "Fever",
-  "Cough",
-  "Headache",
-  "Sore throat",
-  "Fatigue",
-  "Body aches",
-  "Nausea",
-  "Shortness of breath",
-  "Runny nose"
+  ["Fever", "symptom.fever"],
+  ["Cough", "symptom.cough"],
+  ["Headache", "symptom.headache"],
+  ["Sore throat", "symptom.soreThroat"],
+  ["Fatigue", "symptom.fatigue"],
+  ["Body aches", "symptom.bodyAches"],
+  ["Nausea", "symptom.nausea"],
+  ["Shortness of breath", "symptom.shortnessBreath"],
+  ["Runny nose", "symptom.runnyNose"]
 ];
 
-const durations = ["Less than 24 hours", "1–3 days", "4–7 days", "More than a week"];
-const temperatures = ["Normal", "99–100°F", "100–102°F", "Above 102°F", "Don’t know"];
-const severity = ["Mild", "Moderate", "Severe"];
+const durations = [["Less than 24 hours", "symptom.less24"], ["1–3 days", "symptom.oneThree"], ["4–7 days", "symptom.fourSeven"], ["More than 7 days", "symptom.moreSeven"]];
+const temperatures = [["Normal", "symptom.normal"], ["99–100°F", "symptom.tempLow"], ["100–102°F", "symptom.tempMedium"], ["Above 102°F", "symptom.tempHigh"], ["Don’t know", "symptom.dontKnow"]];
+const severity = [["Mild", "symptom.mild"], ["Moderate", "common.moderate"], ["Severe", "symptom.severe"]];
 const redFlags = [
-  "Chest pain",
-  "Trouble breathing",
-  "Confusion",
-  "Severe dehydration",
-  "Stiff neck",
-  "Persistent vomiting",
-  "Rash with fever"
+  ["Chest pain", "symptom.chestPain"],
+  ["Trouble breathing", "symptom.troubleBreathing"],
+  ["Confusion", "symptom.confusion"],
+  ["Severe dehydration", "symptom.severeDehydration"],
+  ["Stiff neck", "symptom.stiffNeck"],
+  ["Persistent vomiting", "symptom.persistentVomiting"],
+  ["Rash with fever", "symptom.rashWithFever"]
 ];
 
 export default function SymptomCheckPage() {
   const router = useRouter();
+  const { language, t } = useI18n();
 
   function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    const selectedSymptoms = symptoms.filter((item) => formData.get(`symptom-${item}`));
-    const selectedRedFlags = redFlags.filter((item) => formData.get(`red-${item}`));
+    const selectedSymptoms = symptoms.map(([value]) => value).filter((item) => formData.get(`symptom-${item}`));
+    const selectedRedFlags = redFlags.map(([value]) => value).filter((item) => formData.get(`red-${item}`));
     const duration = String(formData.get("duration") || "1–3 days");
     const temperature = String(formData.get("temperature") || "100–102°F");
     const level = String(formData.get("severity") || "Moderate");
@@ -53,8 +55,8 @@ export default function SymptomCheckPage() {
             severity: level.toLowerCase(),
             durationValue: 3,
             durationUnit: "days",
-            languageCode: "en",
-            languageName: "English"
+            languageCode: language,
+            languageName: language
           },
           response: {
             referenceId: "HM-APP-TRIAGE",
@@ -87,9 +89,9 @@ export default function SymptomCheckPage() {
     <section className="app-page symptom-app-page">
       <div className="app-page-header">
         <div>
-          <p className="eyebrow">Symptom Triage</p>
-          <h1>Symptom Check</h1>
-          <p>Step 1 of 5</p>
+          <p className="eyebrow">{t("symptom.eyebrow")}</p>
+          <h1>{t("symptom.title")}</h1>
+          <p>{t("symptom.step")}</p>
         </div>
         <VisualCard
           src="/images/design-symptom-check.png"
@@ -99,56 +101,57 @@ export default function SymptomCheckPage() {
 
       <form className="triage-workflow" onSubmit={onSubmit}>
         <article className="panel workflow-step">
-          <span>Step 1 of 5</span>
-          <h2>What symptoms are you experiencing?</h2>
+          <span>{t("symptom.step")}</span>
+          <h2>{t("symptom.question")}</h2>
+          <p>{t("symptom.selectAll")}</p>
           <div className="choice-grid">
-            {symptoms.map((item) => (
-              <label key={item} className="choice-pill">
-                <input type="checkbox" name={`symptom-${item}`} /> {item}
+            {symptoms.map(([value, labelKey]) => (
+              <label key={value} className="choice-pill">
+                <input type="checkbox" name={`symptom-${value}`} /> {t(labelKey)}
               </label>
             ))}
           </div>
         </article>
 
         <article className="panel workflow-step">
-          <h2>How long have you had these symptoms?</h2>
+          <h2>{t("symptom.durationQuestion")}</h2>
           <div className="choice-grid compact-choice-grid">
-            {durations.map((item) => (
-              <label key={item} className="choice-pill">
-                <input type="radio" name="duration" value={item} /> {item}
+            {durations.map(([value, labelKey]) => (
+              <label key={value} className="choice-pill">
+                <input type="radio" name="duration" value={value} /> {t(labelKey)}
               </label>
             ))}
           </div>
         </article>
 
         <article className="panel workflow-step">
-          <h2>What is your highest temperature?</h2>
+          <h2>{t("symptom.temperatureQuestion")}</h2>
           <div className="choice-grid compact-choice-grid">
-            {temperatures.map((item) => (
-              <label key={item} className="choice-pill">
-                <input type="radio" name="temperature" value={item} /> {item}
+            {temperatures.map(([value, labelKey]) => (
+              <label key={value} className="choice-pill">
+                <input type="radio" name="temperature" value={value} /> {t(labelKey)}
               </label>
             ))}
           </div>
         </article>
 
         <article className="panel workflow-step">
-          <h2>Overall severity</h2>
+          <h2>{t("symptom.severityQuestion")}</h2>
           <div className="choice-grid compact-choice-grid">
-            {severity.map((item) => (
-              <label key={item} className="choice-card">
-                <input type="radio" name="severity" value={item} /> <strong>{item}</strong>
+            {severity.map(([value, labelKey]) => (
+              <label key={value} className="choice-card">
+                <input type="radio" name="severity" value={value} /> <strong>{t(labelKey)}</strong>
               </label>
             ))}
           </div>
         </article>
 
         <article className="panel workflow-step">
-          <h2>Red flag symptoms</h2>
+          <h2>{t("symptom.redFlags")}</h2>
           <div className="choice-grid">
-            {redFlags.map((item) => (
-              <label key={item} className="choice-pill">
-                <input type="checkbox" name={`red-${item}`} /> {item}
+            {redFlags.map(([value, labelKey]) => (
+              <label key={value} className="choice-pill danger-choice">
+                <input type="checkbox" name={`red-${value}`} /> {t(labelKey)}
               </label>
             ))}
           </div>
@@ -156,15 +159,15 @@ export default function SymptomCheckPage() {
 
         <div className="workflow-actions">
           <button className="btn-secondary" type="button">
-            Back
+            {t("common.back")}
           </button>
           <button className="btn-primary" type="submit">
-            Continue
+            {t("common.continue")}
           </button>
         </div>
       </form>
 
-      <DisclaimerBox text="HealthMatchAI does not diagnose, prescribe, treat, or replace professional medical care." />
+      <DisclaimerBox text={t("safety.medical")} />
     </section>
   );
 }
