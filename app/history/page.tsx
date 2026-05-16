@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Card, HistoryItem, PageHeader, PrimaryButton, StatusBadge, type Tone } from "@/components/app-ui";
 import { useI18n } from "@/components/i18n-provider";
 import { readSymptomChecks, type SavedSymptomCheck } from "@/lib/settings";
+import { careLevelKey, riskLevelKey, symptomItemKey } from "@/lib/i18n-display";
 
 export default function HistoryPage() {
   const { t } = useI18n();
@@ -28,9 +29,9 @@ export default function HistoryPage() {
           {checks.map((check) => (
             <HistoryItem
               key={check.id}
-              symptom={check.symptoms.slice(0, 3).join(" + ") || check.primarySymptom}
-              risk={check.result.riskLevel}
-              care={check.result.recommendedCare}
+              symptom={(check.symptoms.slice(0, 3).map((item) => t(symptomItemKey(item))).join(" + ")) || t(symptomItemKey(check.primarySymptom))}
+              risk={t(riskLevelKey(check.result.riskLevel))}
+              care={t(careLevelKey(check.result.recommendedCare))}
               date={new Date(check.createdAt).toLocaleString()}
               tone={(check.result.riskLevel === "Low" ? "success" : check.result.riskLevel === "Emergency" ? "danger" : "warning") as Tone}
               riskLabel={t("common.riskLevel")}
@@ -43,7 +44,7 @@ export default function HistoryPage() {
           <div className="empty-icon">◷</div>
           <h2>{t("history.emptyTitle")}</h2>
           <p>{t("history.emptyText")}</p>
-          <p className="login-save-prompt">Create a free account to save your health history.</p>
+          <p className="login-save-prompt">{t("home.createAccountPrompt")}</p>
           <PrimaryButton href="/symptom-check">{t("home.start")}</PrimaryButton>
         </Card>
       )}

@@ -62,8 +62,8 @@ export function Sidebar() {
           HealthMatchAI
         </Link>
         <Link className="sidebar-user" href={user ? "/settings" : "/login"}>
-          <span>{user?.name?.charAt(0) ?? "G"}</span>
-          <strong>{user?.name ?? "Guest mode"}</strong>
+          <span>{user?.name?.charAt(0) ?? t("common.guestMode").charAt(0)}</span>
+          <strong>{user?.name ?? t("common.guestMode")}</strong>
         </Link>
         <nav className="sidebar-nav">
           {sidebarItems.map((item) => (

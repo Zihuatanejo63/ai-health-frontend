@@ -29,7 +29,7 @@ export const symptomCategories = [
   },
   {
     name: "Mental / Emotional",
-    symptoms: ["Anxiety", "Panic feeling", "Low mood", "Trouble sleeping", "Stress", "Suicidal thoughts", "Self-harm thoughts"]
+    symptoms: ["Anxiety", "Panic feeling", "Low mood", "Stress", "Suicidal thoughts", "Self-harm thoughts"]
   }
 ];
 
@@ -53,9 +53,10 @@ export function getSymptomCategory(symptom: string) {
 }
 
 export function getDetailQuestions(category: string) {
-  if (category === "Respiratory") return ["Cough pattern", "Breathing difficulty", "Chest symptoms"];
-  if (category === "Digestive") return ["Vomiting frequency", "Diarrhea frequency", "Pain location"];
+  if (category === "Respiratory") return ["Cough type", "Shortness of breath", "Chest pain"];
+  if (category === "Digestive") return ["Vomiting", "Diarrhea", "Blood in stool", "Pain location"];
   if (category === "Pain") return ["Pain location", "Pain score", "Sudden onset"];
+  if (category === "Neurological") return ["Numbness", "Weakness", "Speech trouble", "Vision changes"];
   if (category === "Mental / Emotional") return ["Current safety", "Support available", "Recent stressors"];
   return ["Main concern", "What makes it worse", "What helps"];
 }

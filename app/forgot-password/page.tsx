@@ -2,9 +2,11 @@
 
 import { FormEvent, useState } from "react";
 import { Card, PageHeader } from "@/components/app-ui";
+import { useI18n } from "@/components/i18n-provider";
 
 export default function ForgotPasswordPage() {
   const [sent, setSent] = useState(false);
+  const { t } = useI18n();
 
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -13,13 +15,13 @@ export default function ForgotPasswordPage() {
 
   return (
     <section className="app-page auth-page">
-      <PageHeader title="Reset your password" description="Mock reset flow for the current frontend build." />
+      <PageHeader title={t("auth.resetTitle")} description={t("auth.resetSubtitle")} />
       <Card className="auth-card">
         <form className="settings-form" onSubmit={submit}>
-          <label>Email<input defaultValue="alex.johnson@email.com" type="email" /></label>
-          <button className="btn-primary" type="submit">Send reset link</button>
+          <label>{t("auth.email")}<input defaultValue="alex.johnson@email.com" type="email" /></label>
+          <button className="btn-primary" type="submit">{t("auth.magicLink")}</button>
         </form>
-        {sent ? <p className="login-save-prompt">Reset link sent in demo mode.</p> : null}
+        {sent ? <p className="login-save-prompt">{t("auth.resetSent")}</p> : null}
       </Card>
     </section>
   );

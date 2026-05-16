@@ -8,17 +8,36 @@ import { IllustrationImage } from "@/components/visual-card";
 import { getDetailQuestions, getSymptomCategory, redFlagSymptoms, symptomCategories } from "@/lib/symptomLibrary";
 import { evaluateTriage } from "@/lib/triageRules";
 import { readSymptomChecks, writeSymptomChecks, type SavedSymptomCheck } from "@/lib/settings";
+import { backgroundFieldKey, detailQuestionKey, symptomCategoryKey, symptomItemKey } from "@/lib/i18n-display";
 
 const SESSION_RESULT_KEY = "ai-health-match-result";
 
 const durations = ["Less than 24 hours", "1–3 days", "4–7 days", "More than 7 days"];
 const temperatures = ["Normal", "99–100°F", "100–102°F", "Above 102°F", "Don’t know"];
 const severities = ["Mild", "Moderate", "Severe"];
-const trends = ["Getting better", "Worse", "Unchanged"];
+const trends = ["Getting better", "Getting worse", "Unchanged"];
+
+const optionKeyMap: Record<string, string> = {
+  "Less than 24 hours": "symptom.less24",
+  "1–3 days": "symptom.oneThree",
+  "4–7 days": "symptom.fourSeven",
+  "More than 7 days": "symptom.moreSeven",
+  Normal: "symptom.normal",
+  "99–100°F": "symptom.tempLow",
+  "100–102°F": "symptom.tempMedium",
+  "Above 102°F": "symptom.tempHigh",
+  "Don’t know": "symptom.dontKnow",
+  Mild: "symptom.mild",
+  Moderate: "common.moderate",
+  Severe: "symptom.severe",
+  "Getting better": "symptom.gettingBetter",
+  "Getting worse": "symptom.worse",
+  Unchanged: "symptom.unchanged"
+};
 
 export default function SymptomCheckPage() {
   const router = useRouter();
-  const { language, t } = useI18n();
+  const { t } = useI18n();
   const [step, setStep] = useState(1);
   const [symptoms, setSymptoms] = useState<string[]>([]);
   const [primarySymptom, setPrimarySymptom] = useState("");
@@ -34,6 +53,7 @@ export default function SymptomCheckPage() {
     sex: "",
     pregnancy: "No",
     chronicConditions: "",
+    immunocompromised: "No",
     medications: "",
     allergies: "",
     insuranceStatus: "Active",
@@ -88,32 +108,29 @@ export default function SymptomCheckPage() {
         <div>
           <p className="eyebrow">{t("symptom.eyebrow")}</p>
           <h1>{t("symptom.title")}</h1>
-          <p>Step {step} of 5</p>
+          <p>{t("symptom.stepLabel").replace("{step}", String(step))}</p>
         </div>
         <IllustrationImage variant="section" src="/images/illustration-symptom-triage-doctor.png" alt="Doctor reviewing symptom triage icons" />
       </div>
 
       {isCrisisSelected ? (
         <section className="panel crisis-card">
-          <h2>Crisis safety support</h2>
-          <p>
-            If you may hurt yourself or someone else, contact local emergency services now or reach a crisis hotline in your country.
-            If you are in the U.S. or Canada, call or text 988 for immediate crisis support.
-          </p>
-          <button className="btn-secondary" onClick={() => setStep(1)} type="button">Review answers</button>
+          <h2>{t("symptom.crisisTitle")}</h2>
+          <p>{t("symptom.crisisBody")}</p>
+          <button className="btn-secondary" onClick={() => setStep(1)} type="button">{t("symptom.reviewAnswers")}</button>
         </section>
       ) : null}
 
       <form className="triage-workflow" onSubmit={onSubmit}>
         {step === 1 ? (
           <article className="panel workflow-step">
-            <span>Step 1: Choose symptoms</span>
+            <span>{t("symptom.stepChoose")}</span>
             <h2>{t("symptom.question")}</h2>
-            <p>Select all symptoms and choose one primary symptom.</p>
+            <p>{t("symptom.chooseMainSymptoms")}. {t("symptom.selectAll")}</p>
             <div className="symptom-category-grid">
               {symptomCategories.map((category) => (
                 <section className="symptom-category-card" key={category.name}>
-                  <h3>{category.name}</h3>
+                  <h3>{t(symptomCategoryKey(category.name))}</h3>
                   <div className="choice-grid">
                     {category.symptoms.map((symptom) => (
                       <label key={symptom} className={`choice-pill${symptom.includes("Suicidal") || symptom.includes("Self-harm") ? " danger-choice" : ""}`}>
@@ -122,7 +139,7 @@ export default function SymptomCheckPage() {
                           onChange={() => toggleValue(symptom, symptoms, setSymptoms)}
                           type="checkbox"
                         />
-                        {symptom}
+                        {t(symptomItemKey(symptom))}
                       </label>
                     ))}
                   </div>
@@ -130,10 +147,10 @@ export default function SymptomCheckPage() {
               ))}
             </div>
             <label className="form-field">
-              Primary symptom
+              {t("symptom.primarySymptom")}
               <select value={primarySymptom} onChange={(event) => setPrimarySymptom(event.target.value)}>
-                <option value="">Choose primary symptom</option>
-                {symptoms.map((symptom) => <option key={symptom}>{symptom}</option>)}
+                <option value="">{t("symptom.choosePrimary")}</option>
+                {symptoms.map((symptom) => <option key={symptom} value={symptom}>{t(symptomItemKey(symptom))}</option>)}
               </select>
             </label>
           </article>
@@ -141,13 +158,13 @@ export default function SymptomCheckPage() {
 
         {step === 2 ? (
           <article className="panel workflow-step">
-            <span>Step 2: Symptom details</span>
-            <h2>{primarySymptom || "Primary symptom"} details</h2>
-            <p>Questions are tailored to the primary symptom category: {primaryCategory}.</p>
+            <span>{t("symptom.stepDetails")}</span>
+            <h2>{t("symptom.primaryDetails").replace("{symptom}", primarySymptom ? t(symptomItemKey(primarySymptom)) : t("symptom.primarySymptom"))}</h2>
+            <p>{t("symptom.tailoredQuestions").replace("{category}", t(symptomCategoryKey(primaryCategory)))}</p>
             <div className="form-grid-two">
               {detailQuestions.map((question) => (
                 <label className="form-field" key={question}>
-                  {question}
+                  {t(detailQuestionKey(question))}
                   <input value={details[question] ?? ""} onChange={(event) => setDetails({ ...details, [question]: event.target.value })} />
                 </label>
               ))}
@@ -157,35 +174,35 @@ export default function SymptomCheckPage() {
 
         {step === 3 ? (
           <article className="panel workflow-step">
-            <span>Step 3: Duration & severity</span>
-            <h2>How long and how severe?</h2>
+            <span>{t("symptom.stepDuration")}</span>
+            <h2>{t("symptom.durationSeverityPrompt")}</h2>
             <div className="choice-grid compact-choice-grid">
-              {durations.map((item) => <label className="choice-pill" key={item}><input checked={duration === item} onChange={() => setDuration(item)} type="radio" /> {item}</label>)}
+              {durations.map((item) => <label className="choice-pill" key={item}><input checked={duration === item} onChange={() => setDuration(item)} type="radio" /> {t(optionKeyMap[item])}</label>)}
             </div>
             <label className="form-field">
-              Pain score: {painScore}
+              {t("symptom.painScore")}: {painScore}
               <input min="0" max="10" value={painScore} onChange={(event) => setPainScore(event.target.value)} type="range" />
             </label>
             <div className="choice-grid compact-choice-grid">
-              {temperatures.map((item) => <label className="choice-pill" key={item}><input checked={temperature === item} onChange={() => setTemperature(item)} type="radio" /> {item}</label>)}
+              {temperatures.map((item) => <label className="choice-pill" key={item}><input checked={temperature === item} onChange={() => setTemperature(item)} type="radio" /> {t(optionKeyMap[item])}</label>)}
             </div>
             <div className="choice-grid compact-choice-grid">
-              {severities.map((item) => <label className="choice-card" key={item}><input checked={severity === item} onChange={() => setSeverity(item)} type="radio" /> <strong>{item}</strong></label>)}
+              {severities.map((item) => <label className="choice-card" key={item}><input checked={severity === item} onChange={() => setSeverity(item)} type="radio" /> <strong>{t(optionKeyMap[item])}</strong></label>)}
             </div>
             <div className="choice-grid compact-choice-grid">
-              {trends.map((item) => <label className="choice-pill" key={item}><input checked={trend === item} onChange={() => setTrend(item)} type="radio" /> {item}</label>)}
+              {trends.map((item) => <label className="choice-pill" key={item}><input checked={trend === item} onChange={() => setTrend(item)} type="radio" /> {t(optionKeyMap[item])}</label>)}
             </div>
           </article>
         ) : null}
 
         {step === 4 ? (
           <article className="panel workflow-step">
-            <span>Step 4: Red flags</span>
+            <span>{t("symptom.stepRedFlags")}</span>
             <h2>{t("symptom.redFlags")}</h2>
             <div className="choice-grid">
               {redFlagSymptoms.map((item) => (
                 <label className="choice-pill danger-choice" key={item}>
-                  <input checked={redFlags.includes(item)} onChange={() => toggleValue(item, redFlags, setRedFlags)} type="checkbox" /> {item}
+                  <input checked={redFlags.includes(item)} onChange={() => toggleValue(item, redFlags, setRedFlags)} type="checkbox" /> {t(symptomItemKey(item))}
                 </label>
               ))}
             </div>
@@ -194,12 +211,12 @@ export default function SymptomCheckPage() {
 
         {step === 5 ? (
           <article className="panel workflow-step">
-            <span>Step 5: Health background</span>
-            <h2>Health background</h2>
+            <span>{t("symptom.stepBackground")}</span>
+            <h2>{t("symptom.healthBackground")}</h2>
             <div className="form-grid-two">
               {Object.entries(background).map(([key, value]) => (
                 <label className="form-field" key={key}>
-                  {key.replace(/([A-Z])/g, " $1")}
+                  {t(backgroundFieldKey(key.replace(/([A-Z])/g, " $1")))}
                   <input value={value} onChange={(event) => setBackground({ ...background, [key]: event.target.value })} />
                 </label>
               ))}
@@ -217,7 +234,7 @@ export default function SymptomCheckPage() {
             </button>
           ) : (
             <button className="btn-primary" type="submit">
-              Get My Care Guidance
+              {t("symptom.getGuidance")}
             </button>
           )}
         </div>

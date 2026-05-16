@@ -14,7 +14,7 @@ import {
 } from "@/components/settings-controls";
 import { useSettings } from "@/components/settings-provider";
 import { type HealthMatchSettings } from "@/lib/settings";
-import { createMockUser, readUser, writeUser } from "@/lib/auth";
+import { clearUser, createMockUser, readUser, writeUser } from "@/lib/auth";
 
 type ModalType = "account" | "health" | "insurance" | null;
 
@@ -22,12 +22,14 @@ function ListEditor({
   label,
   values,
   onChange,
-  addLabel
+  addLabel,
+  emptyLabel
 }: {
   label: string;
   values: string[];
   onChange: (values: string[]) => void;
   addLabel: string;
+  emptyLabel: string;
 }) {
   const [draft, setDraft] = useState("");
 
@@ -42,7 +44,7 @@ function ListEditor({
     <div className="list-editor">
       <label>{label}</label>
       <div className="tag-list">
-        {values.length === 0 ? <span className="empty-tag">None</span> : null}
+        {values.length === 0 ? <span className="empty-tag">{emptyLabel}</span> : null}
         {values.map((item) => (
           <button key={item} onClick={() => onChange(values.filter((value) => value !== item))} type="button">
             {item} ×
@@ -120,7 +122,17 @@ export default function SettingsPage() {
       <PageHeader title={t("settings.title")} />
 
       <SettingsSection title={t("settings.account")} subtitle={t("settings.accountSubtitle")} icon="A">
-        <SettingsRow label={accountView.name} value={accountView.email || "Guest mode"} onClick={() => openModal("account")} />
+        <div className="settings-list-control">
+          <SettingsRow label={accountView.name} value={accountView.email || t("common.guestMode")} onClick={() => openModal("account")} />
+          <SettingsRow
+            label={t("common.signOut")}
+            onClick={() => {
+              clearUser();
+              setAccountView(settings.account);
+              notify(t("settings.saved"));
+            }}
+          />
+        </div>
       </SettingsSection>
 
       <SettingsSection title={t("settings.language")} subtitle={t("settings.languageSubtitle")} icon="G" tone="primary">
@@ -192,7 +204,7 @@ export default function SettingsPage() {
       <SettingsSection title={t("settings.subscription")} subtitle={t("settings.subscriptionSubtitle")} icon="S" tone="warning">
         <div className="settings-list-control">
           <SettingsRow label={t("settings.currentPlan")}>
-            <strong>{settings.subscription.plan}</strong>
+            <strong>{settings.subscription.plan === "Premium" ? t("common.premium") : t("common.free")}</strong>
           </SettingsRow>
           <SettingsRow label={t("settings.manageBilling")} onClick={() => router.push("/pricing")} />
         </div>
@@ -242,18 +254,21 @@ export default function SettingsPage() {
             </div>
             <ListEditor
               addLabel={t("settings.addItem")}
+              emptyLabel={t("common.none")}
               label={t("settings.medicalConditions")}
               values={healthDraft.chronicConditions}
               onChange={(chronicConditions) => setHealthDraft({ ...healthDraft, chronicConditions })}
             />
             <ListEditor
               addLabel={t("settings.addItem")}
+              emptyLabel={t("common.none")}
               label={t("settings.allergies")}
               values={healthDraft.allergies}
               onChange={(allergies) => setHealthDraft({ ...healthDraft, allergies })}
             />
             <ListEditor
               addLabel={t("settings.addItem")}
+              emptyLabel={t("common.none")}
               label={t("settings.medications")}
               values={healthDraft.medications}
               onChange={(medications) => setHealthDraft({ ...healthDraft, medications })}

@@ -31,6 +31,11 @@ export function writeUser(user: HealthMatchUser) {
   window.localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(user));
 }
 
+export function clearUser() {
+  if (typeof window === "undefined") return;
+  window.localStorage.removeItem(USER_STORAGE_KEY);
+}
+
 export function createMockUser(email: string, name = "Alex Johnson", isGuest = false): HealthMatchUser {
   return {
     id: isGuest ? "guest_or_user_id" : `user_${Date.now()}`,

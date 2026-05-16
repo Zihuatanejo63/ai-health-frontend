@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import {
   Card,
   IconCircle,
@@ -9,18 +10,53 @@ import {
   StatusBadge
 } from "@/components/app-ui";
 import { useI18n } from "@/components/i18n-provider";
+import { useSettings } from "@/components/settings-provider";
 import { IllustrationImage } from "@/components/visual-card";
-
-const stats = [
-  ["common.riskLevel", "common.moderate", "home.riskDetail", "warning"],
-  ["home.recommendedCare", "common.primaryCare", "home.recommendedDetail", "primary"],
-  ["home.redFlags", "home.checked", "home.redFlagsDetail", "success"],
-  ["home.insuranceNote", "home.insuranceValue", "home.insuranceDetail", "purple"],
-  ["home.doctorSummary", "common.ready", "home.summaryDetail", "teal"]
-] as const;
+import { careLevelKey, riskLevelKey, symptomItemKey } from "@/lib/i18n-display";
+import { readSymptomChecks, type SavedSymptomCheck } from "@/lib/settings";
 
 export default function HomePage() {
   const { t } = useI18n();
+  const { settings } = useSettings();
+  const [latestCheck, setLatestCheck] = useState<SavedSymptomCheck | null>(null);
+
+  useEffect(() => {
+    setLatestCheck(readSymptomChecks()[0] ?? null);
+  }, []);
+
+  const hasCheck = Boolean(latestCheck);
+  const stats = [
+    {
+      label: t("common.riskLevel"),
+      value: hasCheck ? t(riskLevelKey(latestCheck!.result.riskLevel)) : t("home.notChecked"),
+      detail: hasCheck ? t("home.riskDetail") : t("home.startCheckValue"),
+      tone: hasCheck ? (latestCheck!.result.riskLevel === "Low" ? "success" : latestCheck!.result.riskLevel === "Emergency" ? "danger" : "warning") : "primary"
+    },
+    {
+      label: t("home.recommendedCare"),
+      value: hasCheck ? t(careLevelKey(latestCheck!.result.recommendedCare)) : t("home.startCheckValue"),
+      detail: hasCheck ? t("home.recommendedDetail") : t("home.description"),
+      tone: "primary"
+    },
+    {
+      label: t("home.redFlags"),
+      value: hasCheck ? t("home.checked") : t("home.notReviewed"),
+      detail: hasCheck && latestCheck!.redFlags.length > 0 ? latestCheck!.redFlags.map((item) => t(symptomItemKey(item))).join(", ") : t("home.redFlagsDetail"),
+      tone: hasCheck && latestCheck!.redFlags.length > 0 ? "warning" : "success"
+    },
+    {
+      label: t("home.insuranceNote"),
+      value: hasCheck ? t("home.insuranceValue") : t("home.addInsuranceProfile"),
+      detail: settings.insuranceProfile.status ? `${settings.insuranceProfile.status} · ${settings.insuranceProfile.planType}` : t("home.insuranceDetail"),
+      tone: "purple"
+    },
+    {
+      label: t("home.doctorSummary"),
+      value: hasCheck ? t("common.ready") : t("home.createAfterCheck"),
+      detail: hasCheck ? t("home.summaryDetail") : t("home.startCheckValue"),
+      tone: "teal"
+    }
+  ] as const;
 
   return (
     <section className="app-page dashboard-page">
@@ -43,17 +79,27 @@ export default function HomePage() {
 
       <div className="dashboard-grid">
         <div className="dashboard-card-grid">
-          {stats.map(([label, value, detail, tone]) => (
-            <StatCard key={label} label={t(label)} value={t(value)} detail={t(detail)} tone={tone} />
+          {stats.map((stat) => (
+            <StatCard key={stat.label} label={stat.label} value={stat.value} detail={stat.detail} tone={stat.tone} />
           ))}
           <Card className="recent-activity-card">
             <div>
               <IconCircle tone="primary">H</IconCircle>
               <StatusBadge tone="primary">{t("home.recentActivity")}</StatusBadge>
             </div>
-            <h2>{t("home.recentType")}</h2>
-            <p>{t("home.recentSymptoms")}</p>
-            <time>May 19, 2025 · 10:24 AM</time>
+            {latestCheck ? (
+              <>
+                <h2>{latestCheck.symptoms.slice(0, 3).map((item) => t(symptomItemKey(item))).join(" + ")}</h2>
+                <p>{t(riskLevelKey(latestCheck.result.riskLevel))} · {t(careLevelKey(latestCheck.result.recommendedCare))}</p>
+                <time>{new Date(latestCheck.createdAt).toLocaleString()}</time>
+              </>
+            ) : (
+              <>
+                <h2>{t("home.noRecentActivity")}</h2>
+                <p>{t("home.createAccountPrompt")}</p>
+                <PrimaryButton href="/symptom-check">{t("home.start")}</PrimaryButton>
+              </>
+            )}
           </Card>
         </div>
 

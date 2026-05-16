@@ -1,19 +1,21 @@
-import Link from "next/link";
+"use client";
+
+import { Card, PageHeader, SecondaryButton } from "@/components/app-ui";
+import { useI18n } from "@/components/i18n-provider";
 
 export default function PaymentCancelledPage() {
+  const { t } = useI18n();
+
   return (
-    <section className="panel legal-page">
-      <p className="page-subtitle">Hosted payment</p>
-      <h1 className="page-title">Payment Cancelled</h1>
-      <p className="page-subtitle">
-        No paid tool access was completed. You can return to your care summary and choose another
-        option.
-      </p>
-      <div style={{ marginTop: 18 }}>
-        <Link className="btn-secondary" href="/result">
-          Back to care summary
-        </Link>
-      </div>
+    <section className="app-page">
+      <PageHeader
+        eyebrow={t("payment.eyebrow")}
+        title={t("payment.cancelledTitle")}
+        description={t("payment.cancelledDescription")}
+      />
+      <Card className="paid-tool-card">
+        <SecondaryButton href="/pricing">{t("payment.backPricing")}</SecondaryButton>
+      </Card>
     </section>
   );
 }
