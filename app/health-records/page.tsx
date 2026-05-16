@@ -2,7 +2,7 @@
 
 import { Card, IconCircle, PageHeader, PrimaryButton, StatusBadge, SummaryPreview } from "@/components/app-ui";
 import { useI18n } from "@/components/i18n-provider";
-import { VisualCard } from "@/components/visual-card";
+import { IllustrationImage } from "@/components/visual-card";
 
 const items = [
   ["summary.symptoms", "4", "Headache, fatigue, mild fever, body aches", "primary"],
@@ -22,6 +22,19 @@ export default function HealthRecordsPage() {
         description={t("summary.description")}
         action={<PrimaryButton href="/payment-success">{t("summary.savePdf")}</PrimaryButton>}
       />
+
+      <Card className="summary-intro-card">
+        <div>
+          <IconCircle tone="teal">S</IconCircle>
+          <h2>{t("summary.preview")}</h2>
+          <p>{t("summary.description")}</p>
+        </div>
+        <IllustrationImage
+          variant="section"
+          src="/images/illustration-health-summary-doctor.png"
+          alt="Doctor organizing health summary records"
+        />
+      </Card>
 
       <div className="health-summary-layout">
         <div className="health-summary-list">
@@ -45,7 +58,6 @@ export default function HealthRecordsPage() {
             ready={t("common.ready")}
             rows={[t("summary.preview"), t("summary.symptoms"), t("summary.timeline"), t("summary.redFlags"), t("summary.medications"), t("summary.questions")]}
           />
-          <VisualCard src="/images/illustration-health-summary-doctor.png" alt="Doctor organizing health summary records" />
         </div>
       </div>
 

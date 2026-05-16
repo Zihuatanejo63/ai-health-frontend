@@ -4,7 +4,7 @@ import { FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { DisclaimerBox } from "@/components/disclaimer-box";
 import { useI18n } from "@/components/i18n-provider";
-import { VisualCard } from "@/components/visual-card";
+import { IllustrationImage } from "@/components/visual-card";
 
 const SESSION_RESULT_KEY = "ai-health-match-result";
 
@@ -87,13 +87,14 @@ export default function SymptomCheckPage() {
 
   return (
     <section className="app-page symptom-app-page">
-      <div className="app-page-header">
+      <div className="intro-card app-page-header">
         <div>
           <p className="eyebrow">{t("symptom.eyebrow")}</p>
           <h1>{t("symptom.title")}</h1>
           <p>{t("symptom.step")}</p>
         </div>
-        <VisualCard
+        <IllustrationImage
+          variant="section"
           src="/images/illustration-symptom-triage-doctor.png"
           alt="Doctor reviewing symptom triage icons"
         />

@@ -11,7 +11,7 @@ import {
 } from "@/components/app-ui";
 import { DisclaimerBox } from "@/components/disclaimer-box";
 import { useI18n } from "@/components/i18n-provider";
-import { VisualCard } from "@/components/visual-card";
+import { IllustrationImage } from "@/components/visual-card";
 
 const redFlags = ["result.noChestPain", "result.noTroubleBreathing", "result.noConfusion", "result.noSevereDehydration"];
 const causes = ["result.cold", "result.flu", "result.viral"];
@@ -78,17 +78,24 @@ export default function ResultPage() {
 
         <div className="result-column">
           <Card className="doctor-summary-card">
-            <div className="card-title-row">
-              <h2>{t("home.doctorSummary")}</h2>
-              <IconCircle tone="teal">✓</IconCircle>
+            <div className="doctor-summary-content">
+              <div className="card-title-row">
+                <h2>{t("home.doctorSummary")}</h2>
+                <IconCircle tone="teal">✓</IconCircle>
+              </div>
+              <div className="summary-mini-grid">
+                <span>{t("result.symptoms")} <strong>5</strong></span>
+                <span>{t("result.duration")} <strong>3 days</strong></span>
+                <span>{t("result.checks")} <strong>{t("common.completed")}</strong></span>
+                <span>{t("common.riskLevel")} <strong>{t("common.moderate")}</strong></span>
+              </div>
+              <PrimaryButton href="/payment-success">{t("result.download")}</PrimaryButton>
             </div>
-            <div className="summary-mini-grid">
-              <span>{t("result.symptoms")} <strong>5</strong></span>
-              <span>{t("result.duration")} <strong>3 days</strong></span>
-              <span>{t("result.checks")} <strong>{t("common.completed")}</strong></span>
-              <span>{t("common.riskLevel")} <strong>{t("common.moderate")}</strong></span>
-            </div>
-            <PrimaryButton href="/payment-success">{t("result.download")}</PrimaryButton>
+            <IllustrationImage
+              variant="compact"
+              src="/images/illustration-health-summary-doctor.png"
+              alt="Doctor-ready health summary illustration"
+            />
           </Card>
 
           <Card>
@@ -100,8 +107,6 @@ export default function ResultPage() {
             </div>
             <SecondaryButton href="/insurance-guide">{t("result.coverageOptions")}</SecondaryButton>
           </Card>
-
-          <VisualCard src="/images/illustration-health-summary-doctor.png" alt="Doctor-ready health summary illustration" />
         </div>
       </div>
 

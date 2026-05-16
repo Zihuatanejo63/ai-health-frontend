@@ -4,7 +4,7 @@ import { CareLevelCard } from "@/components/care-level-card";
 import { DisclaimerBox } from "@/components/disclaimer-box";
 import { useI18n } from "@/components/i18n-provider";
 import { SectionHeader } from "@/components/section-header";
-import { VisualCard } from "@/components/visual-card";
+import { IllustrationImage } from "@/components/visual-card";
 
 const options = [
   {
@@ -54,29 +54,40 @@ export default function CareOptionsPage() {
 
   return (
     <section className="stack-page">
-      <div className="page-hero-grid">
+      <div className="intro-card page-hero-grid">
         <SectionHeader
           eyebrow={t("care.eyebrow")}
           title={t("care.title")}
           description={t("care.description")}
         />
-        <VisualCard src="/images/illustration-care-guidance-doctor.png" alt="Doctor discussing care guidance with a patient" />
+        <IllustrationImage
+          variant="section"
+          src="/images/illustration-care-guidance-doctor.png"
+          alt="Doctor discussing care guidance with a patient"
+        />
       </div>
 
       <div className="care-detail-grid">
         {options.map((option) => (
-          <article className="panel detail-card" key={option.title}>
+          <article className="panel detail-card care-compact-card" key={option.title}>
             <CareLevelCard title={t(option.title)} description={t(option.bestFor)} tone={option.tone} />
-            <dl>
-              <dt>{t("care.bestFor")}</dt>
-              <dd>{t(option.bestFor)}</dd>
-              <dt>{t("care.notFor")}</dt>
-              <dd>{option.notFor}</dd>
-              <dt>{t("care.whatAsk")}</dt>
-              <dd>{option.ask}</dd>
-              <dt>{t("care.costNote")}</dt>
-              <dd>{option.insurance}</dd>
-            </dl>
+            <div className="care-card-meta">
+              <span>{option.tone === "danger" ? "24/7" : option.tone === "warning" ? "Today" : option.tone === "primary" ? "Within days" : "Anytime"}</span>
+              <span>{option.tone === "danger" ? "Highest cost" : option.tone === "success" ? "Lowest cost" : "Plan dependent"}</span>
+            </div>
+            <details className="care-details">
+              <summary>{t("common.viewDetails")}</summary>
+              <dl>
+                <dt>{t("care.bestFor")}</dt>
+                <dd>{t(option.bestFor)}</dd>
+                <dt>{t("care.notFor")}</dt>
+                <dd>{option.notFor}</dd>
+                <dt>{t("care.whatAsk")}</dt>
+                <dd>{option.ask}</dd>
+                <dt>{t("care.costNote")}</dt>
+                <dd>{option.insurance}</dd>
+              </dl>
+            </details>
           </article>
         ))}
       </div>

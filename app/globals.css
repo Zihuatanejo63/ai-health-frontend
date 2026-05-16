@@ -270,6 +270,58 @@ a {
   object-fit: contain;
 }
 
+.illustration-image {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.illustration-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.illustration-hero {
+  width: 100%;
+  max-width: 540px;
+}
+
+.illustration-hero img {
+  max-height: 430px;
+}
+
+.illustration-section {
+  width: 100%;
+  max-width: 360px;
+}
+
+.illustration-section img {
+  max-height: 260px;
+}
+
+.illustration-compact {
+  width: 100%;
+  max-width: 280px;
+}
+
+.illustration-compact img {
+  max-height: 220px;
+}
+
+.intro-card {
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 24px;
+  background: #fff;
+  box-shadow: var(--shadow);
+}
+
+.intro-copy-actions {
+  margin-top: 18px;
+}
+
 .triage-preview-card {
   display: flex;
   flex-direction: column;
@@ -799,7 +851,7 @@ button:disabled {
 
 .detail-card {
   display: grid;
-  gap: 16px;
+  gap: 12px;
   padding: 16px;
 }
 
@@ -811,6 +863,36 @@ button:disabled {
   display: grid;
   gap: 8px;
   margin: 0;
+}
+
+.care-compact-card {
+  align-content: start;
+}
+
+.care-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.care-card-meta span {
+  border-radius: 999px;
+  padding: 7px 10px;
+  background: #f8fafc;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 850;
+}
+
+.care-details {
+  border-top: 1px solid var(--border);
+  padding-top: 10px;
+}
+
+.care-details summary {
+  color: var(--primary);
+  font-weight: 850;
+  cursor: pointer;
 }
 
 .detail-card dt {
@@ -1461,6 +1543,8 @@ body {
 .dashboard-visual {
   position: sticky;
   top: 34px;
+  display: flex;
+  justify-content: center;
 }
 
 .triage-workflow {
@@ -1888,6 +1972,13 @@ body {
 
 .doctor-summary-card {
   display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(160px, 0.56fr);
+  gap: 16px;
+  align-items: center;
+}
+
+.doctor-summary-content {
+  display: grid;
   gap: 16px;
 }
 
@@ -1907,7 +1998,7 @@ body {
 
 .insurance-hero-card {
   display: grid;
-  grid-template-columns: minmax(0, 0.55fr) minmax(280px, 0.9fr);
+  grid-template-columns: minmax(0, 0.75fr) minmax(260px, 0.55fr);
   gap: 18px;
   align-items: center;
 }
@@ -1955,6 +2046,23 @@ body {
 .health-summary-preview {
   display: grid;
   gap: 16px;
+}
+
+.summary-intro-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 0.52fr);
+  gap: 20px;
+  align-items: center;
+}
+
+.summary-intro-card h2 {
+  margin: 14px 0 8px;
+}
+
+.summary-intro-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.65;
 }
 
 .summary-dashboard-card {
@@ -2479,12 +2587,21 @@ button.settings-row:hover,
 
   .dashboard-grid,
   .app-page-header,
-  .page-hero-grid {
+  .page-hero-grid,
+  .summary-intro-card {
     grid-template-columns: 1fr;
   }
 
   .dashboard-visual {
     position: static;
+  }
+
+  .illustration-hero {
+    max-width: 360px;
+  }
+
+  .illustration-hero img {
+    max-height: 300px;
   }
 }
 
@@ -2509,6 +2626,7 @@ button.settings-row:hover,
   .concept-grid,
   .health-summary-layout,
   .insurance-hero-card,
+  .doctor-summary-card,
   .chip-row,
   .summary-mini-grid,
   .settings-section-card {
@@ -2544,8 +2662,10 @@ button.settings-row:hover,
     width: 100%;
   }
 
-  .app-page-header .visual-card {
-    display: none;
+  .app-page-header .illustration-image,
+  .page-hero-grid .illustration-image,
+  .summary-intro-card .illustration-image {
+    max-width: 320px;
   }
 
   .form-grid-two,

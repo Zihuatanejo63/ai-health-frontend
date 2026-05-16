@@ -5,12 +5,13 @@ import {
   IconCircle,
   InsuranceConceptCard,
   PageHeader,
+  PrimaryButton,
   StatusBadge
 } from "@/components/app-ui";
 import { DisclaimerBox } from "@/components/disclaimer-box";
 import { useI18n } from "@/components/i18n-provider";
 import { useSettings } from "@/components/settings-provider";
-import { VisualCard } from "@/components/visual-card";
+import { IllustrationImage } from "@/components/visual-card";
 
 const concepts = [
   ["insurance.copay", "insurance.copayDesc", "warning"],
@@ -40,8 +41,11 @@ export default function InsuranceGuidePage() {
             <IconCircle tone="teal">I</IconCircle>
             <h2>{t("insurance.coverageClear")}</h2>
             <p>{t("insurance.coverageText")}</p>
+            <div className="intro-copy-actions">
+              <PrimaryButton href="/settings">{t("insurance.createChecklist")}</PrimaryButton>
+            </div>
           </div>
-          <VisualCard src="/images/illustration-insurance-doctor.png" alt="Medical insurance guidance illustration" />
+          <IllustrationImage variant="section" src="/images/illustration-insurance-doctor.png" alt="Medical insurance guidance illustration" />
         </Card>
 
         <Card className="coverage-snapshot">

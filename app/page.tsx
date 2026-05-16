@@ -9,7 +9,7 @@ import {
   StatusBadge
 } from "@/components/app-ui";
 import { useI18n } from "@/components/i18n-provider";
-import { VisualCard } from "@/components/visual-card";
+import { IllustrationImage } from "@/components/visual-card";
 
 const stats = [
   ["common.riskLevel", "common.moderate", "home.riskDetail", "warning"],
@@ -58,8 +58,9 @@ export default function HomePage() {
         </div>
 
         <aside className="dashboard-visual">
-          <VisualCard
+          <IllustrationImage
             priority
+            variant="hero"
             src="/images/hero-doctor-care.png"
             alt="Friendly doctor helping users understand care options"
           />
