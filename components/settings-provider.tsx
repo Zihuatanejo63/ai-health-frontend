@@ -12,6 +12,8 @@ import {
 import {
   HISTORY_STORAGE_KEY,
   SETTINGS_STORAGE_KEY,
+  SUMMARIES_STORAGE_KEY,
+  SYMPTOM_CHECKS_STORAGE_KEY,
   defaultSettings,
   mergeSettings,
   readSettings,
@@ -66,8 +68,11 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
 
   const resetAll = useCallback(() => {
     if (typeof window !== "undefined") {
-      window.localStorage.removeItem(SETTINGS_STORAGE_KEY);
-      window.localStorage.removeItem(HISTORY_STORAGE_KEY);
+          window.localStorage.removeItem(SETTINGS_STORAGE_KEY);
+          window.localStorage.removeItem(HISTORY_STORAGE_KEY);
+          window.localStorage.removeItem(SYMPTOM_CHECKS_STORAGE_KEY);
+          window.localStorage.removeItem(SUMMARIES_STORAGE_KEY);
+          window.localStorage.removeItem("healthmatchai_user");
     }
     commit(defaultSettings);
   }, [commit]);
@@ -75,6 +80,7 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
   const clearHistory = useCallback(() => {
     if (typeof window !== "undefined") {
       window.localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify([]));
+      window.localStorage.setItem(SYMPTOM_CHECKS_STORAGE_KEY, JSON.stringify([]));
     }
   }, []);
 

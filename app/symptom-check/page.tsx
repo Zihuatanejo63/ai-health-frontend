@@ -1,87 +1,84 @@
 "use client";
 
-import { FormEvent } from "react";
+import { FormEvent, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { DisclaimerBox } from "@/components/disclaimer-box";
 import { useI18n } from "@/components/i18n-provider";
 import { IllustrationImage } from "@/components/visual-card";
+import { getDetailQuestions, getSymptomCategory, redFlagSymptoms, symptomCategories } from "@/lib/symptomLibrary";
+import { evaluateTriage } from "@/lib/triageRules";
+import { readSymptomChecks, writeSymptomChecks, type SavedSymptomCheck } from "@/lib/settings";
 
 const SESSION_RESULT_KEY = "ai-health-match-result";
 
-const symptoms = [
-  ["Fever", "symptom.fever"],
-  ["Cough", "symptom.cough"],
-  ["Headache", "symptom.headache"],
-  ["Sore throat", "symptom.soreThroat"],
-  ["Fatigue", "symptom.fatigue"],
-  ["Body aches", "symptom.bodyAches"],
-  ["Nausea", "symptom.nausea"],
-  ["Shortness of breath", "symptom.shortnessBreath"],
-  ["Runny nose", "symptom.runnyNose"]
-];
-
-const durations = [["Less than 24 hours", "symptom.less24"], ["1–3 days", "symptom.oneThree"], ["4–7 days", "symptom.fourSeven"], ["More than 7 days", "symptom.moreSeven"]];
-const temperatures = [["Normal", "symptom.normal"], ["99–100°F", "symptom.tempLow"], ["100–102°F", "symptom.tempMedium"], ["Above 102°F", "symptom.tempHigh"], ["Don’t know", "symptom.dontKnow"]];
-const severity = [["Mild", "symptom.mild"], ["Moderate", "common.moderate"], ["Severe", "symptom.severe"]];
-const redFlags = [
-  ["Chest pain", "symptom.chestPain"],
-  ["Trouble breathing", "symptom.troubleBreathing"],
-  ["Confusion", "symptom.confusion"],
-  ["Severe dehydration", "symptom.severeDehydration"],
-  ["Stiff neck", "symptom.stiffNeck"],
-  ["Persistent vomiting", "symptom.persistentVomiting"],
-  ["Rash with fever", "symptom.rashWithFever"]
-];
+const durations = ["Less than 24 hours", "1–3 days", "4–7 days", "More than 7 days"];
+const temperatures = ["Normal", "99–100°F", "100–102°F", "Above 102°F", "Don’t know"];
+const severities = ["Mild", "Moderate", "Severe"];
+const trends = ["Getting better", "Worse", "Unchanged"];
 
 export default function SymptomCheckPage() {
   const router = useRouter();
   const { language, t } = useI18n();
+  const [step, setStep] = useState(1);
+  const [symptoms, setSymptoms] = useState<string[]>([]);
+  const [primarySymptom, setPrimarySymptom] = useState("");
+  const [details, setDetails] = useState<Record<string, string>>({});
+  const [duration, setDuration] = useState("1–3 days");
+  const [painScore, setPainScore] = useState("3");
+  const [temperature, setTemperature] = useState("Normal");
+  const [severity, setSeverity] = useState("Moderate");
+  const [trend, setTrend] = useState("Unchanged");
+  const [redFlags, setRedFlags] = useState<string[]>([]);
+  const [background, setBackground] = useState({
+    age: "",
+    sex: "",
+    pregnancy: "No",
+    chronicConditions: "",
+    medications: "",
+    allergies: "",
+    insuranceStatus: "Active",
+    countryRegion: ""
+  });
+
+  const primaryCategory = useMemo(() => getSymptomCategory(primarySymptom), [primarySymptom]);
+  const detailQuestions = useMemo(() => getDetailQuestions(primaryCategory), [primaryCategory]);
+  const isCrisisSelected = symptoms.includes("Suicidal thoughts") || symptoms.includes("Self-harm thoughts") || redFlags.includes("Suicidal thoughts");
+
+  function toggleValue(value: string, values: string[], setter: (next: string[]) => void) {
+    setter(values.includes(value) ? values.filter((item) => item !== value) : [...values, value]);
+  }
+
+  function goNext() {
+    if (step === 1 && symptoms.length > 0 && !primarySymptom) setPrimarySymptom(symptoms[0]);
+    setStep((current) => Math.min(5, current + 1));
+  }
 
   function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    const selectedSymptoms = symptoms.map(([value]) => value).filter((item) => formData.get(`symptom-${item}`));
-    const selectedRedFlags = redFlags.map(([value]) => value).filter((item) => formData.get(`red-${item}`));
-    const duration = String(formData.get("duration") || "1–3 days");
-    const temperature = String(formData.get("temperature") || "100–102°F");
-    const level = String(formData.get("severity") || "Moderate");
-
-    if (typeof window !== "undefined" && window.sessionStorage) {
-      window.sessionStorage.setItem(
-        SESSION_RESULT_KEY,
-        JSON.stringify({
-          request: {
-            symptoms: selectedSymptoms.join(", ") || "Fever, cough",
-            severity: level.toLowerCase(),
-            durationValue: 3,
-            durationUnit: "days",
-            languageCode: language,
-            languageName: language
-          },
-          response: {
-            referenceId: "HM-APP-TRIAGE",
-            riskLevel: selectedRedFlags.length > 0 ? "high" : "medium",
-            redFlags:
-              selectedRedFlags.length > 0
-                ? selectedRedFlags
-                : [
-                    "No chest pain reported",
-                    "No trouble breathing reported",
-                    "No confusion reported",
-                    "No severe dehydration reported",
-                    "No stiff neck reported"
-                  ],
-            recommendedCareLevel: selectedRedFlags.length > 0 ? "Urgent Care" : "Primary Care",
-            possibleCauses: ["Common cold", "Flu-like illness", "COVID-like respiratory infection", "Throat infection"],
-            whatToMonitor: ["Monitor temperature, breathing, hydration, worsening fatigue, and symptom duration."],
-            doctorReadySummary: `${selectedSymptoms.join(", ") || "Fever, cough"}. Duration: ${duration}. Highest temperature: ${temperature}. Overall severity: ${level}. Red flags checked: ${selectedRedFlags.length ? selectedRedFlags.join(", ") : "none selected"}.`,
-            insuranceNavigation: ["Is urgent care covered?", "Is the provider in-network?", "What is your copay?", "Does your deductible apply?", "Is telehealth covered?"],
-            disclaimer: "HealthMatchAI does not diagnose, prescribe, treat, or replace professional medical care. Insurance information is educational only."
-          }
-        })
-      );
+    const result = evaluateTriage({
+      symptoms,
+      primarySymptom,
+      duration,
+      severity,
+      redFlags,
+      details: { ...details, painScore, temperature, trend },
+      healthBackground: background
+    });
+    const saved: SavedSymptomCheck = {
+      id: `check_${Date.now()}`,
+      createdAt: new Date().toISOString(),
+      symptoms,
+      primarySymptom,
+      duration,
+      severity,
+      redFlags,
+      healthBackground: background,
+      result
+    };
+    if (typeof window !== "undefined") {
+      window.sessionStorage.setItem(SESSION_RESULT_KEY, JSON.stringify(saved));
+      writeSymptomChecks([saved, ...readSymptomChecks()]);
     }
-
     router.push("/result");
   }
 
@@ -91,80 +88,138 @@ export default function SymptomCheckPage() {
         <div>
           <p className="eyebrow">{t("symptom.eyebrow")}</p>
           <h1>{t("symptom.title")}</h1>
-          <p>{t("symptom.step")}</p>
+          <p>Step {step} of 5</p>
         </div>
-        <IllustrationImage
-          variant="section"
-          src="/images/illustration-symptom-triage-doctor.png"
-          alt="Doctor reviewing symptom triage icons"
-        />
+        <IllustrationImage variant="section" src="/images/illustration-symptom-triage-doctor.png" alt="Doctor reviewing symptom triage icons" />
       </div>
 
+      {isCrisisSelected ? (
+        <section className="panel crisis-card">
+          <h2>Crisis safety support</h2>
+          <p>
+            If you may hurt yourself or someone else, contact local emergency services now or reach a crisis hotline in your country.
+            If you are in the U.S. or Canada, call or text 988 for immediate crisis support.
+          </p>
+          <button className="btn-secondary" onClick={() => setStep(1)} type="button">Review answers</button>
+        </section>
+      ) : null}
+
       <form className="triage-workflow" onSubmit={onSubmit}>
-        <article className="panel workflow-step">
-          <span>{t("symptom.step")}</span>
-          <h2>{t("symptom.question")}</h2>
-          <p>{t("symptom.selectAll")}</p>
-          <div className="choice-grid">
-            {symptoms.map(([value, labelKey]) => (
-              <label key={value} className="choice-pill">
-                <input type="checkbox" name={`symptom-${value}`} /> {t(labelKey)}
-              </label>
-            ))}
-          </div>
-        </article>
+        {step === 1 ? (
+          <article className="panel workflow-step">
+            <span>Step 1: Choose symptoms</span>
+            <h2>{t("symptom.question")}</h2>
+            <p>Select all symptoms and choose one primary symptom.</p>
+            <div className="symptom-category-grid">
+              {symptomCategories.map((category) => (
+                <section className="symptom-category-card" key={category.name}>
+                  <h3>{category.name}</h3>
+                  <div className="choice-grid">
+                    {category.symptoms.map((symptom) => (
+                      <label key={symptom} className={`choice-pill${symptom.includes("Suicidal") || symptom.includes("Self-harm") ? " danger-choice" : ""}`}>
+                        <input
+                          checked={symptoms.includes(symptom)}
+                          onChange={() => toggleValue(symptom, symptoms, setSymptoms)}
+                          type="checkbox"
+                        />
+                        {symptom}
+                      </label>
+                    ))}
+                  </div>
+                </section>
+              ))}
+            </div>
+            <label className="form-field">
+              Primary symptom
+              <select value={primarySymptom} onChange={(event) => setPrimarySymptom(event.target.value)}>
+                <option value="">Choose primary symptom</option>
+                {symptoms.map((symptom) => <option key={symptom}>{symptom}</option>)}
+              </select>
+            </label>
+          </article>
+        ) : null}
 
-        <article className="panel workflow-step">
-          <h2>{t("symptom.durationQuestion")}</h2>
-          <div className="choice-grid compact-choice-grid">
-            {durations.map(([value, labelKey]) => (
-              <label key={value} className="choice-pill">
-                <input type="radio" name="duration" value={value} /> {t(labelKey)}
-              </label>
-            ))}
-          </div>
-        </article>
+        {step === 2 ? (
+          <article className="panel workflow-step">
+            <span>Step 2: Symptom details</span>
+            <h2>{primarySymptom || "Primary symptom"} details</h2>
+            <p>Questions are tailored to the primary symptom category: {primaryCategory}.</p>
+            <div className="form-grid-two">
+              {detailQuestions.map((question) => (
+                <label className="form-field" key={question}>
+                  {question}
+                  <input value={details[question] ?? ""} onChange={(event) => setDetails({ ...details, [question]: event.target.value })} />
+                </label>
+              ))}
+            </div>
+          </article>
+        ) : null}
 
-        <article className="panel workflow-step">
-          <h2>{t("symptom.temperatureQuestion")}</h2>
-          <div className="choice-grid compact-choice-grid">
-            {temperatures.map(([value, labelKey]) => (
-              <label key={value} className="choice-pill">
-                <input type="radio" name="temperature" value={value} /> {t(labelKey)}
-              </label>
-            ))}
-          </div>
-        </article>
+        {step === 3 ? (
+          <article className="panel workflow-step">
+            <span>Step 3: Duration & severity</span>
+            <h2>How long and how severe?</h2>
+            <div className="choice-grid compact-choice-grid">
+              {durations.map((item) => <label className="choice-pill" key={item}><input checked={duration === item} onChange={() => setDuration(item)} type="radio" /> {item}</label>)}
+            </div>
+            <label className="form-field">
+              Pain score: {painScore}
+              <input min="0" max="10" value={painScore} onChange={(event) => setPainScore(event.target.value)} type="range" />
+            </label>
+            <div className="choice-grid compact-choice-grid">
+              {temperatures.map((item) => <label className="choice-pill" key={item}><input checked={temperature === item} onChange={() => setTemperature(item)} type="radio" /> {item}</label>)}
+            </div>
+            <div className="choice-grid compact-choice-grid">
+              {severities.map((item) => <label className="choice-card" key={item}><input checked={severity === item} onChange={() => setSeverity(item)} type="radio" /> <strong>{item}</strong></label>)}
+            </div>
+            <div className="choice-grid compact-choice-grid">
+              {trends.map((item) => <label className="choice-pill" key={item}><input checked={trend === item} onChange={() => setTrend(item)} type="radio" /> {item}</label>)}
+            </div>
+          </article>
+        ) : null}
 
-        <article className="panel workflow-step">
-          <h2>{t("symptom.severityQuestion")}</h2>
-          <div className="choice-grid compact-choice-grid">
-            {severity.map(([value, labelKey]) => (
-              <label key={value} className="choice-card">
-                <input type="radio" name="severity" value={value} /> <strong>{t(labelKey)}</strong>
-              </label>
-            ))}
-          </div>
-        </article>
+        {step === 4 ? (
+          <article className="panel workflow-step">
+            <span>Step 4: Red flags</span>
+            <h2>{t("symptom.redFlags")}</h2>
+            <div className="choice-grid">
+              {redFlagSymptoms.map((item) => (
+                <label className="choice-pill danger-choice" key={item}>
+                  <input checked={redFlags.includes(item)} onChange={() => toggleValue(item, redFlags, setRedFlags)} type="checkbox" /> {item}
+                </label>
+              ))}
+            </div>
+          </article>
+        ) : null}
 
-        <article className="panel workflow-step">
-          <h2>{t("symptom.redFlags")}</h2>
-          <div className="choice-grid">
-            {redFlags.map(([value, labelKey]) => (
-              <label key={value} className="choice-pill danger-choice">
-                <input type="checkbox" name={`red-${value}`} /> {t(labelKey)}
-              </label>
-            ))}
-          </div>
-        </article>
+        {step === 5 ? (
+          <article className="panel workflow-step">
+            <span>Step 5: Health background</span>
+            <h2>Health background</h2>
+            <div className="form-grid-two">
+              {Object.entries(background).map(([key, value]) => (
+                <label className="form-field" key={key}>
+                  {key.replace(/([A-Z])/g, " $1")}
+                  <input value={value} onChange={(event) => setBackground({ ...background, [key]: event.target.value })} />
+                </label>
+              ))}
+            </div>
+          </article>
+        ) : null}
 
         <div className="workflow-actions">
-          <button className="btn-secondary" type="button">
+          <button className="btn-secondary" disabled={step === 1} onClick={() => setStep((current) => Math.max(1, current - 1))} type="button">
             {t("common.back")}
           </button>
-          <button className="btn-primary" type="submit">
-            {t("common.continue")}
-          </button>
+          {step < 5 ? (
+            <button className="btn-primary" disabled={step === 1 && symptoms.length === 0} onClick={goNext} type="button">
+              {t("common.continue")}
+            </button>
+          ) : (
+            <button className="btn-primary" type="submit">
+              Get My Care Guidance
+            </button>
+          )}
         </div>
       </form>
 

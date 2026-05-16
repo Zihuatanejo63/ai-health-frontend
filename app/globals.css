@@ -1331,6 +1331,35 @@ body {
   min-height: 44px;
 }
 
+.sidebar-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 10px;
+  background: #f8fafc;
+  color: var(--text);
+}
+
+.sidebar-user span {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  background: #eef4ff;
+  color: var(--primary);
+  font-weight: 900;
+}
+
+.sidebar-user strong {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .sidebar-nav {
   display: grid;
   gap: 8px;
@@ -1567,6 +1596,56 @@ body {
 .workflow-step h2 {
   margin: 0;
   font-size: 20px;
+}
+
+.symptom-category-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.symptom-category-card {
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 16px;
+  background: #fff;
+}
+
+.symptom-category-card h3 {
+  margin: 0 0 12px;
+}
+
+.form-field {
+  display: grid;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.form-field input,
+.form-field select {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 12px 14px;
+  background: #fff;
+  color: var(--text);
+  font: inherit;
+}
+
+.crisis-card {
+  border-color: #fecdd3;
+  background: #fff1f2;
+}
+
+.crisis-card h2 {
+  margin: 0 0 10px;
+  color: #9f1239;
+}
+
+.crisis-card p {
+  color: #881337;
+  line-height: 1.7;
 }
 
 .choice-grid {
@@ -1990,6 +2069,32 @@ body {
   display: block;
   margin-top: 5px;
   color: var(--primary);
+}
+
+.button-pair,
+.auth-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.login-save-prompt {
+  border: 1px solid #bfdbfe;
+  border-radius: 14px;
+  padding: 10px 12px;
+  background: #eff6ff;
+  color: var(--primary) !important;
+  font-weight: 800;
+}
+
+.auth-page {
+  max-width: 760px;
+}
+
+.auth-card {
+  display: grid;
+  gap: 18px;
+  padding: 24px;
 }
 
 .insurance-dashboard-grid {
@@ -2531,6 +2636,10 @@ button.settings-row:hover,
   }
 
   .sidebar-brand {
+    display: none;
+  }
+
+  .sidebar-user {
     display: none;
   }
 

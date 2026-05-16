@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { PageHeader, SettingsSection, StatusBadge } from "@/components/app-ui";
 import { useI18n } from "@/components/i18n-provider";
@@ -14,6 +14,7 @@ import {
 } from "@/components/settings-controls";
 import { useSettings } from "@/components/settings-provider";
 import { type HealthMatchSettings } from "@/lib/settings";
+import { createMockUser, readUser, writeUser } from "@/lib/auth";
 
 type ModalType = "account" | "health" | "insurance" | null;
 
@@ -68,6 +69,12 @@ export default function SettingsPage() {
   const [accountDraft, setAccountDraft] = useState(settings.account);
   const [healthDraft, setHealthDraft] = useState(settings.healthProfile);
   const [insuranceDraft, setInsuranceDraft] = useState(settings.insuranceProfile);
+  const [accountView, setAccountView] = useState(settings.account);
+
+  useEffect(() => {
+    const user = readUser();
+    setAccountView(user ? { name: user.name, email: user.email } : settings.account);
+  }, [settings.account]);
 
   function notify(message: string) {
     setToast(message);
@@ -75,7 +82,10 @@ export default function SettingsPage() {
   }
 
   function openModal(type: ModalType) {
-    if (type === "account") setAccountDraft(settings.account);
+    if (type === "account") {
+      const user = readUser();
+      setAccountDraft(user ? { name: user.name, email: user.email } : settings.account);
+    }
     if (type === "health") setHealthDraft(settings.healthProfile);
     if (type === "insurance") setInsuranceDraft(settings.insuranceProfile);
     setActiveModal(type);
@@ -89,6 +99,9 @@ export default function SettingsPage() {
 
   function onAccountSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const existing = readUser();
+    writeUser(existing ? { ...existing, name: accountDraft.name } : createMockUser(accountDraft.email, accountDraft.name));
+    setAccountView(accountDraft);
     savePatch({ account: accountDraft });
   }
 
@@ -107,7 +120,7 @@ export default function SettingsPage() {
       <PageHeader title={t("settings.title")} />
 
       <SettingsSection title={t("settings.account")} subtitle={t("settings.accountSubtitle")} icon="A">
-        <SettingsRow label={settings.account.name} value={settings.account.email} onClick={() => openModal("account")} />
+        <SettingsRow label={accountView.name} value={accountView.email || "Guest mode"} onClick={() => openModal("account")} />
       </SettingsSection>
 
       <SettingsSection title={t("settings.language")} subtitle={t("settings.languageSubtitle")} icon="G" tone="primary">

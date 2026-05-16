@@ -1,5 +1,7 @@
 export const SETTINGS_STORAGE_KEY = "healthmatchai_settings";
 export const HISTORY_STORAGE_KEY = "healthmatchai_history";
+export const SYMPTOM_CHECKS_STORAGE_KEY = "healthmatchai_symptom_checks";
+export const SUMMARIES_STORAGE_KEY = "healthmatchai_summaries";
 
 export const LANGUAGES = [
   { code: "en", name: "English" },
@@ -56,6 +58,35 @@ export type SymptomHistoryItem = {
   care: string;
   date: string;
   tone?: "primary" | "teal" | "success" | "warning" | "danger" | "purple";
+};
+
+export type SavedSymptomCheck = {
+  id: string;
+  createdAt: string;
+  symptoms: string[];
+  primarySymptom: string;
+  duration: string;
+  severity: string;
+  redFlags: string[];
+  healthBackground: Record<string, string | boolean | string[]>;
+  result: {
+    riskLevel: string;
+    recommendedCare: string;
+    possibleCauses: string[];
+    whatToMonitor: string[];
+    why?: string;
+    isCrisis?: boolean;
+  };
+};
+
+export type SavedSummary = {
+  id: string;
+  createdAt: string;
+  checkId: string;
+  title: string;
+  symptoms: string[];
+  riskLevel: string;
+  recommendedCare: string;
 };
 
 export const defaultSettings: HealthMatchSettings = {
@@ -133,16 +164,46 @@ export function writeSettings(settings: HealthMatchSettings) {
 }
 
 export function readHistory(): SymptomHistoryItem[] {
-  if (typeof window === "undefined") return defaultHistory;
+  if (typeof window === "undefined") return [];
   try {
     const stored = window.localStorage.getItem(HISTORY_STORAGE_KEY);
-    return stored ? JSON.parse(stored) : defaultHistory;
+    return stored ? JSON.parse(stored) : [];
   } catch {
-    return defaultHistory;
+    return [];
   }
 }
 
 export function writeHistory(history: SymptomHistoryItem[]) {
   if (typeof window === "undefined") return;
   window.localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(history));
+}
+
+export function readSymptomChecks(): SavedSymptomCheck[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const stored = window.localStorage.getItem(SYMPTOM_CHECKS_STORAGE_KEY);
+    return stored ? JSON.parse(stored) : [];
+  } catch {
+    return [];
+  }
+}
+
+export function writeSymptomChecks(checks: SavedSymptomCheck[]) {
+  if (typeof window === "undefined") return;
+  window.localStorage.setItem(SYMPTOM_CHECKS_STORAGE_KEY, JSON.stringify(checks));
+}
+
+export function readSummaries(): SavedSummary[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const stored = window.localStorage.getItem(SUMMARIES_STORAGE_KEY);
+    return stored ? JSON.parse(stored) : [];
+  } catch {
+    return [];
+  }
+}
+
+export function writeSummaries(summaries: SavedSummary[]) {
+  if (typeof window === "undefined") return;
+  window.localStorage.setItem(SUMMARIES_STORAGE_KEY, JSON.stringify(summaries));
 }

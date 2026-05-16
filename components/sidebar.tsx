@@ -2,7 +2,9 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import { useI18n } from "@/components/i18n-provider";
+import { readUser, type HealthMatchUser } from "@/lib/auth";
 
 export const sidebarItems = [
   { labelKey: "nav.home", href: "/", icon: "⌂" },
@@ -47,12 +49,21 @@ export function SidebarItem({
 export function Sidebar() {
   const pathname = usePathname();
   const { t } = useI18n();
+  const [user, setUser] = useState<HealthMatchUser | null>(null);
+
+  useEffect(() => {
+    setUser(readUser());
+  }, [pathname]);
 
   return (
     <aside className="app-sidebar" aria-label="HealthMatchAI app navigation">
       <div className="sidebar-top">
         <Link className="brand sidebar-brand" href="/">
           HealthMatchAI
+        </Link>
+        <Link className="sidebar-user" href={user ? "/settings" : "/login"}>
+          <span>{user?.name?.charAt(0) ?? "G"}</span>
+          <strong>{user?.name ?? "Guest mode"}</strong>
         </Link>
         <nav className="sidebar-nav">
           {sidebarItems.map((item) => (

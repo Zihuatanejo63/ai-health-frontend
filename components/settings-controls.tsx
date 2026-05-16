@@ -1,7 +1,8 @@
 "use client";
 
 import { type ReactNode } from "react";
-import { LANGUAGES, readHistory, type LanguageCode } from "@/lib/settings";
+import { readUser } from "@/lib/auth";
+import { LANGUAGES, readHistory, readSummaries, readSymptomChecks, type LanguageCode } from "@/lib/settings";
 
 export function SettingsRow({
   label,
@@ -76,7 +77,10 @@ export function DataExportButton({
         JSON.stringify(
           {
             settings,
-            history: readHistory()
+            user: readUser(),
+            history: readHistory(),
+            symptomChecks: readSymptomChecks(),
+            summaries: readSummaries()
           },
           null,
           2
