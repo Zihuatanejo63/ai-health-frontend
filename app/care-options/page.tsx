@@ -60,7 +60,7 @@ export default function CareOptionsPage() {
           title={t("care.title")}
           description={t("care.description")}
         />
-        <VisualCard src="/images/design-care-guidance.png" alt="Care guidance design reference" />
+        <VisualCard src="/images/illustration-care-guidance-doctor.png" alt="Doctor discussing care guidance with a patient" />
       </div>
 
       <div className="care-detail-grid">

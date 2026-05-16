@@ -45,7 +45,7 @@ export default function HealthRecordsPage() {
             ready={t("common.ready")}
             rows={[t("summary.preview"), t("summary.symptoms"), t("summary.timeline"), t("summary.redFlags"), t("summary.medications"), t("summary.questions")]}
           />
-          <VisualCard src="/images/design-health-summary.png" alt="Health summary design reference" />
+          <VisualCard src="/images/illustration-health-summary-doctor.png" alt="Doctor organizing health summary records" />
         </div>
       </div>
 

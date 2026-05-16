@@ -41,7 +41,7 @@ export default function InsuranceGuidePage() {
             <h2>{t("insurance.coverageClear")}</h2>
             <p>{t("insurance.coverageText")}</p>
           </div>
-          <VisualCard src="/images/design-insurance-navigation.png" alt="Insurance navigation design reference" />
+          <VisualCard src="/images/illustration-insurance-doctor.png" alt="Medical insurance guidance illustration" />
         </Card>
 
         <Card className="coverage-snapshot">

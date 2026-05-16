@@ -101,7 +101,7 @@ export default function ResultPage() {
             <SecondaryButton href="/insurance-guide">{t("result.coverageOptions")}</SecondaryButton>
           </Card>
 
-          <VisualCard src="/images/design-result.png" alt="Result page design reference" />
+          <VisualCard src="/images/illustration-health-summary-doctor.png" alt="Doctor-ready health summary illustration" />
         </div>
       </div>
 

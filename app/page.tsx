@@ -60,8 +60,8 @@ export default function HomePage() {
         <aside className="dashboard-visual">
           <VisualCard
             priority
-            src="/images/design-home-dashboard.png"
-            alt="HealthMatchAI dashboard design preview"
+            src="/images/hero-doctor-care.png"
+            alt="Friendly doctor helping users understand care options"
           />
         </aside>
       </div>

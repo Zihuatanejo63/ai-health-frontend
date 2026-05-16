@@ -94,8 +94,8 @@ export default function SymptomCheckPage() {
           <p>{t("symptom.step")}</p>
         </div>
         <VisualCard
-          src="/images/design-symptom-check.png"
-          alt="Symptom triage app screen"
+          src="/images/illustration-symptom-triage-doctor.png"
+          alt="Doctor reviewing symptom triage icons"
         />
       </div>
 
