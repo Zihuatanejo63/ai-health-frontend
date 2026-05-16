@@ -1055,6 +1055,26 @@ button:disabled {
   margin-top: 6px;
 }
 
+.paid-tool-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.paid-tool-card {
+  display: grid;
+  gap: 12px;
+}
+
+.paid-tool-card h2,
+.paid-tool-card p {
+  margin: 0;
+}
+
+.paid-tool-card p {
+  color: var(--muted);
+}
+
 .legal-section {
   margin-top: 20px;
 }
@@ -2137,7 +2157,7 @@ body {
   .app-sidebar {
     inset: auto 0 0 0;
     display: grid;
-    grid-template-columns: repeat(7, minmax(0, 1fr));
+    grid-template-columns: repeat(8, minmax(0, 1fr));
     gap: 4px;
     width: 100%;
     height: 76px;
@@ -2152,17 +2172,17 @@ body {
 
   .sidebar-top {
     display: block;
-    grid-column: 1 / 7;
+    grid-column: 1 / 8;
   }
 
   .sidebar-nav {
     display: grid;
-    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-template-columns: repeat(7, minmax(0, 1fr));
     gap: 4px;
   }
 
   .sidebar-settings {
-    grid-column: 7;
+    grid-column: 8;
     margin: 0;
   }
 
@@ -2226,6 +2246,7 @@ body {
   .summary-dashboard-grid,
   .history-grid,
   .settings-grid,
+  .paid-tool-grid,
   .result-top-grid,
   .result-content-grid,
   .insurance-dashboard-grid,

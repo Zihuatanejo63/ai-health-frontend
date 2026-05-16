@@ -23,9 +23,9 @@ export const copy = {
     banner: "HealthMatchAI does not diagnose, prescribe, treat, or replace professional medical care. Insurance information is educational only and does not constitute insurance advice. For insurance enrollment, speak with a licensed insurance agent or broker.",
     safety: safety.en,
     home: {
-      eyebrow: "Symptom Triage · Care Level Finder · Insurance Navigation",
-      title: "Know what care you need — and how to pay for it.",
-      subtitle: "Check your symptoms, understand your risk level, choose the right care option, and prepare a clear summary for a clinician.",
+      eyebrow: "Dashboard",
+      title: "Welcome back",
+      subtitle: "How can we help you today?",
       start: "Start Symptom Check",
       careCta: "Find My Care Option",
       previewKicker: "AI triage result preview",

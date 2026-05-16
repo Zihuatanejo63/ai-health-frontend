@@ -1,5 +1,5 @@
 import { PricingCard } from "@/components/pricing-card";
-import { SectionHeader } from "@/components/section-header";
+import { PageHeader } from "@/components/app-ui";
 
 const plans = [
   {
@@ -28,8 +28,8 @@ const plans = [
 
 export default function PricingPage() {
   return (
-    <section className="stack-page">
-      <SectionHeader
+    <section className="app-page">
+      <PageHeader
         eyebrow="Pricing"
         title="Choose the support level you need"
         description="Paid options unlock more complete reports, saved records, and shareable summaries."
