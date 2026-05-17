@@ -47,7 +47,7 @@ export default function LoginPage() {
     const result = authenticateMockAccount(email, password);
     setLoading(false);
     if (!result.ok) {
-      setSubmitError(result.reason === "not_found" ? "auth.accountNotFound" : "auth.invalidCredentials");
+      setSubmitError(result.reason === "not_found" ? "auth.errors.accountNotFound" : "auth.errors.invalidCredentials");
       return;
     }
     router.push("/");

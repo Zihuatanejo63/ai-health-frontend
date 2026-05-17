@@ -1,5 +1,6 @@
 export const USER_STORAGE_KEY = "healthmatchai_user";
-export const AUTH_ACCOUNTS_STORAGE_KEY = "healthmatchai_auth_accounts";
+export const AUTH_ACCOUNTS_STORAGE_KEY = "healthmatchai_accounts";
+const LEGACY_AUTH_ACCOUNTS_STORAGE_KEY = "healthmatchai_auth_accounts";
 
 export type HealthMatchUser = {
   id: string;
@@ -14,8 +15,8 @@ type LocalAuthAccount = HealthMatchUser & {
 };
 
 export const defaultGuestUser: HealthMatchUser = {
-  id: "guest_or_user_id",
-  name: "Guest",
+  id: "guest",
+  name: "Guest User",
   email: "",
   isGuest: true,
   createdAt: ""
@@ -41,10 +42,10 @@ export function clearUser() {
   window.localStorage.removeItem(USER_STORAGE_KEY);
 }
 
-export function createMockUser(email: string, name = "Alex Johnson", isGuest = false): HealthMatchUser {
+export function createMockUser(email: string, name = "HealthMatchAI User", isGuest = false): HealthMatchUser {
   return {
-    id: isGuest ? "guest_or_user_id" : `user_${Date.now()}`,
-    name,
+    id: isGuest ? "guest" : (typeof crypto !== "undefined" && "randomUUID" in crypto ? crypto.randomUUID() : `user_${Date.now()}`),
+    name: isGuest ? "Guest User" : name,
     email,
     isGuest,
     createdAt: new Date().toISOString()
@@ -59,7 +60,7 @@ function demoHash(password: string) {
 function readAccounts(): LocalAuthAccount[] {
   if (typeof window === "undefined") return [];
   try {
-    const stored = window.localStorage.getItem(AUTH_ACCOUNTS_STORAGE_KEY);
+    const stored = window.localStorage.getItem(AUTH_ACCOUNTS_STORAGE_KEY) ?? window.localStorage.getItem(LEGACY_AUTH_ACCOUNTS_STORAGE_KEY);
     return stored ? JSON.parse(stored) : [];
   } catch {
     return [];
@@ -69,6 +70,7 @@ function readAccounts(): LocalAuthAccount[] {
 function writeAccounts(accounts: LocalAuthAccount[]) {
   if (typeof window === "undefined") return;
   window.localStorage.setItem(AUTH_ACCOUNTS_STORAGE_KEY, JSON.stringify(accounts));
+  window.localStorage.removeItem(LEGACY_AUTH_ACCOUNTS_STORAGE_KEY);
 }
 
 export function registerMockAccount({ name, email, password }: { name: string; email: string; password: string }) {

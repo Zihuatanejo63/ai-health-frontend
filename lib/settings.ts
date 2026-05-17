@@ -92,8 +92,8 @@ export type SavedSummary = {
 export const defaultSettings: HealthMatchSettings = {
   language: "en",
   account: {
-    name: "Alex Johnson",
-    email: "alex.johnson@email.com"
+    name: "",
+    email: ""
   },
   healthProfile: {
     age: "",

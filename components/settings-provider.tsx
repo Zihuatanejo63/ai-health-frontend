@@ -73,6 +73,8 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
           window.localStorage.removeItem(SYMPTOM_CHECKS_STORAGE_KEY);
           window.localStorage.removeItem(SUMMARIES_STORAGE_KEY);
           window.localStorage.removeItem("healthmatchai_user");
+          window.localStorage.removeItem("healthmatchai_accounts");
+          window.localStorage.removeItem("healthmatchai_auth_accounts");
     }
     commit(defaultSettings);
   }, [commit]);

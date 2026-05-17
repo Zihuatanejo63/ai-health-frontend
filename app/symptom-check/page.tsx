@@ -8,7 +8,7 @@ import { IllustrationImage } from "@/components/visual-card";
 import { getDetailQuestions, getSymptomCategory, redFlagSymptoms, symptomCategories } from "@/lib/symptomLibrary";
 import { evaluateTriage } from "@/lib/triageRules";
 import { readSymptomChecks, writeSymptomChecks, type SavedSymptomCheck } from "@/lib/settings";
-import { backgroundFieldKey, detailQuestionKey, symptomCategoryKey, symptomItemKey } from "@/lib/i18n-display";
+import { backgroundFieldKey, detailQuestionKey, symptomItemKey } from "@/lib/i18n-display";
 
 const SESSION_RESULT_KEY = "ai-health-match-result";
 
@@ -63,7 +63,7 @@ export default function SymptomCheckPage() {
 
   const primaryCategory = useMemo(() => getSymptomCategory(primarySymptom), [primarySymptom]);
   const detailQuestions = useMemo(() => getDetailQuestions(primaryCategory), [primaryCategory]);
-  const isCrisisSelected = symptoms.includes("Suicidal thoughts") || symptoms.includes("Self-harm thoughts") || redFlags.includes("Suicidal thoughts");
+  const isCrisisSelected = symptoms.includes("suicidal-thoughts") || symptoms.includes("self-harm-thoughts") || redFlags.includes("suicidal-thoughts");
 
   function toggleSymptom(symptom: string) {
     const nextSymptoms = symptoms.includes(symptom) ? symptoms.filter((item) => item !== symptom) : [...symptoms, symptom];
@@ -153,8 +153,8 @@ export default function SymptomCheckPage() {
           <button
             className="btn-secondary"
             onClick={() => {
-              setSymptoms((current) => current.filter((item) => item !== "Suicidal thoughts" && item !== "Self-harm thoughts"));
-              setRedFlags((current) => current.filter((item) => item !== "Suicidal thoughts"));
+              setSymptoms((current) => current.filter((item) => item !== "suicidal-thoughts" && item !== "self-harm-thoughts"));
+              setRedFlags((current) => current.filter((item) => item !== "suicidal-thoughts"));
               setPrimarySymptom("");
               setStep(1);
             }}
@@ -171,20 +171,20 @@ export default function SymptomCheckPage() {
           <article className="panel workflow-step">
             <span>{t("symptom.chooseSymptoms")}</span>
             <h2>{t("symptom.question")}</h2>
-            <p>{t("symptom.chooseSymptomsDesc")} {t("symptom.selectAllThatApply")}</p>
+            <p>{t("symptom.subtitle")}</p>
             <div className="symptom-category-grid">
               {symptomCategories.map((category) => (
-                <section className="symptom-category-card" key={category.name}>
-                  <h3>{t(symptomCategoryKey(category.name))}</h3>
+                <section className="symptom-category-card" key={category.id}>
+                  <h3>{t(category.labelKey)}</h3>
                   <div className="choice-grid">
                     {category.symptoms.map((symptom) => (
-                      <label key={symptom} className={`choice-pill${symptom.includes("Suicidal") || symptom.includes("Self-harm") ? " danger-choice" : ""}`}>
+                      <label key={symptom.id} className={`choice-pill${symptom.id.includes("suicidal") || symptom.id.includes("self-harm") ? " danger-choice" : ""}`}>
                         <input
-                          checked={symptoms.includes(symptom)}
-                          onChange={() => toggleSymptom(symptom)}
+                          checked={symptoms.includes(symptom.value)}
+                          onChange={() => toggleSymptom(symptom.value)}
                           type="checkbox"
                         />
-                        {t(symptomItemKey(symptom))}
+                        {t(symptom.labelKey)}
                       </label>
                     ))}
                   </div>
@@ -205,7 +205,7 @@ export default function SymptomCheckPage() {
           <article className="panel workflow-step">
             <span>{t("symptom.symptomDetails")}</span>
             <h2>{t("symptom.primaryDetails").replace("{symptom}", primarySymptom ? t(symptomItemKey(primarySymptom)) : t("symptom.primarySymptom"))}</h2>
-            <p>{t("symptom.tailoredQuestions").replace("{category}", t(symptomCategoryKey(primaryCategory)))}</p>
+            <p>{t("symptom.tailoredQuestions").replace("{category}", t(`symptom.categories.${primaryCategory}`))}</p>
             <div className="form-grid-two">
               {detailQuestions.map((question) => (
                 <label className="form-field" key={question}>
@@ -251,8 +251,8 @@ export default function SymptomCheckPage() {
             <p>{t("symptom.redFlagQuestion")}</p>
             <div className="choice-grid">
               {redFlagSymptoms.map((item) => (
-                <label className="choice-pill danger-choice" key={item}>
-                  <input checked={redFlags.includes(item)} onChange={() => toggleValue(item, redFlags, setRedFlags)} type="checkbox" /> {t(symptomItemKey(item))}
+                <label className="choice-pill danger-choice" key={item.id}>
+                  <input checked={redFlags.includes(item.value)} onChange={() => toggleValue(item.value, redFlags, setRedFlags)} type="checkbox" /> {t(item.labelKey)}
                 </label>
               ))}
             </div>

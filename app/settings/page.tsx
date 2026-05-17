@@ -14,7 +14,7 @@ import {
 } from "@/components/settings-controls";
 import { useSettings } from "@/components/settings-provider";
 import { type HealthMatchSettings } from "@/lib/settings";
-import { clearUser, createMockUser, readUser, writeUser } from "@/lib/auth";
+import { clearUser, readUser, writeUser, type HealthMatchUser } from "@/lib/auth";
 
 type ModalType = "account" | "health" | "insurance" | null;
 
@@ -71,12 +71,11 @@ export default function SettingsPage() {
   const [accountDraft, setAccountDraft] = useState(settings.account);
   const [healthDraft, setHealthDraft] = useState(settings.healthProfile);
   const [insuranceDraft, setInsuranceDraft] = useState(settings.insuranceProfile);
-  const [accountView, setAccountView] = useState(settings.account);
+  const [accountUser, setAccountUser] = useState<HealthMatchUser | null>(null);
 
   useEffect(() => {
-    const user = readUser();
-    setAccountView(user ? { name: user.name, email: user.email } : settings.account);
-  }, [settings.account]);
+    setAccountUser(readUser());
+  }, []);
 
   function notify(message: string) {
     setToast(message);
@@ -86,7 +85,11 @@ export default function SettingsPage() {
   function openModal(type: ModalType) {
     if (type === "account") {
       const user = readUser();
-      setAccountDraft(user ? { name: user.name, email: user.email } : settings.account);
+      if (!user || user.isGuest) {
+        router.push("/login");
+        return;
+      }
+      setAccountDraft({ name: user.name, email: user.email });
     }
     if (type === "health") setHealthDraft(settings.healthProfile);
     if (type === "insurance") setInsuranceDraft(settings.insuranceProfile);
@@ -102,8 +105,10 @@ export default function SettingsPage() {
   function onAccountSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const existing = readUser();
-    writeUser(existing ? { ...existing, name: accountDraft.name } : createMockUser(accountDraft.email, accountDraft.name));
-    setAccountView(accountDraft);
+    if (!existing || existing.isGuest) return;
+    const nextUser = { ...existing, name: accountDraft.name.trim() || existing.name };
+    writeUser(nextUser);
+    setAccountUser(nextUser);
     savePatch({ account: accountDraft });
   }
 
@@ -123,15 +128,32 @@ export default function SettingsPage() {
 
       <SettingsSection title={t("settings.account")} subtitle={t("settings.accountSubtitle")} icon="A">
         <div className="settings-list-control">
-          <SettingsRow label={accountView.name} value={accountView.email || t("common.guestMode")} onClick={() => openModal("account")} />
-          <SettingsRow
-            label={t("common.signOut")}
-            onClick={() => {
-              clearUser();
-              setAccountView(settings.account);
-              notify(t("settings.saved"));
-            }}
-          />
+          {accountUser ? (
+            <>
+              <SettingsRow
+                label={accountUser.isGuest ? t("auth.guestUser") : accountUser.name}
+                value={accountUser.isGuest ? t("auth.localSessionOnly") : accountUser.email}
+                onClick={accountUser.isGuest ? undefined : () => openModal("account")}
+              />
+              {accountUser.isGuest ? (
+                <SettingsRow label={t("auth.signInOrCreateAccount")} onClick={() => router.push("/login")} />
+              ) : null}
+              <SettingsRow
+                label={t("auth.signOut")}
+                onClick={() => {
+                  clearUser();
+                  setAccountUser(null);
+                  notify(t("settings.saved"));
+                }}
+              />
+            </>
+          ) : (
+            <>
+              <SettingsRow label={t("auth.notSignedIn")} value={t("auth.createAccountPrompt")} />
+              <SettingsRow label={t("auth.signIn")} onClick={() => router.push("/login")} />
+              <SettingsRow label={t("auth.createAccount")} onClick={() => router.push("/signup")} />
+            </>
+          )}
         </div>
       </SettingsSection>
 

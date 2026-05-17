@@ -73,7 +73,7 @@ export function evaluateTriage(input: TriageInput): TriageResult {
   const trend = String(input.details?.trend ?? "").toLowerCase();
   const allSignals = [...symptoms, ...redFlags];
 
-  if (hasAny(allSignals, ["Suicidal thoughts", "Self-harm thoughts"])) {
+  if (hasAny(allSignals, ["suicidal-thoughts", "self-harm-thoughts", "Suicidal thoughts", "Self-harm thoughts"])) {
     return {
       riskLevel: "Crisis",
       recommendedCare: "Crisis support",
@@ -85,8 +85,8 @@ export function evaluateTriage(input: TriageInput): TriageResult {
   }
 
   if (
-    (hasAny(symptoms, ["Chest pain"]) && hasAny(allSignals, ["Trouble breathing", "Shortness of breath"])) ||
-    hasAny(redFlags, ["Confusion", "Seizure", "Fainting", "Stroke-like symptoms"])
+    (hasAny(symptoms, ["chest-pain", "Chest pain"]) && hasAny(allSignals, ["trouble-breathing", "shortness-of-breath", "Trouble breathing", "Shortness of breath"])) ||
+    hasAny(redFlags, ["confusion", "seizure", "fainting", "stroke-like-symptoms", "Confusion", "Seizure", "Fainting", "Stroke-like symptoms"])
   ) {
     return {
       riskLevel: "Emergency",
@@ -98,7 +98,7 @@ export function evaluateTriage(input: TriageInput): TriageResult {
     };
   }
 
-  if (hasAny(allSignals, ["Blood in stool or vomit"]) && hasAny(allSignals, ["Severe abdominal pain"])) {
+  if (hasAny(allSignals, ["blood-in-stool-or-vomit", "Blood in stool or vomit"]) && hasAny(allSignals, ["severe-abdominal-pain", "Severe abdominal pain"])) {
     return applyBackgroundRisk({
       riskLevel: "Emergency",
       recommendedCare: "Emergency",
@@ -110,8 +110,8 @@ export function evaluateTriage(input: TriageInput): TriageResult {
   }
 
   if (
-    hasAny(redFlags, ["Blood in stool or vomit", "Severe abdominal pain"]) ||
-    (hasAny(symptoms, ["Abdominal pain", "Stomach pain"]) && severity === "severe")
+    hasAny(redFlags, ["blood-in-stool-or-vomit", "severe-abdominal-pain", "Blood in stool or vomit", "Severe abdominal pain"]) ||
+    (hasAny(symptoms, ["abdominal-pain", "stomach-pain", "Abdominal pain", "Stomach pain"]) && severity === "severe")
   ) {
     return applyBackgroundRisk({
       riskLevel: "High",
@@ -123,7 +123,7 @@ export function evaluateTriage(input: TriageInput): TriageResult {
     }, input);
   }
 
-  if (hasAny(symptoms, ["Shortness of breath"]) && severity === "severe") {
+  if (hasAny(symptoms, ["shortness-of-breath", "Shortness of breath"]) && severity === "severe") {
     return applyBackgroundRisk({
       riskLevel: "High",
       recommendedCare: "Urgent Care",
@@ -134,7 +134,7 @@ export function evaluateTriage(input: TriageInput): TriageResult {
     }, input);
   }
 
-  if (hasAny(symptoms, ["Fever"]) && (duration.includes("more than 7") || trend.includes("worse"))) {
+  if (hasAny(symptoms, ["fever", "Fever"]) && (duration.includes("more than 7") || trend.includes("worse"))) {
     return applyBackgroundRisk({
       riskLevel: "Moderate",
       recommendedCare: trend.includes("worse") ? "Urgent Care" : "Primary Care",
@@ -145,7 +145,7 @@ export function evaluateTriage(input: TriageInput): TriageResult {
     }, input);
   }
 
-  if (hasAny(symptoms, ["Runny nose", "Nasal congestion"]) && severity === "mild" && redFlags.length === 0) {
+  if (hasAny(symptoms, ["runny-nose", "nasal-congestion", "Runny nose", "Nasal congestion"]) && severity === "mild" && redFlags.length === 0) {
     return applyBackgroundRisk({
       riskLevel: "Low",
       recommendedCare: "Self-care",

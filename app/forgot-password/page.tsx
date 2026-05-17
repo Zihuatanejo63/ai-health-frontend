@@ -18,7 +18,7 @@ export default function ForgotPasswordPage() {
       <PageHeader title={t("auth.resetTitle")} description={t("auth.resetSubtitle")} />
       <Card className="auth-card">
         <form className="settings-form" onSubmit={submit}>
-          <label>{t("auth.email")}<input defaultValue="alex.johnson@email.com" type="email" /></label>
+          <label>{t("auth.email")}<input type="email" /></label>
           <button className="btn-primary" type="submit">{t("auth.magicLink")}</button>
         </form>
         {sent ? <p className="login-save-prompt">{t("auth.resetSent")}</p> : null}
