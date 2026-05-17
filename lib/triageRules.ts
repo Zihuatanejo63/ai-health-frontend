@@ -71,9 +71,15 @@ export function evaluateTriage(input: TriageInput): TriageResult {
   const severity = input.severity.toLowerCase();
   const duration = input.duration.toLowerCase();
   const trend = String(input.details?.trend ?? "").toLowerCase();
+  const details = Object.entries(input.details ?? {})
+    .filter(([, value]) => value === "yes" || value === "blood")
+    .map(([key]) => key);
   const allSignals = [...symptoms, ...redFlags];
+  const allSignalsWithDetails = [...allSignals, ...details];
+  const longDuration = duration.includes("more than 7") || duration.includes("morethansevendays") || duration.includes("morethantwoweeks");
+  const worsening = trend.includes("worse") || trend.includes("gettingworse") || trend.includes("improvedthenworsened");
 
-  if (hasAny(allSignals, ["suicidal-thoughts", "self-harm-thoughts", "Suicidal thoughts", "Self-harm thoughts"])) {
+  if (hasAny(allSignalsWithDetails, ["suicidal-thoughts", "self-harm-thoughts", "suicidalThoughts", "selfHarmThoughts", "immediateDanger", "Suicidal thoughts", "Self-harm thoughts"])) {
     return {
       riskLevel: "Crisis",
       recommendedCare: "Crisis support",
@@ -85,8 +91,8 @@ export function evaluateTriage(input: TriageInput): TriageResult {
   }
 
   if (
-    (hasAny(symptoms, ["chest-pain", "Chest pain"]) && hasAny(allSignals, ["trouble-breathing", "shortness-of-breath", "Trouble breathing", "Shortness of breath"])) ||
-    hasAny(redFlags, ["confusion", "seizure", "fainting", "stroke-like-symptoms", "Confusion", "Seizure", "Fainting", "Stroke-like symptoms"])
+    (hasAny(allSignalsWithDetails, ["chest-pain", "chestPainOrPressure", "Chest pain"]) && hasAny(allSignalsWithDetails, ["trouble-breathing", "shortness-of-breath", "troubleBreathing", "Trouble breathing", "Shortness of breath"])) ||
+    hasAny(allSignalsWithDetails, ["confusion", "hardToWake", "seizure", "fainting", "stroke-like-symptoms", "strokeLikeSymptoms", "oneSidedWeaknessOrNumbness", "troubleSpeaking", "severeAllergicReaction", "blueOrGrayLips", "severeBleeding", "Confusion", "Seizure", "Fainting", "Stroke-like symptoms"])
   ) {
     return {
       riskLevel: "Emergency",
@@ -98,7 +104,7 @@ export function evaluateTriage(input: TriageInput): TriageResult {
     };
   }
 
-  if (hasAny(allSignals, ["blood-in-stool-or-vomit", "Blood in stool or vomit"]) && hasAny(allSignals, ["severe-abdominal-pain", "Severe abdominal pain"])) {
+  if (hasAny(allSignalsWithDetails, ["blood-in-stool-or-vomit", "bloodInVomit", "bloodInStool", "blackStool", "bloodInStoolOrBlackStool", "Blood in stool or vomit"]) && hasAny(allSignalsWithDetails, ["severe-abdominal-pain", "severeAbdominalPain", "suddenSeverePain", "Severe abdominal pain"])) {
     return applyBackgroundRisk({
       riskLevel: "Emergency",
       recommendedCare: "Emergency",
@@ -110,7 +116,7 @@ export function evaluateTriage(input: TriageInput): TriageResult {
   }
 
   if (
-    hasAny(redFlags, ["blood-in-stool-or-vomit", "severe-abdominal-pain", "Blood in stool or vomit", "Severe abdominal pain"]) ||
+    hasAny(allSignalsWithDetails, ["blood-in-stool-or-vomit", "bloodInVomit", "bloodInStool", "blackStool", "severe-abdominal-pain", "severeAbdominalPain", "Blood in stool or vomit", "Severe abdominal pain"]) ||
     (hasAny(symptoms, ["abdominal-pain", "stomach-pain", "Abdominal pain", "Stomach pain"]) && severity === "severe")
   ) {
     return applyBackgroundRisk({
@@ -123,7 +129,7 @@ export function evaluateTriage(input: TriageInput): TriageResult {
     }, input);
   }
 
-  if (hasAny(symptoms, ["shortness-of-breath", "Shortness of breath"]) && severity === "severe") {
+  if (hasAny(allSignalsWithDetails, ["shortness-of-breath", "troubleBreathing", "Shortness of breath"]) && severity === "severe") {
     return applyBackgroundRisk({
       riskLevel: "High",
       recommendedCare: "Urgent Care",
@@ -134,10 +140,10 @@ export function evaluateTriage(input: TriageInput): TriageResult {
     }, input);
   }
 
-  if (hasAny(symptoms, ["fever", "Fever"]) && (duration.includes("more than 7") || trend.includes("worse"))) {
+  if (hasAny(symptoms, ["fever", "Fever"]) && (longDuration || worsening)) {
     return applyBackgroundRisk({
       riskLevel: "Moderate",
-      recommendedCare: trend.includes("worse") ? "Urgent Care" : "Primary Care",
+      recommendedCare: worsening ? "Urgent Care" : "Primary Care",
       possibleCauses: ["Viral illness", "Flu-like illness", "Other infection"],
       whatToMonitor: ["Temperature", "Hydration", "Breathing", "Worsening fatigue", "Symptom duration"],
       why: "Fever that lasts longer or is worsening should be reviewed by a clinician.",

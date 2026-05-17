@@ -51,6 +51,12 @@ export default function ResultPage() {
     return symptom === symptomItemKey(value) ? value : symptom;
   }
 
+  function displayDuration(value: string) {
+    const key = `symptom.duration.${value}`;
+    const translated = t(key);
+    return translated === key ? value : translated;
+  }
+
   function saveSummary() {
     const user = readUser();
     if (!user || user.isGuest) {
@@ -153,7 +159,7 @@ export default function ResultPage() {
               </div>
               <div className="summary-mini-grid">
                 <span>{t("result.symptoms")} <strong>{check.symptoms.length}</strong></span>
-                <span>{t("result.duration")} <strong>{check.duration}</strong></span>
+                <span>{t("result.duration")} <strong>{displayDuration(check.duration)}</strong></span>
                 <span>{t("result.checks")} <strong>{t("common.completed")}</strong></span>
                 <span>{t("common.riskLevel")} <strong>{t(riskLevelKey(check.result.riskLevel))}</strong></span>
               </div>

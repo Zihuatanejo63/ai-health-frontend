@@ -1602,6 +1602,42 @@ body {
   font-size: 20px;
 }
 
+.detail-question,
+.review-grid > div {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: #fff;
+  padding: 16px;
+}
+
+.detail-question p {
+  color: var(--text);
+  font-weight: 800;
+  margin: 0 0 10px;
+}
+
+.review-grid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.review-grid strong,
+.review-grid span {
+  display: block;
+}
+
+.review-grid strong {
+  color: var(--muted);
+  font-size: 0.82rem;
+  margin-bottom: 6px;
+}
+
+.review-grid span {
+  color: var(--text);
+  font-weight: 700;
+}
+
 .symptom-category-grid {
   display: grid;
   gap: 14px;
@@ -2743,6 +2779,10 @@ button.settings-row:hover,
   .chip-row,
   .summary-mini-grid,
   .settings-section-card {
+    grid-template-columns: 1fr;
+  }
+
+  .review-grid {
     grid-template-columns: 1fr;
   }
 
