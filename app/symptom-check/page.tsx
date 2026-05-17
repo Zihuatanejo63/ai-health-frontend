@@ -18,21 +18,21 @@ const severities = ["Mild", "Moderate", "Severe"];
 const trends = ["Getting better", "Getting worse", "Unchanged"];
 
 const optionKeyMap: Record<string, string> = {
-  "Less than 24 hours": "symptom.less24",
-  "1–3 days": "symptom.oneThree",
-  "4–7 days": "symptom.fourSeven",
-  "More than 7 days": "symptom.moreSeven",
-  Normal: "symptom.normal",
-  "99–100°F": "symptom.tempLow",
-  "100–102°F": "symptom.tempMedium",
-  "Above 102°F": "symptom.tempHigh",
-  "Don’t know": "symptom.dontKnow",
-  Mild: "symptom.mild",
-  Moderate: "common.moderate",
-  Severe: "symptom.severe",
-  "Getting better": "symptom.gettingBetter",
-  "Getting worse": "symptom.worse",
-  Unchanged: "symptom.unchanged"
+  "Less than 24 hours": "symptom.duration.lessThan24h",
+  "1–3 days": "symptom.duration.oneToThreeDays",
+  "4–7 days": "symptom.duration.fourToSevenDays",
+  "More than 7 days": "symptom.duration.moreThanSevenDays",
+  Normal: "symptom.temperature.normal",
+  "99–100°F": "symptom.temperature.lowGrade",
+  "100–102°F": "symptom.temperature.moderate",
+  "Above 102°F": "symptom.temperature.high",
+  "Don’t know": "symptom.temperature.dontKnow",
+  Mild: "symptom.severity.mild",
+  Moderate: "symptom.severity.moderate",
+  Severe: "symptom.severity.severe",
+  "Getting better": "symptom.trend.gettingBetter",
+  "Getting worse": "symptom.trend.gettingWorse",
+  Unchanged: "symptom.trend.unchanged"
 };
 
 export default function SymptomCheckPage() {
@@ -48,6 +48,7 @@ export default function SymptomCheckPage() {
   const [severity, setSeverity] = useState("Moderate");
   const [trend, setTrend] = useState("Unchanged");
   const [redFlags, setRedFlags] = useState<string[]>([]);
+  const [formError, setFormError] = useState("");
   const [background, setBackground] = useState({
     age: "",
     sex: "",
@@ -64,17 +65,45 @@ export default function SymptomCheckPage() {
   const detailQuestions = useMemo(() => getDetailQuestions(primaryCategory), [primaryCategory]);
   const isCrisisSelected = symptoms.includes("Suicidal thoughts") || symptoms.includes("Self-harm thoughts") || redFlags.includes("Suicidal thoughts");
 
+  function toggleSymptom(symptom: string) {
+    const nextSymptoms = symptoms.includes(symptom) ? symptoms.filter((item) => item !== symptom) : [...symptoms, symptom];
+    setSymptoms(nextSymptoms);
+    if (primarySymptom === symptom && !nextSymptoms.includes(symptom)) setPrimarySymptom("");
+    setFormError("");
+  }
+
   function toggleValue(value: string, values: string[], setter: (next: string[]) => void) {
     setter(values.includes(value) ? values.filter((item) => item !== value) : [...values, value]);
+    setFormError("");
+  }
+
+  function validateStep(currentStep = step) {
+    if (currentStep === 1 && symptoms.length === 0) return "symptom.errors.selectAtLeastOneSymptom";
+    if (currentStep === 1 && !primarySymptom) return "symptom.errors.selectPrimarySymptom";
+    if (currentStep === 5 && background.age.trim()) {
+      const age = Number(background.age);
+      if (!Number.isInteger(age) || age < 0 || age > 120) return "symptom.errors.invalidAge";
+    }
+    return "";
   }
 
   function goNext() {
-    if (step === 1 && symptoms.length > 0 && !primarySymptom) setPrimarySymptom(symptoms[0]);
+    const error = validateStep();
+    if (error) {
+      setFormError(error);
+      return;
+    }
+    setFormError("");
     setStep((current) => Math.min(5, current + 1));
   }
 
   function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const error = validateStep(5);
+    if (error) {
+      setFormError(error);
+      return;
+    }
     const result = evaluateTriage({
       symptoms,
       primarySymptom,
@@ -108,25 +137,41 @@ export default function SymptomCheckPage() {
         <div>
           <p className="eyebrow">{t("symptom.eyebrow")}</p>
           <h1>{t("symptom.title")}</h1>
-          <p>{t("symptom.stepLabel").replace("{step}", String(step))}</p>
+          <p>{t("symptom.subtitle")}</p>
+          <p>{t("symptom.stepOf").replace("{step}", String(step)).replace("{total}", "5")}</p>
         </div>
         <IllustrationImage variant="section" src="/images/illustration-symptom-triage-doctor.png" alt="Doctor reviewing symptom triage icons" />
       </div>
 
       {isCrisisSelected ? (
         <section className="panel crisis-card">
-          <h2>{t("symptom.crisisTitle")}</h2>
-          <p>{t("symptom.crisisBody")}</p>
-          <button className="btn-secondary" onClick={() => setStep(1)} type="button">{t("symptom.reviewAnswers")}</button>
+          <h2>{t("symptom.crisis.title")}</h2>
+          <p>{t("symptom.crisis.description")}</p>
+          <p><strong>{t("symptom.crisis.seekImmediateHelp")}</strong></p>
+          <p>{t("symptom.crisis.localEmergency")}</p>
+          <p>{t("symptom.crisis.notAlone")}</p>
+          <button
+            className="btn-secondary"
+            onClick={() => {
+              setSymptoms((current) => current.filter((item) => item !== "Suicidal thoughts" && item !== "Self-harm thoughts"));
+              setRedFlags((current) => current.filter((item) => item !== "Suicidal thoughts"));
+              setPrimarySymptom("");
+              setStep(1);
+            }}
+            type="button"
+          >
+            {t("symptom.reviewAnswers")}
+          </button>
         </section>
       ) : null}
 
+      {!isCrisisSelected ? (
       <form className="triage-workflow" onSubmit={onSubmit}>
         {step === 1 ? (
           <article className="panel workflow-step">
-            <span>{t("symptom.stepChoose")}</span>
+            <span>{t("symptom.chooseSymptoms")}</span>
             <h2>{t("symptom.question")}</h2>
-            <p>{t("symptom.chooseMainSymptoms")}. {t("symptom.selectAll")}</p>
+            <p>{t("symptom.chooseSymptomsDesc")} {t("symptom.selectAllThatApply")}</p>
             <div className="symptom-category-grid">
               {symptomCategories.map((category) => (
                 <section className="symptom-category-card" key={category.name}>
@@ -136,7 +181,7 @@ export default function SymptomCheckPage() {
                       <label key={symptom} className={`choice-pill${symptom.includes("Suicidal") || symptom.includes("Self-harm") ? " danger-choice" : ""}`}>
                         <input
                           checked={symptoms.includes(symptom)}
-                          onChange={() => toggleValue(symptom, symptoms, setSymptoms)}
+                          onChange={() => toggleSymptom(symptom)}
                           type="checkbox"
                         />
                         {t(symptomItemKey(symptom))}
@@ -149,7 +194,7 @@ export default function SymptomCheckPage() {
             <label className="form-field">
               {t("symptom.primarySymptom")}
               <select value={primarySymptom} onChange={(event) => setPrimarySymptom(event.target.value)}>
-                <option value="">{t("symptom.choosePrimary")}</option>
+                <option value="">{t("symptom.primarySymptomRequired")}</option>
                 {symptoms.map((symptom) => <option key={symptom} value={symptom}>{t(symptomItemKey(symptom))}</option>)}
               </select>
             </label>
@@ -158,7 +203,7 @@ export default function SymptomCheckPage() {
 
         {step === 2 ? (
           <article className="panel workflow-step">
-            <span>{t("symptom.stepDetails")}</span>
+            <span>{t("symptom.symptomDetails")}</span>
             <h2>{t("symptom.primaryDetails").replace("{symptom}", primarySymptom ? t(symptomItemKey(primarySymptom)) : t("symptom.primarySymptom"))}</h2>
             <p>{t("symptom.tailoredQuestions").replace("{category}", t(symptomCategoryKey(primaryCategory)))}</p>
             <div className="form-grid-two">
@@ -176,6 +221,7 @@ export default function SymptomCheckPage() {
           <article className="panel workflow-step">
             <span>{t("symptom.stepDuration")}</span>
             <h2>{t("symptom.durationSeverityPrompt")}</h2>
+            <p>{t("symptom.durationQuestion")}</p>
             <div className="choice-grid compact-choice-grid">
               {durations.map((item) => <label className="choice-pill" key={item}><input checked={duration === item} onChange={() => setDuration(item)} type="radio" /> {t(optionKeyMap[item])}</label>)}
             </div>
@@ -183,12 +229,15 @@ export default function SymptomCheckPage() {
               {t("symptom.painScore")}: {painScore}
               <input min="0" max="10" value={painScore} onChange={(event) => setPainScore(event.target.value)} type="range" />
             </label>
+            <p>{t("symptom.temperatureQuestion")}</p>
             <div className="choice-grid compact-choice-grid">
               {temperatures.map((item) => <label className="choice-pill" key={item}><input checked={temperature === item} onChange={() => setTemperature(item)} type="radio" /> {t(optionKeyMap[item])}</label>)}
             </div>
+            <p>{t("symptom.severityQuestion")}</p>
             <div className="choice-grid compact-choice-grid">
               {severities.map((item) => <label className="choice-card" key={item}><input checked={severity === item} onChange={() => setSeverity(item)} type="radio" /> <strong>{t(optionKeyMap[item])}</strong></label>)}
             </div>
+            <p>{t("symptom.trendQuestion")}</p>
             <div className="choice-grid compact-choice-grid">
               {trends.map((item) => <label className="choice-pill" key={item}><input checked={trend === item} onChange={() => setTrend(item)} type="radio" /> {t(optionKeyMap[item])}</label>)}
             </div>
@@ -199,6 +248,7 @@ export default function SymptomCheckPage() {
           <article className="panel workflow-step">
             <span>{t("symptom.stepRedFlags")}</span>
             <h2>{t("symptom.redFlags")}</h2>
+            <p>{t("symptom.redFlagQuestion")}</p>
             <div className="choice-grid">
               {redFlagSymptoms.map((item) => (
                 <label className="choice-pill danger-choice" key={item}>
@@ -225,20 +275,22 @@ export default function SymptomCheckPage() {
         ) : null}
 
         <div className="workflow-actions">
+          {formError ? <p className="inline-error">{t(formError)}</p> : null}
           <button className="btn-secondary" disabled={step === 1} onClick={() => setStep((current) => Math.max(1, current - 1))} type="button">
-            {t("common.back")}
+            {t("symptom.back")}
           </button>
           {step < 5 ? (
-            <button className="btn-primary" disabled={step === 1 && symptoms.length === 0} onClick={goNext} type="button">
-              {t("common.continue")}
+            <button className="btn-primary" onClick={goNext} type="button">
+              {t("symptom.continue")}
             </button>
           ) : (
             <button className="btn-primary" type="submit">
-              {t("symptom.getGuidance")}
+              {t("symptom.getCareGuidance")}
             </button>
           )}
         </div>
       </form>
+      ) : null}
 
       <DisclaimerBox text={t("safety.medical")} />
     </section>
