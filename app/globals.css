@@ -2382,6 +2382,43 @@ body {
   background: #fff7f7;
 }
 
+.care-plan-card {
+  display: grid;
+  gap: 20px;
+  border-color: rgba(20, 184, 166, 0.18);
+  background: linear-gradient(135deg, #ffffff 0%, #f7fffd 100%);
+}
+
+.care-plan-card.urgent {
+  border-color: rgba(220, 38, 38, 0.18);
+  background: linear-gradient(135deg, #ffffff 0%, #fff7f7 100%);
+}
+
+.care-plan-card p {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.care-plan-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.care-plan-section {
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: rgba(248, 250, 252, 0.72);
+  padding: 16px;
+}
+
+.care-plan-section h3 {
+  margin: 0 0 12px;
+  font-size: 15px;
+  color: var(--text);
+}
+
 .chevron {
   color: var(--muted);
   font-size: 28px;
@@ -2859,6 +2896,7 @@ button.settings-row:hover,
   .result-top-grid,
   .result-content-grid,
   .insurance-dashboard-grid,
+  .care-plan-grid,
   .concept-grid,
   .health-summary-layout,
   .insurance-hero-card,

@@ -36,6 +36,15 @@ export type DoctorReadySummary = {
   questionsToAsk: string[];
 };
 
+export type CarePlan = {
+  titleKey: string;
+  summaryKey: string;
+  actionKeys: string[];
+  avoidKeys: string[];
+  seekCareNowKeys: string[];
+  categorySpecificTipKeys: string[];
+};
+
 export type TriageResult = {
   riskLevel: RiskLevel;
   recommendedCare: RecommendedCare;
@@ -46,6 +55,7 @@ export type TriageResult = {
   possibleCauses: string[];
   whatToMonitor: string[];
   escalationAdvice: string[];
+  carePlan: CarePlan;
   doctorReadySummary: DoctorReadySummary;
   disclaimer: string;
   why: string;
@@ -238,6 +248,173 @@ function escalationAdvice(riskLevel: RiskLevel) {
   return ["Seek care if symptoms worsen, last longer than expected, or new warning signs appear."];
 }
 
+function categorySpecificTipKeys(primarySymptom: string, riskLevel: RiskLevel) {
+  const category = getSymptomCategory(primarySymptom);
+  if (riskLevel === "Crisis" || category === "mental") return ["carePlan.category.mental.support"];
+  if (category === "respiratory") {
+    return [
+      "carePlan.category.respiratory.restFluids",
+      "carePlan.category.respiratory.warmFluids",
+      "carePlan.category.respiratory.watchBreathing",
+      "carePlan.category.respiratory.urgentBreathing"
+    ];
+  }
+  if (category === "digestive") {
+    return [
+      "carePlan.category.digestive.sipFluids",
+      "carePlan.category.digestive.blandFoods",
+      "carePlan.category.digestive.watchBleeding",
+      "carePlan.category.digestive.cannotKeepFluids"
+    ];
+  }
+  if (category === "pain") {
+    return [
+      "carePlan.category.pain.trackPain",
+      "carePlan.category.pain.avoidOverexertion",
+      "carePlan.category.pain.seekSevere"
+    ];
+  }
+  if (category === "neurological") {
+    return [
+      "carePlan.category.neurological.noteStart",
+      "carePlan.category.neurological.seekNeuroEmergency"
+    ];
+  }
+  if (category === "skin") {
+    return [
+      "carePlan.category.skin.monitorRash",
+      "carePlan.category.skin.avoidScratching",
+      "carePlan.category.skin.allergyEmergency"
+    ];
+  }
+  if (category === "urinary") {
+    return [
+      "carePlan.category.urinary.trackUrination",
+      "carePlan.category.urinary.drinkFluids",
+      "carePlan.category.urinary.seekUrinary"
+    ];
+  }
+  return ["carePlan.category.general.track"];
+}
+
+function buildCarePlan(primarySymptom: string, riskLevel: RiskLevel): CarePlan {
+  const base = {
+    Low: {
+      titleKey: "carePlan.low.title",
+      summaryKey: "carePlan.low.summary",
+      actionKeys: [
+        "carePlan.low.action.rest",
+        "carePlan.low.action.fluids",
+        "carePlan.low.action.warmFluids",
+        "carePlan.low.action.track",
+        "carePlan.low.action.air"
+      ],
+      avoidKeys: [
+        "carePlan.low.avoid.worse",
+        "carePlan.low.avoid.warningSigns",
+        "carePlan.low.avoid.dehydrating"
+      ],
+      seekCareNowKeys: [
+        "carePlan.seek.troubleBreathing",
+        "carePlan.seek.chestPain",
+        "carePlan.seek.confusion",
+        "carePlan.seek.severeDehydration",
+        "carePlan.seek.rapidWorsening",
+        "carePlan.seek.feverPersistsOrReturns"
+      ]
+    },
+    Moderate: {
+      titleKey: "carePlan.moderate.title",
+      summaryKey: "carePlan.moderate.summary",
+      actionKeys: [
+        "carePlan.moderate.action.telehealth",
+        "carePlan.moderate.action.summary",
+        "carePlan.moderate.action.track",
+        "carePlan.moderate.action.insurance"
+      ],
+      avoidKeys: [
+        "carePlan.moderate.avoid.severe",
+        "carePlan.moderate.avoid.worsening"
+      ],
+      seekCareNowKeys: [
+        "carePlan.seek.troubleBreathing",
+        "carePlan.seek.chestPain",
+        "carePlan.seek.fainting",
+        "carePlan.seek.confusion",
+        "carePlan.seek.persistentVomiting",
+        "carePlan.seek.severeWeakness",
+        "carePlan.seek.dehydration"
+      ]
+    },
+    High: {
+      titleKey: "carePlan.high.title",
+      summaryKey: "carePlan.high.summary",
+      actionKeys: [
+        "carePlan.high.action.sameDay",
+        "carePlan.high.action.accompany",
+        "carePlan.high.action.bringInfo",
+        "carePlan.high.action.monitor"
+      ],
+      avoidKeys: [
+        "carePlan.high.avoid.delay",
+        "carePlan.high.avoid.drive"
+      ],
+      seekCareNowKeys: [
+        "carePlan.seek.troubleBreathing",
+        "carePlan.seek.chestPainOrPressure",
+        "carePlan.seek.blueGrayLips",
+        "carePlan.seek.severeBleeding",
+        "carePlan.seek.faintingOrSeizure",
+        "carePlan.seek.strokeLike",
+        "carePlan.seek.severeAbdominalBleeding"
+      ]
+    },
+    Emergency: {
+      titleKey: "carePlan.emergency.title",
+      summaryKey: "carePlan.emergency.summary",
+      actionKeys: [
+        "carePlan.emergency.action.call",
+        "carePlan.emergency.action.doNotDrive",
+        "carePlan.emergency.action.stayWithPerson",
+        "carePlan.emergency.action.phoneAndTime",
+        "carePlan.emergency.action.prepareInfo"
+      ],
+      avoidKeys: [
+        "carePlan.emergency.avoid.wait",
+        "carePlan.emergency.avoid.substitute"
+      ],
+      seekCareNowKeys: [
+        "carePlan.seek.emergencyServices",
+        "carePlan.seek.emergencyDepartment",
+        "carePlan.seek.rapidWorsening"
+      ]
+    },
+    Crisis: {
+      titleKey: "carePlan.crisis.title",
+      summaryKey: "carePlan.crisis.summary",
+      actionKeys: [
+        "carePlan.crisis.action.hotline",
+        "carePlan.crisis.action.trustedPerson",
+        "carePlan.crisis.action.removeMeans",
+        "carePlan.crisis.action.safePlace"
+      ],
+      avoidKeys: [
+        "carePlan.crisis.avoid.alone",
+        "carePlan.crisis.avoid.delay"
+      ],
+      seekCareNowKeys: [
+        "carePlan.seek.crisisImmediate",
+        "carePlan.seek.notAlone"
+      ]
+    }
+  } satisfies Record<RiskLevel, Omit<CarePlan, "categorySpecificTipKeys">>;
+
+  return {
+    ...base[riskLevel],
+    categorySpecificTipKeys: categorySpecificTipKeys(primarySymptom, riskLevel)
+  };
+}
+
 function questionsToAsk(riskLevel: RiskLevel) {
   if (riskLevel === "Crisis") return ["Seek immediate crisis support now."];
   if (riskLevel === "Emergency") return ["Seek emergency care now."];
@@ -277,6 +454,7 @@ function makeResult(
     possibleCauses: possibleCauses(input.primarySymptom, input.selectedSymptoms, riskLevel),
     whatToMonitor: whatToMonitor(input.primarySymptom),
     escalationAdvice: escalationAdvice(riskLevel),
+    carePlan: buildCarePlan(input.primarySymptom, riskLevel),
     doctorReadySummary,
     disclaimer: DISCLAIMER,
     why: reasons[0] ?? DISCLAIMER,

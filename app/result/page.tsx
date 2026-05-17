@@ -109,6 +109,7 @@ export default function ResultPage() {
   const redFlagsFound = result.redFlagsFound ?? check.redFlags ?? [];
   const redFlagsChecked = result.redFlagsChecked ?? check.redFlags ?? [];
   const escalationAdvice = result.escalationAdvice ?? [];
+  const carePlan = result.carePlan;
   const summary = result.doctorReadySummary;
   const questionsToAsk = summary?.questionsToAsk ?? [];
   const isEmergencyTone = result.riskLevel === "Emergency" || result.riskLevel === "Crisis";
@@ -134,6 +135,47 @@ export default function ResultPage() {
           tone="primary"
         />
       </div>
+
+      {carePlan ? (
+        <Card className={isEmergencyTone ? "care-plan-card urgent" : "care-plan-card"}>
+          <div className="card-title-row">
+            <div>
+              <h2>{t("result.carePlan")}</h2>
+              <p>{t(carePlan.summaryKey)}</p>
+            </div>
+            <StatusBadge tone={isEmergencyTone ? "danger" : result.riskLevel === "High" ? "warning" : result.riskLevel === "Low" ? "success" : "primary"}>
+              {t(carePlan.titleKey)}
+            </StatusBadge>
+          </div>
+
+          <div className="care-plan-grid">
+            <div className="care-plan-section">
+              <h3>{t("carePlan.actionsTitle")}</h3>
+              <div className="check-list">
+                {carePlan.actionKeys.map((item) => <span key={item}>• {t(item)}</span>)}
+              </div>
+            </div>
+            <div className="care-plan-section">
+              <h3>{t("carePlan.avoidTitle")}</h3>
+              <div className="check-list">
+                {carePlan.avoidKeys.map((item) => <span key={item}>• {t(item)}</span>)}
+              </div>
+            </div>
+            <div className="care-plan-section">
+              <h3>{t("carePlan.seekCareTitle")}</h3>
+              <div className="check-list">
+                {carePlan.seekCareNowKeys.map((item) => <span key={item}>• {t(item)}</span>)}
+              </div>
+            </div>
+            <div className="care-plan-section">
+              <h3>{t("carePlan.tipsTitle")}</h3>
+              <div className="check-list">
+                {carePlan.categorySpecificTipKeys.map((item) => <span key={item}>• {t(item)}</span>)}
+              </div>
+            </div>
+          </div>
+        </Card>
+      ) : null}
 
       <Card className={isEmergencyTone ? "result-safety-card urgent" : "result-safety-card"}>
         <h2>{t("result.safetyTitle")}</h2>

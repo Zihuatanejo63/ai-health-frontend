@@ -80,6 +80,14 @@ export type SavedSymptomCheck = {
     possibleCauses: string[];
     whatToMonitor: string[];
     escalationAdvice?: string[];
+    carePlan?: {
+      titleKey: string;
+      summaryKey: string;
+      actionKeys: string[];
+      avoidKeys: string[];
+      seekCareNowKeys: string[];
+      categorySpecificTipKeys: string[];
+    };
     doctorReadySummary?: {
       primarySymptom: string;
       selectedSymptoms: string[];

@@ -7,6 +7,7 @@ type TriageCase = {
   recommendedCare?: RecommendedCare;
   redFlagsFound?: string[];
   minRisk?: RiskLevel[];
+  carePlanTitleKey?: string;
 };
 
 const cases: TriageCase[] = [
@@ -20,7 +21,8 @@ const cases: TriageCase[] = [
       redFlags: {}
     },
     riskLevel: "Low",
-    recommendedCare: "Self-care and monitoring"
+    recommendedCare: "Self-care and monitoring",
+    carePlanTitleKey: "carePlan.low.title"
   },
   {
     name: "Moderate: fever and cough worsening for several days",
@@ -33,7 +35,8 @@ const cases: TriageCase[] = [
       redFlags: {}
     },
     riskLevel: "Moderate",
-    recommendedCare: "Primary Care within 24–72 hours"
+    recommendedCare: "Primary Care within 24–72 hours",
+    carePlanTitleKey: "carePlan.moderate.title"
   },
   {
     name: "Emergency: chest pain and trouble breathing",
@@ -44,7 +47,8 @@ const cases: TriageCase[] = [
     },
     riskLevel: "Emergency",
     recommendedCare: "Emergency care now",
-    redFlagsFound: ["chestPainOrPressure", "troubleBreathing"]
+    redFlagsFound: ["chestPainOrPressure", "troubleBreathing"],
+    carePlanTitleKey: "carePlan.emergency.title"
   },
   {
     name: "Emergency: fever with stiff neck",
@@ -55,7 +59,8 @@ const cases: TriageCase[] = [
     },
     riskLevel: "Emergency",
     recommendedCare: "Emergency care now",
-    redFlagsFound: ["stiffNeck"]
+    redFlagsFound: ["stiffNeck"],
+    carePlanTitleKey: "carePlan.emergency.title"
   },
   {
     name: "Emergency: abdominal pain with black stool and severe abdominal pain",
@@ -67,7 +72,8 @@ const cases: TriageCase[] = [
     },
     riskLevel: "Emergency",
     recommendedCare: "Emergency care now",
-    redFlagsFound: ["blackStool", "severeAbdominalPain"]
+    redFlagsFound: ["blackStool", "severeAbdominalPain"],
+    carePlanTitleKey: "carePlan.emergency.title"
   },
   {
     name: "Crisis: suicidal thoughts",
@@ -77,7 +83,8 @@ const cases: TriageCase[] = [
     },
     riskLevel: "Crisis",
     recommendedCare: "Crisis support now",
-    redFlagsFound: ["suicidalThoughts"]
+    redFlagsFound: ["suicidalThoughts"],
+    carePlanTitleKey: "carePlan.crisis.title"
   },
   {
     name: "High: severe shortness of breath",
@@ -88,7 +95,8 @@ const cases: TriageCase[] = [
       redFlags: {}
     },
     riskLevel: "High",
-    recommendedCare: "Urgent Care today"
+    recommendedCare: "Urgent Care today",
+    carePlanTitleKey: "carePlan.high.title"
   },
   {
     name: "Background escalation: immunocompromised fever is not low",
@@ -117,6 +125,13 @@ for (const testCase of cases) {
   }
   assert(result.reasons.length > 0, `${testCase.name}: reasons should not be empty`);
   assert(result.possibleCauses.length > 0, `${testCase.name}: possible causes should not be empty`);
+  assert(Boolean(result.carePlan), `${testCase.name}: care plan should exist`);
+  assert(result.carePlan.actionKeys.length > 0, `${testCase.name}: care plan actions should not be empty`);
+  assert(result.carePlan.seekCareNowKeys.length > 0, `${testCase.name}: care plan seek-care guidance should not be empty`);
+  assert(result.carePlan.categorySpecificTipKeys.length > 0, `${testCase.name}: care plan symptom tips should not be empty`);
+  if (testCase.carePlanTitleKey) {
+    assert(result.carePlan.titleKey === testCase.carePlanTitleKey, `${testCase.name}: expected care plan ${testCase.carePlanTitleKey}, got ${result.carePlan.titleKey}`);
+  }
   assert(Boolean(result.disclaimer), `${testCase.name}: disclaimer should exist`);
   for (const flag of testCase.redFlagsFound ?? []) {
     assert(result.redFlagsFound.includes(flag), `${testCase.name}: expected red flag ${flag}`);
