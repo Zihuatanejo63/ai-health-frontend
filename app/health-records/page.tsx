@@ -49,6 +49,7 @@ export default function HealthRecordsPage() {
   const sourceRisk = latest?.riskLevel ?? latestCheck?.result.riskLevel;
   const sourceCare = latest?.recommendedCare ?? latestCheck?.result.recommendedCare;
   const sourceDate = latest?.createdAt ?? latestCheck?.createdAt;
+  const hasSource = Boolean(latest || latestCheck);
   const items = [
     [t("summary.symptoms"), String(sourceSymptoms.length), sourceSymptoms.map((item) => t(symptomItemKey(item))).join(", ") || t("summary.noSavedSymptoms"), "primary"],
     [t("summary.timeline"), sourceDate ? t("common.ready") : "0", sourceDate ? new Date(sourceDate).toLocaleDateString() : t("summary.noSavedSummaries"), "teal"],
@@ -65,6 +66,16 @@ export default function HealthRecordsPage() {
         action={<div className="button-pair"><button className="btn-secondary" type="button">{t("summary.savePdf")}</button><button className="btn-primary" onClick={saveLatestSummary} type="button">{t("common.saveSummary")}</button></div>}
       />
 
+      {!hasSource ? (
+        <Card className="history-empty-card">
+          <div className="empty-icon">S</div>
+          <h2>{t("summary.noSavedSummaries")}</h2>
+          <p>{t("summary.startFirst")}</p>
+          {message ? <p className="login-save-prompt">{message}</p> : null}
+          <PrimaryButton href="/symptom-check">{t("home.start")}</PrimaryButton>
+        </Card>
+      ) : (
+        <>
       <Card className="summary-intro-card">
         <div>
           <IconCircle tone="teal">S</IconCircle>
@@ -109,6 +120,8 @@ export default function HealthRecordsPage() {
           <p>{t("summary.privacyText")}</p>
         </div>
       </Card>
+        </>
+      )}
     </section>
   );
 }

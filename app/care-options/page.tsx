@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { CareLevelCard } from "@/components/care-level-card";
 import { DisclaimerBox } from "@/components/disclaimer-box";
 import { useI18n } from "@/components/i18n-provider";
@@ -60,6 +61,7 @@ function metaKeys(tone: (typeof options)[number]["tone"]) {
 
 export default function CareOptionsPage() {
   const { t } = useI18n();
+  const [openCard, setOpenCard] = useState<string | null>(null);
 
   return (
     <section className="stack-page">
@@ -83,8 +85,11 @@ export default function CareOptionsPage() {
             <div className="care-card-meta">
               {metaKeys(option.tone).map((key) => <span key={key}>{t(key)}</span>)}
             </div>
-            <details className="care-details">
-              <summary>{t("common.viewDetails")}</summary>
+            <button className="care-details-toggle" onClick={() => setOpenCard(openCard === option.title ? null : option.title)} type="button">
+              {t("common.viewDetails")}
+            </button>
+            {openCard === option.title ? (
+            <div className="care-details">
               <dl>
                 <dt>{t("care.bestFor")}</dt>
                 <dd>{t(option.bestFor)}</dd>
@@ -95,7 +100,8 @@ export default function CareOptionsPage() {
                 <dt>{t("care.costNote")}</dt>
                 <dd>{t(careDetailKey(option.insurance))}</dd>
               </dl>
-            </details>
+            </div>
+            ) : null}
           </article>
         ))}
       </div>

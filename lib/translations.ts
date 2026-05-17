@@ -1270,7 +1270,6 @@ const symptomAliasEn: TranslationMap = {
   "auth.notSignedIn": "Not signed in",
   "auth.signInOrCreateAccount": "Sign in or create account",
   "auth.createAccountPrompt": "Create an account to save your health history.",
-  "auth.localDemoNotice": "This is a local demo account until secure authentication is connected.",
   "auth.errors.nameRequired": "Name is required.",
   "auth.errors.nameTooShort": "Name must be at least 2 characters.",
   "auth.errors.emailRequired": "Email is required.",
@@ -1281,6 +1280,7 @@ const symptomAliasEn: TranslationMap = {
   "auth.errors.confirmPasswordRequired": "Confirm your password.",
   "auth.errors.passwordMismatch": "Passwords do not match.",
   "auth.errors.acceptTermsRequired": "You must accept the terms to continue.",
+  "auth.errors.duplicateEmail": "An account with this email already exists.",
   "auth.errors.accountNotFound": "Account not found. Please sign up first.",
   "auth.errors.invalidCredentials": "Email or password is incorrect."
 };
@@ -1429,7 +1429,6 @@ const symptomAliasZh: TranslationMap = {
   "auth.notSignedIn": "未登录",
   "auth.signInOrCreateAccount": "登录或创建账户",
   "auth.createAccountPrompt": "创建账户以保存你的健康历史。",
-  "auth.localDemoNotice": "在接入安全认证服务前，这是本地演示账户。",
   "auth.errors.nameRequired": "请输入姓名。",
   "auth.errors.nameTooShort": "姓名至少需要 2 个字符。",
   "auth.errors.emailRequired": "请输入邮箱地址。",
@@ -1440,6 +1439,7 @@ const symptomAliasZh: TranslationMap = {
   "auth.errors.confirmPasswordRequired": "请再次输入密码。",
   "auth.errors.passwordMismatch": "两次输入的密码不一致。",
   "auth.errors.acceptTermsRequired": "请先同意服务条款和隐私政策。",
+  "auth.errors.duplicateEmail": "该邮箱已注册，请直接登录。",
   "auth.errors.accountNotFound": "未找到该账户，请先注册。",
   "auth.errors.invalidCredentials": "邮箱或密码不正确。"
 };

@@ -889,7 +889,11 @@ button:disabled {
   padding-top: 10px;
 }
 
-.care-details summary {
+.care-details-toggle {
+  width: fit-content;
+  border: 0;
+  padding: 0;
+  background: transparent;
   color: var(--primary);
   font-weight: 850;
   cursor: pointer;

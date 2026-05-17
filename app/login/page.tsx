@@ -62,7 +62,6 @@ export default function LoginPage() {
     <section className="app-page auth-page">
       <PageHeader title={t("auth.loginTitle")} description={t("auth.loginSubtitle")} />
       <Card className="auth-card">
-        <p className="login-save-prompt">{t("auth.localDemoNotice")}</p>
         <form className="settings-form" noValidate onSubmit={signIn}>
           <label>
             {t("auth.email")}

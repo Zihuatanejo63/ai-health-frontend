@@ -67,6 +67,11 @@ function readAccounts(): LocalAuthAccount[] {
   }
 }
 
+export function accountExists(email: string) {
+  const normalizedEmail = email.trim().toLowerCase();
+  return readAccounts().some((item) => item.email.toLowerCase() === normalizedEmail);
+}
+
 function writeAccounts(accounts: LocalAuthAccount[]) {
   if (typeof window === "undefined") return;
   window.localStorage.setItem(AUTH_ACCOUNTS_STORAGE_KEY, JSON.stringify(accounts));
@@ -75,6 +80,7 @@ function writeAccounts(accounts: LocalAuthAccount[]) {
 
 export function registerMockAccount({ name, email, password }: { name: string; email: string; password: string }) {
   const normalizedEmail = email.trim().toLowerCase();
+  if (accountExists(normalizedEmail)) return { ok: false as const, reason: "duplicate" as const };
   const user = createMockUser(normalizedEmail, name.trim(), false);
   const account: LocalAuthAccount = {
     ...user,
@@ -83,7 +89,7 @@ export function registerMockAccount({ name, email, password }: { name: string; e
   const accounts = readAccounts().filter((item) => item.email.toLowerCase() !== normalizedEmail);
   writeAccounts([account, ...accounts]);
   writeUser(user);
-  return user;
+  return { ok: true as const, user };
 }
 
 export function authenticateMockAccount(email: string, password: string) {

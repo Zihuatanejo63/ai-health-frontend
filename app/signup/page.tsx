@@ -22,6 +22,7 @@ export default function SignupPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [acceptTerms, setAcceptTerms] = useState(false);
   const [touched, setTouched] = useState<Record<string, boolean>>({});
+  const [submitError, setSubmitError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const errors = useMemo(() => {
@@ -57,8 +58,12 @@ export default function SignupPage() {
     setTouched({ name: true, email: true, password: true, confirmPassword: true, acceptTerms: true });
     if (!isValid) return;
     setLoading(true);
-    registerMockAccount({ name, email, password: password.trim() });
+    const result = registerMockAccount({ name, email, password: password.trim() });
     setLoading(false);
+    if (!result.ok) {
+      setSubmitError("auth.errors.duplicateEmail");
+      return;
+    }
     router.push("/onboarding");
   }
 
@@ -66,7 +71,6 @@ export default function SignupPage() {
     <section className="app-page auth-page">
       <PageHeader title={t("auth.signupTitle")} description={t("auth.signupSubtitle")} />
       <Card className="auth-card">
-        <p className="login-save-prompt">{t("auth.localDemoNotice")}</p>
         <form className="settings-form" noValidate onSubmit={signup}>
           <label>
             {t("auth.name")}
@@ -84,7 +88,10 @@ export default function SignupPage() {
               autoComplete="email"
               value={email}
               onBlur={() => touch("email")}
-              onChange={(event) => setEmail(event.target.value)}
+              onChange={(event) => {
+                setEmail(event.target.value);
+                setSubmitError("");
+              }}
               type="email"
             />
             {showError("email")}
@@ -126,6 +133,7 @@ export default function SignupPage() {
             <span>{t("auth.acceptTerms")}</span>
           </label>
           {showError("acceptTerms")}
+          {submitError ? <p className="inline-error">{t(submitError)}</p> : null}
           <button className="btn-primary" disabled={!isValid || loading} type="submit">
             {loading ? `${t("auth.signUp")}...` : t("auth.signUp")}
           </button>
