@@ -14,6 +14,12 @@ export default function HistoryPage() {
     setChecks(readSymptomChecks());
   }, []);
 
+  function symptomTitle(check: SavedSymptomCheck) {
+    const primary = check.primarySymptom || check.symptoms[0];
+    const companions = check.symptoms.filter((item) => item !== primary).slice(0, 2);
+    return [primary, ...companions].filter(Boolean).map((item) => t(symptomItemKey(item))).join(" + ");
+  }
+
   return (
     <section className="app-page history-page">
       <PageHeader title={t("history.title")} description={t("history.description")} />
@@ -29,7 +35,7 @@ export default function HistoryPage() {
           {checks.map((check) => (
             <HistoryItem
               key={check.id}
-              symptom={(check.symptoms.slice(0, 3).map((item) => t(symptomItemKey(item))).join(" + ")) || t(symptomItemKey(check.primarySymptom))}
+              symptom={symptomTitle(check)}
               risk={t(riskLevelKey(check.result.riskLevel))}
               care={t(careLevelKey(check.result.recommendedCare))}
               date={new Date(check.createdAt).toLocaleString()}

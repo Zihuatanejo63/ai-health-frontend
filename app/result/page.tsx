@@ -110,6 +110,9 @@ export default function ResultPage() {
   const summary = result.doctorReadySummary;
   const questionsToAsk = summary?.questionsToAsk ?? [];
   const isEmergencyTone = result.riskLevel === "Emergency" || result.riskLevel === "Crisis";
+  const selectedSymptoms = summary?.selectedSymptoms ?? check.symptoms;
+  const mainSymptom = summary?.primarySymptom ?? check.primarySymptom;
+  const otherSymptoms = selectedSymptoms.filter((item) => item !== mainSymptom);
 
   return (
     <section className="app-page result-page">
@@ -190,7 +193,9 @@ export default function ResultPage() {
                 <IconCircle tone="teal">✓</IconCircle>
               </div>
               <div className="summary-mini-grid">
-                <span>{t("result.symptoms")} <strong>{(summary?.selectedSymptoms ?? check.symptoms).length}</strong></span>
+                <span>{t("result.mainSymptom")} <strong>{mainSymptom ? t(symptomItemKey(mainSymptom)) : t("common.notSelected")}</strong></span>
+                <span>{t("result.otherSymptoms")} <strong>{otherSymptoms.length ? otherSymptoms.map((item) => t(symptomItemKey(item))).join(", ") : t("common.none")}</strong></span>
+                <span>{t("result.symptoms")} <strong>{selectedSymptoms.length}</strong></span>
                 <span>{t("result.duration")} <strong>{displayDuration(summary?.duration ?? check.duration)}</strong></span>
                 <span>{t("symptom.trend")} <strong>{displayTrend(summary?.trend)}</strong></span>
                 <span>{t("symptom.severity")} <strong>{displaySeverity(summary?.severity ?? check.severity)}</strong></span>

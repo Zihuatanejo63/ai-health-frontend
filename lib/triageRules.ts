@@ -175,10 +175,20 @@ function buildFound(redFlags: Record<string, boolean>, detailsTrue: Record<strin
     if (redFlags[key] || detailsTrue[key]) found.add(key);
   });
   if (has(selectedSymptoms, "chest-pain")) found.add("chestPainOrPressure");
+  if (has(selectedSymptoms, "chest-tightness")) found.add("chestPainOrPressure");
   if (has(selectedSymptoms, "shortness-of-breath")) found.add("troubleBreathing");
   if (has(selectedSymptoms, "confusion")) found.add("confusion");
   if (has(selectedSymptoms, "seizure")) found.add("seizure");
   if (has(selectedSymptoms, "fainting")) found.add("fainting");
+  if (has(selectedSymptoms, "trouble-speaking")) found.add("strokeLikeSymptoms");
+  if (has(selectedSymptoms, "numbness") || has(selectedSymptoms, "weakness")) found.add("strokeLikeSymptoms");
+  if (has(selectedSymptoms, "severe-allergic-reaction")) found.add("severeAllergicReaction");
+  if (has(selectedSymptoms, "severe-dehydration")) found.add("severeDehydration");
+  if (has(selectedSymptoms, "persistent-vomiting")) found.add("persistentVomiting");
+  if (has(selectedSymptoms, "blood-in-stool")) found.add("bloodInStool");
+  if (has(selectedSymptoms, "black-stool")) found.add("blackStool");
+  if (has(selectedSymptoms, "severe-abdominal-pain")) found.add("severeAbdominalPain");
+  if (has(selectedSymptoms, "stiff-neck")) found.add("stiffNeck");
   if (has(selectedSymptoms, "suicidal-thoughts")) found.add("suicidalThoughts");
   if (has(selectedSymptoms, "self-harm-thoughts")) found.add("selfHarmThoughts");
   return Array.from(found);
@@ -284,6 +294,9 @@ export function evaluateTriage(rawInput: SymptomCheckInput): TriageResult {
   const { selectedSymptoms, redFlags, detailsTrue, healthBackground } = input;
   const found = buildFound(redFlags, detailsTrue, selectedSymptoms);
   const reasonSet = new Set<string>();
+  const hasAbdominalPain = has(selectedSymptoms, "abdominal-pain") || has(selectedSymptoms, "stomach-pain") || has(selectedSymptoms, "lower-abdominal-pain");
+  const hasBleedingStoolSignal = redFlags.bloodInStool || redFlags.blackStool || redFlags.bloodInVomit || detailsTrue.bloodInStoolOrBlackStool || has(selectedSymptoms, "blood-in-stool") || has(selectedSymptoms, "black-stool") || has(selectedSymptoms, "blood-in-stool-or-vomit");
+  const hasSevereAbdominalSignal = redFlags.severeAbdominalPain || detailsTrue.suddenSeverePain || has(selectedSymptoms, "severe-abdominal-pain");
 
   const crisis =
     detailsTrue.suicidalThoughts ||
@@ -301,10 +314,11 @@ export function evaluateTriage(rawInput: SymptomCheckInput): TriageResult {
   }
 
   const chestAndBreathing =
-    (detailsTrue.chestPainOrPressure || redFlags.chestPainOrPressure || has(selectedSymptoms, "chest-pain")) &&
+    (detailsTrue.chestPainOrPressure || redFlags.chestPainOrPressure || has(selectedSymptoms, "chest-pain") || has(selectedSymptoms, "chest-tightness")) &&
     (detailsTrue.troubleBreathing || redFlags.troubleBreathing || has(selectedSymptoms, "shortness-of-breath"));
   const emergencyFlags = ["confusion", "hardToWake", "seizure", "fainting", "strokeLikeSymptoms", "oneSidedWeaknessOrNumbness", "troubleSpeaking", "severeAllergicReaction", "blueOrGrayLips", "severeBleeding"];
-  if (chestAndBreathing || anyTrue({ ...redFlags, ...detailsTrue }, emergencyFlags)) {
+  const selectedNeurologicEmergency = has(selectedSymptoms, "confusion") || has(selectedSymptoms, "seizure") || has(selectedSymptoms, "fainting") || has(selectedSymptoms, "trouble-speaking");
+  if (chestAndBreathing || selectedNeurologicEmergency || anyTrue({ ...redFlags, ...detailsTrue }, emergencyFlags)) {
     const reasons = ["You reported warning signs that may require emergency care."];
     if (chestAndBreathing) reasons.push("Chest pain with trouble breathing can be serious and should be evaluated urgently.");
     return makeResult(input, "Emergency", "Emergency care now", 99, reasons, found);
@@ -312,26 +326,26 @@ export function evaluateTriage(rawInput: SymptomCheckInput): TriageResult {
 
   const fever = has(selectedSymptoms, "fever");
   const severe = input.severity === "severe";
-  if (fever && (redFlags.stiffNeck || detailsTrue.stiffNeck)) {
+  if (fever && (redFlags.stiffNeck || detailsTrue.stiffNeck || has(selectedSymptoms, "stiff-neck"))) {
     return makeResult(input, "Emergency", "Emergency care now", 98, ["Fever with a stiff neck can be an emergency warning sign."], found);
   }
   if (fever && redFlags.rashWithFever && severe) {
     return makeResult(input, "Emergency", "Emergency care now", 98, ["Fever with rash and severe symptoms can require emergency evaluation."], found);
   }
-  if ((redFlags.severeAbdominalPain || detailsTrue.suddenSeverePain) && (redFlags.bloodInStool || redFlags.blackStool || redFlags.bloodInVomit || detailsTrue.bloodInStoolOrBlackStool)) {
+  if ((hasAbdominalPain || hasSevereAbdominalSignal) && hasSevereAbdominalSignal && hasBleedingStoolSignal) {
     return makeResult(input, "Emergency", "Emergency care now", 98, ["Severe abdominal pain with bleeding signs may require emergency evaluation."], found);
   }
 
   const pregnancyConcern =
     (detailsTrue.pregnancyPossible || hasBackgroundFlag(healthBackground, "pregnantOrPossiblyPregnant")) &&
-    (has(selectedSymptoms, "abdominal-pain") || has(selectedSymptoms, "stomach-pain") || has(selectedSymptoms, "vaginal-bleeding") || detailsTrue.suddenSeverePain);
+    (hasAbdominalPain || has(selectedSymptoms, "vaginal-bleeding") || detailsTrue.suddenSeverePain);
   if (pregnancyConcern) {
     return makeResult(input, "High", "Urgent Care today", 8, ["Pregnancy or possible pregnancy with abdominal pain, bleeding, or severe pain should be reviewed promptly."], found);
   }
   if (fever && redFlags.rashWithFever) {
     return makeResult(input, "High", "Urgent Care today", 8, ["Fever with rash may need same-day medical review."], found);
   }
-  if (redFlags.persistentVomiting && redFlags.severeDehydration) {
+  if ((redFlags.persistentVomiting || has(selectedSymptoms, "persistent-vomiting")) && (redFlags.severeDehydration || has(selectedSymptoms, "severe-dehydration"))) {
     return makeResult(input, "High", "Urgent Care today", 8, ["Persistent vomiting with dehydration can require same-day care."], found);
   }
   if (redFlags.notUrinating || input.functionImpact.notUrinatingOrVeryLittle) {

@@ -1603,11 +1603,37 @@ body {
 }
 
 .detail-question,
-.review-grid > div {
+.review-grid > div,
+.primary-symptom-card {
   border: 1px solid var(--border);
   border-radius: 16px;
   background: #fff;
   padding: 16px;
+}
+
+.primary-symptom-card {
+  display: grid;
+  gap: 14px;
+  border-color: rgba(37, 99, 235, 0.18);
+  background: #f8fbff;
+}
+
+.primary-symptom-card h3,
+.primary-symptom-card p {
+  margin: 0;
+}
+
+.primary-symptom-card h3 {
+  color: var(--text);
+  font-size: 18px;
+}
+
+.primary-symptom-card p {
+  color: var(--muted);
+}
+
+.primary-choice-pill {
+  border-radius: 999px;
 }
 
 .detail-question p {

@@ -24,6 +24,12 @@ export default function HomePage() {
     setLatestCheck(readSymptomChecks()[0] ?? null);
   }, []);
 
+  function symptomTitle(check: SavedSymptomCheck) {
+    const primary = check.primarySymptom || check.symptoms[0];
+    const companions = check.symptoms.filter((item) => item !== primary).slice(0, 2);
+    return [primary, ...companions].filter(Boolean).map((item) => t(symptomItemKey(item))).join(" + ");
+  }
+
   const hasCheck = Boolean(latestCheck);
   const stats = [
     {
@@ -89,7 +95,7 @@ export default function HomePage() {
             </div>
             {latestCheck ? (
               <>
-                <h2>{latestCheck.symptoms.slice(0, 3).map((item) => t(symptomItemKey(item))).join(" + ")}</h2>
+                <h2>{symptomTitle(latestCheck)}</h2>
                 <p>{t(riskLevelKey(latestCheck.result.riskLevel))} · {t(careLevelKey(latestCheck.result.recommendedCare))}</p>
                 <time>{new Date(latestCheck.createdAt).toLocaleString()}</time>
               </>

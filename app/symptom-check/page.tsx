@@ -136,7 +136,7 @@ export default function SymptomCheckPage() {
 
   function validateStep(currentStep = step) {
     if (currentStep === 1 && symptoms.length === 0) return "symptom.errors.selectAtLeastOneSymptom";
-    if (currentStep === 1 && !primarySymptom) return "symptom.errors.selectPrimarySymptom";
+    if (currentStep === 1 && (!primarySymptom || !symptoms.includes(primarySymptom))) return "symptom.errors.selectPrimarySymptom";
     if (currentStep === 6 && background.age.trim()) {
       const age = Number(background.age);
       if (!Number.isInteger(age) || age < 0 || age > 120) return "symptom.errors.invalidAge";
@@ -278,7 +278,7 @@ export default function SymptomCheckPage() {
             <article className="panel workflow-step">
               <span>{t("symptom.stepChoose")}</span>
               <h2>{t("symptom.chooseSymptoms")}</h2>
-              <p>{t("symptom.chooseSymptomsDesc")} {t("symptom.selectAllThatApply")}</p>
+              <p>{t("symptom.selectAllThatApply")}</p>
               <div className="symptom-category-grid">
                 {symptomCategories.map((category) => (
                   <section className="symptom-category-card" key={category.id}>
@@ -294,13 +294,24 @@ export default function SymptomCheckPage() {
                   </section>
                 ))}
               </div>
-              <label className="form-field">
-                {t("symptom.primarySymptom")}
-                <select value={primarySymptom} onChange={(event) => setPrimarySymptom(event.target.value)}>
-                  <option value="">{t("symptom.primarySymptomRequired")}</option>
-                  {symptoms.map((symptom) => <option key={symptom} value={symptom}>{t(symptomItemKey(symptom))}</option>)}
-                </select>
-              </label>
+              {symptoms.length > 0 ? (
+                <section className="primary-symptom-card">
+                  <div>
+                    <h3>{t("symptom.mainSymptom")}</h3>
+                    <p>{t("symptom.selectedSymptomCount").replace("{{count}}", String(symptoms.length))}</p>
+                    <p>{t("symptom.chooseMainSymptom")}</p>
+                  </div>
+                  <div className="choice-grid compact-choice-grid">
+                    {symptoms.map((symptom) => (
+                      <label className="choice-pill primary-choice-pill" key={symptom}>
+                        <input checked={primarySymptom === symptom} onChange={() => setPrimarySymptom(symptom)} type="radio" />
+                        {t(symptomItemKey(symptom))}
+                      </label>
+                    ))}
+                  </div>
+                  {!primarySymptom ? <p className="inline-error">{t("symptom.mainSymptomRequired")}</p> : null}
+                </section>
+              ) : null}
             </article>
           ) : null}
 
@@ -429,7 +440,7 @@ export default function SymptomCheckPage() {
               {step === TOTAL_STEPS ? t("symptom.backToEdit") : t("symptom.back")}
             </button>
             {step < TOTAL_STEPS ? (
-              <button className="btn-primary" onClick={goNext} type="button">
+              <button className="btn-primary" disabled={step === 1 && (symptoms.length === 0 || !primarySymptom)} onClick={goNext} type="button">
                 {t("symptom.continue")}
               </button>
             ) : (
