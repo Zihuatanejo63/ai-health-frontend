@@ -70,7 +70,8 @@ export default function ResultPage() {
   function saveSummary() {
     if (!check) return;
     const summary = check.result.doctorReadySummary;
-    writeSummaries([
+    const existing = readSummaries();
+    const nextSummaries = existing.some((item) => item.checkId === check.id) ? existing : [
       {
         id: `summary_${Date.now()}`,
         createdAt: new Date().toISOString(),
@@ -80,8 +81,9 @@ export default function ResultPage() {
         riskLevel: check.result.riskLevel,
         recommendedCare: check.result.recommendedCare
       },
-      ...readSummaries()
-    ]);
+      ...existing
+    ];
+    writeSummaries(nextSummaries);
     setSaved(true);
     const user = readUser();
     if (!user || user.isGuest) setLoginPrompt(true);
@@ -133,6 +135,15 @@ export default function ResultPage() {
         />
       </div>
 
+      <Card className={isEmergencyTone ? "result-safety-card urgent" : "result-safety-card"}>
+        <h2>{t("result.safetyTitle")}</h2>
+        <div className="check-list">
+          <span>• {t("result.thisIsNotDiagnosis")}</span>
+          <span>• {t("result.noPrescription")}</span>
+          <span>• {t("result.seekHelpIfWorse")}</span>
+        </div>
+      </Card>
+
       {redFlagsFound.length > 0 ? (
         <Card className="crisis-card">
           <h2>{t("result.redFlagsFound")}</h2>
@@ -161,14 +172,25 @@ export default function ResultPage() {
             </div>
           </Card>
 
-          <Card>
-            <h2>{t("result.possibleCauses")}</h2>
-            <p>{t("result.mayBe")}</p>
-            <div className="chip-row">
-              {result.possibleCauses.map((item) => <StatusBadge key={item} tone="primary">{displayText(item)}</StatusBadge>)}
-            </div>
-            <p className="microcopy">{t("result.thisIsNotDiagnosis")}</p>
-          </Card>
+          {result.riskLevel === "Crisis" ? (
+            <Card className="crisis-card">
+              <h2>{t("symptom.crisis.title")}</h2>
+              <div className="check-list">
+                <span>• {t("symptom.crisis.seekImmediateHelp")}</span>
+                <span>• {t("symptom.crisis.localEmergency")}</span>
+                <span>• {t("symptom.crisis.notAlone")}</span>
+              </div>
+            </Card>
+          ) : (
+            <Card>
+              <h2>{t("result.possibleCauses")}</h2>
+              <p>{t("result.mayBe")}</p>
+              <div className="chip-row">
+                {result.possibleCauses.map((item) => <StatusBadge key={item} tone="primary">{displayText(item)}</StatusBadge>)}
+              </div>
+              <p className="microcopy">{t("result.thisIsNotDiagnosis")}</p>
+            </Card>
+          )}
 
           <Card>
             <h2>{t("result.monitor")}</h2>

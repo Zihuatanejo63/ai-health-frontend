@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Card, IconCircle, PageHeader, PrimaryButton, StatusBadge } from "@/components/app-ui";
 import { useI18n } from "@/components/i18n-provider";
+import { ConfirmDialog } from "@/components/modal";
 import { IllustrationImage } from "@/components/visual-card";
 import { readSummaries, readSymptomChecks, writeSummaries, type SavedSummary, type SavedSymptomCheck } from "@/lib/settings";
 import { readUser } from "@/lib/auth";
@@ -13,6 +14,8 @@ export default function HealthRecordsPage() {
   const [summaries, setSummaries] = useState<SavedSummary[]>([]);
   const [latestCheck, setLatestCheck] = useState<SavedSymptomCheck | null>(null);
   const [message, setMessage] = useState("");
+  const [selectedSummaryId, setSelectedSummaryId] = useState("");
+  const [deleteSummaryId, setDeleteSummaryId] = useState<string | null>(null);
 
   useEffect(() => {
     setSummaries(readSummaries());
@@ -21,12 +24,15 @@ export default function HealthRecordsPage() {
 
   function saveLatestSummary() {
     const user = readUser();
-    if (!user || user.isGuest) {
-      setMessage(t("home.createAccountPrompt"));
-      return;
-    }
     if (!latestCheck) {
       setMessage(t("summary.startFirst"));
+      return;
+    }
+    const existing = readSummaries();
+    if (existing.some((summary) => summary.checkId === latestCheck.id)) {
+      setSummaries(existing);
+      setSelectedSummaryId(existing.find((summary) => summary.checkId === latestCheck.id)?.id ?? "");
+      setMessage(t("summary.alreadySaved"));
       return;
     }
     const next = {
@@ -38,18 +44,39 @@ export default function HealthRecordsPage() {
       riskLevel: latestCheck.result.riskLevel,
       recommendedCare: latestCheck.result.recommendedCare
     };
-    const all = [next, ...readSummaries()];
+    const all = [next, ...existing];
     writeSummaries(all);
     setSummaries(all);
-    setMessage(t("summary.savedMessage"));
+    setSelectedSummaryId(next.id);
+    setMessage(!user || user.isGuest ? t("home.createAccountPrompt") : t("summary.savedMessage"));
   }
 
-  const latest = summaries[0];
-  const sourceSymptoms = latest?.symptoms ?? latestCheck?.symptoms ?? [];
-  const sourceRisk = latest?.riskLevel ?? latestCheck?.result.riskLevel;
-  const sourceCare = latest?.recommendedCare ?? latestCheck?.result.recommendedCare;
-  const sourceDate = latest?.createdAt ?? latestCheck?.createdAt;
-  const hasSource = Boolean(latest || latestCheck);
+  function deleteSummary(id: string) {
+    const next = readSummaries().filter((summary) => summary.id !== id);
+    writeSummaries(next);
+    setSummaries(next);
+    setSelectedSummaryId(next[0]?.id ?? "");
+    setDeleteSummaryId(null);
+    setMessage(t("summary.deleted"));
+  }
+
+  function exportSummary(summary: SavedSummary) {
+    const blob = new Blob([JSON.stringify(summary, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `healthmatchai-summary-${summary.id}.json`;
+    link.click();
+    URL.revokeObjectURL(url);
+    setMessage(t("summary.exported"));
+  }
+
+  const selectedSummary = summaries.find((summary) => summary.id === selectedSummaryId) ?? summaries[0];
+  const sourceSymptoms = selectedSummary?.symptoms ?? [];
+  const sourceRisk = selectedSummary?.riskLevel;
+  const sourceCare = selectedSummary?.recommendedCare;
+  const sourceDate = selectedSummary?.createdAt;
+  const hasSource = Boolean(selectedSummary);
   const items = [
     [t("summary.symptoms"), String(sourceSymptoms.length), sourceSymptoms.map((item) => t(symptomItemKey(item))).join(", ") || t("summary.noSavedSymptoms"), "primary"],
     [t("summary.timeline"), sourceDate ? t("common.ready") : "0", sourceDate ? new Date(sourceDate).toLocaleDateString() : t("summary.noSavedSummaries"), "teal"],
@@ -72,7 +99,11 @@ export default function HealthRecordsPage() {
           <h2>{t("summary.noSavedSummaries")}</h2>
           <p>{t("summary.startFirst")}</p>
           {message ? <p className="login-save-prompt">{message}</p> : null}
-          <PrimaryButton href="/symptom-check">{t("home.start")}</PrimaryButton>
+          {latestCheck ? (
+            <button className="btn-primary" onClick={saveLatestSummary} type="button">{t("common.saveSummary")}</button>
+          ) : (
+            <PrimaryButton href="/symptom-check">{t("home.start")}</PrimaryButton>
+          )}
         </Card>
       ) : (
         <>
@@ -88,6 +119,26 @@ export default function HealthRecordsPage() {
 
       <div className="health-summary-layout">
         <div className="health-summary-list">
+          {summaries.length > 0 ? (
+            <Card className="summary-dashboard-card">
+              <div className="card-title-row">
+                <h2>{t("summary.savedSummaries").replace("{count}", String(summaries.length))}</h2>
+              </div>
+              <div className="summary-record-list">
+                {summaries.map((summary) => (
+                  <div className="summary-record-row" key={summary.id}>
+                    <button className="summary-record-main" onClick={() => setSelectedSummaryId(summary.id)} type="button">
+                      <strong>{summary.symptoms.map((item) => t(symptomItemKey(item))).slice(0, 2).join(" + ")}</strong>
+                      <span>{new Date(summary.createdAt).toLocaleString()}</span>
+                    </button>
+                    <button className="btn-secondary" onClick={() => setSelectedSummaryId(summary.id)} type="button">{t("common.viewDetails")}</button>
+                    <button className="btn-secondary" onClick={() => exportSummary(summary)} type="button">{t("summary.exportJson")}</button>
+                    <button className="btn-danger" onClick={() => setDeleteSummaryId(summary.id)} type="button">{t("common.delete")}</button>
+                  </div>
+                ))}
+              </div>
+            </Card>
+          ) : null}
           {items.map(([title, count, detail, tone]) => (
             <Card className="summary-dashboard-card" key={title}>
               <IconCircle tone={tone}>{title.charAt(0)}</IconCircle>
@@ -122,6 +173,16 @@ export default function HealthRecordsPage() {
       </Card>
         </>
       )}
+      {deleteSummaryId ? (
+        <ConfirmDialog
+          title={t("summary.deleteTitle")}
+          body={t("summary.deleteBody")}
+          confirmLabel={t("common.delete")}
+          cancelLabel={t("common.cancel")}
+          onCancel={() => setDeleteSummaryId(null)}
+          onConfirm={() => deleteSummary(deleteSummaryId)}
+        />
+      ) : null}
     </section>
   );
 }

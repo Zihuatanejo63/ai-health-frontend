@@ -6,6 +6,7 @@
     "dev": "next dev -p 3000",
     "build": "next build",
     "start": "next start -p 3000",
+    "test:triage": "npx --yes tsx scripts/test-triage-rules.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

@@ -78,6 +78,8 @@ export function DataExportButton({
           {
             settings,
             user: readUser(),
+            healthProfile: (settings as { healthProfile?: unknown })?.healthProfile,
+            insuranceProfile: (settings as { insuranceProfile?: unknown })?.insuranceProfile,
             history: readHistory(),
             symptomChecks: readSymptomChecks(),
             summaries: readSummaries()

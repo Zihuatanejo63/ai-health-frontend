@@ -2299,6 +2299,10 @@ body {
   gap: 16px;
 }
 
+.history-item-with-actions {
+  grid-template-columns: 56px minmax(0, 1fr) auto auto;
+}
+
 .history-item h2 {
   margin: 0 0 10px;
   font-size: 21px;
@@ -2319,6 +2323,63 @@ body {
 
 .history-meta strong {
   color: var(--primary);
+}
+
+.history-actions,
+.summary-record-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.history-actions .btn-secondary,
+.history-actions .btn-danger,
+.summary-record-row .btn-secondary,
+.summary-record-row .btn-danger {
+  min-height: 38px;
+  padding: 0 12px;
+  border-radius: 12px;
+}
+
+.summary-record-list {
+  display: grid;
+  gap: 12px;
+}
+
+.summary-record-row {
+  justify-content: space-between;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 12px;
+  background: #f8fafc;
+}
+
+.summary-record-main {
+  display: grid;
+  gap: 4px;
+  min-width: 180px;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+}
+
+.summary-record-main span {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.result-safety-card {
+  border-color: rgba(37, 99, 235, 0.18);
+  background: #f8fbff;
+}
+
+.result-safety-card.urgent {
+  border-color: rgba(220, 38, 38, 0.2);
+  background: #fff7f7;
 }
 
 .chevron {
@@ -2822,8 +2883,13 @@ button.settings-row:hover,
   }
 
   .history-item time,
-  .history-item .chevron {
+  .history-item .chevron,
+  .history-actions {
     grid-column: 2;
+  }
+
+  .history-actions {
+    justify-content: flex-start;
   }
 
   .history-meta {
