@@ -63,6 +63,7 @@ export type SymptomHistoryItem = {
 export type SavedSymptomCheck = {
   id: string;
   createdAt: string;
+  input?: Record<string, unknown>;
   symptoms: string[];
   primarySymptom: string;
   duration: string;
@@ -72,8 +73,26 @@ export type SavedSymptomCheck = {
   result: {
     riskLevel: string;
     recommendedCare: string;
+    score?: number;
+    reasons?: string[];
+    redFlagsFound?: string[];
+    redFlagsChecked?: string[];
     possibleCauses: string[];
     whatToMonitor: string[];
+    escalationAdvice?: string[];
+    doctorReadySummary?: {
+      primarySymptom: string;
+      selectedSymptoms: string[];
+      duration?: string;
+      trend?: string;
+      severity?: string;
+      painScore?: number;
+      redFlagsFound: string[];
+      redFlagsChecked: string[];
+      healthBackground: Record<string, unknown>;
+      questionsToAsk: string[];
+    };
+    disclaimer?: string;
     why?: string;
     isCrisis?: boolean;
   };

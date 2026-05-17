@@ -171,9 +171,13 @@ export default function SymptomCheckPage() {
     }
     const result = evaluateTriage({
       symptoms,
+      selectedSymptoms: symptoms,
       primarySymptom,
       duration,
+      trend,
       severity,
+      painScore,
+      functionImpact,
       redFlags: selectedRedFlags,
       details: {
         ...details,
@@ -186,6 +190,18 @@ export default function SymptomCheckPage() {
     const saved: SavedSymptomCheck = {
       id: `check_${Date.now()}`,
       createdAt: new Date().toISOString(),
+      input: {
+        selectedSymptoms: symptoms,
+        primarySymptom,
+        details,
+        duration,
+        trend,
+        severity,
+        painScore,
+        functionImpact,
+        redFlags,
+        healthBackground: background
+      },
       symptoms,
       primarySymptom,
       duration,
