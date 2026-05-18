@@ -18,15 +18,15 @@ export default function PricingPage() {
       name: t("pricing.oneTime"),
       price: "$4.99",
       features: [t("pricing.pdf"), t("pricing.timeline"), t("pricing.redFlags"), t("pricing.questions")],
-      cta: t("pricing.createReport"),
+      cta: t("pricing.demoCheckout"),
       href: "/payment-success",
       featured: true
     },
     {
       name: t("pricing.plus"),
       price: "$9.99/month",
-      features: [t("pricing.unlimited"), t("pricing.family"), t("pricing.savedRecords"), t("pricing.insuranceHistory")],
-      cta: t("pricing.viewPlus"),
+      features: [t("pricing.unlimited"), t("pricing.family"), t("pricing.savedRecords"), t("pricing.insuranceHistory"), t("pricing.multiLanguage"), t("pricing.exportableSummaries"), t("pricing.savedInsurance"), t("pricing.historySearch")],
+      cta: t("pricing.comingSoon"),
       href: "/payment-success"
     }
   ];

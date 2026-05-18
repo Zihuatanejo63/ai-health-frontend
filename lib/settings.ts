@@ -31,6 +31,7 @@ export type HealthMatchSettings = {
   healthProfile: {
     age: string;
     sex: string;
+    pregnancyStatus: string;
     chronicConditions: string[];
     allergies: string[];
     medications: string[];
@@ -38,6 +39,8 @@ export type HealthMatchSettings = {
   insuranceProfile: {
     status: string;
     planType: string;
+    urgentCareCopay: string;
+    primaryCareCopay: string;
     copay: string;
     deductible: string;
     inNetworkPreference: string;
@@ -114,6 +117,9 @@ export type SavedSummary = {
   symptoms: string[];
   riskLevel: string;
   recommendedCare: string;
+  carePlanTitleKey?: string;
+  carePlanSummaryKey?: string;
+  questionsToAsk?: string[];
 };
 
 export const defaultSettings: HealthMatchSettings = {
@@ -125,16 +131,19 @@ export const defaultSettings: HealthMatchSettings = {
   healthProfile: {
     age: "",
     sex: "",
+    pregnancyStatus: "",
     chronicConditions: [],
     allergies: [],
     medications: []
   },
   insuranceProfile: {
-    status: "Active",
-    planType: "PPO",
-    copay: "$35",
-    deductible: "$1,250 / $2,000",
-    inNetworkPreference: "Preferred"
+    status: "",
+    planType: "",
+    urgentCareCopay: "",
+    primaryCareCopay: "",
+    copay: "",
+    deductible: "",
+    inNetworkPreference: ""
   },
   notifications: {
     symptomFollowUp: true,
@@ -145,14 +154,6 @@ export const defaultSettings: HealthMatchSettings = {
     plan: "Free"
   }
 };
-
-export const defaultHistory: SymptomHistoryItem[] = [
-  { symptom: "Fever + cough", risk: "Moderate", care: "Primary Care", date: "May 19, 2025 10:24 AM", tone: "warning" },
-  { symptom: "Headache", risk: "Low", care: "Self Care", date: "May 16, 2025 08:15 PM", tone: "success" },
-  { symptom: "Stomach pain", risk: "Moderate", care: "Primary Care", date: "May 14, 2025 11:47 AM", tone: "warning" },
-  { symptom: "Sore throat", risk: "Low", care: "Self Care", date: "May 10, 2025 09:02 AM", tone: "teal" },
-  { symptom: "Fatigue", risk: "Moderate", care: "Primary Care", date: "May 7, 2025 04:30 PM", tone: "warning" }
-];
 
 export function isLanguageCode(value: string): value is LanguageCode {
   return LANGUAGES.some((language) => language.code === value);

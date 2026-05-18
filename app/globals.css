@@ -2343,6 +2343,44 @@ body {
   border-radius: 12px;
 }
 
+.dashboard-quick-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.snapshot-empty {
+  display: grid;
+  gap: 14px;
+  align-items: start;
+}
+
+.snapshot-empty p {
+  margin: 0;
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.insurance-checklist-builder {
+  display: grid;
+  gap: 18px;
+}
+
+.emergency-sign-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.emergency-sign-grid span {
+  border: 1px solid rgba(220, 38, 38, 0.18);
+  border-radius: 16px;
+  padding: 13px 14px;
+  background: #fff7f7;
+  color: #7f1d1d;
+  font-weight: 850;
+}
+
 .summary-record-list {
   display: grid;
   gap: 12px;
@@ -2897,6 +2935,7 @@ button.settings-row:hover,
   .result-content-grid,
   .insurance-dashboard-grid,
   .care-plan-grid,
+  .emergency-sign-grid,
   .concept-grid,
   .health-summary-layout,
   .insurance-hero-card,
@@ -2914,6 +2953,12 @@ button.settings-row:hover,
   .app-content-header {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .dashboard-quick-actions .btn-primary,
+  .dashboard-quick-actions .btn-secondary {
+    width: 100%;
+    justify-content: center;
   }
 
   .history-item {

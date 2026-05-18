@@ -46,7 +46,7 @@ const options = [
     tone: "success" as const,
     bestFor: "care.selfBest",
     notFor: "Red flags, severe symptoms, or symptoms that persist or worsen.",
-    ask: "Which non-prescription options are appropriate for my situation?",
+    ask: "What self-care steps are safe for my situation?",
     insurance: "Some pharmacy items may not count toward medical benefits; ask before assuming coverage."
   }
 ];

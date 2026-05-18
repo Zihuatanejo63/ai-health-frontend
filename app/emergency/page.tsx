@@ -1,42 +1,47 @@
+"use client";
+
 import { Card, IconCircle, PageHeader } from "@/components/app-ui";
+import { DisclaimerBox } from "@/components/disclaimer-box";
+import { useI18n } from "@/components/i18n-provider";
 
 const emergencySigns = [
-  "Chest pain",
-  "Trouble breathing",
-  "Stroke-like symptoms",
-  "Severe bleeding",
-  "Loss of consciousness",
-  "Seizure",
-  "Severe allergic reaction",
-  "Suicidal thoughts or self-harm risk"
+  "emergency.sign.chestPain",
+  "emergency.sign.troubleBreathing",
+  "emergency.sign.stroke",
+  "emergency.sign.severeBleeding",
+  "emergency.sign.lossConsciousness",
+  "emergency.sign.seizure",
+  "emergency.sign.allergicReaction",
+  "emergency.sign.selfHarm"
 ];
 
 export default function EmergencyPage() {
+  const { t } = useI18n();
   return (
     <section className="app-page">
       <PageHeader
-        eyebrow="Emergency"
-        title="If this is an emergency, call your local emergency number now."
-        description="Do not wait for an app result when urgent help may be needed."
+        eyebrow={t("emergency.eyebrow")}
+        title={t("emergency.title")}
+        description={t("emergency.description")}
       />
 
       <Card className="crisis-card">
         <IconCircle tone="danger">!</IconCircle>
-        <h2>Emergency signs</h2>
-        <div className="check-list">
+        <h2>{t("emergency.signsTitle")}</h2>
+        <div className="emergency-sign-grid">
           {emergencySigns.map((sign) => (
-            <span key={sign}>• {sign}</span>
+            <span key={sign}>• {t(sign)}</span>
           ))}
         </div>
       </Card>
 
       <Card>
-        <h2>Get help first</h2>
+        <h2>{t("emergency.helpFirst")}</h2>
         <p>
-          HealthMatchAI is not an emergency service. If symptoms are severe, rapidly worsening, or could be life-threatening,
-          contact local emergency services or go to the nearest emergency department now.
+          {t("emergency.helpBody")}
         </p>
       </Card>
+      <DisclaimerBox text={t("emergency.examples")} />
     </section>
   );
 }

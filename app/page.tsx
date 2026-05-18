@@ -31,6 +31,15 @@ export default function HomePage() {
   }
 
   const hasCheck = Boolean(latestCheck);
+  const hasInsuranceProfile = Boolean(
+    settings.insuranceProfile.status ||
+      settings.insuranceProfile.planType ||
+      settings.insuranceProfile.urgentCareCopay ||
+      settings.insuranceProfile.primaryCareCopay ||
+      settings.insuranceProfile.copay ||
+      settings.insuranceProfile.deductible ||
+      settings.insuranceProfile.inNetworkPreference
+  );
   const stats = [
     {
       label: t("common.riskLevel"),
@@ -52,8 +61,10 @@ export default function HomePage() {
     },
     {
       label: t("home.insuranceNote"),
-      value: hasCheck ? t("home.insuranceValue") : t("home.addInsuranceProfile"),
-      detail: settings.insuranceProfile.status ? `${settings.insuranceProfile.status} · ${settings.insuranceProfile.planType}` : t("home.insuranceDetail"),
+      value: hasInsuranceProfile ? `${settings.insuranceProfile.status || t("common.saved")} · ${settings.insuranceProfile.planType || t("insurance.profile")}` : t("home.addInsuranceProfile"),
+      detail: hasInsuranceProfile
+        ? `${t("insurance.urgentCopay")}: ${settings.insuranceProfile.urgentCareCopay || settings.insuranceProfile.copay || t("common.notSelected")}`
+        : t("home.insuranceDetail"),
       tone: "purple"
     },
     {
@@ -82,6 +93,11 @@ export default function HomePage() {
         </div>
         <PrimaryButton href="/symptom-check">{t("home.start")}</PrimaryButton>
       </Card>
+
+      <div className="dashboard-quick-actions">
+        <a className="btn-secondary" href="/health-records">{t("common.createSummary")}</a>
+        <a className="btn-secondary" href="/insurance-guide">{t("insurance.understandCoverage")}</a>
+      </div>
 
       <div className="dashboard-grid">
         <div className="dashboard-card-grid">

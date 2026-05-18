@@ -79,7 +79,10 @@ export default function ResultPage() {
         title: `${check.primarySymptom || "Symptom"} summary`,
         symptoms: summary?.selectedSymptoms ?? check.symptoms,
         riskLevel: check.result.riskLevel,
-        recommendedCare: check.result.recommendedCare
+        recommendedCare: check.result.recommendedCare,
+        carePlanTitleKey: check.result.carePlan?.titleKey,
+        carePlanSummaryKey: check.result.carePlan?.summaryKey,
+        questionsToAsk: summary?.questionsToAsk ?? []
       },
       ...existing
     ];

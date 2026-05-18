@@ -7,7 +7,7 @@ import { ConfirmDialog } from "@/components/modal";
 import { IllustrationImage } from "@/components/visual-card";
 import { readSummaries, readSymptomChecks, writeSummaries, type SavedSummary, type SavedSymptomCheck } from "@/lib/settings";
 import { readUser } from "@/lib/auth";
-import { careLevelKey, riskLevelKey, symptomItemKey } from "@/lib/i18n-display";
+import { careLevelKey, riskLevelKey, symptomItemKey, triageTextKey } from "@/lib/i18n-display";
 
 export default function HealthRecordsPage() {
   const { t } = useI18n();
@@ -42,7 +42,10 @@ export default function HealthRecordsPage() {
       title: `${latestCheck.primarySymptom || "Symptom"} summary`,
       symptoms: latestCheck.symptoms,
       riskLevel: latestCheck.result.riskLevel,
-      recommendedCare: latestCheck.result.recommendedCare
+      recommendedCare: latestCheck.result.recommendedCare,
+      carePlanTitleKey: latestCheck.result.carePlan?.titleKey,
+      carePlanSummaryKey: latestCheck.result.carePlan?.summaryKey,
+      questionsToAsk: latestCheck.result.doctorReadySummary?.questionsToAsk ?? []
     };
     const all = [next, ...existing];
     writeSummaries(all);
@@ -77,12 +80,14 @@ export default function HealthRecordsPage() {
   const sourceCare = selectedSummary?.recommendedCare;
   const sourceDate = selectedSummary?.createdAt;
   const hasSource = Boolean(selectedSummary);
+  const sourceCheck = selectedSummary ? readSymptomChecks().find((check) => check.id === selectedSummary.checkId) : null;
+  const questions = selectedSummary?.questionsToAsk ?? sourceCheck?.result.doctorReadySummary?.questionsToAsk ?? [];
   const items = [
     [t("summary.symptoms"), String(sourceSymptoms.length), sourceSymptoms.map((item) => t(symptomItemKey(item))).join(", ") || t("summary.noSavedSymptoms"), "primary"],
-    [t("summary.timeline"), sourceDate ? t("common.ready") : "0", sourceDate ? new Date(sourceDate).toLocaleDateString() : t("summary.noSavedSummaries"), "teal"],
-    [t("summary.redFlags"), sourceRisk ? t(riskLevelKey(sourceRisk)) : "—", latestCheck?.redFlags.length ? latestCheck.redFlags.map((item) => t(symptomItemKey(item))).join(", ") : t("summary.fromLatest"), "danger"],
-    [t("summary.medications"), "—", t("summary.addMedications"), "teal"],
-    [t("summary.questions"), "3", t("summary.questionsVisit"), "primary"]
+    [t("common.riskLevel"), sourceRisk ? t(riskLevelKey(sourceRisk)) : "—", sourceDate ? new Date(sourceDate).toLocaleDateString() : t("summary.noSavedSummaries"), "teal"],
+    [t("home.recommendedCare"), sourceCare ? t(careLevelKey(sourceCare)) : "—", selectedSummary?.carePlanTitleKey ? t(selectedSummary.carePlanTitleKey) : t("summary.noCarePlan"), "primary"],
+    [t("result.carePlan"), selectedSummary?.carePlanTitleKey ? t(selectedSummary.carePlanTitleKey) : "—", selectedSummary?.carePlanSummaryKey ? t(selectedSummary.carePlanSummaryKey) : t("summary.noCarePlan"), "success"],
+    [t("summary.questions"), String(questions.length), questions.length ? questions.map((item) => t(triageTextKey(item))).join(" · ") : t("summary.questionsVisit"), "primary"]
   ] as const;
 
   return (
@@ -99,11 +104,7 @@ export default function HealthRecordsPage() {
           <h2>{t("summary.noSavedSummaries")}</h2>
           <p>{t("summary.startFirst")}</p>
           {message ? <p className="login-save-prompt">{message}</p> : null}
-          {latestCheck ? (
-            <button className="btn-primary" onClick={saveLatestSummary} type="button">{t("common.saveSummary")}</button>
-          ) : (
-            <PrimaryButton href="/symptom-check">{t("home.start")}</PrimaryButton>
-          )}
+          <PrimaryButton href="/symptom-check">{t("home.start")}</PrimaryButton>
         </Card>
       ) : (
         <>
@@ -159,7 +160,8 @@ export default function HealthRecordsPage() {
             <div className="summary-preview-row"><strong>{t("summary.symptoms")}</strong><span>{sourceSymptoms.map((item) => t(symptomItemKey(item))).join(", ") || "—"}</span></div>
             <div className="summary-preview-row"><strong>{t("common.riskLevel")}</strong><span>{sourceRisk ? t(riskLevelKey(sourceRisk)) : "—"}</span></div>
             <div className="summary-preview-row"><strong>{t("home.recommendedCare")}</strong><span>{sourceCare ? t(careLevelKey(sourceCare)) : "—"}</span></div>
-            <div className="summary-preview-row"><strong>{t("summary.questions")}</strong><span>{t("summary.questionsVisit")}</span></div>
+            <div className="summary-preview-row"><strong>{t("result.carePlan")}</strong><span>{selectedSummary?.carePlanSummaryKey ? t(selectedSummary.carePlanSummaryKey) : "—"}</span></div>
+            <div className="summary-preview-row"><strong>{t("summary.questions")}</strong><span>{questions.length ? questions.map((item) => t(triageTextKey(item))).join(" · ") : t("summary.questionsVisit")}</span></div>
           </Card>
         </div>
       </div>

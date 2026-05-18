@@ -62,6 +62,8 @@ export default function HistoryPage() {
                     <strong>{t(riskLevelKey(check.result.riskLevel))}</strong>
                     <span>{t("home.recommendedCare")}</span>
                     <strong>{t(careLevelKey(check.result.recommendedCare))}</strong>
+                    <span>{t("result.carePlan")}</span>
+                    <strong>{check.result.carePlan?.titleKey ? t(check.result.carePlan.titleKey) : t("common.notSelected")}</strong>
                   </div>
                 </div>
                 <time>{new Date(check.createdAt).toLocaleString()}</time>

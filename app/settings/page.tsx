@@ -194,7 +194,7 @@ export default function SettingsPage() {
       <SettingsSection title={t("settings.insuranceProfile")} subtitle={t("settings.insuranceSubtitle")} icon="I" tone="primary">
         <div className="settings-list-control">
           <SettingsRow label={t("settings.primaryInsurance")} onClick={() => openModal("insurance")}>
-            <StatusBadge tone="success">{settings.insuranceProfile.status}</StatusBadge>
+            <StatusBadge tone={settings.insuranceProfile.status ? "success" : "primary"}>{settings.insuranceProfile.status || t("insurance.addProfile")}</StatusBadge>
           </SettingsRow>
           <SettingsRow label={t("settings.insuranceHistory")} onClick={() => openModal("insurance")} />
         </div>
@@ -273,6 +273,10 @@ export default function SettingsPage() {
                 {t("settings.sex")}
                 <input value={healthDraft.sex} onChange={(event) => setHealthDraft({ ...healthDraft, sex: event.target.value })} />
               </label>
+              <label>
+                {t("settings.pregnancyStatus")}
+                <input value={healthDraft.pregnancyStatus} onChange={(event) => setHealthDraft({ ...healthDraft, pregnancyStatus: event.target.value })} />
+              </label>
             </div>
             <ListEditor
               addLabel={t("settings.addItem")}
@@ -320,8 +324,12 @@ export default function SettingsPage() {
                 <input value={insuranceDraft.planType} onChange={(event) => setInsuranceDraft({ ...insuranceDraft, planType: event.target.value })} />
               </label>
               <label>
-                {t("settings.copay")}
-                <input value={insuranceDraft.copay} onChange={(event) => setInsuranceDraft({ ...insuranceDraft, copay: event.target.value })} />
+                {t("settings.urgentCareCopay")}
+                <input value={insuranceDraft.urgentCareCopay} onChange={(event) => setInsuranceDraft({ ...insuranceDraft, urgentCareCopay: event.target.value, copay: event.target.value })} />
+              </label>
+              <label>
+                {t("settings.primaryCareCopay")}
+                <input value={insuranceDraft.primaryCareCopay} onChange={(event) => setInsuranceDraft({ ...insuranceDraft, primaryCareCopay: event.target.value })} />
               </label>
               <label>
                 {t("settings.deductible")}
