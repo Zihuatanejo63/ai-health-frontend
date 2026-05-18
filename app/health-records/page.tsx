@@ -102,9 +102,12 @@ export default function HealthRecordsPage() {
         <Card className="history-empty-card">
           <div className="empty-icon">S</div>
           <h2>{t("summary.noSavedSummaries")}</h2>
-          <p>{t("summary.startFirst")}</p>
+          <p>{t("summary.emptyRecordsText")}</p>
           {message ? <p className="login-save-prompt">{message}</p> : null}
-          <PrimaryButton href="/symptom-check">{t("home.start")}</PrimaryButton>
+          <div className="button-pair">
+            <PrimaryButton href="/symptom-check">{t("home.start")}</PrimaryButton>
+            <a className="btn-secondary" href="/history">{t("history.viewHistory")}</a>
+          </div>
         </Card>
       ) : (
         <>

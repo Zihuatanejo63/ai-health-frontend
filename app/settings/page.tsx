@@ -122,6 +122,16 @@ export default function SettingsPage() {
     savePatch({ insuranceProfile: insuranceDraft });
   }
 
+  const hasInsuranceProfile = Boolean(
+    settings.insuranceProfile.status ||
+      settings.insuranceProfile.planType ||
+      settings.insuranceProfile.urgentCareCopay ||
+      settings.insuranceProfile.primaryCareCopay ||
+      settings.insuranceProfile.copay ||
+      settings.insuranceProfile.deductible ||
+      settings.insuranceProfile.inNetworkPreference
+  );
+
   return (
     <section className="app-page settings-page">
       <PageHeader title={t("settings.title")} />
@@ -191,14 +201,16 @@ export default function SettingsPage() {
         </button>
       </SettingsSection>
 
-      <SettingsSection title={t("settings.insuranceProfile")} subtitle={t("settings.insuranceSubtitle")} icon="I" tone="primary">
-        <div className="settings-list-control">
-          <SettingsRow label={t("settings.primaryInsurance")} onClick={() => openModal("insurance")}>
-            <StatusBadge tone={settings.insuranceProfile.status ? "success" : "primary"}>{settings.insuranceProfile.status || t("insurance.addProfile")}</StatusBadge>
-          </SettingsRow>
-          <SettingsRow label={t("settings.insuranceHistory")} onClick={() => openModal("insurance")} />
-        </div>
-      </SettingsSection>
+      <div id="insurance-profile" className="scroll-anchor">
+        <SettingsSection title={t("settings.insuranceProfile")} subtitle={t("settings.insuranceSubtitle")} icon="I" tone="primary">
+          <div className="settings-list-control">
+            <SettingsRow label={hasInsuranceProfile ? t("settings.primaryInsurance") : t("insurance.noProfileYet")} onClick={() => openModal("insurance")}>
+              <StatusBadge tone={hasInsuranceProfile ? "success" : "primary"}>{hasInsuranceProfile ? (settings.insuranceProfile.status || t("common.saved")) : t("insurance.addProfile")}</StatusBadge>
+            </SettingsRow>
+            {hasInsuranceProfile ? <SettingsRow label={t("settings.insuranceHistory")} onClick={() => openModal("insurance")} /> : null}
+          </div>
+        </SettingsSection>
+      </div>
 
       <SettingsSection title={t("settings.notifications")} subtitle={t("settings.notificationsSubtitle")} icon="N" tone="purple">
         <div className="settings-list-control">

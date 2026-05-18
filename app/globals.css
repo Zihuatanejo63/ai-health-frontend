@@ -273,12 +273,16 @@ a {
 .illustration-image {
   display: flex;
   justify-content: center;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
   margin: 0 auto;
 }
 
 .illustration-image img {
   display: block;
   width: 100%;
+  max-width: 100%;
   height: auto;
   object-fit: contain;
 }
@@ -734,6 +738,27 @@ button:disabled {
   line-height: 1.75;
 }
 
+.pricing-panel ul {
+  padding-left: 20px;
+}
+
+.pricing-excluded {
+  display: grid;
+  gap: 6px;
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+}
+
+.pricing-excluded span {
+  color: #94a3b8;
+  font-size: 13px;
+}
+
+.pricing-excluded span::before {
+  content: "Not included: ";
+  font-weight: 850;
+}
+
 .pricing-grid,
 .feature-grid,
 .care-detail-grid,
@@ -889,6 +914,27 @@ button:disabled {
   padding-top: 10px;
 }
 
+.care-card-heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.care-card-heading h2,
+.care-card-heading p {
+  margin: 0;
+}
+
+.care-card-heading h2 {
+  font-size: 20px;
+}
+
+.care-card-heading p {
+  margin-top: 4px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
 .care-details-toggle {
   width: fit-content;
   border: 0;
@@ -909,6 +955,10 @@ button:disabled {
   margin: 0 0 8px;
   color: var(--muted);
   line-height: 1.65;
+}
+
+.detail-card dd span {
+  display: block;
 }
 
 .multi-step-form {
@@ -1198,7 +1248,9 @@ button:disabled {
   .risk-band,
   .pricing-grid,
   .feature-grid,
-  .care-detail-grid {
+  .care-detail-grid,
+  .decision-grid,
+  .care-setting-grid {
     grid-template-columns: 1fr 1fr;
   }
 }
@@ -1242,6 +1294,10 @@ button:disabled {
   .pricing-grid,
   .feature-grid,
   .care-detail-grid,
+  .decision-grid,
+  .care-setting-grid,
+  .stepper-grid,
+  .checklist-control-row,
   .checkbox-grid,
   .paid-action-grid {
     grid-template-columns: 1fr;
@@ -2144,6 +2200,189 @@ body {
   gap: 10px;
 }
 
+.scroll-anchor {
+  scroll-margin-top: 110px;
+}
+
+.tool-section {
+  display: grid;
+  gap: 16px;
+  padding: 22px;
+}
+
+.tool-section h2 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.tool-section > p:not(.eyebrow) {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.table-scroll {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.tool-table {
+  width: 100%;
+  min-width: 820px;
+  border-collapse: collapse;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: #fff;
+}
+
+.tool-table th,
+.tool-table td {
+  border-bottom: 1px solid var(--border);
+  padding: 13px 14px;
+  color: #334155;
+  font-size: 14px;
+  line-height: 1.55;
+  text-align: left;
+  vertical-align: top;
+}
+
+.tool-table thead th {
+  background: #f8fafc;
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.tool-table tbody th {
+  color: var(--text);
+  font-weight: 900;
+}
+
+.tool-table tr:last-child th,
+.tool-table tr:last-child td {
+  border-bottom: 0;
+}
+
+.decision-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.decision-question-list,
+.plan-choice-list,
+.faq-list,
+.care-setting-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.decision-question-card,
+.plan-choice-row,
+.care-setting-card,
+.notice-card {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 14px;
+  background: #f8fafc;
+}
+
+.decision-question-card {
+  display: grid;
+  gap: 10px;
+}
+
+.decision-question-card p,
+.plan-choice-row span,
+.notice-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.tool-check-list {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding-left: 20px;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.notice-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.notice-card h2 {
+  margin: 0 0 6px;
+  font-size: 20px;
+}
+
+.notice-card small {
+  display: block;
+  margin-top: 10px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.notice-card .btn-primary {
+  width: fit-content;
+  margin-top: 12px;
+}
+
+.segmented-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.segment-button {
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 9px 12px;
+  background: #fff;
+  color: #334155;
+}
+
+.segment-button.active {
+  border-color: var(--primary);
+  background: #eff6ff;
+  color: var(--primary);
+}
+
+.suggestion-card {
+  display: grid;
+  gap: 6px;
+  border: 1px solid #bfdbfe;
+  border-radius: 16px;
+  padding: 14px;
+  background: #eff6ff;
+}
+
+.suggestion-card span {
+  color: var(--primary);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.suggestion-card strong {
+  font-size: 20px;
+}
+
+.inline-link {
+  color: var(--primary);
+  font-weight: 850;
+}
+
+.cta-panel {
+  border-color: #bfdbfe;
+  background: linear-gradient(135deg, #ffffff, #eff6ff);
+}
+
 .login-save-prompt {
   border: 1px solid #bfdbfe;
   border-radius: 14px;
@@ -2206,6 +2445,146 @@ body {
 .concept-card {
   display: grid;
   gap: 10px;
+}
+
+.checklist-control-row {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) auto;
+  gap: 12px;
+  align-items: end;
+}
+
+.stepper-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.step-card {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 14px;
+  background: #f8fafc;
+}
+
+.step-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.saved-list {
+  display: grid;
+  gap: 12px;
+}
+
+.saved-row {
+  display: grid;
+  gap: 12px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 14px;
+  background: #fff;
+}
+
+.saved-row > div:first-child {
+  display: grid;
+  gap: 4px;
+}
+
+.saved-row span {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.saved-question-list {
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+}
+
+.empty-inline {
+  border: 1px dashed var(--border);
+  border-radius: 16px;
+  padding: 16px;
+  background: #f8fafc;
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.danger-button {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.care-setting-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.care-setting-card {
+  display: grid;
+  gap: 10px;
+}
+
+.care-setting-card h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.tag-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.red-flag-card {
+  border-color: #fecaca;
+  background: #fff;
+}
+
+.pricing-comparison-table td:not(:first-child) {
+  font-weight: 850;
+}
+
+.table-group-row th {
+  background: #eff6ff !important;
+  color: var(--primary) !important;
+}
+
+.billing-banner {
+  border-color: #fde68a;
+  background: #fffbeb;
+}
+
+.plan-choice-row {
+  display: grid;
+  gap: 4px;
+}
+
+.plan-choice-row strong {
+  color: var(--text);
+}
+
+.faq-list details {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 14px 16px;
+  background: #f8fafc;
+}
+
+.faq-list summary {
+  cursor: pointer;
+  color: var(--text);
+  font-weight: 900;
+}
+
+.faq-list p {
+  margin: 10px 0 0;
+  color: var(--muted);
+  line-height: 1.65;
 }
 
 .health-summary-layout {
