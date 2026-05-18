@@ -1,15 +1,6 @@
+import { ENTITLEMENT_STORAGE_KEY, type Entitlement } from "@/lib/entitlements";
+
 export type CheckoutPlan = "one_time_report" | "plus_monthly";
-
-export type Entitlement = {
-  plan: "free" | "one_time_report" | "plus";
-  status: "inactive" | "pending" | "active" | "cancelled";
-  provider: "creem";
-  checkoutSessionId?: string;
-  createdAt: string;
-  expiresAt?: string;
-};
-
-export const ENTITLEMENT_STORAGE_KEY = "healthmatchai_entitlement";
 
 type CheckoutResponse = {
   checkoutUrl?: string;
@@ -25,11 +16,13 @@ function savePendingEntitlement(plan: CheckoutPlan, checkoutSessionId?: string) 
   if (typeof window === "undefined") return;
 
   const entitlement: Entitlement = {
+    userId: "local-demo",
     plan: pendingPlanForCheckout(plan),
     status: "pending",
     provider: "creem",
     checkoutSessionId,
-    createdAt: new Date().toISOString()
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
   };
 
   localStorage.setItem(ENTITLEMENT_STORAGE_KEY, JSON.stringify(entitlement));
