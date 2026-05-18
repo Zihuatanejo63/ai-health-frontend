@@ -1,8 +1,9 @@
 "use client";
 
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { Card, PageHeader, PrimaryButton, SecondaryButton, StatusBadge } from "@/components/app-ui";
 import { PricingCard } from "@/components/pricing-card";
+import { startCheckout, type CheckoutPlan } from "@/lib/checkout";
 import { useI18n } from "@/components/i18n-provider";
 
 const comparisonGroups = [
@@ -59,7 +60,10 @@ const faqs = [
   ["pricing.faq.insurance.q", "pricing.faq.insurance.a"],
   ["pricing.faq.refund.q", "pricing.faq.refund.a"],
   ["pricing.faq.data.q", "pricing.faq.data.a"],
-  ["pricing.faq.cancel.q", "pricing.faq.cancel.a"]
+  ["pricing.faq.cancel.q", "pricing.faq.cancel.a"],
+  ["pricing.faq.processor.q", "pricing.faq.processor.a"],
+  ["pricing.faq.taxes.q", "pricing.faq.taxes.a"],
+  ["pricing.faq.subscription.q", "pricing.faq.subscription.a"]
 ] as const;
 
 const checkoutPlans = [
@@ -69,6 +73,21 @@ const checkoutPlans = [
 
 export default function PricingPage() {
   const { t } = useI18n();
+  const [checkoutError, setCheckoutError] = useState("");
+  const [checkoutPlan, setCheckoutPlan] = useState<CheckoutPlan | null>(null);
+
+  async function handleCheckout(plan: CheckoutPlan) {
+    setCheckoutError("");
+    setCheckoutPlan(plan);
+
+    try {
+      await startCheckout(plan);
+    } catch (error) {
+      setCheckoutError(error instanceof Error ? error.message : t("pricing.checkoutFailed"));
+      setCheckoutPlan(null);
+    }
+  }
+
   const plans = [
     {
       name: t("pricing.free"),
@@ -103,8 +122,9 @@ export default function PricingPage() {
         t("pricing.insuranceChecklist"),
         t("pricing.exportableReport")
       ],
-      cta: t("pricing.demoCheckout"),
-      href: "/payment-success",
+      cta: checkoutPlan === "one_time_report" ? t("pricing.openingCheckout") : t("pricing.createReportCreem"),
+      onClick: () => handleCheckout("one_time_report"),
+      disabled: checkoutPlan !== null,
       featured: true
     },
     {
@@ -122,8 +142,9 @@ export default function PricingPage() {
         t("pricing.historySearch"),
         t("pricing.priorityAccess")
       ],
-      cta: t("pricing.comingSoon"),
-      href: "/pricing"
+      cta: checkoutPlan === "plus_monthly" ? t("pricing.openingCheckout") : t("pricing.subscribeCreem"),
+      onClick: () => handleCheckout("plus_monthly"),
+      disabled: checkoutPlan !== null
     }
   ];
 
@@ -136,9 +157,17 @@ export default function PricingPage() {
       />
 
       <Card className="notice-card billing-banner">
-        <StatusBadge tone="warning">{t("pricing.demoBillingTitle")}</StatusBadge>
-        <p>{t("pricing.demoBillingText")}</p>
+        <StatusBadge tone="primary">{t("pricing.creemBillingTitle")}</StatusBadge>
+        <p>{t("pricing.creemBillingText")}</p>
+        <small>{t("pricing.paymentNoteText")}</small>
       </Card>
+
+      {checkoutError ? (
+        <Card className="notice-card checkout-error">
+          <StatusBadge tone="warning">{t("pricing.checkoutNotice")}</StatusBadge>
+          <p>{checkoutError}</p>
+        </Card>
+      ) : null}
 
       <div className="pricing-grid">
         {plans.map((plan) => (
@@ -183,7 +212,7 @@ export default function PricingPage() {
       <Card className="tool-section">
         <p className="eyebrow">{t("pricing.afterCheckoutEyebrow")}</p>
         <h2>{t("pricing.afterCheckoutTitle")}</h2>
-        <p>{t("pricing.afterCheckoutDemo")}</p>
+        <p>{t("pricing.afterCheckoutCreem")}</p>
         <div className="decision-grid">
           {checkoutPlans.map(([plan, items]) => (
             <article className="care-setting-card" key={plan}>

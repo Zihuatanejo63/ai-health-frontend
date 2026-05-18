@@ -184,7 +184,7 @@ export default function ResultPage() {
         <h2>{t("result.safetyTitle")}</h2>
         <div className="check-list">
           <span>• {t("result.thisIsNotDiagnosis")}</span>
-          <span>• {t("result.noPrescription")}</span>
+          <span>• {t("result.noMedicationOrder")}</span>
           <span>• {t("result.seekHelpIfWorse")}</span>
         </div>
       </Card>

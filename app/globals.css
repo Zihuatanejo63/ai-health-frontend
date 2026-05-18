@@ -727,7 +727,8 @@ button:disabled {
   font-size: 30px;
 }
 
-.pricing-panel a {
+.pricing-panel a,
+.pricing-panel button {
   width: fit-content;
 }
 
@@ -757,6 +758,16 @@ button:disabled {
 .pricing-excluded span::before {
   content: "Not included: ";
   font-weight: 850;
+}
+
+.pricing-panel button {
+  border: 0;
+  cursor: pointer;
+}
+
+.pricing-panel button:disabled {
+  cursor: not-allowed;
+  opacity: 0.72;
 }
 
 .pricing-grid,
@@ -1331,6 +1342,7 @@ button:disabled {
   .summary-cta,
   .insurance-cta,
   .pricing-panel a,
+  .pricing-panel button,
   .form-submit,
   .result-actions a,
   .empty-state-card a {

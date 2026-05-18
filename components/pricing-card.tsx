@@ -6,9 +6,11 @@ type PricingCardProps = {
   audience?: string;
   features: string[];
   excluded?: string[];
-  href: string;
+  href?: string;
   cta: string;
   featured?: boolean;
+  disabled?: boolean;
+  onClick?: () => void;
 };
 
 export function PricingCard({
@@ -19,8 +21,12 @@ export function PricingCard({
   excluded = [],
   href,
   cta,
-  featured = false
+  featured = false,
+  disabled = false,
+  onClick
 }: PricingCardProps) {
+  const className = featured ? "btn-primary" : "btn-secondary";
+
   return (
     <article className={`panel pricing-panel${featured ? " pricing-featured" : ""}`}>
       <div>
@@ -38,9 +44,15 @@ export function PricingCard({
           {excluded.map((item) => <span key={item}>{item}</span>)}
         </div>
       ) : null}
-      <Link className={featured ? "btn-primary" : "btn-secondary"} href={href}>
-        {cta}
-      </Link>
+      {onClick ? (
+        <button className={className} disabled={disabled} onClick={onClick} type="button">
+          {cta}
+        </button>
+      ) : (
+        <Link className={className} href={href ?? "/pricing"}>
+          {cta}
+        </Link>
+      )}
     </article>
   );
 }

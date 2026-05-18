@@ -1,50 +1,53 @@
 "use client";
 
-import { useEffect } from "react";
-import { Card, IconCircle, PageHeader, PrimaryButton, SecondaryButton } from "@/components/app-ui";
+import { useEffect, useState } from "react";
+import { Card, PageHeader, PrimaryButton, SecondaryButton, StatusBadge } from "@/components/app-ui";
 import { useI18n } from "@/components/i18n-provider";
-import { useSettings } from "@/components/settings-provider";
+
+function planMessageKey(plan: string) {
+  if (plan === "plus_monthly") return "payment.plusReady";
+  if (plan === "one_time_report") return "payment.reportReady";
+  return "payment.pending";
+}
 
 export default function PaymentSuccessPage() {
   const { t } = useI18n();
-  const { updateSettings } = useSettings();
+  const [plan, setPlan] = useState("");
 
   useEffect(() => {
-    updateSettings((current) => ({ ...current, subscription: { plan: "Premium" } }));
-  }, [updateSettings]);
+    const params = new URLSearchParams(window.location.search);
+    setPlan(params.get("plan") || "");
+  }, []);
 
   return (
     <section className="app-page">
       <PageHeader
         eyebrow={t("payment.eyebrow")}
-        title={t("payment.title")}
-        description={t("payment.description")}
+        title={t("payment.receivedTitle")}
+        description={t("payment.creemDescription")}
       />
+
+      <Card className="paid-tool-card">
+        <StatusBadge tone="primary">{t("payment.creemBadge")}</StatusBadge>
+        <h2>{t(planMessageKey(plan))}</h2>
+        <p>{t("payment.verificationNote")}</p>
+      </Card>
 
       <div className="paid-tool-grid">
         <Card className="paid-tool-card">
-          <IconCircle tone="primary">PDF</IconCircle>
-          <h2>{t("payment.downloadPdf")}</h2>
-          <p>{t("payment.summary")}</p>
-          <PrimaryButton href="/result">{t("result.download")}</PrimaryButton>
+          <h2>{t("nav.healthSummary")}</h2>
+          <p>{t("payment.recordsText")}</p>
+          <PrimaryButton href="/health-records">{t("payment.goHealthRecords")}</PrimaryButton>
         </Card>
         <Card className="paid-tool-card">
-          <IconCircle tone="teal">I</IconCircle>
-          <h2>{t("payment.viewChecklist")}</h2>
-          <p>{t("payment.coverage")}</p>
-          <SecondaryButton href="/insurance-guide">{t("payment.viewChecklist")}</SecondaryButton>
+          <h2>{t("common.startSymptomCheck")}</h2>
+          <p>{t("payment.symptomText")}</p>
+          <SecondaryButton href="/symptom-check">{t("common.startSymptomCheck")}</SecondaryButton>
         </Card>
         <Card className="paid-tool-card">
-          <IconCircle tone="success">T</IconCircle>
-          <h2>{t("payment.saveTimeline")}</h2>
-          <p>{t("payment.timelineText")}</p>
-          <SecondaryButton href="/result">{t("payment.saveTimeline")}</SecondaryButton>
-        </Card>
-        <Card className="paid-tool-card">
-          <IconCircle tone="purple">↩</IconCircle>
-          <h2>{t("payment.backResult")}</h2>
-          <p>{t("payment.return")}</p>
-          <SecondaryButton href="/result">{t("payment.backResult")}</SecondaryButton>
+          <h2>{t("nav.home")}</h2>
+          <p>{t("payment.dashboardText")}</p>
+          <SecondaryButton href="/">{t("payment.backDashboard")}</SecondaryButton>
         </Card>
       </div>
     </section>
