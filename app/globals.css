@@ -2749,9 +2749,12 @@ body {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.emergency-sign-grid span {
+.emergency-sign-grid li {
   border: 1px solid rgba(220, 38, 38, 0.18);
   border-radius: 16px;
   padding: 13px 14px;

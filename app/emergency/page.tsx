@@ -28,11 +28,11 @@ export default function EmergencyPage() {
       <Card className="crisis-card">
         <IconCircle tone="danger">!</IconCircle>
         <h2>{t("emergency.signsTitle")}</h2>
-        <div className="emergency-sign-grid">
+        <ul className="emergency-sign-grid">
           {emergencySigns.map((sign) => (
-            <span key={sign}>• {t(sign)}</span>
+            <li key={sign}>{t(sign)}</li>
           ))}
-        </div>
+        </ul>
       </Card>
 
       <Card>

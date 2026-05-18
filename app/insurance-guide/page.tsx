@@ -31,7 +31,9 @@ const concepts = [
   ["insurance.outOfPocket", "insurance.outOfPocketDesc", "purple"],
   ["insurance.inNetwork", "insurance.inNetworkDesc", "success"],
   ["insurance.outOfNetwork", "insurance.outOfNetworkDesc", "danger"],
-  ["insurance.priorAuthorization", "insurance.priorAuthorizationDesc", "warning"]
+  ["insurance.priorAuthorization", "insurance.priorAuthorizationDesc", "warning"],
+  ["insurance.eob", "insurance.eobDesc", "primary"],
+  ["insurance.itemizedBill", "insurance.itemizedBillDesc", "teal"]
 ] as const;
 
 const careSettingTips = [
@@ -230,7 +232,7 @@ export default function InsuranceGuidePage() {
 
       <Card className="notice-card">
         <IconCircle tone="primary">i</IconCircle>
-        <p>{t("safety.insurance")}</p>
+        <p>{t("insurance.boundaryStatement")}</p>
       </Card>
 
       <Card className="notice-card red-flag-card">
@@ -359,7 +361,7 @@ export default function InsuranceGuidePage() {
         <h2>{t("insurance.conceptsTitle")}</h2>
         <div className="concept-grid">
           {concepts.map(([title, description, tone]) => (
-            <InsuranceConceptCard key={title} title={t(title)} description={`${t(description)} ${t(`${title}.example`)}`} tone={tone} />
+            <InsuranceConceptCard key={title} title={t(title)} description={`${t(description)} ${t(`${title}.example`)} ${t("insurance.costDepends")}`} tone={tone} />
           ))}
         </div>
       </Card>
@@ -417,7 +419,7 @@ export default function InsuranceGuidePage() {
         </div>
       </Card>
 
-      <DisclaimerBox text={t("safety.insurance")} />
+      <DisclaimerBox text={t("insurance.boundaryStatement")} />
     </section>
   );
 }
