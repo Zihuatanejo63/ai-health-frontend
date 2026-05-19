@@ -5,7 +5,7 @@ import { Card, PageHeader, PrimaryButton, SecondaryButton, StatusBadge } from "@
 import { useI18n } from "@/components/i18n-provider";
 
 function planMessageKey(plan: string) {
-  if (plan === "plus_monthly") return "payment.plusReady";
+  if (plan === "plus_monthly" || plan === "plus_yearly") return "payment.plusReady";
   if (plan === "one_time_report") return "payment.reportReady";
   return "payment.pending";
 }

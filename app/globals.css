@@ -779,7 +779,7 @@ button:disabled {
 }
 
 .pricing-grid {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .feature-grid {
@@ -2570,6 +2570,28 @@ body {
 .billing-banner {
   border-color: #fde68a;
   background: #fffbeb;
+}
+
+.founding-offer-banner {
+  align-items: center;
+  justify-content: space-between;
+  border-color: #bbf7d0;
+  background: #f0fdf4;
+}
+
+.founding-offer-banner p {
+  flex: 1 1 360px;
+}
+
+.founding-offer-banner button {
+  border: 0;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.founding-offer-banner button:disabled {
+  cursor: not-allowed;
+  opacity: 0.72;
 }
 
 .plan-choice-row {

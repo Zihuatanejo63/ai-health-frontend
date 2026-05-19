@@ -68,7 +68,11 @@ function pendingEntitlementAction(event: CreemWebhookEvent) {
   const eventType = normalizeEventType(event);
   const object = event.object || {};
   const metadata = object.metadata || {};
-  const plan = metadata.plan === "plus_monthly" ? "plus" : metadata.plan === "one_time_report" ? "one_time_report" : "free";
+  const plan = metadata.plan === "plus_monthly" || metadata.plan === "plus_yearly"
+    ? "plus"
+    : metadata.plan === "one_time_report"
+      ? "one_time_report"
+      : "free";
 
   return {
     eventId: event.id,

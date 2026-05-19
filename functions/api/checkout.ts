@@ -1,4 +1,4 @@
-type CheckoutPlan = "one_time_report" | "plus_monthly";
+type CheckoutPlan = "one_time_report" | "plus_monthly" | "plus_yearly";
 
 type PagesFunctionContext = {
   request: Request;
@@ -12,7 +12,7 @@ type CreemCheckoutResponse = {
   url?: string;
 };
 
-const supportedPlans: CheckoutPlan[] = ["one_time_report", "plus_monthly"];
+const supportedPlans: CheckoutPlan[] = ["one_time_report", "plus_monthly", "plus_yearly"];
 
 function json(body: unknown, status = 200) {
   return new Response(JSON.stringify(body), {
@@ -22,9 +22,9 @@ function json(body: unknown, status = 200) {
 }
 
 function getPlanProductId(plan: CheckoutPlan, env: PagesFunctionContext["env"]) {
-  return plan === "one_time_report"
-    ? env.CREEM_ONE_TIME_REPORT_PRODUCT_ID
-    : env.CREEM_PLUS_MONTHLY_PRODUCT_ID;
+  if (plan === "one_time_report") return env.CREEM_ONE_TIME_REPORT_PRODUCT_ID;
+  if (plan === "plus_yearly") return env.CREEM_PLUS_YEARLY_PRODUCT_ID;
+  return env.CREEM_PLUS_MONTHLY_PRODUCT_ID;
 }
 
 function getAppUrl(request: Request, env: PagesFunctionContext["env"]) {

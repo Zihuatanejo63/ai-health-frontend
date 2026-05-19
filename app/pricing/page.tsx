@@ -49,7 +49,8 @@ const notProvided = [
 const planChoices = [
   ["pricing.free", "pricing.choose.free"],
   ["pricing.oneTime", "pricing.choose.report"],
-  ["pricing.plus", "pricing.choose.plus"]
+  ["pricing.plus", "pricing.choose.plus"],
+  ["pricing.foundingPlus", "pricing.choose.founding"]
 ] as const;
 
 const faqs = [
@@ -68,7 +69,8 @@ const faqs = [
 
 const checkoutPlans = [
   ["pricing.oneTime", ["pricing.after.report.1", "pricing.after.report.2", "pricing.after.report.3"]],
-  ["pricing.plus", ["pricing.after.plus.1", "pricing.after.plus.2", "pricing.after.plus.3", "pricing.after.plus.4"]]
+  ["pricing.plus", ["pricing.after.plus.1", "pricing.after.plus.2", "pricing.after.plus.3", "pricing.after.plus.4"]],
+  ["pricing.foundingPlus", ["pricing.after.founding.1", "pricing.after.founding.2", "pricing.after.founding.3", "pricing.after.founding.4"]]
 ] as const;
 
 export default function PricingPage() {
@@ -145,6 +147,25 @@ export default function PricingPage() {
       cta: checkoutPlan === "plus_monthly" ? t("pricing.openingCheckout") : t("pricing.subscribeCreem"),
       onClick: () => handleCheckout("plus_monthly"),
       disabled: checkoutPlan !== null
+    },
+    {
+      name: t("pricing.foundingPlus"),
+      price: "$99/year",
+      audience: t("pricing.foundingAudience"),
+      features: [
+        t("pricing.foundingFeature.value"),
+        t("pricing.unlimited"),
+        t("pricing.savedRecords"),
+        t("pricing.family"),
+        t("pricing.insuranceHistory"),
+        t("pricing.multiLanguage"),
+        t("pricing.exportableSummaries"),
+        t("pricing.historySearch")
+      ],
+      cta: checkoutPlan === "plus_yearly" ? t("pricing.openingCheckout") : t("pricing.subscribeYearlyCreem"),
+      onClick: () => handleCheckout("plus_yearly"),
+      disabled: checkoutPlan !== null,
+      featured: true
     }
   ];
 
@@ -160,6 +181,19 @@ export default function PricingPage() {
         <StatusBadge tone="primary">{t("pricing.creemBillingTitle")}</StatusBadge>
         <p>{t("pricing.creemBillingText")}</p>
         <small>{t("pricing.paymentNoteText")}</small>
+      </Card>
+
+      <Card className="notice-card founding-offer-banner">
+        <StatusBadge tone="success">{t("pricing.foundingOfferBadge")}</StatusBadge>
+        <p>{t("pricing.foundingOfferText")}</p>
+        <button
+          className="btn-primary"
+          disabled={checkoutPlan !== null}
+          onClick={() => handleCheckout("plus_yearly")}
+          type="button"
+        >
+          {checkoutPlan === "plus_yearly" ? t("pricing.openingCheckout") : t("pricing.subscribeYearlyCreem")}
+        </button>
       </Card>
 
       {checkoutError ? (

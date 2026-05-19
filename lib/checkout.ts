@@ -1,6 +1,6 @@
 import { ENTITLEMENT_STORAGE_KEY, type Entitlement } from "@/lib/entitlements";
 
-export type CheckoutPlan = "one_time_report" | "plus_monthly";
+export type CheckoutPlan = "one_time_report" | "plus_monthly" | "plus_yearly";
 
 type CheckoutResponse = {
   checkoutUrl?: string;
@@ -9,7 +9,7 @@ type CheckoutResponse = {
 };
 
 function pendingPlanForCheckout(plan: CheckoutPlan): Entitlement["plan"] {
-  return plan === "plus_monthly" ? "plus" : "one_time_report";
+  return plan === "plus_monthly" || plan === "plus_yearly" ? "plus" : "one_time_report";
 }
 
 function savePendingEntitlement(plan: CheckoutPlan, checkoutSessionId?: string) {
