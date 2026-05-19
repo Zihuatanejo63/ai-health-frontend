@@ -31,7 +31,7 @@ export default function MedicalDisclaimerPage() {
         {
           heading: "Insurance information",
           body:
-            "Insurance information is educational only and does not constitute insurance advice. HealthMatchAI is not an insurer, insurance broker, insurance agency, or enrollment platform. For insurance enrollment, subsidies, eligibility, or plan-specific coverage questions, speak with a licensed insurance agent or broker."
+            "Insurance information is educational only and does not constitute insurance advice. HealthMatchAI is not an insurer, insurance broker, insurance agency, or plan sign-up platform. For subsidies, eligibility, or plan-specific coverage questions, speak with a licensed insurance professional."
         },
         {
           heading: "Paid tools",

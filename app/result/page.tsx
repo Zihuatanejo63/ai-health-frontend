@@ -8,6 +8,7 @@ import { IllustrationImage } from "@/components/visual-card";
 import { readSymptomChecks, readSummaries, writeSymptomChecks, writeSummaries, type SavedSymptomCheck } from "@/lib/settings";
 import { readUser } from "@/lib/auth";
 import { careLevelKey, riskLevelKey, symptomItemKey, triageTextKey } from "@/lib/i18n-display";
+import { startCheckout } from "@/lib/checkout";
 
 const SESSION_RESULT_KEY = "ai-health-match-result";
 const checklist = ["result.urgentCovered", "result.providerNetwork", "result.copayQuestion", "result.deductibleQuestion"];
@@ -18,6 +19,8 @@ export default function ResultPage() {
   const [saved, setSaved] = useState(false);
   const [timelineSaved, setTimelineSaved] = useState(false);
   const [loginPrompt, setLoginPrompt] = useState(false);
+  const [checkoutLoading, setCheckoutLoading] = useState(false);
+  const [checkoutError, setCheckoutError] = useState("");
 
   useEffect(() => {
     const session = window.sessionStorage.getItem(SESSION_RESULT_KEY);
@@ -90,6 +93,17 @@ export default function ResultPage() {
     setSaved(true);
     const user = readUser();
     if (!user || user.isGuest) setLoginPrompt(true);
+  }
+
+  async function handleReportCheckout() {
+    setCheckoutError("");
+    setCheckoutLoading(true);
+    try {
+      await startCheckout("one_time_report");
+    } catch (error) {
+      setCheckoutError(error instanceof Error ? error.message : t("pricing.checkoutFailed"));
+      setCheckoutLoading(false);
+    }
   }
 
   if (!check) {
@@ -270,10 +284,13 @@ export default function ResultPage() {
                 <span>{t("common.riskLevel")} <strong>{t(riskLevelKey(result.riskLevel))}</strong></span>
               </div>
               <div className="button-pair">
-                <PrimaryButton href="/payment-success">{t("result.download")}</PrimaryButton>
+                <button className="btn-primary" disabled={checkoutLoading} onClick={handleReportCheckout} type="button">
+                  {checkoutLoading ? t("pricing.openingCheckout") : t("result.download")}
+                </button>
                 <button className="btn-secondary" onClick={saveTimeline} type="button">{t("result.saveTimeline")}</button>
                 <button className="btn-secondary" onClick={saveSummary} type="button">{t("result.saveSummary")}</button>
               </div>
+              {checkoutError ? <p className="inline-error">{checkoutError}</p> : null}
               {timelineSaved ? <StatusBadge tone="success">{t("result.timelineSaved")}</StatusBadge> : null}
               {saved ? <StatusBadge tone="success">{t("result.saved")}</StatusBadge> : null}
               {loginPrompt ? <p className="login-save-prompt">{t("result.localGuestSavePrompt")}</p> : null}

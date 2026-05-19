@@ -19,7 +19,7 @@ export default function TermsPage() {
         {
           heading: "Insurance education only",
           body:
-            "Insurance information is educational only and does not constitute insurance advice. HealthMatchAI does not recommend, sell, underwrite, broker, or enroll users in specific insurance plans. For insurance enrollment or plan-specific advice, speak with a licensed insurance agent or broker."
+            "Insurance information is educational only and does not constitute insurance advice. HealthMatchAI does not recommend, sell, underwrite, broker, or help users sign up for specific insurance plans. For plan-specific advice, speak with a licensed insurance professional."
         },
         {
           heading: "User responsibility",
@@ -39,7 +39,7 @@ export default function TermsPage() {
           body: [
             "Payments, if enabled, are processed by a hosted merchant-of-record provider.",
             "HealthMatchAI may collect payments for tools such as doctor-ready PDF reports, insurance education checklists, or symptom timeline saving.",
-            "A payment does not guarantee a medical outcome, appointment availability, insurance coverage, plan eligibility, enrollment, or clinician relationship.",
+            "A payment does not guarantee a medical outcome, appointment availability, insurance coverage, plan eligibility, or clinician relationship.",
             "Refunds, cancellation, support, and jurisdiction-specific rules apply to paid report or checklist features."
           ]
         },

@@ -171,7 +171,7 @@ export default function PricingPage() {
 
       <div className="pricing-grid">
         {plans.map((plan) => (
-          <PricingCard key={plan.name} {...plan} />
+          <PricingCard key={plan.name} excludedLabel={t("pricing.notIncluded")} {...plan} />
         ))}
       </div>
 

@@ -6,6 +6,7 @@ type PricingCardProps = {
   audience?: string;
   features: string[];
   excluded?: string[];
+  excludedLabel?: string;
   href?: string;
   cta: string;
   featured?: boolean;
@@ -19,6 +20,7 @@ export function PricingCard({
   audience,
   features,
   excluded = [],
+  excludedLabel = "Not included",
   href,
   cta,
   featured = false,
@@ -41,7 +43,12 @@ export function PricingCard({
       </ul>
       {excluded.length ? (
         <div className="pricing-excluded">
-          {excluded.map((item) => <span key={item}>{item}</span>)}
+          {excluded.map((item) => (
+            <span key={item}>
+              <strong>{excludedLabel}: </strong>
+              {item}
+            </span>
+          ))}
         </div>
       ) : null}
       {onClick ? (

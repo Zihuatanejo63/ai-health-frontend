@@ -8,7 +8,7 @@ type DisclaimerBannerProps = {
 };
 
 export const DEFAULT_DISCLAIMER =
-  "HealthMatchAI does not diagnose, prescribe, treat, or replace professional medical care. Insurance information is educational only and does not constitute insurance advice. For insurance enrollment, speak with a licensed insurance agent or broker.";
+  "HealthMatchAI does not diagnose, prescribe, treat, or replace professional medical care. Insurance information is educational only and does not constitute insurance advice. For plan-specific insurance questions, speak with a licensed insurance professional.";
 
 export function DisclaimerBanner({ text }: DisclaimerBannerProps) {
   const { languageCode } = useLanguage();

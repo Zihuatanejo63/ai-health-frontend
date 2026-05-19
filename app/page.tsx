@@ -13,7 +13,7 @@ import { useI18n } from "@/components/i18n-provider";
 import { useSettings } from "@/components/settings-provider";
 import { IllustrationImage } from "@/components/visual-card";
 import { careLevelKey, riskLevelKey, symptomItemKey } from "@/lib/i18n-display";
-import { readSymptomChecks, type SavedSymptomCheck } from "@/lib/settings";
+import { hasUsableInsuranceProfile, readSymptomChecks, type SavedSymptomCheck } from "@/lib/settings";
 
 export default function HomePage() {
   const { t } = useI18n();
@@ -31,15 +31,7 @@ export default function HomePage() {
   }
 
   const hasCheck = Boolean(latestCheck);
-  const hasInsuranceProfile = Boolean(
-    settings.insuranceProfile.status ||
-      settings.insuranceProfile.planType ||
-      settings.insuranceProfile.urgentCareCopay ||
-      settings.insuranceProfile.primaryCareCopay ||
-      settings.insuranceProfile.copay ||
-      settings.insuranceProfile.deductible ||
-      settings.insuranceProfile.inNetworkPreference
-  );
+  const hasInsuranceProfile = hasUsableInsuranceProfile(settings.insuranceProfile);
   const stats = [
     {
       label: t("common.riskLevel"),

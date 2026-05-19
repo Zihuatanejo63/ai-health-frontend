@@ -13,7 +13,7 @@ import {
   Toggle
 } from "@/components/settings-controls";
 import { useSettings } from "@/components/settings-provider";
-import { type HealthMatchSettings } from "@/lib/settings";
+import { hasUsableInsuranceProfile, type HealthMatchSettings } from "@/lib/settings";
 import { clearUser, readUser, writeUser, type HealthMatchUser } from "@/lib/auth";
 
 type ModalType = "account" | "health" | "insurance" | null;
@@ -122,15 +122,7 @@ export default function SettingsPage() {
     savePatch({ insuranceProfile: insuranceDraft });
   }
 
-  const hasInsuranceProfile = Boolean(
-    settings.insuranceProfile.status ||
-      settings.insuranceProfile.planType ||
-      settings.insuranceProfile.urgentCareCopay ||
-      settings.insuranceProfile.primaryCareCopay ||
-      settings.insuranceProfile.copay ||
-      settings.insuranceProfile.deductible ||
-      settings.insuranceProfile.inNetworkPreference
-  );
+  const hasInsuranceProfile = hasUsableInsuranceProfile(settings.insuranceProfile);
 
   return (
     <section className="app-page settings-page">

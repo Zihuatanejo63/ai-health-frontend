@@ -105,7 +105,7 @@ export default function SymptomCheckPage() {
     medications: "",
     allergies: "",
     countryOrRegion: "",
-    insuranceStatus: "active"
+    insuranceStatus: ""
   });
 
   const primaryDetailGroup = useMemo(() => getDetailGroup(primarySymptom), [primarySymptom]);
@@ -164,7 +164,11 @@ export default function SymptomCheckPage() {
 
   function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const error = validateStep(6);
+    if (step !== TOTAL_STEPS) {
+      goNext();
+      return;
+    }
+    const error = validateStep(TOTAL_STEPS);
     if (error) {
       setFormError(error);
       return;

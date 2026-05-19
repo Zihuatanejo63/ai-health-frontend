@@ -170,7 +170,7 @@ function readJson<T>(key: string, fallback: T): T {
 }
 
 export function mergeSettings(value: Partial<HealthMatchSettings>): HealthMatchSettings {
-  return {
+  const merged = {
     ...defaultSettings,
     ...value,
     account: { ...defaultSettings.account, ...value.account },
@@ -178,6 +178,70 @@ export function mergeSettings(value: Partial<HealthMatchSettings>): HealthMatchS
     insuranceProfile: { ...defaultSettings.insuranceProfile, ...value.insuranceProfile },
     notifications: { ...defaultSettings.notifications, ...value.notifications },
     subscription: { ...defaultSettings.subscription, ...value.subscription }
+  };
+  return normalizeLegacyDefaults(merged);
+}
+
+export function isLegacyDemoInsuranceProfile(profile: HealthMatchSettings["insuranceProfile"]) {
+  const status = profile.status.trim().toLowerCase();
+  const planType = profile.planType.trim().toLowerCase();
+  const urgentCopay = profile.urgentCareCopay.trim();
+  const fallbackCopay = profile.copay.trim();
+  const deductible = profile.deductible.trim().replace(/\s+/g, " ");
+  const preference = profile.inNetworkPreference.trim().toLowerCase();
+  const primaryCopay = profile.primaryCareCopay.trim().toLowerCase();
+  const compactValues = Object.values(profile).join(" ").toLowerCase();
+  const exactLegacyDefault =
+    status === "active" &&
+    planType === "ppo" &&
+    (urgentCopay === "$35" || fallbackCopay === "$35") &&
+    (deductible.includes("$1,250") || deductible.includes("1250")) &&
+    preference === "preferred" &&
+    (!primaryCopay || primaryCopay === "not recorded" || primaryCopay === "未记录");
+  const looseLegacyDefault =
+    compactValues.includes("active") &&
+    compactValues.includes("ppo") &&
+    compactValues.includes("$35") &&
+    (compactValues.includes("$1,250") || compactValues.includes("1250")) &&
+    compactValues.includes("preferred");
+  return exactLegacyDefault || looseLegacyDefault;
+}
+
+export function hasUsableInsuranceProfile(profile: HealthMatchSettings["insuranceProfile"]) {
+  if (isLegacyDemoInsuranceProfile(profile)) return false;
+  return Boolean(
+    profile.status.trim() ||
+      profile.planType.trim() ||
+      profile.urgentCareCopay.trim() ||
+      profile.primaryCareCopay.trim() ||
+      profile.copay.trim() ||
+      profile.deductible.trim() ||
+      profile.inNetworkPreference.trim()
+  );
+}
+
+function hasVerifiedPlusEntitlement() {
+  if (typeof window === "undefined") return false;
+  try {
+    const raw = window.localStorage.getItem("healthmatchai_entitlement");
+    if (!raw) return false;
+    const entitlement = JSON.parse(raw) as { plan?: string; status?: string };
+    return entitlement.plan === "plus" && entitlement.status === "active";
+  } catch {
+    return false;
+  }
+}
+
+function normalizeLegacyDefaults(settings: HealthMatchSettings): HealthMatchSettings {
+  return {
+    ...settings,
+    insuranceProfile: isLegacyDemoInsuranceProfile(settings.insuranceProfile)
+      ? defaultSettings.insuranceProfile
+      : settings.insuranceProfile,
+    subscription:
+      settings.subscription.plan === "Premium" && !hasVerifiedPlusEntitlement()
+        ? defaultSettings.subscription
+        : settings.subscription
   };
 }
 

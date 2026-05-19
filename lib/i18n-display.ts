@@ -253,7 +253,9 @@ export function backgroundFieldKey(value: string) {
     "insurance Status": "symptom.background.insuranceStatus",
     insuranceStatus: "symptom.background.insuranceStatus",
     "country Region": "symptom.background.countryRegion",
-    countryRegion: "symptom.background.countryRegion"
+    countryRegion: "symptom.background.countryRegion",
+    "country Or Region": "symptom.background.countryRegion",
+    countryOrRegion: "symptom.background.countryRegion"
   };
   return backgroundKeys[value] ?? `symptom.background.${toI18nSlug(value)}`;
 }

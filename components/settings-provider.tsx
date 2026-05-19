@@ -38,6 +38,7 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const next = readSettings();
     setSettings(next);
+    writeSettings(next);
     document.documentElement.lang = next.language;
   }, []);
 

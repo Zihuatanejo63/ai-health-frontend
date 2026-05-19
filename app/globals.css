@@ -755,9 +755,9 @@ button:disabled {
   font-size: 13px;
 }
 
-.pricing-excluded span::before {
-  content: "Not included: ";
-  font-weight: 850;
+.pricing-excluded strong {
+  color: #64748b;
+  font-size: 13px;
 }
 
 .pricing-panel button {
@@ -1818,6 +1818,7 @@ body {
 }
 
 .choice-pill:has(input:checked),
+.choice-pill.selected,
 .choice-card:has(input:checked),
 .choice-chip:has(input:checked),
 .choice-chip.selected {
@@ -2755,6 +2756,21 @@ body {
 .insurance-checklist-builder {
   display: grid;
   gap: 18px;
+}
+
+.copy-script {
+  display: grid;
+  gap: 6px;
+  border: 1px solid rgba(37, 99, 235, 0.16);
+  border-radius: 16px;
+  padding: 14px;
+  background: #f8fbff;
+}
+
+.copy-script p {
+  margin: 0;
+  color: var(--muted);
+  font-weight: 800;
 }
 
 .emergency-sign-grid {

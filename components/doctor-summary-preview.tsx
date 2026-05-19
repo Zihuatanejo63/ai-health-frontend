@@ -36,7 +36,7 @@ export function DoctorSummaryPreview({
           <span key={field}>{field}</span>
         ))}
       </div>
-      <a className="btn-primary summary-cta" href="/payment-success">
+      <a className="btn-primary summary-cta" href="/pricing">
         {cta}
       </a>
     </article>

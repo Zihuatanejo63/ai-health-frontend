@@ -10,10 +10,9 @@ import {
   StatusBadge,
   type Tone
 } from "@/components/app-ui";
-import { DisclaimerBox } from "@/components/disclaimer-box";
 import { useI18n } from "@/components/i18n-provider";
 import { useSettings } from "@/components/settings-provider";
-import { IllustrationImage } from "@/components/visual-card";
+import { hasUsableInsuranceProfile } from "@/lib/settings";
 
 const STORAGE_KEY = "healthmatchai_insurance_checklists";
 
@@ -45,102 +44,109 @@ const careSettingTips = [
 ] as const;
 
 const careTypes = [
-  "insurance.careType.emergency",
-  "insurance.careType.urgent",
-  "insurance.careType.primary",
-  "insurance.careType.telehealth",
-  "insurance.careType.lab",
-  "insurance.careType.pharmacy",
-  "insurance.careType.followUp"
+  { key: "emergency", labelKey: "insurance.careType.emergency" },
+  { key: "urgent", labelKey: "insurance.careType.urgent" },
+  { key: "primary", labelKey: "insurance.careType.primary" },
+  { key: "telehealth", labelKey: "insurance.careType.telehealth" },
+  { key: "lab", labelKey: "insurance.careType.lab" },
+  { key: "pharmacy", labelKey: "insurance.careType.pharmacy" },
+  { key: "followUp", labelKey: "insurance.careType.followUp" },
+  { key: "notSure", labelKey: "insurance.careType.notSure" }
 ] as const;
 
-const checklistMap: Record<string, string[]> = {
-  "insurance.careType.emergency": [
-    "insurance.checklist.emergency.1",
-    "insurance.checklist.emergency.2",
-    "insurance.checklist.emergency.3",
-    "insurance.checklist.emergency.4"
-  ],
-  "insurance.careType.urgent": [
-    "insurance.checklist.urgent.1",
-    "insurance.checklist.urgent.2",
-    "insurance.checklist.urgent.3",
-    "insurance.checklist.urgent.4",
-    "insurance.checklist.urgent.5",
-    "insurance.checklist.urgent.6"
-  ],
-  "insurance.careType.primary": [
-    "insurance.checklist.primary.1",
-    "insurance.checklist.primary.2",
-    "insurance.checklist.primary.3",
-    "insurance.checklist.primary.4"
-  ],
-  "insurance.careType.telehealth": [
-    "insurance.checklist.telehealth.1",
-    "insurance.checklist.telehealth.2",
-    "insurance.checklist.telehealth.3",
-    "insurance.checklist.telehealth.4"
-  ],
-  "insurance.careType.lab": [
-    "insurance.checklist.lab.1",
-    "insurance.checklist.lab.2",
-    "insurance.checklist.lab.3",
-    "insurance.checklist.lab.4"
-  ],
-  "insurance.careType.pharmacy": [
-    "insurance.checklist.pharmacy.1",
-    "insurance.checklist.pharmacy.2",
-    "insurance.checklist.pharmacy.3",
-    "insurance.checklist.pharmacy.4"
-  ],
-  "insurance.careType.followUp": [
-    "insurance.checklist.followUp.1",
-    "insurance.checklist.followUp.2",
-    "insurance.checklist.followUp.3",
-    "insurance.checklist.followUp.4"
-  ]
+const concerns = [
+  { key: "network", labelKey: "insurance.concern.network" },
+  { key: "estimatedCost", labelKey: "insurance.concern.estimatedCost" },
+  { key: "copay", labelKey: "insurance.concern.copay" },
+  { key: "deductible", labelKey: "insurance.concern.deductible" },
+  { key: "priorAuth", labelKey: "insurance.concern.priorAuth" },
+  { key: "separateBilling", labelKey: "insurance.concern.separateBilling" },
+  { key: "telehealthCoverage", labelKey: "insurance.concern.telehealthCoverage" },
+  { key: "documents", labelKey: "insurance.concern.documents" },
+  { key: "billingIssues", labelKey: "insurance.concern.billingIssues" }
+] as const;
+
+type CareTypeKey = (typeof careTypes)[number]["key"];
+type ConcernKey = (typeof concerns)[number]["key"];
+
+const defaultConcernMap: Record<CareTypeKey, ConcernKey[]> = {
+  emergency: ["estimatedCost", "billingIssues"],
+  urgent: ["network", "estimatedCost", "copay", "deductible", "separateBilling", "priorAuth", "documents"],
+  primary: ["network", "copay", "documents"],
+  telehealth: ["telehealthCoverage", "copay", "network"],
+  lab: ["network", "deductible", "priorAuth", "separateBilling"],
+  pharmacy: ["estimatedCost", "priorAuth"],
+  followUp: ["network", "copay", "deductible"],
+  notSure: []
 };
 
-const redFlags = [
-  "insurance.redFlag.chestPain",
-  "insurance.redFlag.breathing",
-  "insurance.redFlag.stroke",
-  "insurance.redFlag.allergic",
-  "insurance.redFlag.bleeding",
-  "insurance.redFlag.consciousness",
-  "insurance.redFlag.selfHarm"
-];
-
-const generalQuestions = [
-  "insurance.generalQuestion.network",
-  "insurance.generalQuestion.copay",
-  "insurance.generalQuestion.deductible",
-  "insurance.generalQuestion.separateBilling",
-  "insurance.generalQuestion.priorAuth",
-  "insurance.generalQuestion.telehealth",
-  "insurance.generalQuestion.documents"
-];
+const questionKeyMap: Partial<Record<CareTypeKey, Partial<Record<ConcernKey, string[]>>>> = {
+  emergency: {
+    estimatedCost: ["insurance.checklist.emergency.2"],
+    billingIssues: ["insurance.checklist.emergency.3", "insurance.checklist.emergency.4"]
+  },
+  urgent: {
+    network: ["insurance.checklist.urgent.network"],
+    estimatedCost: ["insurance.checklist.urgent.estimatedCost"],
+    copay: ["insurance.checklist.urgent.copay"],
+    deductible: ["insurance.checklist.urgent.deductible"],
+    separateBilling: ["insurance.checklist.urgent.separateBilling"],
+    priorAuth: ["insurance.checklist.urgent.priorAuth"],
+    documents: ["insurance.checklist.urgent.documents"]
+  },
+  primary: {
+    network: ["insurance.checklist.primary.network"],
+    copay: ["insurance.checklist.primary.copay"],
+    documents: ["insurance.checklist.primary.pcp"],
+    priorAuth: ["insurance.checklist.primary.referral"],
+    estimatedCost: ["insurance.checklist.primary.copay"]
+  },
+  telehealth: {
+    telehealthCoverage: ["insurance.checklist.telehealth.coverage"],
+    copay: ["insurance.checklist.telehealth.copay"],
+    network: ["insurance.checklist.telehealth.platforms"],
+    documents: ["insurance.checklist.telehealth.orders"],
+    priorAuth: ["insurance.checklist.telehealth.orders"]
+  },
+  lab: {
+    network: ["insurance.checklist.lab.network"],
+    deductible: ["insurance.checklist.lab.deductible"],
+    priorAuth: ["insurance.checklist.lab.priorAuth"],
+    separateBilling: ["insurance.checklist.lab.separateBilling"],
+    estimatedCost: ["insurance.checklist.lab.deductible"]
+  },
+  pharmacy: {
+    estimatedCost: ["insurance.checklist.pharmacy.coverage", "insurance.checklist.pharmacy.alternative"],
+    network: ["insurance.checklist.pharmacy.preferred"],
+    priorAuth: ["insurance.checklist.pharmacy.priorAuth"],
+    copay: ["insurance.checklist.pharmacy.coverage"],
+    deductible: ["insurance.checklist.pharmacy.coverage"]
+  },
+  followUp: {
+    estimatedCost: ["insurance.checklist.followUp.coverage"],
+    priorAuth: ["insurance.checklist.followUp.referral"],
+    network: ["insurance.checklist.followUp.network"],
+    copay: ["insurance.checklist.followUp.copay"],
+    deductible: ["insurance.checklist.followUp.coverage"]
+  }
+};
 
 export default function InsuranceGuidePage() {
   const { t } = useI18n();
   const { settings } = useSettings();
   const insurance = settings.insuranceProfile;
-  const [selectedCareType, setSelectedCareType] = useState<string>("insurance.careType.urgent");
-  const [generatedType, setGeneratedType] = useState<string>("insurance.careType.urgent");
+  const [selectedCareType, setSelectedCareType] = useState<CareTypeKey>("urgent");
+  const [selectedConcerns, setSelectedConcerns] = useState<ConcernKey[]>([]);
+  const [generatedType, setGeneratedType] = useState<CareTypeKey>("urgent");
+  const [generatedConcernKeys, setGeneratedConcernKeys] = useState<ConcernKey[]>(defaultConcernMap.urgent);
   const [message, setMessage] = useState("");
   const [savedChecklists, setSavedChecklists] = useState<SavedChecklist[]>([]);
   const [viewChecklistId, setViewChecklistId] = useState<string | null>(null);
-  const hasInsuranceProfile = Boolean(
-    insurance.status ||
-      insurance.planType ||
-      insurance.urgentCareCopay ||
-      insurance.primaryCareCopay ||
-      insurance.copay ||
-      insurance.deductible ||
-      insurance.inNetworkPreference
-  );
-  const generatedKeys = useMemo(() => checklistMap[generatedType] ?? checklistMap["insurance.careType.urgent"], [generatedType]);
+  const hasInsuranceProfile = hasUsableInsuranceProfile(insurance);
+  const generatedKeys = useMemo(() => buildQuestionKeys(generatedType, generatedConcernKeys), [generatedType, generatedConcernKeys]);
   const generatedQuestions = useMemo(() => generatedKeys.map((key) => t(key)), [generatedKeys, t]);
+  const generatedCareLabel = t(careTypes.find((careType) => careType.key === generatedType)?.labelKey ?? "insurance.careType.urgent");
+  const copyIntro = t("insurance.copyIntro").replace("{careType}", generatedCareLabel.toLowerCase());
   const viewedChecklist = savedChecklists.find((item) => item.id === viewChecklistId);
 
   useEffect(() => {
@@ -166,17 +172,54 @@ export default function InsuranceGuidePage() {
     return value || t("insurance.notRecorded");
   }
 
+  function buildQuestionKeys(careType: CareTypeKey, activeConcerns: ConcernKey[]) {
+    if (careType === "notSure") return [];
+    const concernKeys = activeConcerns.length ? activeConcerns : defaultConcernMap[careType];
+    const keys = new Set<string>();
+    if (careType === "emergency") keys.add("insurance.checklist.emergency.1");
+    concernKeys.forEach((concern) => {
+      questionKeyMap[careType]?.[concern]?.forEach((key) => keys.add(key));
+    });
+    if (keys.size === 0) {
+      defaultConcernMap[careType].forEach((concern) => {
+        questionKeyMap[careType]?.[concern]?.forEach((key) => keys.add(key));
+      });
+    }
+    return Array.from(keys);
+  }
+
+  function toggleConcern(concern: ConcernKey) {
+    setSelectedConcerns((current) => current.includes(concern) ? current.filter((item) => item !== concern) : [...current, concern]);
+  }
+
+  function handleCareTypeChange(nextCareType: CareTypeKey) {
+    setSelectedCareType(nextCareType);
+    setSelectedConcerns([]);
+    if (nextCareType === "notSure") {
+      setGeneratedType("notSure");
+      setGeneratedConcernKeys([]);
+      setMessage("");
+    }
+  }
+
   function checklistPayload() {
     return {
       id: crypto.randomUUID?.() ?? `${Date.now()}`,
       createdAt: new Date().toISOString(),
-      careType: t(generatedType),
+      careType: generatedCareLabel,
       questions: generatedQuestions
     };
   }
 
   function generateChecklist() {
+    if (selectedCareType === "notSure") {
+      setGeneratedType("notSure");
+      setGeneratedConcernKeys([]);
+      setMessage("");
+      return;
+    }
     setGeneratedType(selectedCareType);
+    setGeneratedConcernKeys(selectedConcerns.length ? selectedConcerns : defaultConcernMap[selectedCareType]);
     setMessage(t("insurance.checklistGenerated"));
   }
 
@@ -187,7 +230,7 @@ export default function InsuranceGuidePage() {
   }
 
   async function copyQuestions() {
-    await navigator.clipboard?.writeText(generatedQuestions.map((question) => `- ${question}`).join("\n"));
+    await navigator.clipboard?.writeText([copyIntro, "", ...generatedQuestions.map((question) => `- ${question}`)].join("\n"));
     setMessage(t("insurance.questionsCopied"));
   }
 
@@ -207,16 +250,20 @@ export default function InsuranceGuidePage() {
   }
 
   function clearChecklist() {
-    setGeneratedType(selectedCareType);
+    setSelectedConcerns([]);
+    setGeneratedType(selectedCareType === "notSure" ? "urgent" : selectedCareType);
+    setGeneratedConcernKeys(selectedCareType === "notSure" ? defaultConcernMap.urgent : defaultConcernMap[selectedCareType]);
     setMessage(t("insurance.checklistCleared"));
   }
 
   async function copySavedChecklist(item: SavedChecklist) {
-    await navigator.clipboard?.writeText(item.questions.map((question) => `- ${question}`).join("\n"));
+    const intro = t("insurance.copyIntro").replace("{careType}", item.careType.toLowerCase());
+    await navigator.clipboard?.writeText([intro, "", ...item.questions.map((question) => `- ${question}`)].join("\n"));
     setMessage(t("insurance.questionsCopied"));
   }
 
   function deleteSavedChecklist(id: string) {
+    if (!window.confirm(t("insurance.deleteConfirm"))) return;
     writeSavedChecklists(savedChecklists.filter((item) => item.id !== id));
     if (viewChecklistId === id) setViewChecklistId(null);
     setMessage(t("insurance.checklistDeleted"));
@@ -225,7 +272,7 @@ export default function InsuranceGuidePage() {
   return (
     <section className="app-page">
       <PageHeader
-        eyebrow={t("insurance.title")}
+        eyebrow={t("insurance.checklistBuilderEyebrow")}
         title={t("insurance.title")}
         description={t("insurance.description")}
       />
@@ -239,47 +286,6 @@ export default function InsuranceGuidePage() {
         <IconCircle tone="danger">!</IconCircle>
         <p><strong>{t("insurance.doNotDelayTitle")}</strong> {t("insurance.doNotDelayText")}</p>
       </Card>
-
-      <div className="insurance-dashboard-grid">
-        <Card className="insurance-hero-card">
-          <div>
-            <IconCircle tone="teal">I</IconCircle>
-            <h2>{t("insurance.coverageClear")}</h2>
-            <p>{t("insurance.coverageText")}</p>
-            <div className="intro-copy-actions">
-              <a className="btn-primary" href="#checklist-builder">{t("insurance.createChecklist")}</a>
-            </div>
-          </div>
-          <IllustrationImage variant="section" src="/images/illustration-insurance-checklist.png" alt={t("insurance.imageAlt")} />
-        </Card>
-
-        <Card className="coverage-snapshot">
-          <h2>{t("insurance.snapshot")}</h2>
-          {!hasInsuranceProfile ? (
-            <div className="snapshot-empty">
-              <p>{t("insurance.addProfilePrompt")}</p>
-              <PrimaryButton href="/settings#insurance-profile">{t("insurance.addProfile")}</PrimaryButton>
-            </div>
-          ) : [
-            [t("settings.insuranceStatus"), displayValue(insurance.status)],
-            [t("settings.planType"), displayValue(insurance.planType)],
-            [t("insurance.primaryCopay"), displayValue(insurance.primaryCareCopay)],
-            [t("insurance.urgentCopay"), displayValue(insurance.urgentCareCopay || insurance.copay)],
-            [t("settings.deductible"), displayValue(insurance.deductible)],
-            [t("settings.inNetworkPreference"), displayValue(insurance.inNetworkPreference)],
-            [t("insurance.lastUpdated"), t("insurance.notRecorded")]
-          ].map(([label, value]) => (
-            <div className="snapshot-row" key={label}>
-              <span>{label}</span>
-              <StatusBadge tone={value === t("insurance.notRecorded") ? "primary" : "success"}>
-                {value}
-              </StatusBadge>
-            </div>
-          )).concat([
-            <PrimaryButton key="edit-profile" href="/settings#insurance-profile">{t("insurance.editProfile")}</PrimaryButton>
-          ])}
-        </Card>
-      </div>
 
       <div id="checklist-builder" className="scroll-anchor">
       <Card className="insurance-checklist-builder tool-section">
@@ -295,28 +301,65 @@ export default function InsuranceGuidePage() {
             <StatusBadge tone="primary">{t("insurance.step1")}</StatusBadge>
             <label>
               {t("insurance.chooseCareType")}
-              <select value={selectedCareType} onChange={(event) => setSelectedCareType(event.target.value)}>
-                {careTypes.map((careType) => <option key={careType} value={careType}>{t(careType)}</option>)}
+              <select value={selectedCareType} onChange={(event) => handleCareTypeChange(event.target.value as CareTypeKey)}>
+                {careTypes.map((careType) => <option key={careType.key} value={careType.key}>{t(careType.labelKey)}</option>)}
               </select>
             </label>
+            {selectedCareType === "notSure" ? (
+              <div className="empty-inline">
+                <p>{t("insurance.notSureHelp")}</p>
+                <div className="button-pair">
+                  <a className="btn-primary" href="/symptom-check">{t("home.start")}</a>
+                  <a className="btn-secondary" href="/care-options">{t("insurance.viewCareGuidance")}</a>
+                </div>
+              </div>
+            ) : null}
             <button className="btn-primary" onClick={generateChecklist} type="button">{t("insurance.generateChecklist")}</button>
           </div>
           <div className="step-card">
             <StatusBadge tone="teal">{t("insurance.step2")}</StatusBadge>
-            <p>{t("insurance.checklistReadyText")}</p>
+            <p>{t("insurance.chooseConcernsHelp")}</p>
+            <div className="tag-grid concern-grid">
+              {concerns.map((concern) => (
+                <button
+                  className={`choice-pill ${selectedConcerns.includes(concern.key) ? "selected" : ""}`}
+                  key={concern.key}
+                  onClick={() => toggleConcern(concern.key)}
+                  type="button"
+                >
+                  {t(concern.labelKey)}
+                </button>
+              ))}
+            </div>
           </div>
           <div className="step-card">
             <StatusBadge tone="success">{t("insurance.step3")}</StatusBadge>
-            <p>{t("insurance.saveCopyExportText")}</p>
+            <p>{t("insurance.checklistReadyText")}</p>
           </div>
         </div>
-        <div className="check-list">
-          {generatedQuestions.map((question) => <span key={question}>□ {question}</span>)}
-        </div>
+        {generatedType === "notSure" ? (
+          <div className="empty-inline">
+            <p>{t("insurance.notSureHelp")}</p>
+            <div className="button-pair">
+              <a className="btn-primary" href="/symptom-check">{t("home.start")}</a>
+              <a className="btn-secondary" href="/care-options">{t("insurance.viewCareGuidance")}</a>
+            </div>
+          </div>
+        ) : (
+          <>
+            <div className="copy-script">
+              <strong>{t("insurance.yourQuestionsReady")}</strong>
+              <p>{copyIntro}</p>
+            </div>
+            <div className="check-list">
+              {generatedQuestions.map((question) => <span key={question}>□ {question}</span>)}
+            </div>
+          </>
+        )}
         <div className="button-pair">
-          <button className="btn-primary" onClick={saveChecklist} type="button">{t("insurance.saveChecklist")}</button>
-          <button className="btn-secondary" onClick={copyQuestions} type="button">{t("insurance.copyQuestions")}</button>
-          <button className="btn-secondary" onClick={exportChecklist} type="button">{t("insurance.exportChecklist")}</button>
+          <button className="btn-primary" disabled={generatedType === "notSure"} onClick={copyQuestions} type="button">{t("insurance.copyQuestions")}</button>
+          <button className="btn-secondary" disabled={generatedType === "notSure"} onClick={saveChecklist} type="button">{t("insurance.saveChecklist")}</button>
+          <button className="btn-secondary" disabled={generatedType === "notSure"} onClick={exportChecklist} type="button">{t("insurance.exportChecklist")}</button>
           <button className="btn-secondary" onClick={clearChecklist} type="button">{t("insurance.clearChecklist")}</button>
         </div>
       </Card>
@@ -357,22 +400,31 @@ export default function InsuranceGuidePage() {
       </Card>
 
       <Card className="tool-section">
-        <p className="eyebrow">{t("insurance.conceptsEyebrow")}</p>
-        <h2>{t("insurance.conceptsTitle")}</h2>
-        <div className="concept-grid">
-          {concepts.map(([title, description, tone]) => (
-            <InsuranceConceptCard key={title} title={t(title)} description={`${t(description)} ${t(`${title}.example`)} ${t("insurance.costDepends")}`} tone={tone} />
-          ))}
-        </div>
-      </Card>
-
-      <Card className="tool-section">
-        <p className="eyebrow">{t("insurance.afterVisitEyebrow")}</p>
-        <h2>{t("insurance.afterVisitTitle")}</h2>
-        <ul className="tool-check-list">
-          {["insurance.afterVisit.1", "insurance.afterVisit.2", "insurance.afterVisit.3", "insurance.afterVisit.4"].map((key) => <li key={key}>{t(key)}</li>)}
-        </ul>
-        <p className="fine-print">{t("insurance.afterVisitNote")}</p>
+        <h2>{t("insurance.snapshot")}</h2>
+        {!hasInsuranceProfile ? (
+          <div className="snapshot-empty">
+            <p><strong>{t("insurance.noProfileYet")}</strong></p>
+            <p>{t("insurance.addProfilePrompt")}</p>
+            <PrimaryButton href="/settings#insurance-profile">{t("insurance.addProfile")}</PrimaryButton>
+          </div>
+        ) : [
+          [t("settings.insuranceStatus"), displayValue(insurance.status)],
+          [t("settings.planType"), displayValue(insurance.planType)],
+          [t("insurance.primaryCopay"), displayValue(insurance.primaryCareCopay)],
+          [t("insurance.urgentCopay"), displayValue(insurance.urgentCareCopay || insurance.copay)],
+          [t("settings.deductible"), displayValue(insurance.deductible)],
+          [t("settings.inNetworkPreference"), displayValue(insurance.inNetworkPreference)],
+          [t("insurance.lastUpdated"), t("insurance.notRecorded")]
+        ].map(([label, value]) => (
+          <div className="snapshot-row" key={label}>
+            <span>{label}</span>
+            <StatusBadge tone={value === t("insurance.notRecorded") ? "primary" : "success"}>
+              {value}
+            </StatusBadge>
+          </div>
+        )).concat([
+          <PrimaryButton key="edit-profile" href="/settings#insurance-profile">{t("insurance.editProfile")}</PrimaryButton>
+        ])}
       </Card>
 
       <Card className="tool-section">
@@ -391,35 +443,33 @@ export default function InsuranceGuidePage() {
         </div>
       </Card>
 
-      <div className="decision-grid">
-        <Card className="tool-section red-flag-card">
-          <p className="eyebrow">{t("insurance.redFlagsEyebrow")}</p>
-          <h2>{t("insurance.redFlagsTitle")}</h2>
-          <p>{t("insurance.redFlagsBody")}</p>
-          <div className="tag-grid">
-            {redFlags.map((key) => <StatusBadge key={key} tone="danger">{t(key)}</StatusBadge>)}
-          </div>
-        </Card>
-
-        <Card className="tool-section">
-          <p className="eyebrow">{t("insurance.generalQuestionsEyebrow")}</p>
-          <h2>{t("insurance.generalQuestionsTitle")}</h2>
-          <ul className="tool-check-list">
-            {generalQuestions.map((key) => <li key={key}>{t(key)}</li>)}
-          </ul>
-        </Card>
-      </div>
-
-      <Card className="tool-section cta-panel">
-        <h2>{t("insurance.summaryCtaTitle")}</h2>
-        <div className="button-pair">
-          <PrimaryButton href="/result">{t("care.createSummary")}</PrimaryButton>
-          <a className="btn-secondary" href="/symptom-check">{t("home.start")}</a>
-          <a className="btn-secondary" href="/pricing">{t("nav.pricing")}</a>
+      <Card className="tool-section">
+        <p className="eyebrow">{t("insurance.conceptsEyebrow")}</p>
+        <h2>{t("insurance.conceptsTitle")}</h2>
+        <div className="concept-grid">
+          {concepts.map(([title, description, tone]) => (
+            <InsuranceConceptCard key={title} title={t(title)} description={`${t(description)} ${t(`${title}.example`)} ${t("insurance.costDepends")}`} tone={tone} />
+          ))}
         </div>
       </Card>
 
-      <DisclaimerBox text={t("insurance.boundaryStatement")} />
+      <Card className="tool-section">
+        <p className="eyebrow">{t("insurance.afterVisitEyebrow")}</p>
+        <h2>{t("insurance.afterVisitTitle")}</h2>
+        <ul className="tool-check-list">
+          {["insurance.afterVisit.1", "insurance.afterVisit.2", "insurance.afterVisit.3", "insurance.afterVisit.4"].map((key) => <li key={key}>{t(key)}</li>)}
+        </ul>
+        <p className="fine-print">{t("insurance.afterVisitNote")}</p>
+      </Card>
+
+      <Card className="tool-section cta-panel">
+        <h2>{t("insurance.bottomCtaTitle")}</h2>
+        <div className="button-pair">
+          <PrimaryButton href="/symptom-check">{t("home.start")}</PrimaryButton>
+          <a className="btn-secondary" href="/care-options">{t("insurance.viewCareGuidance")}</a>
+          <a className="btn-secondary" href="/pricing">{t("nav.pricing")}</a>
+        </div>
+      </Card>
     </section>
   );
 }
