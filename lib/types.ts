@@ -73,5 +73,5 @@ export interface TriageApiResponse {
   coverageQuestions: string[];
   disclaimer: string;
   referenceId: string;
-  aiGenerated: boolean;
+  aiReviewStatus: "generated" | "fallback" | "unavailable";
 }

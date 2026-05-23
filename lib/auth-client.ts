@@ -52,17 +52,24 @@ export function clearCachedMe(): void {
 }
 
 export async function requestMagicLink(email: string): Promise<{ ok: boolean; message: string }> {
-  const res = await fetch(`${API_BASE}/api/auth/request-link`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email }),
-  });
+  try {
+    const res = await fetch(`${API_BASE}/api/auth/request-link`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email }),
+    });
 
-  const data = (await res.json().catch(() => ({}))) as { ok?: boolean; message?: string; error?: { message?: string } };
-  return {
-    ok: res.ok && (data.ok ?? false),
-    message: data.message || data.error?.message || "Something went wrong. Please try again.",
-  };
+    const data = (await res.json().catch(() => ({}))) as { ok?: boolean; message?: string; error?: { message?: string } };
+    return {
+      ok: res.ok && (data.ok ?? false),
+      message: data.message || data.error?.message || "We could not send the sign-in email right now. Please try again later.",
+    };
+  } catch {
+    return {
+      ok: false,
+      message: "We could not send the sign-in email right now. Please try again later.",
+    };
+  }
 }
 
 export async function logout(): Promise<void> {

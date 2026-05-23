@@ -160,7 +160,7 @@ export default function ResultPage() {
 
   // AI-generated content from backend
   const plainLanguageExplanation = result.plainLanguageExplanation as string | undefined;
-  const aiGenerated = result.aiGenerated as boolean | undefined;
+  const aiReviewStatus = (result.aiReviewStatus as string) || (result.aiGenerated ? "generated" : "unavailable");
 
   return (
     <section className="app-page result-page">
@@ -188,11 +188,28 @@ export default function ResultPage() {
         </div>
       </Card>
 
+      {/* AI / Safety review status */}
+      <Card className="tool-section">
+        <h2>{t("result.aiReviewTitle")}</h2>
+        <div className="check-list">
+          <span>✓ {t("result.safetyRulesChecked")}</span>
+          {aiReviewStatus === "generated" ? (
+            <span>✓ {t("result.aiSummaryGenerated")}</span>
+          ) : aiReviewStatus === "fallback" ? (
+            <span>⚠ {t("result.aiSummaryFallback")}</span>
+          ) : (
+            <span>— {t("result.aiSummaryUnavailable")}</span>
+          )}
+          <span>✓ {t("result.doctorSummaryPrepared")}</span>
+        </div>
+        <p className="help-text" style={{ marginTop: 8 }}>{t("result.aiReviewDisclaimer")}</p>
+      </Card>
+
       {plainLanguageExplanation ? (
         <Card className="ai-explanation-card">
           <div className="card-title-row">
-            <h2>AI Summary</h2>
-            {aiGenerated ? <StatusBadge tone="teal">AI-assisted</StatusBadge> : null}
+            <h2>{t("result.aiSummary")}</h2>
+            {aiReviewStatus === "generated" ? <StatusBadge tone="teal">{t("result.aiAssisted")}</StatusBadge> : null}
           </div>
           <p>{plainLanguageExplanation}</p>
           <p className="help-text">{t("result.thisIsNotDiagnosis")}</p>

@@ -42,6 +42,8 @@ export type HealthMatchSettings = {
     medications: string[];
     recentSurgery: string;
     highRiskConditions: string[];
+    countryRegion: string;
+    insuranceStatus: string;
   };
   insuranceProfile: {
     status: string;
@@ -78,6 +80,7 @@ export type SavedSymptomCheck = {
   symptoms: string[];
   primarySymptom: string;
   duration: string;
+  trend?: string;
   severity: string;
   redFlags: string[];
   healthBackground: Record<string, string | boolean | string[]>;
@@ -144,7 +147,9 @@ export const defaultSettings: HealthMatchSettings = {
     allergies: [],
     medications: [],
     recentSurgery: "",
-    highRiskConditions: []
+    highRiskConditions: [],
+    countryRegion: "",
+    insuranceStatus: ""
   },
   insuranceProfile: {
     status: "",

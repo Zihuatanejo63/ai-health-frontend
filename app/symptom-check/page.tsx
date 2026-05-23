@@ -113,19 +113,68 @@ const functionImpactOptions = [
   { value: "notUrinatingOrVeryLittle", labelKey: "symptom.impact.notUrinatingOrVeryLittle" }
 ];
 
-const booleanBackgroundFields = [
-  "pregnantOrPossiblyPregnant",
-  "child",
-  "olderAdult",
-  "immunocompromised",
-  "heartDisease",
-  "diabetes",
-  "asthmaOrChronicLungDisease",
-  "kidneyDisease",
-  "recentSurgery"
+const ageOptions = Array.from({ length: 100 }, (_, i) => `${i + 1}`).concat(["100+"]);
+
+const sexOptions = [
+  { value: "female", labelKey: "health.sex.female" },
+  { value: "male", labelKey: "health.sex.male" },
+  { value: "intersex", labelKey: "health.sex.intersex" },
+  { value: "preferNotToSay", labelKey: "health.sex.preferNotToSay" }
 ];
 
-const textBackgroundFields = ["age", "sex", "chronicConditions", "medications", "allergies", "countryOrRegion", "insuranceStatus"];
+const pregnancyOptions = [
+  { value: "notPregnant", labelKey: "health.pregnancy.notPregnant" },
+  { value: "pregnant", labelKey: "health.pregnancy.pregnant" },
+  { value: "possiblyPregnant", labelKey: "health.pregnancy.possiblyPregnant" },
+  { value: "recentlyGaveBirth", labelKey: "health.pregnancy.recentlyGaveBirth" },
+  { value: "notApplicable", labelKey: "health.pregnancy.notApplicable" },
+  { value: "preferNotToSay", labelKey: "health.pregnancy.preferNotToSay" }
+];
+
+const chronicConditionOptions = [
+  { value: "none", labelKey: "health.chronic.none" },
+  { value: "diabetes", labelKey: "health.chronic.diabetes" },
+  { value: "highBloodPressure", labelKey: "health.chronic.highBloodPressure" },
+  { value: "heartDisease", labelKey: "health.chronic.heartDisease" },
+  { value: "asthmaOrCopd", labelKey: "health.chronic.asthmaOrCopd" },
+  { value: "kidneyDisease", labelKey: "health.chronic.kidneyDisease" },
+  { value: "immuneCondition", labelKey: "health.chronic.immuneCondition" },
+  { value: "cancerTreatment", labelKey: "health.chronic.cancerTreatment" },
+  { value: "recentSurgery", labelKey: "health.chronic.recentSurgery" },
+  { value: "other", labelKey: "health.chronic.other" }
+];
+
+const allergyOptions = [
+  { value: "none", labelKey: "health.allergy.none" },
+  { value: "medication", labelKey: "health.allergy.medication" },
+  { value: "food", labelKey: "health.allergy.food" },
+  { value: "latex", labelKey: "health.allergy.latex" },
+  { value: "environmental", labelKey: "health.allergy.environmental" },
+  { value: "other", labelKey: "health.allergy.other" }
+];
+
+const countryOptions = [
+  { value: "United States", labelKey: "health.country.us" },
+  { value: "Canada", labelKey: "health.country.canada" },
+  { value: "United Kingdom", labelKey: "health.country.uk" },
+  { value: "Australia", labelKey: "health.country.australia" },
+  { value: "Japan", labelKey: "health.country.japan" },
+  { value: "China", labelKey: "health.country.china" },
+  { value: "European Union", labelKey: "health.country.eu" },
+  { value: "Other", labelKey: "health.country.other" }
+];
+
+const insuranceStatusOptions = [
+  { value: "hasInsurance", labelKey: "health.insurance.has" },
+  { value: "noInsurance", labelKey: "health.insurance.no" },
+  { value: "notSure", labelKey: "health.insurance.notSure" },
+  { value: "lostCoverage", labelKey: "health.insurance.lost" },
+  { value: "student", labelKey: "health.insurance.student" },
+  { value: "travel", labelKey: "health.insurance.travel" },
+  { value: "employer", labelKey: "health.insurance.employer" },
+  { value: "government", labelKey: "health.insurance.government" },
+  { value: "notApplicable", labelKey: "health.insurance.notApplicable" }
+];
 
 const yesNoOptions = [
   { value: "no", labelKey: "common.no" },
@@ -159,21 +208,14 @@ export default function SymptomCheckPage() {
   const [background, setBackground] = useState<Record<string, string>>({
     age: "",
     sex: "",
-    pregnantOrPossiblyPregnant: "no",
-    child: "no",
-    olderAdult: "no",
-    immunocompromised: "no",
+    pregnancyStatus: "",
     chronicConditions: "",
-    heartDisease: "no",
-    diabetes: "no",
-    asthmaOrChronicLungDisease: "no",
-    kidneyDisease: "no",
-    recentSurgery: "no",
     medications: "",
     allergies: "",
-    countryOrRegion: "",
+    countryRegion: "",
     insuranceStatus: ""
   });
+  const [saveAsProfile, setSaveAsProfile] = useState(false);
 
   const primaryDetailGroup = useMemo(() => getDetailGroup(primarySymptom), [primarySymptom]);
   const detailQuestions = useMemo(() => getDetailQuestionsForPrimary(primarySymptom), [primarySymptom]);
@@ -195,22 +237,16 @@ export default function SymptomCheckPage() {
   useEffect(() => {
     const profile = settings.healthProfile;
     const insurance = settings.insuranceProfile;
-    const highRiskText = profile.highRiskConditions.join(" ").toLowerCase();
     setBackground((current) => ({
       ...current,
-      age: current.age || profile.age,
-      sex: current.sex || profile.sex,
-      pregnantOrPossiblyPregnant: current.pregnantOrPossiblyPregnant !== "no" ? current.pregnantOrPossiblyPregnant : profile.pregnancyStatus.toLowerCase().includes("preg") || profile.pregnancyStatus.toLowerCase().includes("yes") ? "yes" : "no",
-      immunocompromised: current.immunocompromised !== "no" ? current.immunocompromised : highRiskText.includes("immun") ? "yes" : "no",
+      age: current.age || profile.age || "",
+      sex: current.sex || profile.sex || "",
+      pregnancyStatus: current.pregnancyStatus || profile.pregnancyStatus || "",
       chronicConditions: current.chronicConditions || [...profile.chronicConditions, ...profile.highRiskConditions].join(", "),
-      heartDisease: current.heartDisease !== "no" ? current.heartDisease : highRiskText.includes("heart") ? "yes" : "no",
-      diabetes: current.diabetes !== "no" ? current.diabetes : highRiskText.includes("diabetes") ? "yes" : "no",
-      asthmaOrChronicLungDisease: current.asthmaOrChronicLungDisease !== "no" ? current.asthmaOrChronicLungDisease : highRiskText.includes("asthma") || highRiskText.includes("lung") ? "yes" : "no",
-      kidneyDisease: current.kidneyDisease !== "no" ? current.kidneyDisease : highRiskText.includes("kidney") ? "yes" : "no",
-      recentSurgery: current.recentSurgery !== "no" ? current.recentSurgery : profile.recentSurgery.trim() ? "yes" : "no",
       medications: current.medications || profile.medications.join(", "),
       allergies: current.allergies || profile.allergies.join(", "),
-      insuranceStatus: current.insuranceStatus || insurance.status
+      countryRegion: current.countryRegion || profile.countryRegion || "",
+      insuranceStatus: current.insuranceStatus || insurance.status || ""
     }));
   }, [settings.healthProfile, settings.insuranceProfile]);
 
@@ -559,26 +595,123 @@ export default function SymptomCheckPage() {
             <article className="panel workflow-step">
               <span>{t("symptom.stepBackground")}</span>
               <h2>{t("symptom.healthBackground")}</h2>
+
+              {/* Age — select */}
               <div className="form-grid-two">
-                {textBackgroundFields.map((key) => (
-                  <label className="form-field" key={key}>
-                    {t(backgroundFieldKey(key))}
-                    <input value={background[key] ?? ""} onChange={(event) => setBackground({ ...background, [key]: event.target.value })} />
-                  </label>
-                ))}
+                <label className="form-field">
+                  {t("health.age")}
+                  <select value={background.age ?? ""} onChange={(e) => setBackground({ ...background, age: e.target.value })}>
+                    <option value="">{t("common.notSelected")}</option>
+                    {ageOptions.map((a) => <option key={a} value={a}>{a}</option>)}
+                  </select>
+                </label>
+
+                {/* Sex — select */}
+                <label className="form-field">
+                  {t("health.sex")}
+                  <select value={background.sex ?? ""} onChange={(e) => setBackground({ ...background, sex: e.target.value })}>
+                    <option value="">{t("common.notSelected")}</option>
+                    {sexOptions.map((o) => <option key={o.value} value={o.value}>{t(o.labelKey)}</option>)}
+                  </select>
+                </label>
+
+                {/* Pregnancy status — select */}
+                <label className="form-field">
+                  {t("health.pregnancyStatus")}
+                  <select value={background.pregnancyStatus ?? ""} onChange={(e) => setBackground({ ...background, pregnancyStatus: e.target.value })}>
+                    <option value="">{t("common.notSelected")}</option>
+                    {pregnancyOptions.map((o) => <option key={o.value} value={o.value}>{t(o.labelKey)}</option>)}
+                  </select>
+                </label>
+
+                {/* Country / region — select */}
+                <label className="form-field">
+                  {t("health.countryRegion")}
+                  <select value={background.countryRegion ?? ""} onChange={(e) => setBackground({ ...background, countryRegion: e.target.value })}>
+                    <option value="">{t("common.notSelected")}</option>
+                    {countryOptions.map((o) => <option key={o.value} value={o.value}>{t(o.labelKey)}</option>)}
+                  </select>
+                </label>
+
+                {/* Insurance status — select */}
+                <label className="form-field">
+                  {t("health.insuranceStatus")}
+                  <select value={background.insuranceStatus ?? ""} onChange={(e) => setBackground({ ...background, insuranceStatus: e.target.value })}>
+                    <option value="">{t("common.notSelected")}</option>
+                    {insuranceStatusOptions.map((o) => <option key={o.value} value={o.value}>{t(o.labelKey)}</option>)}
+                  </select>
+                </label>
               </div>
-              <div className="choice-grid">
-                {booleanBackgroundFields.map((key) => (
-                  <label className="choice-pill" key={key}>
-                    <input
-                      checked={background[key] === "yes"}
-                      onChange={() => setBackground((current) => ({ ...current, [key]: current[key] === "yes" ? "no" : "yes" }))}
-                      type="checkbox"
-                    />
-                    {t(backgroundFieldKey(key))}
-                  </label>
-                ))}
+
+              {/* Chronic conditions — multi chips */}
+              <div style={{ marginTop: 16 }}>
+                <p className="help-text">{t("health.chronicConditions")}</p>
+                <div className="choice-grid">
+                  {chronicConditionOptions.map((o) => {
+                    const selected = background.chronicConditions?.includes(o.value);
+                    return (
+                      <label className={`choice-pill${selected ? " selected" : ""}`} key={o.value}>
+                        <input
+                          checked={selected}
+                          onChange={() => {
+                            const current = background.chronicConditions ? background.chronicConditions.split(", ").filter(Boolean) : [];
+                            const next = current.includes(o.value) ? current.filter((c) => c !== o.value) : [...current, o.value];
+                            setBackground({ ...background, chronicConditions: next.join(", ") });
+                          }}
+                          type="checkbox"
+                        />
+                        {t(o.labelKey)}
+                      </label>
+                    );
+                  })}
+                </div>
               </div>
+
+              {/* Medications — text with placeholder */}
+              <div className="form-grid-two" style={{ marginTop: 16 }}>
+                <label className="form-field" style={{ gridColumn: "1 / -1" }}>
+                  {t("health.medications")}
+                  <input
+                    value={background.medications ?? ""}
+                    onChange={(e) => setBackground({ ...background, medications: e.target.value })}
+                    placeholder={t("health.medicationsPlaceholder")}
+                  />
+                </label>
+              </div>
+
+              {/* Allergies — multi chips */}
+              <div style={{ marginTop: 16 }}>
+                <p className="help-text">{t("health.allergies")}</p>
+                <div className="choice-grid">
+                  {allergyOptions.map((o) => {
+                    const selected = background.allergies?.includes(o.value);
+                    return (
+                      <label className={`choice-pill${selected ? " selected" : ""}`} key={o.value}>
+                        <input
+                          checked={selected}
+                          onChange={() => {
+                            const current = background.allergies ? background.allergies.split(", ").filter(Boolean) : [];
+                            const next = current.includes(o.value) ? current.filter((a) => a !== o.value) : [...current, o.value];
+                            setBackground({ ...background, allergies: next.join(", ") });
+                          }}
+                          type="checkbox"
+                        />
+                        {t(o.labelKey)}
+                      </label>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Save as health profile */}
+              <label className="choice-pill" style={{ marginTop: 20, display: "inline-flex" }}>
+                <input
+                  checked={saveAsProfile}
+                  onChange={() => setSaveAsProfile((p) => !p)}
+                  type="checkbox"
+                />
+                {t("health.saveAsProfile")}
+              </label>
             </article>
           ) : null}
 

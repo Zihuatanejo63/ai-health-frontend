@@ -10,7 +10,7 @@ export const sidebarItems = [
   { labelKey: "nav.symptomCheck", href: "/symptom-check", icon: "☤" },
   { labelKey: "nav.findCare", href: "/care-options", icon: "♡" },
   { labelKey: "nav.coverageProtection", href: "/insurance-guide", icon: "♢" },
-  { labelKey: "nav.healthSummary", href: "/health-records", icon: "▣" },
+  { labelKey: "nav.healthRecords", href: "/health-records", icon: "▣" },
   { labelKey: "nav.history", href: "/history", icon: "◷" },
   { labelKey: "nav.pricing", href: "/pricing", icon: "$" }
 ];
