@@ -260,6 +260,28 @@ export default function ResultPage() {
         </Card>
       ) : null}
 
+      {/* Action cards: Find care + Coverage protection (hidden for emergency/crisis) */}
+      {!isEmergencyTone ? (
+        <div className="result-action-grid">
+          <Card className="action-card">
+            <IconCircle tone="primary">♡</IconCircle>
+            <div>
+              <h2>{t("result.findCareOptions")}</h2>
+              <p>{t("result.findCareOptionsDesc")}</p>
+              <PrimaryButton href="/care-options">{t("result.findCareOptionsBtn")}</PrimaryButton>
+            </div>
+          </Card>
+          <Card className="action-card">
+            <IconCircle tone="teal">♢</IconCircle>
+            <div>
+              <h2>{t("result.checkCoverageProtection")}</h2>
+              <p>{t("result.checkCoverageProtectionDesc")}</p>
+              <SecondaryButton href="/insurance-guide">{t("result.checkCoverageProtectionBtn")}</SecondaryButton>
+            </div>
+          </Card>
+        </div>
+      ) : null}
+
       <Card>
         <h2>{t("result.whatToWatch")}</h2>
         <div className="chip-row">

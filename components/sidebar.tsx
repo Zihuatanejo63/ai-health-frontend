@@ -8,8 +8,8 @@ import { useSettings } from "@/components/settings-provider";
 export const sidebarItems = [
   { labelKey: "nav.home", href: "/", icon: "⌂" },
   { labelKey: "nav.symptomCheck", href: "/symptom-check", icon: "☤" },
-  { labelKey: "nav.careGuidance", href: "/care-options", icon: "♡" },
-  { labelKey: "nav.insurance", href: "/insurance-guide", icon: "♢" },
+  { labelKey: "nav.findCare", href: "/care-options", icon: "♡" },
+  { labelKey: "nav.coverageProtection", href: "/insurance-guide", icon: "♢" },
   { labelKey: "nav.healthSummary", href: "/health-records", icon: "▣" },
   { labelKey: "nav.history", href: "/history", icon: "◷" },
   { labelKey: "nav.pricing", href: "/pricing", icon: "$" }

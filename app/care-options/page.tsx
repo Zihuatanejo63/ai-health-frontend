@@ -1,134 +1,60 @@
 "use client";
 
-import { useState } from "react";
-import { Card, IconCircle, PrimaryButton, SecondaryButton, StatusBadge, type Tone } from "@/components/app-ui";
+import { useEffect, useState } from "react";
+import { Card, IconCircle, PageHeader, PrimaryButton, SecondaryButton, StatusBadge, type Tone } from "@/components/app-ui";
 import { DisclaimerBox } from "@/components/disclaimer-box";
 import { useI18n } from "@/components/i18n-provider";
-import { SectionHeader } from "@/components/section-header";
-import { IllustrationImage } from "@/components/visual-card";
+import { readSymptomChecks, type SavedSymptomCheck } from "@/lib/settings";
+import { careLevelKey, riskLevelKey } from "@/lib/i18n-display";
 
-type CareOption = {
+const SESSION_RESULT_KEY = "ai-health-match-result";
+
+type NearbyOption = {
   id: string;
   titleKey: string;
-  shortKey: string;
+  descKey: string;
+  btnKey: string;
   tone: Tone;
   icon: string;
-  timingKey: string;
-  costKey: string;
-  bestKey: string;
-  notForKey: string;
-  askKeys: string[];
-  insuranceKey: string;
-  prepareKey: string;
-  urgencyKey: string;
-  waitKey: string;
-  insuranceCheckKey: string;
-  callAheadKey: string;
-  nextStepKey: string;
-  nextStepHref: string;
+  mapsQuery: string;
 };
 
-const careOptions: CareOption[] = [
-  {
-    id: "emergency",
-    titleKey: "care.emergency",
-    shortKey: "care.card.emergency.short",
-    tone: "danger",
-    icon: "!",
-    timingKey: "care.timing.now",
-    costKey: "care.cost.highest",
-    bestKey: "care.compare.emergency.best",
-    notForKey: "care.compare.emergency.notUse",
-    askKeys: ["care.ask.emergency"],
-    insuranceKey: "care.compare.emergency.insurance",
-    prepareKey: "care.prepare.emergency",
-    urgencyKey: "care.urgency.emergency",
-    waitKey: "care.wait.emergency",
-    insuranceCheckKey: "care.insuranceCheck.noDelay",
-    callAheadKey: "care.callAhead.emergency",
-    nextStepKey: "care.next.emergency",
-    nextStepHref: "/emergency"
-  },
+const nearbyOptions: NearbyOption[] = [
   {
     id: "urgent",
-    titleKey: "care.urgent",
-    shortKey: "care.card.urgent.short",
+    titleKey: "care.nearbyUrgent",
+    descKey: "care.nearbyUrgentDesc",
+    btnKey: "care.findUrgentNearMe",
     tone: "warning",
     icon: "U",
-    timingKey: "care.timing.today",
-    costKey: "care.cost.mediumHigh",
-    bestKey: "care.compare.urgent.best",
-    notForKey: "care.compare.urgent.notUse",
-    askKeys: ["care.ask.urgent"],
-    insuranceKey: "care.compare.urgent.insurance",
-    prepareKey: "care.prepare.standard",
-    urgencyKey: "care.urgency.urgent",
-    waitKey: "care.wait.urgent",
-    insuranceCheckKey: "care.insuranceCheck.yes",
-    callAheadKey: "care.callAhead.urgent",
-    nextStepKey: "care.next.urgent",
-    nextStepHref: "/insurance-guide#checklist-builder"
+    mapsQuery: "urgent+care+near+me"
   },
   {
     id: "primary",
-    titleKey: "common.primaryCare",
-    shortKey: "care.card.primary.short",
+    titleKey: "care.nearbyPrimary",
+    descKey: "care.nearbyPrimaryDesc",
+    btnKey: "care.findPrimaryNearMe",
     tone: "primary",
     icon: "P",
-    timingKey: "care.timing.scheduled",
-    costKey: "care.cost.lowerMedium",
-    bestKey: "care.compare.primary.best",
-    notForKey: "care.compare.primary.notUse",
-    askKeys: ["care.ask.primary"],
-    insuranceKey: "care.compare.primary.insurance",
-    prepareKey: "care.prepare.standard",
-    urgencyKey: "care.urgency.primary",
-    waitKey: "care.wait.primary",
-    insuranceCheckKey: "care.insuranceCheck.yes",
-    callAheadKey: "care.callAhead.primary",
-    nextStepKey: "care.next.primary",
-    nextStepHref: "/result"
+    mapsQuery: "primary+care+provider+near+me"
   },
   {
     id: "telehealth",
-    titleKey: "care.telehealth",
-    shortKey: "care.card.telehealth.short",
+    titleKey: "care.nearbyTelehealth",
+    descKey: "care.nearbyTelehealthDesc",
+    btnKey: "care.findTelehealthOptions",
     tone: "teal",
     icon: "T",
-    timingKey: "care.timing.virtual",
-    costKey: "care.cost.lowerMedium",
-    bestKey: "care.compare.telehealth.best",
-    notForKey: "care.compare.telehealth.notUse",
-    askKeys: ["care.ask.telehealth"],
-    insuranceKey: "care.compare.telehealth.insurance",
-    prepareKey: "care.prepare.telehealth",
-    urgencyKey: "care.urgency.telehealth",
-    waitKey: "care.wait.telehealth",
-    insuranceCheckKey: "care.insuranceCheck.yes",
-    callAheadKey: "care.callAhead.telehealth",
-    nextStepKey: "care.next.telehealth",
-    nextStepHref: "/insurance-guide#checklist-builder"
-  },
-  {
-    id: "self",
-    titleKey: "care.selfCare",
-    shortKey: "care.card.self.short",
-    tone: "success",
-    icon: "S",
-    timingKey: "care.timing.monitoring",
-    costKey: "care.cost.lowest",
-    bestKey: "care.compare.self.best",
-    notForKey: "care.compare.self.notUse",
-    askKeys: ["care.ask.self.safe", "care.ask.self.stop"],
-    insuranceKey: "care.compare.self.insurance",
-    prepareKey: "care.prepare.self",
-    urgencyKey: "care.urgency.self",
-    waitKey: "care.wait.self",
-    insuranceCheckKey: "care.insuranceCheck.noVisit",
-    callAheadKey: "care.callAhead.self",
-    nextStepKey: "care.next.self",
-    nextStepHref: "/symptom-check"
+    mapsQuery: "telehealth+providers"
   }
+];
+
+const beforeYouGo = [
+  "care.before.summarySave",
+  "care.before.medicationsList",
+  "care.before.inNetwork",
+  "care.before.noDelay",
+  "care.before.worsen"
 ];
 
 const comparisonColumns = [
@@ -143,101 +69,238 @@ const comparisonColumns = [
   "care.table.notUse"
 ];
 
-const decisionQuestions = [
-  ["emergency", "care.decision.tool.q1"],
-  ["severeToday", "care.decision.tool.q2"],
-  ["lasting", "care.decision.tool.q3"],
-  ["mildStable", "care.decision.tool.q4"]
-] as const;
-
-const beforeYouGo = [
-  "care.before.started",
-  "care.before.medications",
-  "care.before.summary",
-  "care.before.insurance",
-  "care.before.emergency"
+const careOptionRows = [
+  {
+    id: "emergency",
+    titleKey: "care.emergency",
+    bestKey: "care.compare.emergency.best",
+    urgencyKey: "care.urgency.emergency",
+    timingKey: "care.timing.now",
+    waitKey: "care.wait.emergency",
+    costKey: "care.cost.highest",
+    insuranceCheckKey: "care.insuranceCheck.noDelay",
+    callAheadKey: "care.callAhead.emergency",
+    notForKey: "care.compare.emergency.notUse"
+  },
+  {
+    id: "urgent",
+    titleKey: "care.urgent",
+    bestKey: "care.compare.urgent.best",
+    urgencyKey: "care.urgency.urgent",
+    timingKey: "care.timing.today",
+    waitKey: "care.wait.urgent",
+    costKey: "care.cost.mediumHigh",
+    insuranceCheckKey: "care.insuranceCheck.yes",
+    callAheadKey: "care.callAhead.urgent",
+    notForKey: "care.compare.urgent.notUse"
+  },
+  {
+    id: "primary",
+    titleKey: "common.primaryCare",
+    bestKey: "care.compare.primary.best",
+    urgencyKey: "care.urgency.primary",
+    timingKey: "care.timing.scheduled",
+    waitKey: "care.wait.primary",
+    costKey: "care.cost.lowerMedium",
+    insuranceCheckKey: "care.insuranceCheck.yes",
+    callAheadKey: "care.callAhead.primary",
+    notForKey: "care.compare.primary.notUse"
+  },
+  {
+    id: "telehealth",
+    titleKey: "care.telehealth",
+    bestKey: "care.compare.telehealth.best",
+    urgencyKey: "care.urgency.telehealth",
+    timingKey: "care.timing.virtual",
+    waitKey: "care.wait.telehealth",
+    costKey: "care.cost.lowerMedium",
+    insuranceCheckKey: "care.insuranceCheck.yes",
+    callAheadKey: "care.callAhead.telehealth",
+    notForKey: "care.compare.telehealth.notUse"
+  },
+  {
+    id: "self",
+    titleKey: "care.selfCare",
+    bestKey: "care.compare.self.best",
+    urgencyKey: "care.urgency.self",
+    timingKey: "care.timing.monitoring",
+    waitKey: "care.wait.self",
+    costKey: "care.cost.lowest",
+    insuranceCheckKey: "care.insuranceCheck.noVisit",
+    callAheadKey: "care.callAhead.self",
+    notForKey: "care.compare.self.notUse"
+  }
 ];
+
+function openMapsSearch(query: string) {
+  if (typeof window === "undefined") return;
+  if ("geolocation" in navigator) {
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const { latitude, longitude } = pos.coords;
+        window.open(
+          `https://www.google.com/maps/search/${query}/@${latitude},${longitude},13z`,
+          "_blank"
+        );
+      },
+      () => {
+        window.open(`https://www.google.com/maps/search/${query}`, "_blank");
+      }
+    );
+  } else {
+    window.open(`https://www.google.com/maps/search/${query}`, "_blank");
+  }
+}
 
 export default function CareOptionsPage() {
   const { t } = useI18n();
-  const [answers, setAnswers] = useState<Record<string, string>>({});
-  const [savedMessage, setSavedMessage] = useState("");
+  const [check, setCheck] = useState<SavedSymptomCheck | null>(null);
 
-  function suggestedCareKey(nextAnswers = answers) {
-    const notSureCount = Object.values(nextAnswers).filter((answer) => answer === "notSure").length;
-    if (nextAnswers.emergency === "yes") return "care.suggest.emergency";
-    if (nextAnswers.severeToday === "yes") return "care.suggest.urgent";
-    if (nextAnswers.lasting === "yes") return "care.suggest.primaryTelehealth";
-    if (nextAnswers.mildStable === "yes") return "care.suggest.self";
-    if (notSureCount >= 2) return "care.suggest.symptomCheck";
-    return "care.suggest.pending";
-  }
+  useEffect(() => {
+    const session = window.sessionStorage.getItem(SESSION_RESULT_KEY);
+    if (session) {
+      setCheck(JSON.parse(session));
+      return;
+    }
+    setCheck(readSymptomChecks()[0] ?? null);
+  }, []);
 
-  function chooseAnswer(questionId: string, answer: string) {
-    const nextAnswers = { ...answers, [questionId]: answer };
-    setAnswers(nextAnswers);
-    const payload = {
-      id: crypto.randomUUID?.() ?? `${Date.now()}`,
-      answers: nextAnswers,
-      suggestedCareLevel: t(suggestedCareKey(nextAnswers)),
-      createdAt: new Date().toISOString()
-    };
-    window.localStorage.setItem("healthmatchai_care_decision", JSON.stringify(payload));
-    setSavedMessage(t("care.decision.saved"));
-  }
+  const result = check?.result as Record<string, unknown> | undefined;
+  const recommendedCare = result?.recommendedCare as string | undefined;
+  const riskLevel = result?.riskLevel as string | undefined;
+  const isEmergency = riskLevel === "Emergency" || riskLevel === "Crisis";
 
   return (
     <section className="stack-page">
-      <div className="intro-card page-hero-grid">
-        <div>
-          <SectionHeader
-            eyebrow={t("care.eyebrow")}
-            title={t("care.title")}
-            description={t("care.description")}
-          />
-          <div className="button-pair">
-            <PrimaryButton href="/symptom-check">{t("home.start")}</PrimaryButton>
-            <a className="btn-secondary" href="#care-comparison">{t("care.compareOptions")}</a>
-          </div>
-        </div>
-        <IllustrationImage
-          variant="section"
-          src="/images/illustration-care-levels.png"
-          alt={t("care.imageAlt")}
-        />
-      </div>
+      <PageHeader
+        eyebrow={t("care.eyebrow")}
+        title={t("care.title")}
+        description={t("care.description")}
+      />
 
+      {/* Not sure? Start with Symptom Check */}
       <Card className="notice-card">
         <IconCircle tone="primary">?</IconCircle>
         <div>
           <h2>{t("care.notSureTitle")}</h2>
           <p>{t("care.notSureText")}</p>
           <PrimaryButton href="/symptom-check">{t("home.start")}</PrimaryButton>
-          <small>{t("care.supportFinePrint")}</small>
         </div>
       </Card>
 
-      <div id="care-comparison" className="scroll-anchor">
+      {/* If result exists, show recommended next step */}
+      {check && recommendedCare && !isEmergency ? (
+        <Card className="tool-section result-linked-card">
+          <div className="card-title-row">
+            <div>
+              <h2>{t("care.recommendedNextStep")}</h2>
+              <p>
+                <strong>{t(careLevelKey(recommendedCare))}</strong>
+                {" — "}{t("result.recommendedNextStep")}
+              </p>
+            </div>
+            <StatusBadge tone={riskLevel === "High" ? "warning" : riskLevel === "Low" ? "success" : "primary"}>
+              {t(riskLevelKey(riskLevel || "Low"))}
+            </StatusBadge>
+          </div>
+          <div className="button-pair">
+            <SecondaryButton href="/result">{t("care.prepareDoctorSummary")}</SecondaryButton>
+            <SecondaryButton href="/insurance-guide">{t("care.checkCoverageQuestions")}</SecondaryButton>
+          </div>
+        </Card>
+      ) : null}
+
+      {/* Emergency: only show emergency CTA */}
+      {isEmergency ? (
+        <Card className="crisis-card">
+          <IconCircle tone="danger">!</IconCircle>
+          <div>
+            <h2>{t("care.emergencyWarningTitle")}</h2>
+            <p>{t("care.emergencyWarningText")}</p>
+            <PrimaryButton href="/emergency">{t("care.viewEmergencySigns")}</PrimaryButton>
+          </div>
+        </Card>
+      ) : null}
+
+      {/* Find care near you */}
+      <div>
+        <h2 className="section-title">{t("care.findCareNearYou")}</h2>
+        <p className="section-description">{t("care.findCareNearYouDesc")}</p>
+        <div className="care-detail-grid">
+          {nearbyOptions.map((opt) => (
+            <article className="panel detail-card care-compact-card" key={opt.id}>
+              <div className="care-card-heading">
+                <IconCircle tone={opt.tone}>{opt.icon}</IconCircle>
+                <div>
+                  <h2>{t(opt.titleKey)}</h2>
+                  <p>{t(opt.descKey)}</p>
+                </div>
+              </div>
+              <div className="care-card-meta">
+                <button
+                  className="btn-primary"
+                  onClick={() => openMapsSearch(opt.mapsQuery)}
+                  type="button"
+                >
+                  {t(opt.btnKey)}
+                </button>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+
+      {/* Emergency warning card (always show, not just for emergency results) */}
+      {!isEmergency ? (
+        <Card className="notice-card red-flag-card">
+          <IconCircle tone="danger">!</IconCircle>
+          <div>
+            <h2>{t("care.emergencyWarningTitle")}</h2>
+            <p>{t("care.emergencyWarningText")}</p>
+            <SecondaryButton href="/emergency">{t("care.viewEmergencySigns")}</SecondaryButton>
+          </div>
+        </Card>
+      ) : null}
+
+      {/* Before you go */}
+      <Card className="tool-section">
+        <h2>{t("care.beforeTitle")}</h2>
+        <ul className="tool-check-list">
+          {beforeYouGo.map((item) => (
+            <li key={item}>{t(item)}</li>
+          ))}
+        </ul>
+        <div className="button-pair" style={{ marginTop: 16 }}>
+          <SecondaryButton href="/result">{t("care.createSummary")}</SecondaryButton>
+          <SecondaryButton href="/insurance-guide">{t("insurance.understandCoverage")}</SecondaryButton>
+        </div>
+      </Card>
+
+      {/* Detailed care comparison — collapsed by default */}
       <Card className="tool-section">
         <details>
           <summary>{t("care.detailedComparison")}</summary>
-          <div className="table-scroll care-table-scroll">
+          <div className="table-scroll care-table-scroll" style={{ marginTop: 16 }}>
             <table className="tool-table">
               <thead>
-                <tr>{comparisonColumns.map((column) => <th key={column}>{t(column)}</th>)}</tr>
+                <tr>
+                  {comparisonColumns.map((col) => (
+                    <th key={col}>{t(col)}</th>
+                  ))}
+                </tr>
               </thead>
               <tbody>
-                {careOptions.map((option) => (
-                  <tr key={option.id}>
-                    <th scope="row">{t(option.titleKey)}</th>
-                    <td>{t(option.bestKey)}</td>
-                    <td>{t(option.urgencyKey)}</td>
-                    <td>{t(option.timingKey)}</td>
-                    <td>{t(option.waitKey)}</td>
-                    <td>{t(option.costKey)}</td>
-                    <td>{t(option.insuranceCheckKey)}</td>
-                    <td>{t(option.callAheadKey)}</td>
-                    <td>{t(option.notForKey)}</td>
+                {careOptionRows.map((row) => (
+                  <tr key={row.id}>
+                    <th scope="row">{t(row.titleKey)}</th>
+                    <td>{t(row.bestKey)}</td>
+                    <td>{t(row.urgencyKey)}</td>
+                    <td>{t(row.timingKey)}</td>
+                    <td>{t(row.waitKey)}</td>
+                    <td>{t(row.costKey)}</td>
+                    <td>{t(row.insuranceCheckKey)}</td>
+                    <td>{t(row.callAheadKey)}</td>
+                    <td>{t(row.notForKey)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -245,88 +308,8 @@ export default function CareOptionsPage() {
           </div>
         </details>
       </Card>
-      </div>
 
-      <div className="decision-grid">
-        <Card className="tool-section">
-          <p className="eyebrow">{t("care.decisionEyebrow")}</p>
-          <h2>{t("care.decisionTitle")}</h2>
-          <p>{t("care.decisionEducationalNote")}</p>
-          {savedMessage ? <StatusBadge tone="success">{savedMessage}</StatusBadge> : null}
-          <div className="decision-question-list">
-            {decisionQuestions.map(([id, question]) => (
-              <div className="decision-question-card" key={id}>
-                <p>{t(question)}</p>
-                <div className="segmented-actions">
-                  {["yes", "no", "notSure"].map((answer) => (
-                    <button
-                      className={answers[id] === answer ? "segment-button active" : "segment-button"}
-                      key={answer}
-                      onClick={() => chooseAnswer(id, answer)}
-                      type="button"
-                    >
-                      {t(`care.answer.${answer}`)}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="suggestion-card">
-            <span>{t("care.suggestedLabel")}</span>
-            <strong>{t(suggestedCareKey())}</strong>
-            {suggestedCareKey() === "care.suggest.symptomCheck" ? <PrimaryButton href="/symptom-check">{t("home.start")}</PrimaryButton> : null}
-          </div>
-        </Card>
-
-        <Card className="tool-section">
-          <p className="eyebrow">{t("care.beforeEyebrow")}</p>
-          <h2>{t("care.beforeTitle")}</h2>
-          <ul className="tool-check-list">
-            {beforeYouGo.map((item) => <li key={item}>{t(item)}</li>)}
-          </ul>
-          <SecondaryButton href="/insurance-guide">{t("insurance.title")}</SecondaryButton>
-        </Card>
-      </div>
-
-      <div className="care-detail-grid">
-        {careOptions.map((option) => (
-          <article className="panel detail-card care-compact-card" key={option.id}>
-            <div className="care-card-heading">
-              <IconCircle tone={option.tone}>{option.icon}</IconCircle>
-              <div>
-                <h2>{t(option.titleKey)}</h2>
-                <p>{t(option.shortKey)}</p>
-              </div>
-            </div>
-            <div className="care-card-meta">
-              <StatusBadge tone={option.tone}>{t(option.timingKey)}</StatusBadge>
-              <span>{t(option.costKey)}</span>
-            </div>
-              <div className="care-details">
-                <dl>
-                  <dt>{t("care.bestFor")}</dt>
-                  <dd>{t(option.bestKey)}</dd>
-                  <dt>{t("care.avoidThisWhen")}</dt>
-                  <dd>{t(option.notForKey)}</dd>
-                  <dt>{t("care.prepareBefore")}</dt>
-                  <dd>{t(option.prepareKey)}</dd>
-                </dl>
-              </div>
-          </article>
-        ))}
-      </div>
-
-      <Card className="tool-section cta-panel">
-        <h2>{t("care.stillUnsure")}</h2>
-        <div className="button-pair">
-          <PrimaryButton href="/symptom-check">{t("home.start")}</PrimaryButton>
-          <SecondaryButton href="/result">{t("care.createSummary")}</SecondaryButton>
-          <SecondaryButton href="/insurance-guide">{t("insurance.understandCoverage")}</SecondaryButton>
-        </div>
-      </Card>
-
-      <DisclaimerBox text={t("care.disclaimer")} />
+      <DisclaimerBox text={`${t("safety.medical")} ${t("safety.insurance")}`} />
     </section>
   );
 }
