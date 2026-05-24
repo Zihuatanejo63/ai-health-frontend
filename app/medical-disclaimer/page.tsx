@@ -9,7 +9,7 @@ export default function MedicalDisclaimerPage() {
         {
           heading: "Medical boundaries",
           body:
-            "HealthMatchAI provides AI-generated symptom triage and care guidance only. It does not diagnose, prescribe, treat, interpret medical images as a clinician, or replace evaluation by a licensed clinician."
+            "HealthMatchAI does not provide medical diagnosis, treatment, prescriptions, emergency care, or insurance brokerage. It provides educational health navigation and doctor-ready report preparation only. It does not replace evaluation by a licensed clinician."
         },
         {
           heading: "Emergency warning",
@@ -36,7 +36,7 @@ export default function MedicalDisclaimerPage() {
         {
           heading: "Paid tools",
           body:
-            "Paid tools such as doctor-ready PDF reports, coverage education checklists, or symptom timelines are organizational aids only. They do not create a clinician relationship, guarantee coverage, or replace professional medical or insurance guidance."
+            "Paid Plus subscription features — such as unlimited doctor-ready reports, saved health records, symptom history, insurance checklist history, and multi-language reports — are organizational aids only. They do not create a clinician relationship, guarantee coverage, or replace professional medical or insurance guidance."
         },
         {
           heading: "Image and report uploads",

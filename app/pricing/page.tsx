@@ -118,6 +118,7 @@ export default function PricingPage() {
       <Card className="tool-section">
         <p className="eyebrow">{t("pricing.boundaryEyebrow")}</p>
         <h2>{t("pricing.boundaryTitle")}</h2>
+        <p className="disclaimer-text">{t("pricing.disclaimerText")}</p>
         <div className="tag-grid">
           {notProvided.map((key) => <StatusBadge key={key} tone="primary">{t(key)}</StatusBadge>)}
         </div>

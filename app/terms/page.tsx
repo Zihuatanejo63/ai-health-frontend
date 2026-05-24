@@ -14,7 +14,7 @@ export default function TermsPage() {
         {
           heading: "Medical boundaries",
           body:
-            "The service does not diagnose, prescribe, treat, or replace professional medical care. It must not be used as a substitute for professional medical advice, clinician care, emergency care, or clinical decision making."
+            "HealthMatchAI does not provide medical diagnosis, treatment, prescriptions, emergency care, or insurance brokerage. It provides educational health navigation and doctor-ready report preparation only. It must not be used as a substitute for professional medical advice, clinician care, emergency care, or clinical decision making."
         },
         {
           heading: "Insurance education only",
@@ -37,18 +37,18 @@ export default function TermsPage() {
         {
           heading: "Paid services",
           body: [
-            "Payments, where enabled, are processed through Creem. Applicable taxes may be calculated during checkout depending on your location.",
-            "HealthMatchAI may collect payments for tools such as doctor-ready PDF reports, insurance education checklists, or symptom timeline saving.",
+            "HealthMatchAI offers a Plus subscription at $9.99/month. Payments are processed through Creem. Applicable taxes may be calculated during checkout depending on your location.",
+            "Plus features include unlimited doctor-ready reports, saved health records, symptom history, insurance checklist history, multi-language reports, and priority access to new features.",
             "A payment does not guarantee a medical outcome, appointment availability, insurance coverage, plan eligibility, or clinician relationship.",
-            "Refund and cancellation terms are described in the Refund Policy."
+            "Subscriptions can be cancelled at any time. Access remains until the end of the billing period after cancellation. Refund and cancellation terms are described in the Refund Policy."
           ]
         },
         {
           heading: "Refund Policy",
           body: [
-            "One-time digital reports may be non-refundable once generated or downloaded, except where required by law.",
-            "Subscriptions can be cancelled through the billing flow once live billing is enabled.",
-            "If payment verification fails or access is not delivered, users may contact support."
+            "Subscriptions can be cancelled at any time. Access remains until the end of the billing period after cancellation.",
+            "Refund requests may be reviewed within 7 days of purchase.",
+            "If payment verification fails or access is not delivered, users may contact support@healthmatchai.com."
           ]
         },
         {
