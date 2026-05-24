@@ -13,7 +13,7 @@ export const ENTITLEMENT_STORAGE_KEY = "healthmatchai_entitlement";
 // Legacy type kept for reference only
 export type Entitlement = {
   userId: string;
-  plan: "free" | "one_time_report" | "plus";
+  plan: "free" | "plus";
   status: "pending" | "active" | "cancelled" | "refunded" | "chargeback";
   provider: "creem";
   checkoutSessionId?: string;

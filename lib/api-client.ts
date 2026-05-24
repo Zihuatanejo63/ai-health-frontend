@@ -56,7 +56,7 @@ export async function submitTriage(input: TriageInput): Promise<TriageApiRespons
 
 // ---- Checkout ----
 
-export async function createCheckout(plan: "one_time_report" | "plus_monthly" | "plus_yearly"): Promise<{ checkoutUrl: string }> {
+export async function createCheckout(plan: "plus_monthly"): Promise<{ checkoutUrl: string }> {
   return apiFetch<{ checkoutUrl: string }>("/api/create-checkout-session", {
     method: "POST",
     body: JSON.stringify({ plan }),

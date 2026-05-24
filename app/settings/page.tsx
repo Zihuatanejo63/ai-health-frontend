@@ -202,9 +202,7 @@ export default function SettingsPage() {
             <strong>
               {serverEntitlement?.plan === "plus" && serverEntitlement?.status === "active"
                 ? "Plus"
-                : serverEntitlement?.plan === "one_time_report" && serverEntitlement?.status === "active"
-                  ? "One-time Report"
-                  : t("common.free")}
+                : t("common.free")}
             </strong>
           </SettingsRow>
           <SettingsRow label={t("settings.manageBilling")} onClick={() => router.push("/pricing")} />

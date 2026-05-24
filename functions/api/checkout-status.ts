@@ -13,7 +13,7 @@ export async function onRequest(context: PagesFunctionContext) {
   const { env } = context;
   const configured = Boolean(
     env.CREEM_API_KEY &&
-      env.CREEM_ONE_TIME_REPORT_PRODUCT_ID
+      env.CREEM_PLUS_MONTHLY_PRODUCT_ID
   );
 
   return json({ configured });

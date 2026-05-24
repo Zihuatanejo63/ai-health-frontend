@@ -111,11 +111,11 @@ export default function ResultPage() {
     if (!user || user.isGuest) setLoginPrompt(true);
   }
 
-  async function handleReportCheckout() {
+  async function handlePlusCheckout() {
     setCheckoutError("");
     setCheckoutLoading(true);
     try {
-      await startCheckout("one_time_report");
+      await startCheckout("plus_monthly");
     } catch (error) {
       setCheckoutError(error instanceof Error ? error.message : t("pricing.checkoutFailed"));
       setCheckoutLoading(false);
@@ -434,8 +434,8 @@ export default function ResultPage() {
         <div className="button-pair">
           <button className="btn-secondary" onClick={saveTimeline} type="button">{t("result.saveTimeline")}</button>
           {!isEmergencyTone ? (
-            <button className="btn-primary" disabled={checkoutLoading} onClick={handleReportCheckout} type="button">
-              {checkoutLoading ? t("pricing.openingCheckout") : t("pricing.createReportCreem")}
+            <button className="btn-primary" disabled={checkoutLoading} onClick={handlePlusCheckout} type="button">
+              {checkoutLoading ? t("pricing.openingCheckout") : t("pricing.subscribePlus")}
             </button>
           ) : null}
         </div>

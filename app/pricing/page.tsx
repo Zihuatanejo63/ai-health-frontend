@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { Card, PageHeader, PrimaryButton, SecondaryButton, StatusBadge } from "@/components/app-ui";
 import { PricingCard } from "@/components/pricing-card";
-import { startCheckout, type CheckoutPlan } from "@/lib/checkout";
+import { startCheckout } from "@/lib/checkout";
 import { useI18n } from "@/components/i18n-provider";
 
 const notProvided = [
@@ -24,7 +24,7 @@ const faqs = [
 export default function PricingPage() {
   const { t } = useI18n();
   const [checkoutError, setCheckoutError] = useState("");
-  const [checkoutPlan, setCheckoutPlan] = useState<CheckoutPlan | null>(null);
+  const [checkoutLoading, setCheckoutLoading] = useState(false);
   const [checkoutConfigured, setCheckoutConfigured] = useState(false);
 
   useEffect(() => {
@@ -42,15 +42,15 @@ export default function PricingPage() {
     };
   }, []);
 
-  async function handleCheckout(plan: CheckoutPlan) {
+  async function handleCheckout() {
     setCheckoutError("");
-    setCheckoutPlan(plan);
+    setCheckoutLoading(true);
 
     try {
-      await startCheckout(plan);
+      await startCheckout("plus_monthly");
     } catch (error) {
       setCheckoutError(error instanceof Error ? error.message : t("pricing.checkoutFailed"));
-      setCheckoutPlan(null);
+      setCheckoutLoading(false);
     }
   }
 
@@ -69,34 +69,21 @@ export default function PricingPage() {
       href: "/symptom-check"
     },
     {
-      name: t("pricing.oneTime"),
-      price: "$4.99",
-      audience: t("pricing.reportAudience"),
-      features: [
-        t("pricing.doctorReadySummary"),
-        t("pricing.carePlan"),
-        t("pricing.redFlags"),
-        t("pricing.coverageQuestions"),
-        t("pricing.exportableReport")
-      ],
-      cta: checkoutPlan === "one_time_report" ? t("pricing.openingCheckout") : t("pricing.createReportCreem"),
-      onClick: () => handleCheckout("one_time_report"),
-      disabled: checkoutPlan !== null,
-      featured: true
-    },
-    {
       name: t("pricing.plus"),
-      price: t("pricing.comingSoonPrice"),
+      price: "$9.99/month",
       audience: t("pricing.plusAudience"),
       features: [
+        t("pricing.unlimited"),
         t("pricing.savedRecords"),
-        t("pricing.family"),
-        t("pricing.repeatedReports"),
-        t("pricing.insuranceHistory")
+        t("pricing.symptomHistory"),
+        t("pricing.insuranceHistory"),
+        t("pricing.multiLanguage"),
+        t("pricing.priorityAccess")
       ],
-      cta: t("pricing.comingSoon"),
-      onClick: () => undefined,
-      disabled: true
+      cta: checkoutLoading ? t("pricing.openingCheckout") : t("pricing.subscribePlus"),
+      onClick: handleCheckout,
+      disabled: checkoutLoading,
+      featured: true
     }
   ];
 

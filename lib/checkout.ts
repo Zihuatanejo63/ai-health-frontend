@@ -5,7 +5,7 @@
 
 import { createCheckout } from "./api-client";
 
-export type CheckoutPlan = "one_time_report" | "plus_monthly" | "plus_yearly";
+export type CheckoutPlan = "plus_monthly";
 
 export async function startCheckout(plan: CheckoutPlan): Promise<void> {
   const result = await createCheckout(plan);

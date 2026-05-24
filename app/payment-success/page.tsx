@@ -8,12 +8,6 @@ import type { MeResponse } from "@/lib/auth-client";
 
 type EntitlementState = "checking" | "granted" | "not_granted";
 
-function planLabel(plan: string) {
-  if (plan === "plus") return "Plus";
-  if (plan === "one_time_report") return "One-Time Report";
-  return "";
-}
-
 export default function PaymentSuccessPage() {
   const { t } = useI18n();
   const [plan, setPlan] = useState("");
@@ -63,7 +57,7 @@ export default function PaymentSuccessPage() {
       {entitlementState === "granted" && activePlan ? (
         <Card className="paid-tool-card">
           <StatusBadge tone="primary">{t("payment.creemBadge")}</StatusBadge>
-          <h2>{planLabel(activePlan)} — Active</h2>
+          <h2>Plus — Active</h2>
           <p>{t("payment.planActiveDescription")}</p>
         </Card>
       ) : entitlementState === "checking" ? (
