@@ -39,6 +39,15 @@ const nearbyOptions: NearbyOption[] = [
     mapsQuery: "primary+care+provider+near+me"
   },
   {
+    id: "hospital",
+    titleKey: "care.nearbyHospital",
+    descKey: "care.nearbyHospitalDesc",
+    btnKey: "care.findHospitalNearMe",
+    tone: "danger",
+    icon: "H",
+    mapsQuery: "hospital+near+me"
+  },
+  {
     id: "telehealth",
     titleKey: "care.nearbyTelehealth",
     descKey: "care.nearbyTelehealthDesc",
@@ -46,89 +55,6 @@ const nearbyOptions: NearbyOption[] = [
     tone: "teal",
     icon: "T",
     mapsQuery: "telehealth+providers"
-  }
-];
-
-const beforeYouGo = [
-  "care.before.summarySave",
-  "care.before.medicationsList",
-  "care.before.inNetwork",
-  "care.before.noDelay",
-  "care.before.worsen"
-];
-
-const comparisonColumns = [
-  "care.table.option",
-  "care.table.bestFor",
-  "care.table.urgency",
-  "care.table.timing",
-  "care.table.wait",
-  "care.table.cost",
-  "care.table.insuranceCheck",
-  "care.table.callAhead",
-  "care.table.notUse"
-];
-
-const careOptionRows = [
-  {
-    id: "emergency",
-    titleKey: "care.emergency",
-    bestKey: "care.compare.emergency.best",
-    urgencyKey: "care.urgency.emergency",
-    timingKey: "care.timing.now",
-    waitKey: "care.wait.emergency",
-    costKey: "care.cost.highest",
-    insuranceCheckKey: "care.insuranceCheck.noDelay",
-    callAheadKey: "care.callAhead.emergency",
-    notForKey: "care.compare.emergency.notUse"
-  },
-  {
-    id: "urgent",
-    titleKey: "care.urgent",
-    bestKey: "care.compare.urgent.best",
-    urgencyKey: "care.urgency.urgent",
-    timingKey: "care.timing.today",
-    waitKey: "care.wait.urgent",
-    costKey: "care.cost.mediumHigh",
-    insuranceCheckKey: "care.insuranceCheck.yes",
-    callAheadKey: "care.callAhead.urgent",
-    notForKey: "care.compare.urgent.notUse"
-  },
-  {
-    id: "primary",
-    titleKey: "common.primaryCare",
-    bestKey: "care.compare.primary.best",
-    urgencyKey: "care.urgency.primary",
-    timingKey: "care.timing.scheduled",
-    waitKey: "care.wait.primary",
-    costKey: "care.cost.lowerMedium",
-    insuranceCheckKey: "care.insuranceCheck.yes",
-    callAheadKey: "care.callAhead.primary",
-    notForKey: "care.compare.primary.notUse"
-  },
-  {
-    id: "telehealth",
-    titleKey: "care.telehealth",
-    bestKey: "care.compare.telehealth.best",
-    urgencyKey: "care.urgency.telehealth",
-    timingKey: "care.timing.virtual",
-    waitKey: "care.wait.telehealth",
-    costKey: "care.cost.lowerMedium",
-    insuranceCheckKey: "care.insuranceCheck.yes",
-    callAheadKey: "care.callAhead.telehealth",
-    notForKey: "care.compare.telehealth.notUse"
-  },
-  {
-    id: "self",
-    titleKey: "care.selfCare",
-    bestKey: "care.compare.self.best",
-    urgencyKey: "care.urgency.self",
-    timingKey: "care.timing.monitoring",
-    waitKey: "care.wait.self",
-    costKey: "care.cost.lowest",
-    insuranceCheckKey: "care.insuranceCheck.noVisit",
-    callAheadKey: "care.callAhead.self",
-    notForKey: "care.compare.self.notUse"
   }
 ];
 
@@ -178,15 +104,17 @@ export default function CareOptionsPage() {
         description={t("care.description")}
       />
 
-      {/* Not sure? Start with Symptom Check */}
-      <Card className="notice-card">
-        <IconCircle tone="primary">?</IconCircle>
-        <div>
-          <h2>{t("care.notSureTitle")}</h2>
-          <p>{t("care.notSureText")}</p>
-          <PrimaryButton href="/symptom-check">{t("home.start")}</PrimaryButton>
-        </div>
-      </Card>
+      {/* No result: prompt to start symptom check */}
+      {!check ? (
+        <Card className="notice-card">
+          <IconCircle tone="primary">?</IconCircle>
+          <div>
+            <h2>{t("care.notSureTitle")}</h2>
+            <p>{t("care.notSureText")}</p>
+            <PrimaryButton href="/symptom-check">{t("home.start")}</PrimaryButton>
+          </div>
+        </Card>
+      ) : null}
 
       {/* If result exists, show recommended next step */}
       {check && recommendedCare && !isEmergency ? (
@@ -248,9 +176,10 @@ export default function CareOptionsPage() {
             </article>
           ))}
         </div>
+        <p className="help-text" style={{ marginTop: 16, textAlign: "center" }}>{t("care.licensedProviderComingSoon")}</p>
       </div>
 
-      {/* Emergency warning card (always show, not just for emergency results) */}
+      {/* Emergency warning card */}
       {!isEmergency ? (
         <Card className="notice-card red-flag-card">
           <IconCircle tone="danger">!</IconCircle>
@@ -262,54 +191,7 @@ export default function CareOptionsPage() {
         </Card>
       ) : null}
 
-      {/* Before you go */}
-      <Card className="tool-section">
-        <h2>{t("care.beforeTitle")}</h2>
-        <ul className="tool-check-list">
-          {beforeYouGo.map((item) => (
-            <li key={item}>{t(item)}</li>
-          ))}
-        </ul>
-        <div className="button-pair" style={{ marginTop: 16 }}>
-          <SecondaryButton href="/result">{t("care.createSummary")}</SecondaryButton>
-          <SecondaryButton href="/insurance-guide">{t("insurance.understandCoverage")}</SecondaryButton>
-        </div>
-      </Card>
-
-      {/* Detailed care comparison — collapsed by default */}
-      <Card className="tool-section">
-        <details>
-          <summary>{t("care.detailedComparison")}</summary>
-          <div className="table-scroll care-table-scroll" style={{ marginTop: 16 }}>
-            <table className="tool-table">
-              <thead>
-                <tr>
-                  {comparisonColumns.map((col) => (
-                    <th key={col}>{t(col)}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {careOptionRows.map((row) => (
-                  <tr key={row.id}>
-                    <th scope="row">{t(row.titleKey)}</th>
-                    <td>{t(row.bestKey)}</td>
-                    <td>{t(row.urgencyKey)}</td>
-                    <td>{t(row.timingKey)}</td>
-                    <td>{t(row.waitKey)}</td>
-                    <td>{t(row.costKey)}</td>
-                    <td>{t(row.insuranceCheckKey)}</td>
-                    <td>{t(row.callAheadKey)}</td>
-                    <td>{t(row.notForKey)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </details>
-      </Card>
-
-      <DisclaimerBox text={`${t("safety.medical")} ${t("safety.insurance")}`} />
+      <DisclaimerBox text={t("care.disclaimerV2")} />
     </section>
   );
 }

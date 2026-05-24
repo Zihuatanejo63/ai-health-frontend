@@ -4,7 +4,6 @@ import { useState } from "react";
 import {
   Card,
   IconCircle,
-  InsuranceConceptCard,
   PageHeader,
   PrimaryButton,
   SecondaryButton,
@@ -28,18 +27,6 @@ const coverageScenarios = [
   { key: "maternity", labelKey: "insurance.scenario.maternity" },
   { key: "chronicCare", labelKey: "insurance.scenario.chronicCare" },
   { key: "travelMedical", labelKey: "insurance.scenario.travelMedical" }
-] as const;
-
-const concepts = [
-  ["insurance.copay", "insurance.copayDesc", "warning"],
-  ["insurance.deductible", "insurance.deductibleDesc", "primary"],
-  ["insurance.coinsurance", "insurance.coinsuranceDesc", "teal"],
-  ["insurance.outOfPocket", "insurance.outOfPocketDesc", "purple"],
-  ["insurance.inNetwork", "insurance.inNetworkDesc", "success"],
-  ["insurance.outOfNetwork", "insurance.outOfNetworkDesc", "danger"],
-  ["insurance.priorAuthorization", "insurance.priorAuthorizationDesc", "warning"],
-  ["insurance.eob", "insurance.eobDesc", "primary"],
-  ["insurance.itemizedBill", "insurance.itemizedBillDesc", "teal"]
 ] as const;
 
 export default function InsuranceGuidePage() {
@@ -133,23 +120,26 @@ export default function InsuranceGuidePage() {
         <StatusBadge tone="primary">{t("insurance.step4")}</StatusBadge>
         <h2>{t("insurance.step4Title")}</h2>
         <div className="button-pair" style={{ marginTop: 16 }}>
+          <button className="btn-secondary" disabled type="button">
+            {t("insurance.talkToLicensedPartner")}
+          </button>
           <a className="btn-primary" href="https://www.healthcare.gov" target="_blank" rel="noopener noreferrer">
             {t("insurance.goToMarketplace")}
           </a>
-          <SecondaryButton href="/insurance-guide#questions">
+          <SecondaryButton href="#questions">
             {t("insurance.prepareQuestions")}
           </SecondaryButton>
         </div>
         <p className="help-text" style={{ marginTop: 12 }}>
-          {t("insurance.comingSoonPartner")}
+          {t("insurance.licensedPartnerComingSoon")}
         </p>
       </Card>
 
-      {/* Already insured? — collapsed */}
+      {/* Prepare questions — collapsed */}
       <div id="questions" className="scroll-anchor">
-      <Card className="tool-section">
+        <Card className="tool-section">
         <details>
-          <summary>{t("insurance.alreadyInsured")}</summary>
+          <summary>{t("insurance.prepareQuestions")}</summary>
           <p style={{ marginTop: 8 }}>{t("insurance.alreadyInsuredDesc")}</p>
           <div className="check-list" style={{ marginTop: 8 }}>
             {hasSelection ? selectedScenarios.map((key) => {
@@ -158,23 +148,14 @@ export default function InsuranceGuidePage() {
             }) : <p className="help-text">{t("insurance.selectScenariosFirst")}</p>}
           </div>
         </details>
-      </Card>
+        </Card>
       </div>
 
-      {/* Insurance terms — collapsed */}
+      {/* Insurance terms — collapsed, optional */}
       <Card className="tool-section">
         <details>
-          <summary>{t("insurance.termsCollapsed")}</summary>
-          <div className="concept-grid" style={{ marginTop: 16 }}>
-            {concepts.map(([titleKey, descKey, tone]) => (
-              <InsuranceConceptCard
-                key={titleKey}
-                title={t(titleKey)}
-                description={`${t(descKey)} ${t(`${titleKey}.example`)} ${t("insurance.costDepends")}`}
-                tone={tone}
-              />
-            ))}
-          </div>
+          <summary>{t("insurance.termsOptional")}</summary>
+          <p className="help-text" style={{ marginTop: 8 }}>{t("insurance.termsCollapsed")}</p>
         </details>
       </Card>
 

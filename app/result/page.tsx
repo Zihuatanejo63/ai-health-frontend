@@ -4,30 +4,21 @@ import { useEffect, useState } from "react";
 import { Card, IconCircle, PageHeader, PrimaryButton, SecondaryButton, StatCard, StatusBadge } from "@/components/app-ui";
 import { DisclaimerBox } from "@/components/disclaimer-box";
 import { useI18n } from "@/components/i18n-provider";
-import { IllustrationImage } from "@/components/visual-card";
 import { readSymptomChecks, readSummaries, writeSymptomChecks, writeSummaries, type SavedSymptomCheck } from "@/lib/settings";
 import { readUser } from "@/lib/auth";
 import { careLevelKey, riskLevelKey, symptomItemKey, triageTextKey } from "@/lib/i18n-display";
 import { startCheckout } from "@/lib/checkout";
 
 const SESSION_RESULT_KEY = "ai-health-match-result";
-const coverageQuestionMap: Record<string, string[]> = {
-  "Self-care and monitoring": ["result.coverage.self.1", "result.coverage.self.2"],
-  "Telehealth may be appropriate": ["result.coverage.telehealth.1", "result.coverage.telehealth.2", "result.coverage.telehealth.3"],
-  "Primary Care within 24–72 hours": ["result.coverage.primary.1", "result.coverage.primary.2", "result.coverage.primary.3"],
-  "Urgent Care today": ["result.coverage.urgent.1", "result.coverage.urgent.2", "result.coverage.urgent.3", "result.coverage.urgent.4"],
-  "Emergency care now": ["result.coverage.emergency.1"],
-  "Crisis support now": ["result.coverage.crisis.1"]
-};
 
-function nextCarePathKeys(recommendedCare: string) {
-  if (recommendedCare === "Self-care and monitoring") return ["result.path.self.1", "result.path.self.2", "result.path.self.3"];
-  if (recommendedCare === "Telehealth may be appropriate") return ["result.path.telehealth.1", "result.path.telehealth.2", "result.path.telehealth.3"];
-  if (recommendedCare === "Primary Care within 24–72 hours") return ["result.path.primary.1", "result.path.primary.2", "result.path.primary.3"];
-  if (recommendedCare === "Urgent Care today") return ["result.path.urgent.1", "result.path.urgent.2", "result.path.urgent.3"];
-  if (recommendedCare === "Emergency care now") return ["result.path.emergency.1", "result.path.emergency.2"];
-  if (recommendedCare === "Crisis support now") return ["result.path.crisis.1", "result.path.crisis.2"];
-  return ["result.path.default.1", "result.path.default.2"];
+function nextStepKey(recommendedCare: string) {
+  if (recommendedCare === "Self-care and monitoring") return "result.nextStep.self";
+  if (recommendedCare === "Telehealth may be appropriate") return "result.nextStep.telehealth";
+  if (recommendedCare === "Primary Care within 24–72 hours") return "result.nextStep.primary";
+  if (recommendedCare === "Urgent Care today") return "result.nextStep.urgent";
+  if (recommendedCare === "Emergency care now") return "result.nextStep.emergency";
+  if (recommendedCare === "Crisis support now") return "result.nextStep.crisis";
+  return "result.nextStep.self";
 }
 
 export default function ResultPage() {
@@ -77,6 +68,14 @@ export default function ResultPage() {
     return translated === key ? value : translated;
   }
 
+  function displayHealthValue(key: string, value: string) {
+    if (!value) return t("common.notSelected");
+    if (key === "age" || key === "medications") return value;
+    const labelKey = `health.${key}.${value}`;
+    const translated = t(labelKey);
+    return translated === labelKey ? value : translated;
+  }
+
   function saveTimeline() {
     if (!check) return;
     const existing = readSymptomChecks();
@@ -123,6 +122,72 @@ export default function ResultPage() {
     }
   }
 
+  function copyReportText() {
+    if (!check) return;
+    const lines: string[] = [];
+    const hb = check.healthBackground || {};
+    const result = check.result as Record<string, unknown>;
+    const summary = result.doctorReadySummary as Record<string, unknown> | undefined;
+    const questionsToAsk: string[] = (result.questionsToAskClinician as string[]) ?? (summary?.questionsToAsk as string[]) ?? [];
+    const input = check.input as Record<string, unknown> | undefined;
+    const funcImpact: string[] = Array.isArray(input?.functionImpact)
+      ? input.functionImpact as string[]
+      : typeof input?.functionImpact === "object" && input?.functionImpact
+        ? Object.entries(input.functionImpact as Record<string, boolean>).filter(([, v]) => v).map(([k]) => k)
+        : [];
+
+    lines.push(`=== ${t("result.doctorReadyMedicalReport")} ===`);
+    lines.push(`ID: ${check.id}`);
+    lines.push("");
+    lines.push(`--- ${t("result.report.patientBasics")} ---`);
+    if (hb.age) lines.push(`${t("health.age")}: ${hb.age}`);
+    if (hb.sex) lines.push(`${t("health.sex")}: ${displayHealthValue("sex", String(hb.sex))}`);
+    if (hb.pregnancyStatus) lines.push(`${t("health.pregnancyStatus")}: ${displayHealthValue("pregnancy", String(hb.pregnancyStatus))}`);
+    if (hb.countryRegion) lines.push(`${t("health.countryRegion")}: ${hb.countryRegion}`);
+    if (hb.insuranceStatus) lines.push(`${t("health.insuranceStatus")}: ${displayHealthValue("insuranceStatus", String(hb.insuranceStatus))}`);
+    lines.push("");
+    lines.push(`--- ${t("result.report.mainConcern")} ---`);
+    lines.push(t(symptomItemKey(check.primarySymptom)));
+    lines.push("");
+    lines.push(`--- ${t("result.report.associatedSymptoms")} ---`);
+    const otherSymptoms = check.symptoms.filter((s) => s !== check.primarySymptom);
+    lines.push(otherSymptoms.length ? otherSymptoms.map((s) => t(symptomItemKey(s))).join(", ") : t("common.none"));
+    lines.push("");
+    lines.push(`--- ${t("result.report.severityImpact")} ---`);
+    lines.push(`${t("symptom.severity")}: ${displaySeverity(check.severity)}`);
+    lines.push(`${t("symptom.painScore")}: ${check.input ? (check.input as Record<string, unknown>).painScore ?? summary?.painScore ?? "—" : "—"}`);
+    lines.push(`${t("symptom.trend")}: ${displayTrend(check.trend)}`);
+    if (funcImpact.length) lines.push(`${t("symptom.functionImpact")}: ${funcImpact.map((k) => t(`symptom.impact.${k}`)).join(", ")}`);
+    lines.push("");
+    lines.push(`--- ${t("result.report.redFlagsChecked")} ---`);
+    lines.push(check.redFlags.length ? check.redFlags.map((r) => displayText(r)).join(", ") : t("common.none"));
+    lines.push("");
+    lines.push(`--- ${t("result.report.healthBackground")} ---`);
+    if (hb.chronicConditions) lines.push(`${t("health.chronicConditions")}: ${String(hb.chronicConditions).split(", ").filter(Boolean).map((c: string) => t(`health.chronic.${c}`)).join(", ")}`);
+    if (hb.allergies) lines.push(`${t("health.allergies")}: ${String(hb.allergies).split(", ").filter(Boolean).map((a: string) => t(`health.allergy.${a}`)).join(", ")}`);
+    if (hb.medications) lines.push(`${t("health.medications")}: ${hb.medications}`);
+    lines.push("");
+    lines.push(`--- ${t("result.report.triageResult")} ---`);
+    lines.push(`${t("common.riskLevel")}: ${t(riskLevelKey(check.result.riskLevel))}`);
+    lines.push(`${t("home.recommendedCare")}: ${t(careLevelKey(check.result.recommendedCare))}`);
+    const causes = result.possibleCauses as string[] | undefined;
+    if (causes?.length) lines.push(`${t("result.report.posssibleCauses")}: ${causes.map((c) => displayText(c)).join(", ")}`);
+    lines.push("");
+    lines.push(`--- ${t("result.report.aiReview")} ---`);
+    const aiStatus = (result.aiReviewStatus as string) || (result.aiGenerated ? "generated" : "unavailable");
+    lines.push(aiStatus === "generated" ? t("result.aiSummaryGenerated") : aiStatus === "fallback" ? t("result.aiSummaryFallback") : t("result.aiSummaryUnavailable"));
+    lines.push("");
+    lines.push(`--- ${t("result.report.questionsForClinician")} ---`);
+    questionsToAsk.forEach((q, i) => { lines.push(`${i + 1}. ${q}`); });
+    if (!questionsToAsk.length) lines.push(t("common.none"));
+    lines.push("");
+    lines.push(`--- ${t("result.report.coverageNote")} ---`);
+    lines.push(t("result.checkCoverageProtectionDesc"));
+
+    navigator.clipboard.writeText(lines.join("\n")).catch(console.error);
+    alert(t("result.report.copyReport"));
+  }
+
   if (!check) {
     return (
       <section className="app-page result-page">
@@ -133,7 +198,7 @@ export default function ResultPage() {
           <p>{t("history.emptyText")}</p>
           <PrimaryButton href="/symptom-check">{t("home.start")}</PrimaryButton>
         </Card>
-        <DisclaimerBox text={`${t("safety.medical")} ${t("safety.insurance")}`} />
+        <DisclaimerBox text={t("care.disclaimerV2")} />
       </section>
     );
   }
@@ -141,26 +206,31 @@ export default function ResultPage() {
   const result = check.result as Record<string, unknown> & SavedSymptomCheck["result"];
   const reasons: string[] = (result.reasons as string[]) ?? (result.why ? [result.why as string] : []);
   const redFlagsFound: string[] = (result.redFlagsFound as string[]) ?? check.redFlags ?? [];
-  const carePlan = result.carePlan;
   const summary = result.doctorReadySummary;
+  const input = check.input as Record<string, unknown> | undefined;
 
-  // Backend returns questionsToAskClinician as string[], local returns nested object
   const backendQuestions = result.questionsToAskClinician as string[] | undefined;
   const questionsToAsk: string[] = backendQuestions ?? (summary?.questionsToAsk as string[]) ?? [];
 
-  // Backend returns coverageQuestions as string[], local uses coverageQuestionMap
-  const backendCoverage = result.coverageQuestions as string[] | undefined;
-  const coverageQuestions: string[] = backendCoverage ?? (coverageQuestionMap[result.recommendedCare] ?? coverageQuestionMap["Primary Care within 24–72 hours"]);
-
   const isEmergencyTone = result.riskLevel === "Emergency" || result.riskLevel === "Crisis";
-  const nextPathKeys = nextCarePathKeys(result.recommendedCare);
+
   const selectedSymptoms: string[] = (summary?.selectedSymptoms as string[]) ?? check.symptoms;
   const mainSymptom: string = (summary?.primarySymptom as string) ?? check.primarySymptom;
   const otherSymptoms = selectedSymptoms.filter((item) => item !== mainSymptom);
 
-  // AI-generated content from backend
   const plainLanguageExplanation = result.plainLanguageExplanation as string | undefined;
   const aiReviewStatus = (result.aiReviewStatus as string) || (result.aiGenerated ? "generated" : "unavailable");
+
+  // Parse functionImpact from input (could be Record<string, boolean> or string[])
+  const rawImpact = input?.functionImpact;
+  const functionImpact: string[] = Array.isArray(rawImpact)
+    ? rawImpact as string[]
+    : typeof rawImpact === "object" && rawImpact
+      ? Object.entries(rawImpact as Record<string, boolean>).filter(([, v]) => v).map(([k]) => k)
+      : [];
+
+  const hb = check.healthBackground || {};
+  const causes = result.possibleCauses as string[] | undefined;
 
   return (
     <section className="app-page result-page">
@@ -216,88 +286,25 @@ export default function ResultPage() {
         </Card>
       ) : null}
 
+      {/* Your next step */}
       <Card className={isEmergencyTone ? "result-safety-card urgent" : "result-safety-card"}>
         <div className="card-title-row">
-          <div>
-            <h2>{t("result.whatToDoNow")}</h2>
-            <p>{t(careLevelKey(result.recommendedCare))}</p>
-          </div>
+          <h2>{t("result.yourNextStep")}</h2>
           <StatusBadge tone={isEmergencyTone ? "danger" : result.riskLevel === "High" ? "warning" : result.riskLevel === "Low" ? "success" : "primary"}>
-            {t("result.recommendedNextStep")}
+            {t(careLevelKey(result.recommendedCare))}
           </StatusBadge>
         </div>
-        <div className="check-list">
-          {nextPathKeys.map((item) => <span key={item}>• {t(item)}</span>)}
-        </div>
+        <p style={{ marginBottom: 16 }}>{t(nextStepKey(result.recommendedCare))}</p>
         {isEmergencyTone ? (
+          <PrimaryButton href="/emergency">{t("result.seekHelpNow")}</PrimaryButton>
+        ) : (
           <div className="button-pair">
-            <PrimaryButton href={result.riskLevel === "Crisis" ? "/emergency" : "/emergency"}>{t("result.seekHelpNow")}</PrimaryButton>
+            <PrimaryButton href="/care-options">{t("result.findCareOptionsBtn")}</PrimaryButton>
+            <PrimaryButton href="#doctor-report">{t("result.createDoctorReadyReport")}</PrimaryButton>
+            <SecondaryButton href="/insurance-guide">{t("result.checkCoverageProtectionBtn")}</SecondaryButton>
           </div>
-        ) : null}
+        )}
       </Card>
-
-      {carePlan ? (
-        <Card className={isEmergencyTone ? "care-plan-card urgent" : "care-plan-card"}>
-          <div className="card-title-row">
-            <div>
-              <h2>{t("result.carePlan")}</h2>
-              <p>{t(carePlan.summaryKey)}</p>
-            </div>
-            <StatusBadge tone={isEmergencyTone ? "danger" : result.riskLevel === "High" ? "warning" : result.riskLevel === "Low" ? "success" : "primary"}>
-              {t(carePlan.titleKey)}
-            </StatusBadge>
-          </div>
-
-          <div className="care-plan-grid">
-            <div className="care-plan-section">
-              <h3>{t("carePlan.actionsTitle")}</h3>
-              <div className="check-list">
-                {carePlan.actionKeys.map((item) => <span key={item}>• {t(item)}</span>)}
-              </div>
-            </div>
-            <div className="care-plan-section">
-              <h3>{t("carePlan.avoidTitle")}</h3>
-              <div className="check-list">
-                {carePlan.avoidKeys.map((item) => <span key={item}>• {t(item)}</span>)}
-              </div>
-            </div>
-            <div className="care-plan-section">
-              <h3>{t("carePlan.seekCareTitle")}</h3>
-              <div className="check-list">
-                {carePlan.seekCareNowKeys.map((item) => <span key={item}>• {t(item)}</span>)}
-              </div>
-            </div>
-            <div className="care-plan-section">
-              <h3>{t("carePlan.tipsTitle")}</h3>
-              <div className="check-list">
-                {carePlan.categorySpecificTipKeys.map((item) => <span key={item}>• {t(item)}</span>)}
-              </div>
-            </div>
-          </div>
-        </Card>
-      ) : null}
-
-      {/* Action cards: Find care + Coverage protection (hidden for emergency/crisis) */}
-      {!isEmergencyTone ? (
-        <div className="result-action-grid">
-          <Card className="action-card">
-            <IconCircle tone="primary">♡</IconCircle>
-            <div>
-              <h2>{t("result.findCareOptions")}</h2>
-              <p>{t("result.findCareOptionsDesc")}</p>
-              <PrimaryButton href="/care-options">{t("result.findCareOptionsBtn")}</PrimaryButton>
-            </div>
-          </Card>
-          <Card className="action-card">
-            <IconCircle tone="teal">♢</IconCircle>
-            <div>
-              <h2>{t("result.checkCoverageProtection")}</h2>
-              <p>{t("result.checkCoverageProtectionDesc")}</p>
-              <SecondaryButton href="/insurance-guide">{t("result.checkCoverageProtectionBtn")}</SecondaryButton>
-            </div>
-          </Card>
-        </div>
-      ) : null}
 
       <Card>
         <h2>{t("result.whatToWatch")}</h2>
@@ -316,39 +323,116 @@ export default function ResultPage() {
         </Card>
       ) : null}
 
-      <Card className="doctor-summary-card">
-            <div className="doctor-summary-content">
-              <div className="card-title-row">
-                <h2>{t("home.doctorSummary")}</h2>
-                <IconCircle tone="teal">✓</IconCircle>
-              </div>
-              <div className="summary-mini-grid">
-                <span>{t("result.mainSymptom")} <strong>{mainSymptom ? t(symptomItemKey(mainSymptom)) : t("common.notSelected")}</strong></span>
-                <span>{t("result.otherSymptoms")} <strong>{otherSymptoms.length ? otherSymptoms.map((item) => t(symptomItemKey(item))).join(", ") : t("common.none")}</strong></span>
-                <span>{t("result.symptoms")} <strong>{selectedSymptoms.length}</strong></span>
-                <span>{t("result.duration")} <strong>{displayDuration(summary?.duration ?? check.duration)}</strong></span>
-                <span>{t("symptom.trend")} <strong>{displayTrend(summary?.trend)}</strong></span>
-                <span>{t("symptom.severity")} <strong>{displaySeverity(summary?.severity ?? check.severity)}</strong></span>
-                <span>{t("symptom.painScore")} <strong>{summary?.painScore ?? "—"}</strong></span>
-                <span>{t("common.riskLevel")} <strong>{t(riskLevelKey(result.riskLevel))}</strong></span>
-              </div>
+      {/* Doctor-ready Medical Report */}
+      <div id="doctor-report" className="scroll-anchor">
+        <Card className="doctor-summary-card">
+          <div className="doctor-summary-content">
+            <div className="card-title-row">
+              <h2>{t("result.doctorReadyMedicalReport")}</h2>
+              <IconCircle tone="teal">✓</IconCircle>
             </div>
-            <IllustrationImage variant="compact" src="/images/illustration-health-summary-doctor.png" alt="Doctor-ready health summary illustration" />
-      </Card>
 
-      <Card>
-            <h2>{t("result.coverageQuestionsForPath")}</h2>
-            <div className="check-list">
-              {coverageQuestions.map((item) => <span key={item}>□ {t(item)}</span>)}
+            {/* 1. Patient basics */}
+            <section style={{ marginTop: 16 }}>
+              <h3>{t("result.report.patientBasics")}</h3>
+              <div className="summary-mini-grid">
+                {hb.age ? <span>{t("health.age")} <strong>{String(hb.age)}</strong></span> : null}
+                {hb.sex ? <span>{t("health.sex")} <strong>{displayHealthValue("sex", String(hb.sex))}</strong></span> : null}
+                {hb.pregnancyStatus ? <span>{t("health.pregnancyStatus")} <strong>{displayHealthValue("pregnancy", String(hb.pregnancyStatus))}</strong></span> : null}
+                {hb.countryRegion ? <span>{t("health.countryRegion")} <strong>{String(hb.countryRegion)}</strong></span> : null}
+                {hb.insuranceStatus ? <span>{t("health.insuranceStatus")} <strong>{displayHealthValue("insuranceStatus", String(hb.insuranceStatus))}</strong></span> : null}
+              </div>
+            </section>
+
+            {/* 2. Main concern */}
+            <section style={{ marginTop: 16 }}>
+              <h3>{t("result.report.mainConcern")}</h3>
+              <p><strong>{mainSymptom ? t(symptomItemKey(mainSymptom)) : t("common.notSelected")}</strong></p>
+            </section>
+
+            {/* 3. Associated symptoms */}
+            <section style={{ marginTop: 16 }}>
+              <h3>{t("result.report.associatedSymptoms")}</h3>
+              <p>{otherSymptoms.length ? otherSymptoms.map((s) => t(symptomItemKey(s))).join(", ") : t("common.none")}</p>
+            </section>
+
+            {/* 4. Severity and function impact */}
+            <section style={{ marginTop: 16 }}>
+              <h3>{t("result.report.severityImpact")}</h3>
+              <div className="summary-mini-grid">
+                <span>{t("symptom.severity")} <strong>{displaySeverity(summary?.severity ?? check.severity)}</strong></span>
+                <span>{t("symptom.painScore")} <strong>{typeof input?.painScore === "number" ? input.painScore : (summary?.painScore as number) ?? "—"}</strong></span>
+                <span>{t("symptom.trend")} <strong>{displayTrend(summary?.trend ?? check.trend)}</strong></span>
+                {functionImpact.length ? <span>{t("symptom.functionImpact")} <strong>{functionImpact.map((k) => t(`symptom.impact.${k}`)).join(", ")}</strong></span> : null}
+              </div>
+            </section>
+
+            {/* 5. Red flags checked */}
+            <section style={{ marginTop: 16 }}>
+              <h3>{t("result.report.redFlagsChecked")}</h3>
+              <p>{check.redFlags.length ? check.redFlags.map((r) => displayText(r)).join(", ") : t("common.none")}</p>
+            </section>
+
+            {/* 6. Health background */}
+            <section style={{ marginTop: 16 }}>
+              <h3>{t("result.report.healthBackground")}</h3>
+              <div className="summary-mini-grid">
+                {hb.chronicConditions ? <span>{t("health.chronicConditions")} <strong>{String(hb.chronicConditions).split(", ").filter(Boolean).map((c: string) => t(`health.chronic.${c}`)).join(", ")}</strong></span> : null}
+                {hb.allergies ? <span>{t("health.allergies")} <strong>{String(hb.allergies).split(", ").filter(Boolean).map((a: string) => t(`health.allergy.${a}`)).join(", ")}</strong></span> : null}
+                {hb.medications ? <span>{t("health.medications")} <strong>{String(hb.medications)}</strong></span> : null}
+                {!hb.chronicConditions && !hb.allergies && !hb.medications ? <span>{t("common.none")}</span> : null}
+              </div>
+            </section>
+
+            {/* 7. Triage result */}
+            <section style={{ marginTop: 16 }}>
+              <h3>{t("result.report.triageResult")}</h3>
+              <div className="summary-mini-grid">
+                <span>{t("common.riskLevel")} <strong>{t(riskLevelKey(result.riskLevel))}</strong></span>
+                <span>{t("home.recommendedCare")} <strong>{t(careLevelKey(result.recommendedCare))}</strong></span>
+                {causes?.length ? <span>{t("result.report.posssibleCauses")} <strong>{causes.map((c) => displayText(c)).join(", ")}</strong></span> : null}
+              </div>
+            </section>
+
+            {/* 8. AI review status */}
+            <section style={{ marginTop: 16 }}>
+              <h3>{t("result.report.aiReview")}</h3>
+              <p>
+                {aiReviewStatus === "generated" ? t("result.aiSummaryGenerated") : aiReviewStatus === "fallback" ? t("result.aiSummaryFallback") : t("result.aiSummaryUnavailable")}
+              </p>
+            </section>
+
+            {/* 9. Questions for clinician */}
+            <section style={{ marginTop: 16 }}>
+              <h3>{t("result.report.questionsForClinician")}</h3>
+              {questionsToAsk.length ? (
+                <div className="check-list">
+                  {questionsToAsk.map((q, i) => <span key={i}>{i + 1}. {q}</span>)}
+                </div>
+              ) : <p>{t("common.none")}</p>}
+            </section>
+
+            {/* 10. Coverage note */}
+            <section style={{ marginTop: 16 }}>
+              <h3>{t("result.report.coverageNote")}</h3>
+              <p className="help-text">{t("result.checkCoverageProtectionDesc")}</p>
+            </section>
+
+            {/* Report actions: Copy / Download / Save */}
+            <div className="button-pair" style={{ marginTop: 20 }}>
+              <button className="btn-secondary" onClick={copyReportText} type="button">{t("result.report.copyReport")}</button>
+              <button className="btn-secondary" disabled type="button">{t("result.report.downloadPdf")}</button>
+              <button className="btn-primary" onClick={saveSummary} type="button">{t("result.report.saveToRecords")}</button>
             </div>
-            <SecondaryButton href="/insurance-guide">{t("result.coverageOptions")}</SecondaryButton>
-      </Card>
+            {saved ? <StatusBadge tone="success">{t("result.saved")}</StatusBadge> : null}
+          </div>
+        </Card>
+      </div>
 
       <Card className="tool-section">
         <h2>{t("result.exportSaveCreate")}</h2>
         <div className="button-pair">
           <button className="btn-secondary" onClick={saveTimeline} type="button">{t("result.saveTimeline")}</button>
-          <button className="btn-secondary" onClick={saveSummary} type="button">{t("result.saveSummary")}</button>
           {!isEmergencyTone ? (
             <button className="btn-primary" disabled={checkoutLoading} onClick={handleReportCheckout} type="button">
               {checkoutLoading ? t("pricing.openingCheckout") : t("pricing.createReportCreem")}
@@ -357,11 +441,10 @@ export default function ResultPage() {
         </div>
         {checkoutError ? <p className="inline-error">{checkoutError}</p> : null}
         {timelineSaved ? <StatusBadge tone="success">{t("result.timelineSaved")}</StatusBadge> : null}
-        {saved ? <StatusBadge tone="success">{t("result.saved")}</StatusBadge> : null}
         {loginPrompt ? <p className="login-save-prompt">{t("result.localGuestSavePrompt")}</p> : null}
       </Card>
 
-      <DisclaimerBox text={`${t("safety.medical")} ${t("safety.insurance")}`} />
+      <DisclaimerBox text={t("care.disclaimerV2")} />
     </section>
   );
 }
