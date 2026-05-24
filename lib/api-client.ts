@@ -6,7 +6,10 @@
 import type { TriageApiResponse } from "./types";
 
 const API_BASE =
-  process.env.NEXT_PUBLIC_API_BASE_URL?.replace(/\/$/, "") ?? "";
+  process.env.NEXT_PUBLIC_API_BASE_URL?.replace(/\/$/, "") ||
+  (typeof window !== "undefined" && window.location.hostname === "healthmatchai.com"
+    ? "https://api.healthmatchai.com"
+    : "");
 
 async function apiFetch<T>(path: string, options: RequestInit = {}): Promise<T> {
   const res = await fetch(`${API_BASE}${path}`, {
@@ -21,8 +24,26 @@ async function apiFetch<T>(path: string, options: RequestInit = {}): Promise<T> 
   if (!res.ok) {
     let message = "Request failed.";
     try {
-      const data = (await res.json()) as { error?: { message?: string }; message?: string };
+      const data = (await res.json()) as {
+        error?: { code?: string; message?: string };
+        code?: string;
+        message?: string;
+        creemStatus?: number;
+        creemResponse?: string;
+      };
+      // Use the most specific message available
       message = data.error?.message || data.message || message;
+      // Append Creem context for debugging
+      if (data.creemStatus && data.creemResponse) {
+        const lower = data.creemResponse.toLowerCase();
+        if (lower.includes("account") || lower.includes("store") || lower.includes("merchant") ||
+            lower.includes("onboarding") || lower.includes("verification") || lower.includes("review") ||
+            lower.includes("not approved")) {
+          message = "Creem account review is not completed yet.";
+        } else if (data.creemStatus === 401 || data.creemStatus === 403) {
+          message = "Creem API key or account review is not ready.";
+        }
+      }
     } catch { /* use default */ }
     throw new Error(message);
   }
