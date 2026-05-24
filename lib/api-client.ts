@@ -21,8 +21,8 @@ async function apiFetch<T>(path: string, options: RequestInit = {}): Promise<T> 
   if (!res.ok) {
     let message = "Request failed.";
     try {
-      const data = (await res.json()) as { error?: { message?: string } };
-      message = data.error?.message || message;
+      const data = (await res.json()) as { error?: { message?: string }; message?: string };
+      message = data.error?.message || data.message || message;
     } catch { /* use default */ }
     throw new Error(message);
   }
