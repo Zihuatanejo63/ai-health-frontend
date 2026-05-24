@@ -7,7 +7,8 @@ export const SUMMARIES_STORAGE_KEY = "healthmatchai_summaries";
 
 export const ALL_LANGUAGES = [
   { code: "en", name: "English" },
-  { code: "zh", name: "中文" },
+  { code: "zh", name: "简体中文" },
+  { code: "zh-TW", name: "繁體中文" },
   { code: "es", name: "Español" },
   { code: "fr", name: "Français" },
   { code: "de", name: "Deutsch" },
@@ -16,16 +17,13 @@ export const ALL_LANGUAGES = [
   { code: "it", name: "Italiano" },
   { code: "pt", name: "Português" },
   { code: "nl", name: "Nederlands" },
-  { code: "sv", name: "Svenska" },
-  { code: "da", name: "Dansk" },
-  { code: "no", name: "Norsk" },
-  { code: "fi", name: "Suomi" }
+  { code: "sv", name: "Svenska" }
 ] as const;
 
 export type LanguageCode = (typeof ALL_LANGUAGES)[number]["code"];
 
-// Only show languages with >95% translation coverage in the language selector
-export const LANGUAGES = ALL_LANGUAGES.filter((l) => l.code === "en" || l.code === "zh");
+// Show all 12 languages in the language selector
+export const LANGUAGES = ALL_LANGUAGES;
 
 export type HealthMatchSettings = {
   language: LanguageCode;
@@ -261,8 +259,25 @@ function normalizeLegacyDefaults(settings: HealthMatchSettings): HealthMatchSett
   };
 }
 
+function detectBrowserLanguage(): LanguageCode | null {
+  if (typeof window === "undefined") return null;
+  const browserLang = navigator.language || (navigator as { userLanguage?: string }).userLanguage || "";
+  const code = browserLang.split("-")[0].toLowerCase();
+  const match = ALL_LANGUAGES.find((l) => l.code === code || l.code === browserLang.toLowerCase());
+  return match?.code ?? null;
+}
+
 export function readSettings(): HealthMatchSettings {
   const raw = readJson<Partial<HealthMatchSettings>>(SETTINGS_STORAGE_KEY, defaultSettings);
+
+  // Auto-detect browser language on first visit (no stored preference)
+  if (!raw.language || raw.language === defaultSettings.language) {
+    const detected = detectBrowserLanguage();
+    if (detected) {
+      raw.language = detected;
+    }
+  }
+
   const separateHealthProfile = readJson<Partial<HealthMatchSettings["healthProfile"]>>(HEALTH_PROFILE_STORAGE_KEY, {});
   const separateInsuranceProfile = readJson<Partial<HealthMatchSettings["insuranceProfile"]>>(INSURANCE_PROFILE_STORAGE_KEY, {});
   return mergeSettings({

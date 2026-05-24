@@ -1,6 +1,6 @@
 "use client";
 
-import { LANGUAGES, isLanguageCode } from "@/lib/language";
+import { LANGUAGES, isLanguageCode } from "@/lib/settings";
 import { useLanguage } from "@/components/language-provider";
 
 export function LanguageSelect() {

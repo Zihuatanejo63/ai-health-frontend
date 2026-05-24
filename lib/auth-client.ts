@@ -80,6 +80,55 @@ export async function logout(): Promise<void> {
   clearCachedMe();
 }
 
+export async function registerWithPassword(
+  email: string,
+  password: string,
+  name?: string
+): Promise<{ ok: boolean; message: string; user?: ServerUser }> {
+  try {
+    const res = await fetch(`${API_BASE}/api/auth/register`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password, name }),
+      credentials: "include",
+    });
+    const data = (await res.json().catch(() => ({}))) as {
+      ok?: boolean; message?: string; user?: ServerUser; error?: { message?: string };
+    };
+    if (res.ok && data.ok) {
+      clearCachedMe();
+      return { ok: true, message: data.message || "Account created.", user: data.user };
+    }
+    return { ok: false, message: data.error?.message || data.message || "Registration failed. Please try again." };
+  } catch {
+    return { ok: false, message: "Registration failed. Please check your connection and try again." };
+  }
+}
+
+export async function loginWithPassword(
+  email: string,
+  password: string
+): Promise<{ ok: boolean; message: string; user?: ServerUser }> {
+  try {
+    const res = await fetch(`${API_BASE}/api/auth/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+      credentials: "include",
+    });
+    const data = (await res.json().catch(() => ({}))) as {
+      ok?: boolean; message?: string; user?: ServerUser; error?: { message?: string };
+    };
+    if (res.ok && data.ok) {
+      clearCachedMe();
+      return { ok: true, message: data.message || "Logged in.", user: data.user };
+    }
+    return { ok: false, message: data.error?.message || data.message || "Login failed. Please try again." };
+  } catch {
+    return { ok: false, message: "Login failed. Please check your connection and try again." };
+  }
+}
+
 export function isLoggedIn(me?: MeResponse | null): boolean {
   return Boolean((me ?? cachedMe)?.user);
 }

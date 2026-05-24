@@ -10,44 +10,83 @@ import {
   StatusBadge
 } from "@/components/app-ui";
 import { useI18n } from "@/components/i18n-provider";
+import { insuranceGuides, countryList, type InsuranceGuide } from "@/lib/insurance-guides";
 
-const countries = [
-  "United States", "Canada", "United Kingdom", "Australia",
-  "Japan", "European Union", "China", "Other"
-] as const;
+function GuideCard({ guide }: { guide: InsuranceGuide }) {
+  const { t } = useI18n();
 
-const coverageScenarios = [
-  { key: "emergency", labelKey: "insurance.scenario.emergency" },
-  { key: "hospitalization", labelKey: "insurance.scenario.hospitalization" },
-  { key: "doctorVisits", labelKey: "insurance.scenario.doctorVisits" },
-  { key: "urgentCare", labelKey: "insurance.scenario.urgentCare" },
-  { key: "prescriptions", labelKey: "insurance.scenario.prescriptions" },
-  { key: "labImaging", labelKey: "insurance.scenario.labImaging" },
-  { key: "mentalHealth", labelKey: "insurance.scenario.mentalHealth" },
-  { key: "maternity", labelKey: "insurance.scenario.maternity" },
-  { key: "chronicCare", labelKey: "insurance.scenario.chronicCare" },
-  { key: "travelMedical", labelKey: "insurance.scenario.travelMedical" }
-] as const;
+  return (
+    <Card className="tool-section">
+      <StatusBadge tone="primary">{guide.country}</StatusBadge>
+      <h2 style={{ marginTop: 8 }}>{guide.publicSystem}</h2>
+
+      {/* Who it helps */}
+      <section style={{ marginTop: 16 }}>
+        <h3>{t("insurance.guide.whoItHelps")}</h3>
+        <div className="check-list">
+          {guide.whoItHelps.map((item) => <span key={item}>• {item}</span>)}
+        </div>
+      </section>
+
+      {/* Steps */}
+      <section style={{ marginTop: 16 }}>
+        <h3>{t("insurance.guide.steps")}</h3>
+        <div className="check-list">
+          {guide.steps.map((step, i) => <span key={i}>{i + 1}. {step}</span>)}
+        </div>
+      </section>
+
+      {/* Official links */}
+      <section style={{ marginTop: 16 }}>
+        <h3>{t("insurance.guide.officialLinks")}</h3>
+        <div className="button-pair" style={{ marginTop: 8 }}>
+          {guide.officialLinks.map((link) => (
+            <a
+              className="btn-secondary"
+              href={link.url}
+              key={link.url}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              {link.label}
+            </a>
+          ))}
+        </div>
+      </section>
+
+      {/* Emergency */}
+      <section style={{ marginTop: 16 }}>
+        <h3>{t("insurance.guide.emergency")}</h3>
+        <p className="help-text">{guide.emergency}</p>
+      </section>
+
+      {/* How HealthMatchAI helps */}
+      <section style={{ marginTop: 16 }}>
+        <h3>{t("insurance.guide.howWeHelpTitle")}</h3>
+        <p>{guide.howWeHelp}</p>
+        <div className="button-pair" style={{ marginTop: 8 }}>
+          <PrimaryButton href="/symptom-check">{t("home.start")}</PrimaryButton>
+          <SecondaryButton href="/result">{t("insurance.guide.viewReport")}</SecondaryButton>
+        </div>
+      </section>
+
+      <p className="help-text" style={{ marginTop: 12 }}>{guide.disclaimer}</p>
+    </Card>
+  );
+}
 
 export default function InsuranceGuidePage() {
   const { t } = useI18n();
-  const [country, setCountry] = useState("");
-  const [selectedScenarios, setSelectedScenarios] = useState<string[]>([]);
+  const [selectedCountry, setSelectedCountry] = useState("");
 
-  function toggleScenario(key: string) {
-    setSelectedScenarios((prev) =>
-      prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key]
-    );
-  }
-
-  const hasSelection = selectedScenarios.length > 0;
+  const guide = selectedCountry ? insuranceGuides[selectedCountry] : null;
 
   return (
     <section className="app-page">
       <PageHeader
         eyebrow={t("insurance.coverageEyebrow")}
-        title={t("insurance.title")}
-        description={t("insurance.description")}
+        title={t("insurance.guide.title")}
+        description={t("insurance.guide.description")}
       />
 
       {/* Compliance disclaimer */}
@@ -59,105 +98,41 @@ export default function InsuranceGuidePage() {
         </div>
       </Card>
 
-      {/* Step 1: Country / Region */}
-      <Card className="tool-section">
-        <StatusBadge tone="primary">{t("insurance.step1")}</StatusBadge>
-        <h2>{t("insurance.step1CountryTitle")}</h2>
-        <div className="tag-grid concern-grid" style={{ marginTop: 12 }}>
-          {countries.map((c) => (
-            <button
-              className={`choice-pill ${country === c ? "selected" : ""}`}
-              key={c}
-              onClick={() => setCountry(c)}
-              type="button"
-            >
-              {c}
-            </button>
-          ))}
-        </div>
-      </Card>
-
-      {/* Step 2: What do you want coverage to protect? */}
-      <Card className="tool-section">
-        <StatusBadge tone="teal">{t("insurance.step2")}</StatusBadge>
-        <h2>{t("insurance.step2Title")}</h2>
-        <p className="help-text">{t("insurance.step2Help")}</p>
-        <div className="tag-grid concern-grid" style={{ marginTop: 12 }}>
-          {coverageScenarios.map((scenario) => (
-            <button
-              className={`choice-pill ${selectedScenarios.includes(scenario.key) ? "selected" : ""}`}
-              key={scenario.key}
-              onClick={() => toggleScenario(scenario.key)}
-              type="button"
-            >
-              {t(scenario.labelKey)}
-            </button>
-          ))}
-        </div>
-      </Card>
-
-      {/* Step 3: Coverage needs summary */}
-      <Card className="tool-section">
-        <StatusBadge tone="success">{t("insurance.step3")}</StatusBadge>
-        <h2>{t("insurance.step3Title")}</h2>
-        {hasSelection ? (
-          <>
-            <p>{t("insurance.coverageNeedsIntro")}</p>
-            <div className="check-list" style={{ marginTop: 8 }}>
-              {selectedScenarios.map((key) => {
-                const scenario = coverageScenarios.find((s) => s.key === key);
-                return scenario ? <span key={key}>• {t(scenario.labelKey)}</span> : null;
-              })}
-            </div>
-          </>
-        ) : (
-          <p className="help-text">{t("insurance.selectScenariosPrompt")}</p>
-        )}
-      </Card>
-
-      {/* Step 4: Next step */}
-      <Card className="tool-section cta-panel">
-        <StatusBadge tone="primary">{t("insurance.step4")}</StatusBadge>
-        <h2>{t("insurance.step4Title")}</h2>
-        <div className="button-pair" style={{ marginTop: 16 }}>
-          <button className="btn-secondary" disabled type="button">
-            {t("insurance.talkToLicensedPartner")}
-          </button>
-          <a className="btn-primary" href="https://www.healthcare.gov" target="_blank" rel="noopener noreferrer">
-            {t("insurance.goToMarketplace")}
-          </a>
-          <SecondaryButton href="#questions">
-            {t("insurance.prepareQuestions")}
-          </SecondaryButton>
-        </div>
-        <p className="help-text" style={{ marginTop: 12 }}>
-          {t("insurance.licensedPartnerComingSoon")}
-        </p>
-      </Card>
-
-      {/* Prepare questions — collapsed */}
-      <div id="questions" className="scroll-anchor">
-        <Card className="tool-section">
-        <details>
-          <summary>{t("insurance.prepareQuestions")}</summary>
-          <p style={{ marginTop: 8 }}>{t("insurance.alreadyInsuredDesc")}</p>
-          <div className="check-list" style={{ marginTop: 8 }}>
-            {hasSelection ? selectedScenarios.map((key) => {
-              const scenario = coverageScenarios.find((s) => s.key === key);
-              return scenario ? <span key={key}>□ {t(`insurance.question.${scenario.key}`)}</span> : null;
-            }) : <p className="help-text">{t("insurance.selectScenariosFirst")}</p>}
+      {/* Result context banner */}
+      <div style={{ marginTop: 16 }}>
+        <Card className="notice-card">
+          <IconCircle tone="teal">♢</IconCircle>
+          <div>
+            <p>{t("insurance.guide.resultContext")}</p>
           </div>
-        </details>
         </Card>
       </div>
 
-      {/* Insurance terms — collapsed, optional */}
+      {/* Country selector */}
       <Card className="tool-section">
-        <details>
-          <summary>{t("insurance.termsOptional")}</summary>
-          <p className="help-text" style={{ marginTop: 8 }}>{t("insurance.termsCollapsed")}</p>
-        </details>
+        <StatusBadge tone="primary">{t("insurance.guide.step1")}</StatusBadge>
+        <h2>{t("insurance.guide.selectCountry")}</h2>
+        <p className="help-text">{t("insurance.guide.selectCountryHelp")}</p>
+        <div className="tag-grid concern-grid" style={{ marginTop: 12 }}>
+          {countryList.map(({ code, name }) => (
+            <button
+              className={`choice-pill ${selectedCountry === code ? "selected" : ""}`}
+              key={code}
+              onClick={() => setSelectedCountry(code)}
+              type="button"
+            >
+              {name}
+            </button>
+          ))}
+        </div>
       </Card>
+
+      {/* Country guide card */}
+      {guide ? <GuideCard guide={guide} /> : (
+        <Card className="tool-section">
+          <p className="help-text">{t("insurance.guide.selectPrompt")}</p>
+        </Card>
+      )}
 
       {/* Do not delay care */}
       <Card className="notice-card red-flag-card">

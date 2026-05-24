@@ -15,17 +15,10 @@ const notProvided = [
 ];
 
 const faqs = [
-  ["pricing.faq.medicalService.q", "pricing.faq.medicalService.a"],
-  ["pricing.faq.guidance.q", "pricing.faq.guidance.a"],
-  ["pricing.faq.doctor.q", "pricing.faq.doctor.a"],
+  ["pricing.faq.diagnosis.q", "pricing.faq.diagnosis.a"],
   ["pricing.faq.emergency.q", "pricing.faq.emergency.a"],
-  ["pricing.faq.insurance.q", "pricing.faq.insurance.a"],
-  ["pricing.faq.refund.q", "pricing.faq.refund.a"],
-  ["pricing.faq.data.q", "pricing.faq.data.a"],
+  ["pricing.faq.insuranceHow.q", "pricing.faq.insuranceHow.a"],
   ["pricing.faq.cancel.q", "pricing.faq.cancel.a"],
-  ["pricing.faq.processor.q", "pricing.faq.processor.a"],
-  ["pricing.faq.taxes.q", "pricing.faq.taxes.a"],
-  ["pricing.faq.subscription.q", "pricing.faq.subscription.a"]
 ] as const;
 
 export default function PricingPage() {
