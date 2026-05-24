@@ -11,14 +11,14 @@ export interface ServerUser {
 }
 
 export interface ServerEntitlement {
-  plan: string;
+  planId: string;
   status: string;
   currentPeriodEnd?: string;
 }
 
 export interface MeResponse {
   user: ServerUser | null;
-  entitlement: ServerEntitlement | null;
+  entitlement: ServerEntitlement;
 }
 
 const API_BASE =
@@ -35,8 +35,8 @@ export async function fetchMe(): Promise<MeResponse> {
   if (mePromise) return mePromise;
 
   mePromise = fetch(`${API_BASE}/api/me`, { credentials: "include" })
-    .then((res) => (res.ok ? (res.json() as Promise<MeResponse>) : { user: null, entitlement: null }))
-    .catch(() => ({ user: null, entitlement: null }))
+    .then((res) => (res.ok ? (res.json() as Promise<MeResponse>) : { user: null, entitlement: { planId: "free", status: "inactive" } }))
+    .catch(() => ({ user: null, entitlement: { planId: "free", status: "inactive" } }))
     .finally(() => {
       mePromise = null;
     });
@@ -47,7 +47,7 @@ export async function fetchMe(): Promise<MeResponse> {
 }
 
 export function getCachedMe(): MeResponse {
-  return cachedMe ?? { user: null, entitlement: null };
+  return cachedMe ?? { user: null, entitlement: { planId: "free", status: "inactive" } };
 }
 
 export function clearCachedMe(): void {
@@ -159,13 +159,13 @@ export function isLoggedIn(me?: MeResponse | null): boolean {
   return Boolean((me ?? cachedMe)?.user);
 }
 
-export function hasActivePlan(plan: string, me?: MeResponse | null): boolean {
+export function hasActivePlan(planId: string, me?: MeResponse | null): boolean {
   const ent = (me ?? cachedMe)?.entitlement;
-  return ent !== null && ent !== undefined && ent.plan === plan && ent.status === "active";
+  return ent !== null && ent !== undefined && ent.planId === planId && ent.status === "active";
 }
 
 export function getActivePlan(me?: MeResponse | null): string | null {
   const ent = (me ?? cachedMe)?.entitlement;
-  if (ent && ent.status === "active") return ent.plan;
+  if (ent && ent.status === "active" && ent.planId !== "free") return ent.planId;
   return null;
 }

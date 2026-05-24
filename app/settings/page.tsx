@@ -200,7 +200,7 @@ export default function SettingsPage() {
         <div className="settings-list-control">
           <SettingsRow label={t("settings.currentPlan")}>
             <strong>
-              {serverEntitlement?.plan === "plus" && serverEntitlement?.status === "active"
+              {serverEntitlement?.planId === "plus_monthly" && serverEntitlement?.status === "active"
                 ? "Plus"
                 : t("common.free")}
             </strong>
