@@ -33,6 +33,7 @@ export default function LoginPage() {
   const [loginLoading, setLoginLoading] = useState(false);
 
   // Register form
+  const [regName, setRegName] = useState("");
   const [regEmail, setRegEmail] = useState("");
   const [regPassword, setRegPassword] = useState("");
   const [regConfirm, setRegConfirm] = useState("");
@@ -87,7 +88,7 @@ export default function LoginPage() {
     }
 
     setRegLoading(true);
-    const result = await registerWithPassword(email, regPassword, email);
+    const result = await registerWithPassword(email, regPassword, regName.trim() || undefined);
     setRegLoading(false);
 
     if (result.ok) {
@@ -160,6 +161,16 @@ export default function LoginPage() {
         ) : (
           /* Register form */
           <form className="settings-form" noValidate onSubmit={handleRegister}>
+            <label>
+              {t("auth.displayName")}
+              <input
+                autoComplete="name"
+                value={regName}
+                onChange={(e) => { setRegName(e.target.value); setRegError(""); }}
+                placeholder={t("auth.displayNamePlaceholder")}
+                type="text"
+              />
+            </label>
             <label>
               {t("auth.email")}
               <input

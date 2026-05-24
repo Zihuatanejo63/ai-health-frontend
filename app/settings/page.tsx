@@ -13,7 +13,7 @@ import {
 } from "@/components/settings-controls";
 import { useSettings } from "@/components/settings-provider";
 import { hasUsableInsuranceProfile, type HealthMatchSettings } from "@/lib/settings";
-import { logout } from "@/lib/auth-client";
+import { logout, updateProfile } from "@/lib/auth-client";
 import type { ServerUser } from "@/lib/auth-client";
 
 type ModalType = "account" | "health" | "insurance" | null;
@@ -68,6 +68,7 @@ export default function SettingsPage() {
   const [activeModal, setActiveModal] = useState<ModalType>(null);
   const [toast, setToast] = useState("");
   const [confirmDelete, setConfirmDelete] = useState(false);
+  const [accountLoading, setAccountLoading] = useState(false);
   const [accountDraft, setAccountDraft] = useState(settings.account);
   const [healthDraft, setHealthDraft] = useState(settings.healthProfile);
   const [insuranceDraft, setInsuranceDraft] = useState(settings.insuranceProfile);
@@ -98,10 +99,19 @@ export default function SettingsPage() {
     notify(t("settings.saved"));
   }
 
-  function onAccountSubmit(event: FormEvent<HTMLFormElement>) {
+  async function onAccountSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!accountUser) return;
-    savePatch({ account: accountDraft });
+    setAccountLoading(true);
+    const result = await updateProfile(accountDraft.name.trim() || accountUser.email.split("@")[0]);
+    setAccountLoading(false);
+    if (result.ok) {
+      await refreshAuth();
+      setActiveModal(null);
+      notify(t("settings.saved"));
+    } else {
+      notify(result.message);
+    }
   }
 
   function onHealthSubmit(event: FormEvent<HTMLFormElement>) {
@@ -224,8 +234,8 @@ export default function SettingsPage() {
               <button className="btn-secondary" onClick={() => setActiveModal(null)} type="button">
                 {t("common.cancel")}
               </button>
-              <button className="btn-primary" type="submit">
-                {t("common.save")}
+              <button className="btn-primary" disabled={accountLoading} type="submit">
+                {accountLoading ? t("auth.loading") : t("common.save")}
               </button>
             </div>
           </form>

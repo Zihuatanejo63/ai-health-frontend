@@ -155,6 +155,27 @@ export async function logout(): Promise<void> {
   clearCachedMe();
 }
 
+export async function updateProfile(name: string): Promise<{ ok: boolean; message: string; user?: ServerUser }> {
+  try {
+    const res = await fetch(`${API_BASE}/api/me`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ name }),
+    });
+    const data = (await res.json().catch(() => ({}))) as {
+      ok?: boolean; message?: string; user?: ServerUser; error?: { message?: string };
+    };
+    if (res.ok && data.ok) {
+      clearCachedMe();
+      return { ok: true, message: data.message || "Profile updated.", user: data.user };
+    }
+    return { ok: false, message: data.error?.message || data.message || "Update failed." };
+  } catch {
+    return { ok: false, message: "Update failed. Please check your connection." };
+  }
+}
+
 export function isLoggedIn(me?: MeResponse | null): boolean {
   return Boolean((me ?? cachedMe)?.user);
 }
