@@ -65,9 +65,12 @@ export default function LoginPage() {
     }
   }
 
+  const [regSuccess, setRegSuccess] = useState("");
+
   async function handleRegister(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setRegError("");
+    setRegSuccess("");
 
     const email = regEmail.trim();
     if (!email || !email.includes("@")) {
@@ -88,8 +91,13 @@ export default function LoginPage() {
     setRegLoading(false);
 
     if (result.ok) {
-      await refreshAuth();
-      router.push("/");
+      setRegSuccess(result.message || "Account created successfully.");
+      // Navigate after a brief delay so user can see success message
+      setTimeout(() => {
+        refreshAuth().finally(() => {
+          router.push("/");
+        });
+      }, 800);
     } else {
       setRegError(result.message);
     }
@@ -183,6 +191,7 @@ export default function LoginPage() {
               />
             </label>
             {regError ? <p className="inline-error">{regError}</p> : null}
+            {regSuccess ? <p className="inline-success">{regSuccess}</p> : null}
             <button className="btn-primary" disabled={regLoading} type="submit">
               {regLoading ? t("auth.loading") : t("auth.createAccount")}
             </button>

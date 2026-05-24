@@ -22,7 +22,10 @@ export interface MeResponse {
 }
 
 const API_BASE =
-  process.env.NEXT_PUBLIC_API_BASE_URL?.replace(/\/$/, "") ?? "";
+  process.env.NEXT_PUBLIC_API_BASE_URL?.replace(/\/$/, "") ||
+  (typeof window !== "undefined" && window.location.hostname === "healthmatchai.com"
+    ? "https://api.healthmatchai.com"
+    : "");
 
 let cachedMe: MeResponse | null = null;
 let mePromise: Promise<MeResponse> | null = null;
@@ -72,35 +75,39 @@ export async function requestMagicLink(email: string): Promise<{ ok: boolean; me
   }
 }
 
-export async function logout(): Promise<void> {
-  await fetch(`${API_BASE}/api/auth/logout`, {
-    method: "POST",
-    credentials: "include",
-  }).catch(() => {});
-  clearCachedMe();
-}
-
 export async function registerWithPassword(
   email: string,
   password: string,
   name?: string
 ): Promise<{ ok: boolean; message: string; user?: ServerUser }> {
+  const url = `${API_BASE}/api/auth/register`;
+  console.log("[register] API_BASE:", API_BASE);
+  console.log("[register] URL:", url);
+
   try {
-    const res = await fetch(`${API_BASE}/api/auth/register`, {
+    const res = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password, name }),
       credentials: "include",
     });
     const data = (await res.json().catch(() => ({}))) as {
-      ok?: boolean; message?: string; user?: ServerUser; error?: { message?: string };
+      ok?: boolean; message?: string; code?: string; user?: ServerUser; error?: { message?: string };
     };
+    console.log("[register] response.status:", res.status);
+    console.log("[register] response JSON:", data);
+
     if (res.ok && data.ok) {
       clearCachedMe();
-      return { ok: true, message: data.message || "Account created.", user: data.user };
+      return { ok: true, message: data.message || "Account created successfully.", user: data.user };
     }
-    return { ok: false, message: data.error?.message || data.message || "Registration failed. Please try again." };
-  } catch {
+    // Show real backend message
+    return {
+      ok: false,
+      message: data.message || data.error?.message || "Registration failed. Please try again.",
+    };
+  } catch (err) {
+    console.error("[register] fetch error:", err);
     return { ok: false, message: "Registration failed. Please check your connection and try again." };
   }
 }
@@ -109,24 +116,43 @@ export async function loginWithPassword(
   email: string,
   password: string
 ): Promise<{ ok: boolean; message: string; user?: ServerUser }> {
+  const url = `${API_BASE}/api/auth/login`;
+  console.log("[login] API_BASE:", API_BASE);
+  console.log("[login] URL:", url);
+
   try {
-    const res = await fetch(`${API_BASE}/api/auth/login`, {
+    const res = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
       credentials: "include",
     });
     const data = (await res.json().catch(() => ({}))) as {
-      ok?: boolean; message?: string; user?: ServerUser; error?: { message?: string };
+      ok?: boolean; message?: string; code?: string; user?: ServerUser; error?: { message?: string };
     };
+    console.log("[login] response.status:", res.status);
+    console.log("[login] response JSON:", data);
+
     if (res.ok && data.ok) {
       clearCachedMe();
-      return { ok: true, message: data.message || "Logged in.", user: data.user };
+      return { ok: true, message: data.message || "Logged in successfully.", user: data.user };
     }
-    return { ok: false, message: data.error?.message || data.message || "Login failed. Please try again." };
-  } catch {
+    return {
+      ok: false,
+      message: data.message || data.error?.message || "Login failed. Please try again.",
+    };
+  } catch (err) {
+    console.error("[login] fetch error:", err);
     return { ok: false, message: "Login failed. Please check your connection and try again." };
   }
+}
+
+export async function logout(): Promise<void> {
+  await fetch(`${API_BASE}/api/auth/logout`, {
+    method: "POST",
+    credentials: "include",
+  }).catch(() => {});
+  clearCachedMe();
 }
 
 export function isLoggedIn(me?: MeResponse | null): boolean {
