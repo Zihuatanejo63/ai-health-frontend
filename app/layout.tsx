@@ -48,7 +48,20 @@ export const metadata: Metadata = {
       "Structured symptom checks, care guidance, health summaries, and before-care cost and coverage questions.",
     images: ["/images/hero-doctor-care.png"]
   },
-  category: "health"
+  category: "health",
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png" }],
+    other: [{ rel: "manifest", url: "/site.webmanifest" }],
+  },
+};
+
+export const viewport = {
+  themeColor: "#00B8C8",
 };
 
 export default function RootLayout({
