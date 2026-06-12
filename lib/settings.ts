@@ -268,10 +268,12 @@ function detectBrowserLanguage(): LanguageCode | null {
 }
 
 export function readSettings(): HealthMatchSettings {
+  const hasStored = typeof window !== "undefined" && window.localStorage.getItem(SETTINGS_STORAGE_KEY) !== null;
   const raw = readJson<Partial<HealthMatchSettings>>(SETTINGS_STORAGE_KEY, defaultSettings);
 
-  // Auto-detect browser language on first visit (no stored preference)
-  if (!raw.language || raw.language === defaultSettings.language) {
+  // Auto-detect browser language only on true first visit; an explicitly
+  // chosen language (even the default) must never be overridden.
+  if (!hasStored || !raw.language) {
     const detected = detectBrowserLanguage();
     if (detected) {
       raw.language = detected;

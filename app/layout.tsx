@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Fraunces, Public_Sans } from "next/font/google";
 import { AppLayout } from "@/components/app-ui";
 import { I18nProvider } from "@/components/i18n-provider";
 import { SettingsProvider } from "@/components/settings-provider";
@@ -61,8 +62,21 @@ export const metadata: Metadata = {
 };
 
 export const viewport = {
-  themeColor: "#00B8C8",
+  themeColor: "#0F6E64",
 };
+
+const displayFont = Fraunces({
+  subsets: ["latin"],
+  axes: ["opsz"],
+  weight: "variable",
+  variable: "--font-display",
+});
+
+const bodyFont = Public_Sans({
+  subsets: ["latin"],
+  weight: "variable",
+  variable: "--font-body",
+});
 
 export default function RootLayout({
   children
@@ -70,7 +84,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html className={`${displayFont.variable} ${bodyFont.variable}`} lang="en">
       <body>
         <SettingsProvider>
           <I18nProvider>
