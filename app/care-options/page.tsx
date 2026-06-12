@@ -10,6 +10,8 @@ import { careLevelKey, riskLevelKey } from "@/lib/i18n-display";
 const SESSION_RESULT_KEY = "ai-health-match-result";
 
 type NearbyOption = {
+  /** External link takes precedence over a maps search. */
+  externalUrl?: string;
   id: string;
   titleKey: string;
   descKey: string;
@@ -54,7 +56,8 @@ const nearbyOptions: NearbyOption[] = [
     btnKey: "care.findTelehealthOptions",
     tone: "teal",
     icon: "T",
-    mapsQuery: "telehealth+providers"
+    mapsQuery: "telehealth+providers",
+    externalUrl: "https://sesamecare.com/"
   }
 ];
 
@@ -165,18 +168,23 @@ export default function CareOptionsPage() {
                 </div>
               </div>
               <div className="care-card-meta">
-                <button
-                  className="btn-primary"
-                  onClick={() => openMapsSearch(opt.mapsQuery)}
-                  type="button"
-                >
-                  {t(opt.btnKey)}
-                </button>
+                {opt.externalUrl ? (
+                  <a className="btn-primary" href={opt.externalUrl} rel="noopener noreferrer" target="_blank">
+                    {t(opt.btnKey)}
+                  </a>
+                ) : (
+                  <button
+                    className="btn-primary"
+                    onClick={() => openMapsSearch(opt.mapsQuery)}
+                    type="button"
+                  >
+                    {t(opt.btnKey)}
+                  </button>
+                )}
               </div>
             </article>
           ))}
         </div>
-        <p className="help-text" style={{ marginTop: 16, textAlign: "center" }}>{t("care.licensedProviderComingSoon")}</p>
       </div>
 
       {/* Emergency warning card */}

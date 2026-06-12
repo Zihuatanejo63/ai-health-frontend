@@ -10,8 +10,11 @@
  *   skips the panel entirely for those tones).
  *
  * To activate a partner after affiliate approval, paste the tracking URL into
- * `url` and rebuild. Entries with an empty `url` are hidden automatically, so
- * this file can ship before any program is approved.
+ * `url` and rebuild. Entries with an empty `url` are hidden automatically.
+ *
+ * Until affiliate programs are approved, `url` holds a plain, untracked link
+ * to a reputable destination so the user journey never dead-ends. Swap these
+ * for affiliate tracking URLs as programs are approved.
  */
 
 export type PartnerCategory =
@@ -35,21 +38,21 @@ export const partnerLinks: PartnerLink[] = [
     category: "telehealth",
     labelKey: "action.partner.telehealth",
     descKey: "action.partner.telehealthDesc",
-    url: ""
+    url: "https://sesamecare.com/"
   },
   {
     id: "mental-health",
     category: "mentalHealth",
     labelKey: "action.partner.mentalHealth",
     descKey: "action.partner.mentalHealthDesc",
-    url: ""
+    url: "https://www.psychologytoday.com/us/therapists"
   },
   {
     id: "rx-discount",
     category: "rxDiscount",
     labelKey: "action.partner.rxDiscount",
     descKey: "action.partner.rxDiscountDesc",
-    url: ""
+    url: "https://www.goodrx.com/"
   },
   {
     id: "lab-tests",
@@ -63,7 +66,7 @@ export const partnerLinks: PartnerLink[] = [
     category: "insurance",
     labelKey: "action.partner.insurance",
     descKey: "action.partner.insuranceDesc",
-    url: ""
+    url: "https://www.healthcare.gov/see-plans/"
   }
 ];
 
