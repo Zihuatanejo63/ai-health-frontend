@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Card, IconCircle, PageHeader, PrimaryButton, SecondaryButton, StatCard, StatusBadge } from "@/components/app-ui";
+import { CareActionPanel } from "@/components/care-action-panel";
 import { DisclaimerBox } from "@/components/disclaimer-box";
 import { useI18n } from "@/components/i18n-provider";
 import { readSymptomChecks, readSummaries, writeSymptomChecks, writeSummaries, type SavedSymptomCheck } from "@/lib/settings";
@@ -305,6 +306,8 @@ export default function ResultPage() {
           </div>
         )}
       </Card>
+
+      {!isEmergencyTone ? <CareActionPanel recommendedCare={result.recommendedCare} /> : null}
 
       <Card>
         <h2>{t("result.whatToWatch")}</h2>

@@ -10,11 +10,12 @@ export function SiteFooter() {
     <footer className="footer">
       <div className="container footer-inner">
         <span>
-          <strong>AI Health Match</strong> · {t("footer.summary")}
+          <strong>HealthMatchAI</strong> · {t("footer.summary")}
         </span>
         <p className="footer-disclaimer">
           {t("safety.medical")} {t("safety.insurance")}
         </p>
+        <p className="footer-disclaimer">{t("footer.affiliate")}</p>
         <nav className="footer-links">
           <Link href="/privacy">{t("footer.privacy")}</Link>
           <Link href="/terms">{t("footer.terms")}</Link>
