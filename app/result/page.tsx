@@ -8,6 +8,8 @@ import { useI18n } from "@/components/i18n-provider";
 import { readSymptomChecks, readSummaries, writeSymptomChecks, writeSummaries, type SavedSymptomCheck } from "@/lib/settings";
 import { readUser } from "@/lib/auth";
 import { careLevelKey, riskLevelKey, symptomItemKey, triageTextKey } from "@/lib/i18n-display";
+import { EmailCapture } from "@/components/email-capture";
+import { trackEvent } from "@/lib/track";
 
 const SESSION_RESULT_KEY = "ai-health-match-result";
 
@@ -32,10 +34,16 @@ export default function ResultPage() {
     const session = window.sessionStorage.getItem(SESSION_RESULT_KEY);
     if (session) {
       setCheck(JSON.parse(session));
+      trackEvent("result_viewed");
       return;
     }
     setCheck(readSymptomChecks()[0] ?? null);
   }, []);
+
+  function printReport() {
+    trackEvent("report_print");
+    window.print();
+  }
 
   function displayText(value?: string) {
     if (!value) return "";
@@ -407,10 +415,14 @@ export default function ResultPage() {
               <p className="help-text">{t("result.checkCoverageProtectionDesc")}</p>
             </section>
 
+            <p className="print-only">
+              {t("safety.medical")} {t("result.thisIsNotDiagnosis")}
+            </p>
+
             {/* Report actions: Copy / Download / Save */}
             <div className="button-pair" style={{ marginTop: 20 }}>
               <button className="btn-secondary" onClick={copyReportText} type="button">{t("result.report.copyReport")}</button>
-              <button className="btn-secondary" disabled type="button">{t("result.report.downloadPdf")}</button>
+              <button className="btn-secondary" onClick={printReport} type="button">{t("result.report.downloadPdf")}</button>
               <button className="btn-primary" onClick={saveSummary} type="button">{t("result.report.saveToRecords")}</button>
             </div>
             {saved ? <StatusBadge tone="success">{t("result.saved")}</StatusBadge> : null}
@@ -425,6 +437,10 @@ export default function ResultPage() {
         </div>
         {timelineSaved ? <StatusBadge tone="success">{t("result.timelineSaved")}</StatusBadge> : null}
         {loginPrompt ? <p className="login-save-prompt">{t("result.localGuestSavePrompt")}</p> : null}
+      </Card>
+
+      <Card className="tool-section email-capture-card">
+        <EmailCapture source="result" />
       </Card>
 
       <DisclaimerBox text={t("care.disclaimerV2")} />

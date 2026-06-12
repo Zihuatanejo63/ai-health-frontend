@@ -244,6 +244,11 @@ export default function PrepareForDoctorAppointmentPage() {
         </a>
       </div>
 
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: "{\"@context\": \"https://schema.org\", \"@type\": \"FAQPage\", \"mainEntity\": [{\"@type\": \"Question\", \"name\": \"Will my doctor be offended if I bring a printed summary?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Most clinicians welcome it. A concise, well-organized summary saves them time and reduces the risk of miscommunication. Approach it as a helpful tool: &ldquo;I wrote this down so I would not forget anything.&rdquo;\"}}, {\"@type\": \"Question\", \"name\": \"What if I have too many symptoms to list?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Focus on the symptoms that concern you most and the ones that have changed recently. HealthMatchAI's structured workflow helps you prioritize a primary symptom and organize the rest. If you have a long history, note the most relevant or recent issues and be ready to summarize the rest verbally.\"}}, {\"@type\": \"Question\", \"name\": \"Should I bring someone with me to the appointment?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"If you are comfortable doing so, yes. A companion can help you remember instructions, ask questions you might not think of, and provide emotional support. For appointments involving serious news or complex treatment decisions, having a second person is strongly recommended.\"}}, {\"@type\": \"Question\", \"name\": \"Can I use this guide for a telehealth appointment?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Absolutely. Telehealth visits benefit even more from preparation because the provider cannot perform a physical exam. Sending your HealthMatchAI summary ahead of time through your patient portal gives the clinician context before the call begins.\"}}, {\"@type\": \"Question\", \"name\": \"How often should I update my summary?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Run a new symptom check whenever your symptoms change significantly, when a new symptom appears, or before a scheduled appointment. Keeping your summary current ensures your clinician has the most accurate picture.\"}}]}" }}
+      />
     </section>
   );
 }

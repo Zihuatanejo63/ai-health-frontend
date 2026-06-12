@@ -17,6 +17,7 @@ export function SiteFooter() {
         </p>
         <p className="footer-disclaimer">{t("footer.affiliate")}</p>
         <nav className="footer-links">
+          <Link href="/about">{t("footer.about")}</Link>
           <Link href="/privacy">{t("footer.privacy")}</Link>
           <Link href="/terms">{t("footer.terms")}</Link>
           <Link href="/medical-disclaimer">{t("footer.disclaimer")}</Link>

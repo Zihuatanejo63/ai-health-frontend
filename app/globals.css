@@ -3699,3 +3699,123 @@ button.settings-row:hover,
     width: 100%;
   }
 }
+
+/* ---- Print: doctor-ready report only ---- */
+@media print {
+  body {
+    background: #fff;
+    font-size: 12.5px;
+  }
+
+  .app-sidebar,
+  .footer,
+  .result-top-grid,
+  .result-safety-card,
+  .care-action-panel,
+  .email-capture-card,
+  .ai-explanation-card,
+  .crisis-card,
+  .tool-section,
+  .app-content-header,
+  .disclaimer-box,
+  .button-pair,
+  .login-save-prompt {
+    display: none !important;
+  }
+
+  .page-main,
+  .footer {
+    margin-left: 0;
+  }
+
+  .page-main .container {
+    width: 100%;
+  }
+
+  .result-page > .panel:not(.doctor-summary-card) {
+    display: none !important;
+  }
+
+  .doctor-summary-card {
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+    padding: 0;
+  }
+
+  .doctor-summary-card h2 {
+    font-size: 20px;
+    border-bottom: 1.5px solid #15252b;
+    padding-bottom: 8px;
+  }
+
+  .doctor-summary-card section {
+    break-inside: avoid;
+  }
+}
+
+.print-only {
+  display: none;
+}
+
+@media print {
+  .print-only {
+    display: block;
+    margin-top: 18px;
+    padding-top: 10px;
+    border-top: 1px solid #e3e0d8;
+    color: #5c6b6e;
+    font-size: 11px;
+  }
+}
+
+/* ---- Email capture ---- */
+.email-capture {
+  display: grid;
+  gap: 12px;
+}
+
+.email-capture h3 {
+  margin: 0 0 4px;
+}
+
+.email-capture > div > p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.email-capture-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.email-capture-row input {
+  flex: 1 1 220px;
+  min-height: 44px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  padding: 10px 14px;
+  font-size: 14.5px;
+  font-family: inherit;
+  background: var(--surface);
+  color: var(--text);
+}
+
+.email-capture-row input:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 1px;
+  border-color: var(--primary);
+}
+
+.email-capture .help-text {
+  margin: 0;
+  font-size: 12px;
+}
+
+.email-capture-done {
+  margin: 0;
+  color: var(--success);
+  font-weight: 600;
+}

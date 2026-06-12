@@ -220,6 +220,11 @@ export default function DoctorVisitSummaryPage() {
         </a>
       </div>
 
+    
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: "{\"@context\": \"https://schema.org\", \"@type\": \"FAQPage\", \"mainEntity\": [{\"@type\": \"Question\", \"name\": \"Does the summary count as an official medical record?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"No. The HealthMatchAI summary is a personal communication tool, not a legal medical record. Your doctor maintains the official record of your visit. The summary simply helps you communicate your experience more clearly.\"}}, {\"@type\": \"Question\", \"name\": \"Will my doctor accept a printed summary from me?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Most clinicians appreciate when patients come prepared with organized information. A clear, concise summary can help the appointment start on the right foot. If you are unsure, ask the office staff when you check in.\"}}, {\"@type\": \"Question\", \"name\": \"Can I update the summary after I generate it?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"You can run a new symptom check with updated information to generate a fresh summary at any time. HealthMatchAI also saves your previous checks so you can review them in your history.\"}}, {\"@type\": \"Question\", \"name\": \"Is the summary suitable for a telehealth appointment?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"Yes. The summary is especially useful for telehealth visits where the provider cannot physically examine you. Sharing it through your patient portal or messaging system before the call gives your provider helpful context.\"}}, {\"@type\": \"Question\", \"name\": \"Does the summary include a diagnosis or prescription?\", \"acceptedAnswer\": {\"@type\": \"Answer\", \"text\": \"No. HealthMatchAI does not diagnose conditions, prescribe medication, or recommend specific treatments. The summary organizes what you report; it does not add clinical conclusions.\"}}]}" }}
+      />
     </section>
   );
 }

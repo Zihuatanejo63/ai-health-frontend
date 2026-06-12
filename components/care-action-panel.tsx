@@ -7,6 +7,7 @@ import {
   costRows,
   recommendedCostRowId
 } from "@/lib/partners";
+import { trackEvent } from "@/lib/track";
 
 interface CareActionPanelProps {
   recommendedCare: string;
@@ -64,6 +65,7 @@ export function CareActionPanel({ recommendedCare }: CareActionPanelProps) {
               key={partner.id}
               className="partner-link"
               href={partner.url}
+              onClick={() => trackEvent("partner_click", partner.id)}
               target="_blank"
               rel="sponsored noopener noreferrer"
             >
