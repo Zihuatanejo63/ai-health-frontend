@@ -8,7 +8,6 @@ import { useI18n } from "@/components/i18n-provider";
 import { readSymptomChecks, readSummaries, writeSymptomChecks, writeSummaries, type SavedSymptomCheck } from "@/lib/settings";
 import { readUser } from "@/lib/auth";
 import { careLevelKey, riskLevelKey, symptomItemKey, triageTextKey } from "@/lib/i18n-display";
-import { startCheckout } from "@/lib/checkout";
 
 const SESSION_RESULT_KEY = "ai-health-match-result";
 
@@ -28,8 +27,6 @@ export default function ResultPage() {
   const [saved, setSaved] = useState(false);
   const [timelineSaved, setTimelineSaved] = useState(false);
   const [loginPrompt, setLoginPrompt] = useState(false);
-  const [checkoutLoading, setCheckoutLoading] = useState(false);
-  const [checkoutError, setCheckoutError] = useState("");
 
   useEffect(() => {
     const session = window.sessionStorage.getItem(SESSION_RESULT_KEY);
@@ -110,17 +107,6 @@ export default function ResultPage() {
     setSaved(true);
     const user = readUser();
     if (!user || user.isGuest) setLoginPrompt(true);
-  }
-
-  async function handlePlusCheckout() {
-    setCheckoutError("");
-    setCheckoutLoading(true);
-    try {
-      await startCheckout("plus_monthly");
-    } catch (error) {
-      setCheckoutError(error instanceof Error ? error.message : t("pricing.checkoutFailed"));
-      setCheckoutLoading(false);
-    }
   }
 
   function copyReportText() {
@@ -436,13 +422,7 @@ export default function ResultPage() {
         <h2>{t("result.exportSaveCreate")}</h2>
         <div className="button-pair">
           <button className="btn-secondary" onClick={saveTimeline} type="button">{t("result.saveTimeline")}</button>
-          {!isEmergencyTone ? (
-            <button className="btn-primary" disabled={checkoutLoading} onClick={handlePlusCheckout} type="button">
-              {checkoutLoading ? t("pricing.openingCheckout") : t("pricing.subscribePlus")}
-            </button>
-          ) : null}
         </div>
-        {checkoutError ? <p className="inline-error">{checkoutError}</p> : null}
         {timelineSaved ? <StatusBadge tone="success">{t("result.timelineSaved")}</StatusBadge> : null}
         {loginPrompt ? <p className="login-save-prompt">{t("result.localGuestSavePrompt")}</p> : null}
       </Card>

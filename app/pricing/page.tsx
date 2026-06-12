@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Card, PageHeader, PrimaryButton, SecondaryButton, StatusBadge } from "@/components/app-ui";
 import { PricingCard } from "@/components/pricing-card";
 import { startCheckout } from "@/lib/checkout";
+import { getCheckoutStatus } from "@/lib/api-client";
 import { useI18n } from "@/components/i18n-provider";
 
 const notProvided = [
@@ -29,9 +30,8 @@ export default function PricingPage() {
 
   useEffect(() => {
     let active = true;
-    fetch("/api/checkout-status")
-      .then((res) => res.ok ? res.json() : { configured: false })
-      .then((data: { configured?: boolean }) => {
+    getCheckoutStatus()
+      .then((data) => {
         if (active) setCheckoutConfigured(Boolean(data.configured));
       })
       .catch(() => {

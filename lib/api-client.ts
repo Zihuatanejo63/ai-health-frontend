@@ -84,6 +84,10 @@ export async function createCheckout(plan: "plus_monthly"): Promise<{ checkoutUr
   });
 }
 
+export async function getCheckoutStatus(): Promise<{ configured: boolean }> {
+  return apiFetch<{ configured: boolean }>("/api/checkout-status");
+}
+
 // ---- Data ----
 
 export async function getSymptomChecks(): Promise<{ checks: Array<{ id: string; risk_level: string; recommended_care: string; primary_concern: string; created_at: string }> }> {
