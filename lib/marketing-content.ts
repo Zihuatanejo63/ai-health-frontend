@@ -66,7 +66,7 @@ export const marketing = {
   faqs: [
     [
       "Can I upload a report today?",
-      "Not yet. This is a preview of the new product. Explore the complete sample without creating an account. Uploads, accounts, reminders, and PDF export will come in the application phase.",
+      "Yes, in the local application. Sign in, upload a PDF or image and confirm the extracted values. If extraction is unavailable, use manual entry or import the fictional three-year sample. In-app follow-ups and PDF export work; email reminders are not connected.",
     ],
     [
       "Can it tell me whether I have a condition?",
@@ -82,11 +82,11 @@ export const marketing = {
     ],
     [
       "Will every marker be interpreted?",
-      "The MVP is planned around roughly 120 common markers. Unsupported results will retain their original values and be labeled as not yet covered. Listing a category is not a promise to detect disease.",
+      "The local pilot covers HbA1c, glucose, potassium, ALT and hemoglobin. Other markers retain their original values and remain unclassified. A broader library of roughly 120 markers requires clinical review before release.",
     ],
     [
       "What happens to my data?",
-      "This sample contains fictional data and accepts no health uploads. The planned app requires encryption in transit and at rest, minimal retention, export and complete deletion, and no sale or advertising use of health data. Processing regions and providers must be published before uploads open.",
+      "The public sample is fictional. The local app stores encrypted report data and provides export and workspace deletion. Files sent for extraction go to the configured Gemini endpoint with your consent. See Privacy for local HTTP, retention and deletion limits; this is not a production health-data service.",
     ],
   ],
 };

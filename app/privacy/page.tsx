@@ -2,64 +2,97 @@ export default function Privacy() {
   return (
     <div className="hm-page hm-prose">
       <header className="hm-page-heading">
-        <p className="hm-overline">UPDATED OCTOBER 24, 2026 · PREVIEW</p>
-        <h1>Privacy, from the beginning.</h1>
+        <p className="hm-overline">UPDATED OCTOBER 24, 2026 · LOCAL PILOT</p>
+        <h1>
+          Your reports.
+          <br />
+          Your choices.
+        </h1>
         <p>
-          This notice covers the phase 1 marketing preview. Its sample reports
-          contain fictional data. It offers no upload, account creation,
-          checkout, or health-data submission through the new marketing pages.
+          This notice describes the local phase 2 application. It has not been
+          deployed as a production health-data service. Use fictional data for
+          local evaluation.
         </p>
       </header>
       <section>
-        <h2>What this preview processes</h2>
+        <h2>Storage and processing</h2>
         <p>
-          The browser requests static pages and assets. The local preview server
-          may record technical request information. The new marketing pages do
-          not initialize the legacy account client or load analytics scripts. Do
-          not enter health information into retained legacy tools; those pages
-          belong to the retired product.
+          Accounts and sessions use the existing D1 data layer, running locally
+          through Cloudflare’s emulator. Report values, source text, drafts,
+          self-reported profiles and task state are encrypted with AES-256-GCM
+          before being stored in the local database. Account email and technical
+          record identifiers are not encrypted by the application. The
+          encryption key is kept in an ignored local environment file.
+        </p>
+        <p>
+          The browser and API run on this computer over loopback HTTP; this is
+          not encrypted transport. External model requests use HTTPS. Production
+          TLS, key management and hosting locations have not been established.
         </p>
       </section>
       <section>
-        <h2>Before real reports are accepted</h2>
+        <h2>Optional model processing</h2>
         <p>
-          The planned app must use encryption in transit and at rest, minimize
-          retention, and offer one-click export and complete deletion. Health
-          information will not be sold or used for advertising. The upload flow
-          must explain the purpose, legal basis, retention, user rights, and any
-          international transfers before collecting sensitive data.
+          With your permission, uploaded PDF/image bytes are sent to the
+          configured Gemini API endpoint for extraction. With report Q&amp;A
+          enabled, your question and confirmed marker values are sent to select
+          relevant evidence and an answer topic. By default personal-workspace
+          Q&amp;A uses templates until you opt in. Sample data is fictional and
+          kept separate.
         </p>
-      </section>
-      <section>
-        <h2>Processing locations and subprocessors</h2>
         <p>
-          No production processing region or health-data subprocessors have been
-          selected for the rebuilt app. The list is pending and uploads remain
-          unavailable. Before launch, this notice must name each storage, OCR,
-          model, and email provider, its role and processing countries, and
-          applicable transfer safeguards. Existing legacy providers are not
-          automatically approved for the new application.
+          The current default endpoint is Google’s Gemini API at
+          generativelanguage.googleapis.com. An operator may configure a
+          different endpoint. Processing locations, provider retention and
+          contractual safeguards are not verified for production use. Model
+          access is optional: Sample import, manual entry, rules and template
+          answers work without it.
         </p>
       </section>
       <section>
         <h2>Retention and deletion</h2>
         <p>
-          Exact retention periods and backup expiry must be established before
-          launch. Deletion must cover original files, extracted text, results,
-          alerts, reminders, derived exports, caches, and processor-held copies;
-          any legally required retention must be explained. Export and deletion
-          are design requirements, not active controls in this preview.
+          Original uploads are processed transiently and are not stored by this
+          app. A browser preview may remain until the page closes. Saved values,
+          source text and pending drafts remain until you delete the selected
+          workspace. In Health profile, export all workspace data as JSON or
+          delete its profile, reports, drafts and reminder records. Personal and
+          Sample workspaces are deleted separately.
+        </p>
+        <p>
+          Deletion removes active records; it does not erase downloaded files,
+          device backups, SQLite journals/free pages or copies retained by an
+          external model provider. No remote-provider deletion API or backup
+          expiry process is implemented. These limits must be resolved before a
+          production launch claiming complete erasure. Account/session records
+          are managed separately by the existing login service.
         </p>
       </section>
       <section>
-        <h2>Privacy contact</h2>
+        <h2>No advertising use</h2>
         <p>
-          For privacy questions:{" "}
+          The new application does not sell health data or use it for
+          advertising. No analytics scripts are loaded by these pages. In-app
+          reminders are available; reminder email is not connected and sends
+          nothing. Local development login links do not send email or verify
+          email ownership.
+        </p>
+      </section>
+      <section>
+        <h2>Before production</h2>
+        <p>
+          Clinical rule approval, processor contracts, processing countries,
+          GDPR legal basis and user-rights handling, retention schedules,
+          encrypted transport, operational security and verified
+          complete-deletion procedures remain release requirements. This pilot
+          makes no production compliance claim.
+        </p>
+        <p>
+          Privacy contact:{" "}
           <a href="mailto:support@healthmatchai.com">
             support@healthmatchai.com
           </a>
-          . A full privacy and GDPR readiness review remains a launch
-          prerequisite.
+          .
         </p>
       </section>
     </div>

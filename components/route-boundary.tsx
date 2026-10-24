@@ -3,6 +3,7 @@ import { usePathname } from "next/navigation";
 import { SettingsProvider } from "@/components/settings-provider";
 import { I18nProvider } from "@/components/i18n-provider";
 const currentRoutes = [
+  "/dashboard", "/login", "/signup",
   "/",
   "/sample-report",
   "/sample-doctor-report",

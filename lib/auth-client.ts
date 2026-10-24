@@ -54,7 +54,7 @@ export function clearCachedMe(): void {
   cachedMe = null;
 }
 
-export async function requestMagicLink(email: string): Promise<{ ok: boolean; message: string }> {
+export async function requestMagicLink(email: string): Promise<{ ok: boolean; message: string; localUrl?: string }> {
   try {
     const res = await fetch(`${API_BASE}/api/auth/request-link`, {
       method: "POST",
@@ -62,9 +62,10 @@ export async function requestMagicLink(email: string): Promise<{ ok: boolean; me
       body: JSON.stringify({ email }),
     });
 
-    const data = (await res.json().catch(() => ({}))) as { ok?: boolean; message?: string; error?: { message?: string } };
+    const data = (await res.json().catch(() => ({}))) as { ok?: boolean; message?: string; localUrl?: string; error?: { message?: string } };
     return {
       ok: res.ok && (data.ok ?? false),
+      localUrl: data.localUrl,
       message: data.message || data.error?.message || "We could not send the sign-in email right now. Please try again later.",
     };
   } catch {

@@ -28,8 +28,8 @@ export function SiteHeader() {
             </Link>
           ))}
         </nav>
-        <Link className="hm-button hm-nav-cta" href="/sample-report">
-          Explore the sample ↗
+        <Link className="hm-button hm-nav-cta" href="/dashboard">
+          Open my workspace ↗
         </Link>
       </div>
     </header>

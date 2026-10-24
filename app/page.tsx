@@ -10,7 +10,7 @@ export default function HomePage() {
           <h1>{marketing.hero}</h1>
           <p className="hm-lead">{marketing.subtitle}</p>
           <div className="hm-actions">
-            <Link className="hm-button" href="#upload-preview">
+            <Link className="hm-button" href="/dashboard">
               Upload a report <span aria-hidden="true">↗</span>
             </Link>
             <Link className="hm-text-link" href="/sample-report">
@@ -18,7 +18,8 @@ export default function HomePage() {
             </Link>
           </div>
           <p className="hm-small">
-            Product preview · Uploads coming in the next phase
+            Upload, confirm, understand · Sample and manual entry always
+            available
           </p>
         </div>
         <ReportPreview />
@@ -106,12 +107,12 @@ export default function HomePage() {
         <p className="hm-overline">WHAT’S NEXT</p>
         <h2>Your first report is the beginning.</h2>
         <p>
-          Report uploads are not open yet. This preview accepts no files or
-          health information. You can explore every part of the fictional sample
-          right now, with no account.
+          Upload a PDF or image, review the extracted values, and keep the
+          changes in view. Manual entry and a separate fictional Sample
+          workspace are always available.
         </p>
-        <Link className="hm-button" href="/sample-report">
-          Open the sample report ↗
+        <Link className="hm-button" href="/dashboard">
+          Open my health workspace ↗
         </Link>
       </section>
       <section className="hm-section hm-faq">

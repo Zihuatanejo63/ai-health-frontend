@@ -1,3 +1,4 @@
+import { PublicSafety } from "@/components/public-safety";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Disclaimer } from "@/components/marketing";
@@ -24,9 +25,10 @@ export default function Safety() {
           If a laboratory or clinician tells you a result is critical, seek
           urgent medical attention and follow their instructions. If you believe
           you are having a medical emergency, contact local emergency services.
-          This preview does not assess results or monitor anyone.
+          This app is not continuously monitored.
         </p>
       </section>
+      <PublicSafety />
       <section>
         <h2>Information, not a diagnosis</h2>
         <p>
@@ -39,17 +41,18 @@ export default function Safety() {
       <section>
         <h2>Rules decide. AI explains.</h2>
         <p>
-          The planned application will use versioned, auditable rules for four
+          The local application uses versioned, auditable rules for four
           severity levels: normal, mild deviation, significant abnormality, and
-          critical. Separate red-flag rules will show critical-value warnings at
-          the top of the first screen, immediately and without a paywall.
+          critical. Separate red-flag rules show critical-value warnings at the
+          top of the first screen, immediately and without a paywall.
         </p>
         <p>
-          AI will only extract report information and express rule outputs in
-          plain language. You must confirm extracted values before they enter
-          your health record. Generated explanations must pass checks against
-          the rule outputs before display; a safe template will replace an
-          explanation that fails validation.
+          AI extracts report information or selects relevant evidence and a
+          question topic. Answers use validated, report-specific templates. You
+          must confirm extracted values before they enter your health record.
+          Generated explanations must pass checks against the rule outputs
+          before display; a safe template will replace an explanation that fails
+          validation.
         </p>
       </section>
       <section>
@@ -64,28 +67,28 @@ export default function Safety() {
         <p>
           Uncovered markers will show the original report value and
           “interpretation not yet covered.” A normal result or no alert is not
-          an assurance of health. The static sample shows the format only, not
-          an approved clinical rule set.
+          an assurance of health. Five markers currently have local pilot rules:
+          HbA1c, glucose, potassium, ALT and hemoglobin. Clinical sign-off is
+          pending. Follow-up intervals are clinician-review targets, not
+          universal repeat-test instructions.
         </p>
       </section>
       <section>
         <h2>Health data deserves careful handling.</h2>
         <p>
-          This phase has no health upload or subscription collection. Before the
-          app opens, it must provide encryption in transit and at rest, private
-          storage with short-lived signed access, minimal retention, and
-          one-click export and complete deletion. Health data must not be sold
-          or used for advertising.
+          The local app encrypts saved health payloads and separates fictional
+          samples from personal reports. Upload extraction sends files to the
+          configured Gemini endpoint with consent; manual entry and sample
+          import need no model access.
         </p>
         <p>
-          Processing regions, subprocessors, retention periods, and deletion
-          arrangements are not finalized. They must be documented publicly, and
-          the GDPR basics reviewed for European users, before real uploads are
-          enabled. These are release requirements, not claims that this preview
-          implements a health-data service.
+          Local connections use loopback HTTP. Active workspace data can be
+          exported or deleted, but device backups, SQLite journals and
+          provider-retained copies are outside this control. Production privacy
+          and deletion requirements are not complete.
         </p>
         <Link className="hm-text-link" href="/privacy">
-          Read the preview privacy notice →
+          Read actual local privacy controls and limits →
         </Link>
       </section>
     </div>
