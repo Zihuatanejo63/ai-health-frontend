@@ -1,112 +1,128 @@
-"use client";
-
-import { useEffect, useState } from "react";
-import {
-  Card,
-  IconCircle,
-  PageHeader,
-  PrimaryButton,
-  SecondaryButton,
-} from "@/components/app-ui";
-import { useI18n } from "@/components/i18n-provider";
-import { IllustrationImage } from "@/components/visual-card";
-import { readSymptomChecks, type SavedSymptomCheck } from "@/lib/settings";
-
-const steps = [
-  { step: "1", titleKey: "home.step1Title", descKey: "home.step1Desc", icon: "☤" },
-  { step: "2", titleKey: "home.step2Title", descKey: "home.step2Desc", icon: "♡" },
-  { step: "3", titleKey: "home.step3Title", descKey: "home.step3Desc", icon: "▣" },
-  { step: "4", titleKey: "home.step4Title", descKey: "home.step4Desc", icon: "♢" },
-];
-
-const actionCards = [
-  { titleKey: "nav.symptomCheck", descKey: "home.actionSymptomDesc", href: "/symptom-check", icon: "☤", tone: "primary" as const },
-  { titleKey: "nav.findCare", descKey: "home.actionFindCareDesc", href: "/care-options", icon: "♡", tone: "teal" as const },
-  { titleKey: "nav.coverageProtection", descKey: "home.actionCoverageDesc", href: "/insurance-guide", icon: "♢", tone: "purple" as const },
-];
-
+import Link from "next/link";
+import { marketing } from "@/lib/marketing-content";
+import { ReportPreview, Plans, Disclaimer } from "@/components/marketing";
 export default function HomePage() {
-  const { t } = useI18n();
-  const [latestCheck, setLatestCheck] = useState<SavedSymptomCheck | null>(null);
-
-  useEffect(() => {
-    setLatestCheck(readSymptomChecks()[0] ?? null);
-  }, []);
-
   return (
-    <section className="app-page dashboard-page">
-      {/* Hero */}
-      <PageHeader
-        title={t("home.title")}
-        description={t("home.description")}
-      />
-
-      <Card className="symptom-command-card">
+    <div className="hm-page">
+      <section className="hm-hero">
         <div>
-          <h2>{t("home.heroQuestion")}</h2>
-          <p>{t("home.heroSubtitle")}</p>
-          <PrimaryButton href="/symptom-check">{t("home.start")}</PrimaryButton>
-          <SecondaryButton href="#how-it-works">{t("home.howItWorks")}</SecondaryButton>
+          <p className="hm-overline">MEET YOUR LONG-TERM HEALTH COMPANION</p>
+          <h1>{marketing.hero}</h1>
+          <p className="hm-lead">{marketing.subtitle}</p>
+          <div className="hm-actions">
+            <Link className="hm-button" href="#upload-preview">
+              Upload a report <span aria-hidden="true">↗</span>
+            </Link>
+            <Link className="hm-text-link" href="/sample-report">
+              See a sample report →
+            </Link>
+          </div>
+          <p className="hm-small">
+            Product preview · Uploads coming in the next phase
+          </p>
         </div>
-        <IllustrationImage
-          priority
-          variant="hero"
-          src="/images/hero-doctor-care.png"
-          alt="Care pathway illustration"
-        />
-      </Card>
-
-      {/* 4-step care pathway */}
-      <div id="how-it-works" className="scroll-anchor">
-        <h2 className="section-title">{t("home.pathwayTitle")}</h2>
-        <p className="section-description">{t("home.pathwayDesc")}</p>
-        <div className="stepper-grid">
-          {steps.map((s) => (
-            <div className="step-card" key={s.step}>
-              <IconCircle tone="primary">{s.icon}</IconCircle>
-              <h3>{t(s.titleKey)}</h3>
-              <p>{t(s.descKey)}</p>
-            </div>
+        <ReportPreview />
+      </section>
+      <section className="hm-strip">
+        <span>Understand each result.</span>
+        <span>Notice the pattern.</span>
+        <span>Remember the follow-up.</span>
+      </section>
+      <section className="hm-section">
+        <p className="hm-overline">FROM A REPORT TO A ROUTINE</p>
+        <h2>Three steps. A longer view.</h2>
+        <div className="hm-grid">
+          {marketing.steps.map(([n, t, d]) => (
+            <article className="hm-step" key={n}>
+              <span className="hm-step-number">{n}</span>
+              <h3>{t}</h3>
+              <p>{d}</p>
+            </article>
           ))}
         </div>
-      </div>
-
-      {/* Action cards */}
-      <div className="care-detail-grid" style={{ marginTop: 32 }}>
-        {actionCards.map((card) => (
-          <article className="panel detail-card care-compact-card" key={card.href}>
-            <div className="care-card-heading">
-              <IconCircle tone={card.tone}>{card.icon}</IconCircle>
-              <div>
-                <h2>{t(card.titleKey)}</h2>
-                <p>{t(card.descKey)}</p>
-              </div>
-            </div>
-            <div className="care-card-meta">
-              <PrimaryButton href={card.href}>{t(card.titleKey)}</PrimaryButton>
-            </div>
-          </article>
-        ))}
-      </div>
-
-      {/* Latest check summary, if exists */}
-      {latestCheck ? (
-        <div style={{ marginTop: 32 }}>
-        <Card className="recent-activity-card">
-          <h2>{t("home.recentActivity")}</h2>
-          <p>
-            {t("common.riskLevel")}: <strong>{t(latestCheck.result.riskLevel)}</strong>
-            {" · "}
-            {t("home.recommendedCare")}: <strong>{t(latestCheck.result.recommendedCare)}</strong>
-          </p>
-          <time>{new Date(latestCheck.createdAt).toLocaleString()}</time>
-          <div className="button-pair" style={{ marginTop: 12 }}>
-            <PrimaryButton href="/result">{t("home.viewLatestResult")}</PrimaryButton>
-            <SecondaryButton href="/history">{t("home.viewAll")}</SecondaryButton>
-          </div>
-        </Card>
+      </section>
+      <section className="hm-section">
+        <p className="hm-overline">THE NUMBERS THAT TELL YOUR STORY</p>
+        <h2>From individual markers to the bigger picture.</h2>
+        <div className="hm-categories">
+          {marketing.categories.map(([n, t, d]) => (
+            <article key={n}>
+              <span>{n}</span>
+              <h3>{t}</h3>
+              <p>{d}</p>
+            </article>
+          ))}
         </div>
-      ) : null}
-    </section>
+        <p className="hm-small">
+          Planned categories, not detection promises. Coverage varies by marker;
+          tumor markers cannot independently establish or rule out cancer.
+          Unsupported markers will be clearly labeled.
+        </p>
+      </section>
+      <section className="hm-section hm-split">
+        <div>
+          <p className="hm-overline">CHANGES DESERVE CONTEXT</p>
+          <h2>
+            A result is a moment.
+            <br />A trend tells you more.
+          </h2>
+          <p className="hm-lead">
+            Keep the small shifts in sight. See what’s new, what persists, and
+            what has moved back into range.
+          </p>
+          <p>
+            Each alert will show the result, its source, the rule behind it, and
+            a suggested next conversation with your clinician.
+          </p>
+          <Link className="hm-text-link" href="/sample-report#trends">
+            Follow the sample’s three-year trend →
+          </Link>
+        </div>
+        <ReportPreview />
+      </section>
+      <section className="hm-section">
+        <p className="hm-overline">A PLAN FOR YOUR NEXT CHAPTER</p>
+        <h2>Start with one report. Build from there.</h2>
+        <p>
+          Preview pricing only. Plans are not on sale; final pricing will be
+          confirmed before launch.
+        </p>
+        <Plans />
+      </section>
+      <section className="hm-safety">
+        <p className="hm-overline">CLEAR INFORMATION. CLEAR BOUNDARIES.</p>
+        <h2>Your clinician stays at the center.</h2>
+        <Disclaimer />
+        <p>
+          Rules will determine severity, red flags, and follow-up intervals. AI
+          will help with extraction and language. Critical alerts will never sit
+          behind a paywall.
+        </p>
+        <Link className="hm-text-link" href="/safety">
+          Read Safety &amp; Limits →
+        </Link>
+      </section>
+      <section className="hm-section" id="upload-preview">
+        <p className="hm-overline">WHAT’S NEXT</p>
+        <h2>Your first report is the beginning.</h2>
+        <p>
+          Report uploads are not open yet. This preview accepts no files or
+          health information. You can explore every part of the fictional sample
+          right now, with no account.
+        </p>
+        <Link className="hm-button" href="/sample-report">
+          Open the sample report ↗
+        </Link>
+      </section>
+      <section className="hm-section hm-faq">
+        <h2>A few things you might be wondering.</h2>
+        {marketing.faqs.map(([q, a]) => (
+          <details key={q}>
+            <summary>{q}</summary>
+            <p>{a}</p>
+          </details>
+        ))}
+      </section>
+    </div>
   );
 }
