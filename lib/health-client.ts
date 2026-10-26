@@ -15,7 +15,12 @@ export type Answer = {
   answer: string;
   urgent: boolean;
   channel: string;
-  citations: { marker: string; value: number; unit: string; date: string }[];
+  citations: {
+    marker: string;
+    value: number | string;
+    unit: string;
+    date: string;
+  }[];
   ruleVersion: string;
 };
 export async function healthApi<T>(
@@ -37,14 +42,12 @@ export async function healthApi<T>(
           ? body
           : JSON.stringify(body),
   });
-  const data = await response
-    .json()
-    .catch(() => ({
-      error: {
-        message:
-          "The local service did not respond. Start npm run local and retry.",
-      },
-    }));
+  const data = await response.json().catch(() => ({
+    error: {
+      message:
+        "The local service did not respond. Start npm run local and retry.",
+    },
+  }));
   if (!response.ok)
     throw Object.assign(new Error(data.error?.message || "Request failed"), {
       status: response.status,

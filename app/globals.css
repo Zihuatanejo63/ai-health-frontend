@@ -3964,7 +3964,7 @@ a:focus-visible, summary:focus-visible { outline: 3px solid #a87927; outline-off
 .hp-result details { margin-top:20px; font-size:13px; }
 .hp-result summary { cursor:pointer; }
 .hp-status { font-size:12px; padding:5px 10px; background:#edf1e8; border-radius:5px; }
-.hp-status-mild,.hp-status-significant { background:#fff0ce; color:#795619; }
+.hp-status-mild,.hp-status-significant,.hp-status-review { background:#fff0ce; color:#795619; }
 .hp-status-critical { background:#fbe0da; color:#962e22; }
 .hp-status-unclassified { background:#e6eaf0; color:#405365; }
 .hp-qa form { display:grid; gap:14px; }

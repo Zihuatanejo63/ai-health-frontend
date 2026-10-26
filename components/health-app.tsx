@@ -16,13 +16,14 @@ import type {
   Profile,
   Evaluation,
 } from "../../shared/health";
-import { emptyWorkspace } from "../../shared/health";
+import { displayValue, emptyWorkspace } from "../../shared/health";
 import {
   evaluate,
   rank,
   EMERGENCY_TEXT,
   redFlagQuestion,
   RULE_REVIEW,
+  RULES,
 } from "../../shared/health-rules";
 type View =
   | "overview"
@@ -42,6 +43,7 @@ const views: [View, string][] = [
 const severityLabels = {
   normal: "Within range",
   mild: "Mild deviation",
+  review: "Worth rechecking / 咨询医生",
   significant: "Significant abnormality",
   critical: "Critical value",
   unclassified: "Needs review",
@@ -49,13 +51,13 @@ const severityLabels = {
 const trendLabels = {
   new: "New abnormality / 新发",
   persistent: "Persistent / 持续",
-  worsening: "Worsening / 恶化",
-  improving: "Improving / 改善",
-  resolved: "Resolved / 恢复",
+  worsening: "Increasing / 加重",
+  improving: "Decreasing / 减轻",
+  resolved: "Resolved / 恢复或转阴",
   stable: "Stable",
   insufficient_history: "More comparable data needed",
 };
-const fmt = (n: number) => Number(n.toFixed(3)).toString();
+const fmt = displayValue;
 const blankRow = (): LabResult => ({
   id: crypto.randomUUID(),
   marker: "",
@@ -82,6 +84,7 @@ export function HealthApp() {
   const [sourceUrl, setSourceUrl] = useState("");
   const sourceRef = useRef("");
   const [file, setFile] = useState<File | null>(null);
+  const [uploadFailed, setUploadFailed] = useState(false);
   const [consent, setConsent] = useState(false);
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState<Answer | null>(null);
@@ -209,9 +212,7 @@ export function HealthApp() {
         setSpace(s);
         setAllowModel(true);
       }
-      if (sourceRef.current) URL.revokeObjectURL(sourceRef.current);
-      sourceRef.current = "";
-      setSourceUrl("");
+      // Keep selected source visible when switching to manual entry after a failed read.
       const result = await healthApi<{ draft: Draft }>(s, "/drafts", "POST", {
         kind,
       });
@@ -233,12 +234,14 @@ export function HealthApp() {
         message?: string;
       }>(space, "/extract", "POST", form);
       if (result.fallback) {
+        setUploadFailed(true);
         setNotice(
           result.message || "Use manual entry or the fictional sample below.",
         );
         return;
       }
       if (result.draft) {
+        setUploadFailed(false);
         await reload();
         setDraft(result.draft);
         navigate("confirm", { draft: result.draft.id });
@@ -412,7 +415,9 @@ export function HealthApp() {
       {view === "report" && state && (
         <section className="hp-conclusions" aria-label="Report conclusions">
           <article>
-            <span>Flagged results {space === "sample" ? "· Sample / fictional" : ""}</span>
+            <span>
+              Flagged results {space === "sample" ? "· Sample / fictional" : ""}
+            </span>
             <strong>{flagged.length}</strong>
             <p>
               {shown.filter((e) => e.severity === "unclassified").length}{" "}
@@ -564,7 +569,10 @@ export function HealthApp() {
                   aria-label="Report conclusions"
                 >
                   <article>
-                    <span>Flagged results {space === "sample" ? "· Sample / fictional" : ""}</span>
+                    <span>
+                      Flagged results{" "}
+                      {space === "sample" ? "· Sample / fictional" : ""}
+                    </span>
                     <strong>{flagged.length}</strong>
                     <p>
                       {
@@ -837,6 +845,7 @@ export function HealthApp() {
                       onChange={(e) => {
                         const f = e.target.files?.[0] || null;
                         setFile(f);
+                        setUploadFailed(false);
                         if (sourceRef.current)
                           URL.revokeObjectURL(sourceRef.current);
                         sourceRef.current = f ? URL.createObjectURL(f) : "";
@@ -863,7 +872,9 @@ export function HealthApp() {
                     className="hm-button"
                     disabled={busy || !file || !consent}
                   >
-                    Extract and review
+                    {uploadFailed
+                      ? "稍后再试一次 / Try again"
+                      : "Extract and review"}
                   </button>
                 </form>
                 <div className="hm-card hp-form">
@@ -881,7 +892,7 @@ export function HealthApp() {
                     disabled={busy}
                     onClick={() => createDraft("manual")}
                   >
-                    Enter results manually
+                    Enter results manually / 手动录入
                   </button>
                   <p className="hm-small">
                     Sample imports use a separate fictional profile. To see a
@@ -996,18 +1007,74 @@ export function HealthApp() {
                           />
                         </label>
                         <label>
+                          Result type
+                          <select
+                            value={
+                              typeof v.value === "string" ? "text" : "number"
+                            }
+                            onChange={(e) =>
+                              setRow(
+                                ri,
+                                vi,
+                                e.target.value === "text"
+                                  ? {
+                                      value: "Negative",
+                                      unit: "qualitative",
+                                      low: null,
+                                      high: null,
+                                      comparator: "=",
+                                    }
+                                  : {
+                                      value: 0,
+                                      unit: "",
+                                      qualitativeReference: undefined,
+                                    },
+                              )
+                            }
+                          >
+                            <option value="number">Numeric</option>
+                            <option value="text">Qualitative / 定性</option>
+                          </select>
+                        </label>
+                        <label>
                           Value
                           <input
-                            type="number"
-                            step="any"
-                            min="0"
                             required
+                            type={
+                              typeof v.value === "string" ? "text" : "number"
+                            }
+                            step="any"
+                            min={typeof v.value === "number" ? 0 : undefined}
+                            list={
+                              typeof v.value === "string"
+                                ? "qualitative-values"
+                                : undefined
+                            }
                             value={v.value}
                             onChange={(e) =>
-                              setRow(ri, vi, { value: Number(e.target.value) })
+                              setRow(ri, vi, {
+                                value:
+                                  typeof v.value === "string"
+                                    ? e.target.value
+                                    : Number(e.target.value),
+                              })
                             }
                           />
                         </label>
+                        {typeof v.value === "string" && (
+                          <label>
+                            Qualitative reference (as printed)
+                            <input
+                              value={v.qualitativeReference || ""}
+                              onChange={(e) =>
+                                setRow(ri, vi, {
+                                  qualitativeReference:
+                                    e.target.value || undefined,
+                                })
+                              }
+                            />
+                          </label>
+                        )}
                         <label>
                           Unit
                           <input
@@ -1022,6 +1089,7 @@ export function HealthApp() {
                         <label>
                           Comparator
                           <select
+                            disabled={typeof v.value === "string"}
                             value={v.comparator}
                             onChange={(e) =>
                               setRow(ri, vi, {
@@ -1041,6 +1109,7 @@ export function HealthApp() {
                             type="number"
                             step="any"
                             min="0"
+                            disabled={typeof v.value === "string"}
                             value={v.low ?? ""}
                             placeholder="Unknown"
                             onChange={(e) =>
@@ -1059,6 +1128,7 @@ export function HealthApp() {
                             type="number"
                             step="any"
                             min="0"
+                            disabled={typeof v.value === "string"}
                             value={v.high ?? ""}
                             placeholder="Unknown"
                             onChange={(e) =>
@@ -1112,12 +1182,15 @@ export function HealthApp() {
                   </button>
                 </fieldset>
               ))}
+              <datalist id="qualitative-values">
+                {["Negative", "Trace", "+", "++", "+++"].map((v) => (
+                  <option key={v} value={v} />
+                ))}
+              </datalist>
               <datalist id="known-markers">
-                {["HbA1c", "Glucose", "Potassium", "ALT", "Hemoglobin"].map(
-                  (m) => (
-                    <option key={m} value={m} />
-                  ),
-                )}
+                {RULES.map((r) => r.name).map((m) => (
+                  <option key={m} value={m} />
+                ))}
               </datalist>
               <div className="hp-actions">
                 <button className="hm-button" disabled={busy}>
@@ -1214,9 +1287,65 @@ export function HealthApp() {
                   : ""}
               </p>
               <p className="hp-notice">
-                Email: {state.emailStatus}. Nothing is emailed. In-app due dates
-                update when you open the workspace.
+                Email: {state.emailStatus}. Reminders contain only a generic due
+                notice and a login link. {RULE_REVIEW}
               </p>
+              {space === "personal" && (
+                <div className="hm-card hp-form">
+                  <label>
+                    <input
+                      type="checkbox"
+                      disabled={busy}
+                      checked={state.workspace.reminders?.enabled || false}
+                      onChange={(e) =>
+                        run(async () => {
+                          await healthApi(space, "/reminder-settings", "PUT", {
+                            enabled: e.target.checked,
+                            revision: state.workspace.revision,
+                          });
+                          await reload();
+                        })
+                      }
+                    />{" "}
+                    Enable private due reminders / 开启到期提醒
+                  </label>
+                  <button
+                    className="hm-button"
+                    disabled={busy || !state.workspace.reminders?.enabled}
+                    onClick={() =>
+                      run(async () => {
+                        const result = await healthApi<{
+                          status: string;
+                          transport?: string;
+                        }>(space, "/reminders/send", "POST", {});
+                        setNotice(
+                          `Reminder: ${result.status}${result.transport ? ` (${result.transport})` : ""}`,
+                        );
+                        await reload();
+                      })
+                    }
+                  >
+                    Send due reminder now
+                  </button>
+                  {state.workspace.reminders?.deliveries.map((d) => (
+                    <details key={d.key}>
+                      <summary>
+                        {d.at} · {d.status} · {d.transport}
+                      </summary>
+                      {d.envelope && (
+                        <>
+                          <p>Local capture only. No external delivery.</p>
+                          <p>To: {d.envelope.to}</p>
+                          <p>{d.envelope.subject}</p>
+                          <pre style={{ whiteSpace: "pre-wrap" }}>
+                            {d.envelope.text}
+                          </pre>
+                        </>
+                      )}
+                    </details>
+                  ))}
+                </div>
+              )}
               <h3>Due now · {due.length}</h3>
               {due.length === 0 && <p>No overdue outstanding tasks.</p>}
               {actions.length === 0 && (
@@ -1520,8 +1649,11 @@ function ResultCard({ entry: e }: { entry: Evaluation }) {
         <p>
           Original: {e.result.marker}{" "}
           {e.result.comparator === "=" ? "" : e.result.comparator}
-          {e.result.value} {e.result.unit}, range {e.result.low ?? "?"}–
-          {e.result.high ?? "?"}. {e.result.source}
+          {e.result.value} {e.result.unit}, reference{" "}
+          {typeof e.result.value === "string"
+            ? e.result.qualitativeReference || "not provided"
+            : `${e.result.low ?? "?"}–${e.result.high ?? "?"}`}
+          . {e.result.source}
         </p>
         <p>{RULE_REVIEW}</p>
       </details>
@@ -1529,7 +1661,15 @@ function ResultCard({ entry: e }: { entry: Evaluation }) {
   );
 }
 function TrendChart({ entry: e }: { entry: Evaluation }) {
-  const values = e.history.map((h) => h.value);
+  if (e.history.some((h) => typeof h.value === "string"))
+    return (
+      <p>
+        Qualitative category changes / 定性等级变化：
+        {e.history.map((h) => `${h.date}: ${h.value}`).join(" → ")}. These are
+        categories, not measured quantities.
+      </p>
+    );
+  const values = e.history.map((h) => h.value as number);
   if (values.length < 2)
     return (
       <p>

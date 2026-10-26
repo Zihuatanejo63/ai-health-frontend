@@ -2,7 +2,10 @@
 const nextConfig = {
   reactStrictMode: true,
   output: process.env.HEALTHMATCH_LOCAL_API ? undefined : "export",
-  experimental: { externalDir: true },
+  experimental: {
+    externalDir: true,
+    ...(process.env.HEALTHMATCH_LOCAL_API ? { proxyTimeout: 45000 } : {}),
+  },
   ...(process.env.HEALTHMATCH_LOCAL_API
     ? {
         async rewrites() {
