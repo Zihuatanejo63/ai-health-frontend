@@ -66,7 +66,7 @@ const blankRow = (): LabResult => ({
   comparator: "=",
   low: null,
   high: null,
-  confidence: 0,
+  confidence: null,
   source: "Manual entry",
   reviewed: false,
 });
@@ -912,7 +912,7 @@ export function HealthApp() {
                 </strong>
                 <p>
                   Edit every field as needed, then check each row. Orange rows
-                  have low confidence. Only confirmed values enter your record.
+                  have low or unprovided confidence. Only confirmed values enter your record.
                   Leaving or refreshing this page restores the original saved
                   draft; unsaved edits must be re-entered.
                 </p>
@@ -983,13 +983,15 @@ export function HealthApp() {
                   </div>
                   {r.results.map((v, vi) => (
                     <div
-                      className={`hp-edit-row ${v.confidence < 0.8 ? "hp-low-confidence" : ""}`}
+                      className={`hp-edit-row ${(v.confidence === null || v.confidence < 0.8) ? "hp-low-confidence" : ""}`}
                       key={v.id}
                     >
                       <div className="hp-row-heading">
                         <strong>Marker {vi + 1}</strong>
                         <span>
-                          {v.confidence < 0.8
+                          {v.confidence === null
+                            ? "Confidence not provided / 置信度未提供 — check carefully"
+                            : v.confidence < 0.8
                             ? "Low confidence — check carefully"
                             : `Extraction confidence ${Math.round(v.confidence * 100)}%`}
                         </span>
