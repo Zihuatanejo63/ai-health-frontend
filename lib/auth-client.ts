@@ -21,9 +21,9 @@ export interface MeResponse {
   entitlement: ServerEntitlement;
 }
 
-export const API_BASE =
+const API_BASE =
   process.env.NEXT_PUBLIC_API_BASE_URL?.replace(/\/$/, "") ||
-  (typeof window !== "undefined" && ["healthmatchai.com", "www.healthmatchai.com", "ai-health-frontend.pages.dev"].includes(window.location.hostname)
+  (typeof window !== "undefined" && window.location.hostname === "healthmatchai.com"
     ? "https://api.healthmatchai.com"
     : "");
 
@@ -54,7 +54,7 @@ export function clearCachedMe(): void {
   cachedMe = null;
 }
 
-export async function requestMagicLink(email: string): Promise<{ ok: boolean; message: string; localUrl?: string }> {
+export async function requestMagicLink(email: string): Promise<{ ok: boolean; message: string }> {
   try {
     const res = await fetch(`${API_BASE}/api/auth/request-link`, {
       method: "POST",
@@ -62,10 +62,9 @@ export async function requestMagicLink(email: string): Promise<{ ok: boolean; me
       body: JSON.stringify({ email }),
     });
 
-    const data = (await res.json().catch(() => ({}))) as { ok?: boolean; message?: string; localUrl?: string; error?: { message?: string } };
+    const data = (await res.json().catch(() => ({}))) as { ok?: boolean; message?: string; error?: { message?: string } };
     return {
       ok: res.ok && (data.ok ?? false),
-      localUrl: data.localUrl,
       message: data.message || data.error?.message || "We could not send the sign-in email right now. Please try again later.",
     };
   } catch {
@@ -82,6 +81,8 @@ export async function registerWithPassword(
   name?: string
 ): Promise<{ ok: boolean; message: string; user?: ServerUser }> {
   const url = `${API_BASE}/api/auth/register`;
+  console.log("[register] API_BASE:", API_BASE);
+  console.log("[register] URL:", url);
 
   try {
     const res = await fetch(url, {
@@ -93,6 +94,8 @@ export async function registerWithPassword(
     const data = (await res.json().catch(() => ({}))) as {
       ok?: boolean; message?: string; code?: string; user?: ServerUser; error?: { message?: string };
     };
+    console.log("[register] response.status:", res.status);
+    console.log("[register] response JSON:", data);
 
     if (res.ok && data.ok) {
       clearCachedMe();
@@ -114,6 +117,8 @@ export async function loginWithPassword(
   password: string
 ): Promise<{ ok: boolean; message: string; user?: ServerUser }> {
   const url = `${API_BASE}/api/auth/login`;
+  console.log("[login] API_BASE:", API_BASE);
+  console.log("[login] URL:", url);
 
   try {
     const res = await fetch(url, {
@@ -125,6 +130,8 @@ export async function loginWithPassword(
     const data = (await res.json().catch(() => ({}))) as {
       ok?: boolean; message?: string; code?: string; user?: ServerUser; error?: { message?: string };
     };
+    console.log("[login] response.status:", res.status);
+    console.log("[login] response JSON:", data);
 
     if (res.ok && data.ok) {
       clearCachedMe();

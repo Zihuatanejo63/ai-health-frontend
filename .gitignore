@@ -4,5 +4,3 @@ out
 .env.local
 *.log
 *.tsbuildinfo
-
-.marketing-build

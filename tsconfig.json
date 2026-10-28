@@ -36,8 +36,6 @@
     ".next/types/**/*.ts"
   ],
   "exclude": [
-    "node_modules",
-    "marketing",
-    ".marketing-build"
+    "node_modules"
   ]
 }
