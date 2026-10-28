@@ -4,11 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 3000",
-    "build": "next build && node scripts/localized-index.cjs",
+    "build": "node scripts/build-marketing.cjs",
     "start": "next start -p 3000",
     "test:triage": "npx --yes tsx scripts/test-triage-rules.ts",
     "test:e2e": "npx playwright test --config e2e/playwright.config.ts",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "build:full": "next build && node scripts/localized-index.cjs"
   },
   "dependencies": {
     "next": "^14.2.5",
