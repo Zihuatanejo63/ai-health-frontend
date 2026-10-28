@@ -13,6 +13,7 @@ const currentRoutes = [
 ];
 export function RouteBoundary({ children }: { children: React.ReactNode }) {
   const path = usePathname();
+  if (/^\/(zh|es|hi|ar|pt|fr|ru|ja|de)(\/|$)/.test(path)) return <>{children}</>;
   if (currentRoutes.includes(path.replace(/\/$/, "") || "/"))
     return <>{children}</>;
   return (

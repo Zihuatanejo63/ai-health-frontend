@@ -1,8 +1,653 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://healthmatchai.com/</loc><lastmod>2026-10-24</lastmod></url>
-  <url><loc>https://healthmatchai.com/sample-report</loc><lastmod>2026-10-24</lastmod></url>
-  <url><loc>https://healthmatchai.com/pricing</loc><lastmod>2026-10-24</lastmod></url>
-  <url><loc>https://healthmatchai.com/safety</loc><lastmod>2026-10-24</lastmod></url>
-  <url><loc>https://healthmatchai.com/privacy</loc><lastmod>2026-10-24</lastmod></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url><loc>https://healthmatchai.com/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthmatchai.com/"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://healthmatchai.com/zh/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthmatchai.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://healthmatchai.com/hi/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://healthmatchai.com/ar/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://healthmatchai.com/pt/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthmatchai.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://healthmatchai.com/ru/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://healthmatchai.com/ja/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://healthmatchai.com/de/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://healthmatchai.com/"/>
+  </url>
+  <url><loc>https://healthmatchai.com/zh/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthmatchai.com/"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://healthmatchai.com/zh/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthmatchai.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://healthmatchai.com/hi/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://healthmatchai.com/ar/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://healthmatchai.com/pt/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthmatchai.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://healthmatchai.com/ru/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://healthmatchai.com/ja/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://healthmatchai.com/de/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://healthmatchai.com/"/>
+  </url>
+  <url><loc>https://healthmatchai.com/es/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthmatchai.com/"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://healthmatchai.com/zh/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthmatchai.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://healthmatchai.com/hi/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://healthmatchai.com/ar/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://healthmatchai.com/pt/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthmatchai.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://healthmatchai.com/ru/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://healthmatchai.com/ja/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://healthmatchai.com/de/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://healthmatchai.com/"/>
+  </url>
+  <url><loc>https://healthmatchai.com/hi/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthmatchai.com/"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://healthmatchai.com/zh/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthmatchai.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://healthmatchai.com/hi/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://healthmatchai.com/ar/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://healthmatchai.com/pt/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthmatchai.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://healthmatchai.com/ru/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://healthmatchai.com/ja/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://healthmatchai.com/de/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://healthmatchai.com/"/>
+  </url>
+  <url><loc>https://healthmatchai.com/ar/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthmatchai.com/"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://healthmatchai.com/zh/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthmatchai.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://healthmatchai.com/hi/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://healthmatchai.com/ar/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://healthmatchai.com/pt/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthmatchai.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://healthmatchai.com/ru/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://healthmatchai.com/ja/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://healthmatchai.com/de/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://healthmatchai.com/"/>
+  </url>
+  <url><loc>https://healthmatchai.com/pt/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthmatchai.com/"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://healthmatchai.com/zh/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthmatchai.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://healthmatchai.com/hi/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://healthmatchai.com/ar/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://healthmatchai.com/pt/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthmatchai.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://healthmatchai.com/ru/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://healthmatchai.com/ja/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://healthmatchai.com/de/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://healthmatchai.com/"/>
+  </url>
+  <url><loc>https://healthmatchai.com/fr/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthmatchai.com/"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://healthmatchai.com/zh/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthmatchai.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://healthmatchai.com/hi/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://healthmatchai.com/ar/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://healthmatchai.com/pt/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthmatchai.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://healthmatchai.com/ru/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://healthmatchai.com/ja/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://healthmatchai.com/de/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://healthmatchai.com/"/>
+  </url>
+  <url><loc>https://healthmatchai.com/ru/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthmatchai.com/"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://healthmatchai.com/zh/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthmatchai.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://healthmatchai.com/hi/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://healthmatchai.com/ar/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://healthmatchai.com/pt/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthmatchai.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://healthmatchai.com/ru/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://healthmatchai.com/ja/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://healthmatchai.com/de/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://healthmatchai.com/"/>
+  </url>
+  <url><loc>https://healthmatchai.com/ja/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthmatchai.com/"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://healthmatchai.com/zh/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthmatchai.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://healthmatchai.com/hi/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://healthmatchai.com/ar/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://healthmatchai.com/pt/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthmatchai.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://healthmatchai.com/ru/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://healthmatchai.com/ja/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://healthmatchai.com/de/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://healthmatchai.com/"/>
+  </url>
+  <url><loc>https://healthmatchai.com/de/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthmatchai.com/"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://healthmatchai.com/zh/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthmatchai.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://healthmatchai.com/hi/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://healthmatchai.com/ar/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://healthmatchai.com/pt/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthmatchai.com/fr/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://healthmatchai.com/ru/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://healthmatchai.com/ja/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://healthmatchai.com/de/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://healthmatchai.com/"/>
+  </url>
+  <url><loc>https://healthmatchai.com/sample-report</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthmatchai.com/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://healthmatchai.com/zh/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthmatchai.com/es/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://healthmatchai.com/hi/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://healthmatchai.com/ar/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://healthmatchai.com/pt/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthmatchai.com/fr/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://healthmatchai.com/ru/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://healthmatchai.com/ja/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://healthmatchai.com/de/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://healthmatchai.com/sample-report"/>
+  </url>
+  <url><loc>https://healthmatchai.com/zh/sample-report</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthmatchai.com/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://healthmatchai.com/zh/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthmatchai.com/es/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://healthmatchai.com/hi/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://healthmatchai.com/ar/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://healthmatchai.com/pt/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthmatchai.com/fr/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://healthmatchai.com/ru/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://healthmatchai.com/ja/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://healthmatchai.com/de/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://healthmatchai.com/sample-report"/>
+  </url>
+  <url><loc>https://healthmatchai.com/es/sample-report</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthmatchai.com/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://healthmatchai.com/zh/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthmatchai.com/es/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://healthmatchai.com/hi/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://healthmatchai.com/ar/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://healthmatchai.com/pt/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthmatchai.com/fr/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://healthmatchai.com/ru/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://healthmatchai.com/ja/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://healthmatchai.com/de/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://healthmatchai.com/sample-report"/>
+  </url>
+  <url><loc>https://healthmatchai.com/hi/sample-report</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthmatchai.com/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://healthmatchai.com/zh/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthmatchai.com/es/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://healthmatchai.com/hi/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://healthmatchai.com/ar/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://healthmatchai.com/pt/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthmatchai.com/fr/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://healthmatchai.com/ru/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://healthmatchai.com/ja/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://healthmatchai.com/de/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://healthmatchai.com/sample-report"/>
+  </url>
+  <url><loc>https://healthmatchai.com/ar/sample-report</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthmatchai.com/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://healthmatchai.com/zh/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthmatchai.com/es/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://healthmatchai.com/hi/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://healthmatchai.com/ar/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://healthmatchai.com/pt/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthmatchai.com/fr/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://healthmatchai.com/ru/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://healthmatchai.com/ja/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://healthmatchai.com/de/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://healthmatchai.com/sample-report"/>
+  </url>
+  <url><loc>https://healthmatchai.com/pt/sample-report</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthmatchai.com/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://healthmatchai.com/zh/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthmatchai.com/es/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://healthmatchai.com/hi/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://healthmatchai.com/ar/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://healthmatchai.com/pt/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthmatchai.com/fr/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://healthmatchai.com/ru/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://healthmatchai.com/ja/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://healthmatchai.com/de/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://healthmatchai.com/sample-report"/>
+  </url>
+  <url><loc>https://healthmatchai.com/fr/sample-report</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthmatchai.com/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://healthmatchai.com/zh/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthmatchai.com/es/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://healthmatchai.com/hi/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://healthmatchai.com/ar/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://healthmatchai.com/pt/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthmatchai.com/fr/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://healthmatchai.com/ru/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://healthmatchai.com/ja/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://healthmatchai.com/de/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://healthmatchai.com/sample-report"/>
+  </url>
+  <url><loc>https://healthmatchai.com/ru/sample-report</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthmatchai.com/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://healthmatchai.com/zh/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthmatchai.com/es/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://healthmatchai.com/hi/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://healthmatchai.com/ar/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://healthmatchai.com/pt/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthmatchai.com/fr/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://healthmatchai.com/ru/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://healthmatchai.com/ja/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://healthmatchai.com/de/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://healthmatchai.com/sample-report"/>
+  </url>
+  <url><loc>https://healthmatchai.com/ja/sample-report</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthmatchai.com/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://healthmatchai.com/zh/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthmatchai.com/es/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://healthmatchai.com/hi/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://healthmatchai.com/ar/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://healthmatchai.com/pt/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthmatchai.com/fr/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://healthmatchai.com/ru/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://healthmatchai.com/ja/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://healthmatchai.com/de/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://healthmatchai.com/sample-report"/>
+  </url>
+  <url><loc>https://healthmatchai.com/de/sample-report</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthmatchai.com/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://healthmatchai.com/zh/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthmatchai.com/es/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://healthmatchai.com/hi/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://healthmatchai.com/ar/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://healthmatchai.com/pt/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthmatchai.com/fr/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://healthmatchai.com/ru/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://healthmatchai.com/ja/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://healthmatchai.com/de/sample-report"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://healthmatchai.com/sample-report"/>
+  </url>
+  <url><loc>https://healthmatchai.com/pricing</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthmatchai.com/pricing"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://healthmatchai.com/zh/pricing"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthmatchai.com/es/pricing"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://healthmatchai.com/hi/pricing"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://healthmatchai.com/ar/pricing"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://healthmatchai.com/pt/pricing"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthmatchai.com/fr/pricing"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://healthmatchai.com/ru/pricing"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://healthmatchai.com/ja/pricing"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://healthmatchai.com/de/pricing"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://healthmatchai.com/pricing"/>
+  </url>
+  <url><loc>https://healthmatchai.com/zh/pricing</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthmatchai.com/pricing"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://healthmatchai.com/zh/pricing"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthmatchai.com/es/pricing"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://healthmatchai.com/hi/pricing"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://healthmatchai.com/ar/pricing"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://healthmatchai.com/pt/pricing"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthmatchai.com/fr/pricing"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://healthmatchai.com/ru/pricing"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://healthmatchai.com/ja/pricing"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://healthmatchai.com/de/pricing"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://healthmatchai.com/pricing"/>
+  </url>
+  <url><loc>https://healthmatchai.com/es/pricing</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthmatchai.com/pricing"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://healthmatchai.com/zh/pricing"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthmatchai.com/es/pricing"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://healthmatchai.com/hi/pricing"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://healthmatchai.com/ar/pricing"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://healthmatchai.com/pt/pricing"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthmatchai.com/fr/pricing"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://healthmatchai.com/ru/pricing"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://healthmatchai.com/ja/pricing"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://healthmatchai.com/de/pricing"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://healthmatchai.com/pricing"/>
+  </url>
+  <url><loc>https://healthmatchai.com/hi/pricing</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthmatchai.com/pricing"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://healthmatchai.com/zh/pricing"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthmatchai.com/es/pricing"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://healthmatchai.com/hi/pricing"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://healthmatchai.com/ar/pricing"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://healthmatchai.com/pt/pricing"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthmatchai.com/fr/pricing"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://healthmatchai.com/ru/pricing"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://healthmatchai.com/ja/pricing"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://healthmatchai.com/de/pricing"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://healthmatchai.com/pricing"/>
+  </url>
+  <url><loc>https://healthmatchai.com/ar/pricing</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthmatchai.com/pricing"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://healthmatchai.com/zh/pricing"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthmatchai.com/es/pricing"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://healthmatchai.com/hi/pricing"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://healthmatchai.com/ar/pricing"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://healthmatchai.com/pt/pricing"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthmatchai.com/fr/pricing"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://healthmatchai.com/ru/pricing"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://healthmatchai.com/ja/pricing"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://healthmatchai.com/de/pricing"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://healthmatchai.com/pricing"/>
+  </url>
+  <url><loc>https://healthmatchai.com/pt/pricing</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthmatchai.com/pricing"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://healthmatchai.com/zh/pricing"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthmatchai.com/es/pricing"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://healthmatchai.com/hi/pricing"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://healthmatchai.com/ar/pricing"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://healthmatchai.com/pt/pricing"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthmatchai.com/fr/pricing"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://healthmatchai.com/ru/pricing"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://healthmatchai.com/ja/pricing"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://healthmatchai.com/de/pricing"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://healthmatchai.com/pricing"/>
+  </url>
+  <url><loc>https://healthmatchai.com/fr/pricing</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthmatchai.com/pricing"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://healthmatchai.com/zh/pricing"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthmatchai.com/es/pricing"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://healthmatchai.com/hi/pricing"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://healthmatchai.com/ar/pricing"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://healthmatchai.com/pt/pricing"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthmatchai.com/fr/pricing"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://healthmatchai.com/ru/pricing"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://healthmatchai.com/ja/pricing"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://healthmatchai.com/de/pricing"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://healthmatchai.com/pricing"/>
+  </url>
+  <url><loc>https://healthmatchai.com/ru/pricing</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthmatchai.com/pricing"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://healthmatchai.com/zh/pricing"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthmatchai.com/es/pricing"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://healthmatchai.com/hi/pricing"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://healthmatchai.com/ar/pricing"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://healthmatchai.com/pt/pricing"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthmatchai.com/fr/pricing"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://healthmatchai.com/ru/pricing"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://healthmatchai.com/ja/pricing"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://healthmatchai.com/de/pricing"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://healthmatchai.com/pricing"/>
+  </url>
+  <url><loc>https://healthmatchai.com/ja/pricing</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthmatchai.com/pricing"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://healthmatchai.com/zh/pricing"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthmatchai.com/es/pricing"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://healthmatchai.com/hi/pricing"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://healthmatchai.com/ar/pricing"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://healthmatchai.com/pt/pricing"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthmatchai.com/fr/pricing"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://healthmatchai.com/ru/pricing"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://healthmatchai.com/ja/pricing"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://healthmatchai.com/de/pricing"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://healthmatchai.com/pricing"/>
+  </url>
+  <url><loc>https://healthmatchai.com/de/pricing</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthmatchai.com/pricing"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://healthmatchai.com/zh/pricing"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthmatchai.com/es/pricing"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://healthmatchai.com/hi/pricing"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://healthmatchai.com/ar/pricing"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://healthmatchai.com/pt/pricing"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthmatchai.com/fr/pricing"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://healthmatchai.com/ru/pricing"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://healthmatchai.com/ja/pricing"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://healthmatchai.com/de/pricing"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://healthmatchai.com/pricing"/>
+  </url>
+  <url><loc>https://healthmatchai.com/safety</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthmatchai.com/safety"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://healthmatchai.com/zh/safety"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthmatchai.com/es/safety"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://healthmatchai.com/hi/safety"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://healthmatchai.com/ar/safety"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://healthmatchai.com/pt/safety"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthmatchai.com/fr/safety"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://healthmatchai.com/ru/safety"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://healthmatchai.com/ja/safety"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://healthmatchai.com/de/safety"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://healthmatchai.com/safety"/>
+  </url>
+  <url><loc>https://healthmatchai.com/zh/safety</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthmatchai.com/safety"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://healthmatchai.com/zh/safety"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthmatchai.com/es/safety"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://healthmatchai.com/hi/safety"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://healthmatchai.com/ar/safety"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://healthmatchai.com/pt/safety"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthmatchai.com/fr/safety"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://healthmatchai.com/ru/safety"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://healthmatchai.com/ja/safety"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://healthmatchai.com/de/safety"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://healthmatchai.com/safety"/>
+  </url>
+  <url><loc>https://healthmatchai.com/es/safety</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthmatchai.com/safety"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://healthmatchai.com/zh/safety"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthmatchai.com/es/safety"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://healthmatchai.com/hi/safety"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://healthmatchai.com/ar/safety"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://healthmatchai.com/pt/safety"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthmatchai.com/fr/safety"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://healthmatchai.com/ru/safety"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://healthmatchai.com/ja/safety"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://healthmatchai.com/de/safety"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://healthmatchai.com/safety"/>
+  </url>
+  <url><loc>https://healthmatchai.com/hi/safety</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthmatchai.com/safety"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://healthmatchai.com/zh/safety"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthmatchai.com/es/safety"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://healthmatchai.com/hi/safety"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://healthmatchai.com/ar/safety"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://healthmatchai.com/pt/safety"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthmatchai.com/fr/safety"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://healthmatchai.com/ru/safety"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://healthmatchai.com/ja/safety"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://healthmatchai.com/de/safety"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://healthmatchai.com/safety"/>
+  </url>
+  <url><loc>https://healthmatchai.com/ar/safety</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthmatchai.com/safety"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://healthmatchai.com/zh/safety"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthmatchai.com/es/safety"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://healthmatchai.com/hi/safety"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://healthmatchai.com/ar/safety"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://healthmatchai.com/pt/safety"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthmatchai.com/fr/safety"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://healthmatchai.com/ru/safety"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://healthmatchai.com/ja/safety"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://healthmatchai.com/de/safety"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://healthmatchai.com/safety"/>
+  </url>
+  <url><loc>https://healthmatchai.com/pt/safety</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthmatchai.com/safety"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://healthmatchai.com/zh/safety"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthmatchai.com/es/safety"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://healthmatchai.com/hi/safety"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://healthmatchai.com/ar/safety"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://healthmatchai.com/pt/safety"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthmatchai.com/fr/safety"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://healthmatchai.com/ru/safety"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://healthmatchai.com/ja/safety"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://healthmatchai.com/de/safety"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://healthmatchai.com/safety"/>
+  </url>
+  <url><loc>https://healthmatchai.com/fr/safety</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthmatchai.com/safety"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://healthmatchai.com/zh/safety"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthmatchai.com/es/safety"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://healthmatchai.com/hi/safety"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://healthmatchai.com/ar/safety"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://healthmatchai.com/pt/safety"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthmatchai.com/fr/safety"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://healthmatchai.com/ru/safety"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://healthmatchai.com/ja/safety"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://healthmatchai.com/de/safety"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://healthmatchai.com/safety"/>
+  </url>
+  <url><loc>https://healthmatchai.com/ru/safety</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthmatchai.com/safety"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://healthmatchai.com/zh/safety"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthmatchai.com/es/safety"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://healthmatchai.com/hi/safety"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://healthmatchai.com/ar/safety"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://healthmatchai.com/pt/safety"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthmatchai.com/fr/safety"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://healthmatchai.com/ru/safety"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://healthmatchai.com/ja/safety"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://healthmatchai.com/de/safety"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://healthmatchai.com/safety"/>
+  </url>
+  <url><loc>https://healthmatchai.com/ja/safety</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthmatchai.com/safety"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://healthmatchai.com/zh/safety"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthmatchai.com/es/safety"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://healthmatchai.com/hi/safety"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://healthmatchai.com/ar/safety"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://healthmatchai.com/pt/safety"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthmatchai.com/fr/safety"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://healthmatchai.com/ru/safety"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://healthmatchai.com/ja/safety"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://healthmatchai.com/de/safety"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://healthmatchai.com/safety"/>
+  </url>
+  <url><loc>https://healthmatchai.com/de/safety</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthmatchai.com/safety"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://healthmatchai.com/zh/safety"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthmatchai.com/es/safety"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://healthmatchai.com/hi/safety"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://healthmatchai.com/ar/safety"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://healthmatchai.com/pt/safety"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthmatchai.com/fr/safety"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://healthmatchai.com/ru/safety"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://healthmatchai.com/ja/safety"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://healthmatchai.com/de/safety"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://healthmatchai.com/safety"/>
+  </url>
+  <url><loc>https://healthmatchai.com/privacy</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthmatchai.com/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://healthmatchai.com/zh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthmatchai.com/es/privacy"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://healthmatchai.com/hi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://healthmatchai.com/ar/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://healthmatchai.com/pt/privacy"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthmatchai.com/fr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://healthmatchai.com/ru/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://healthmatchai.com/ja/privacy"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://healthmatchai.com/de/privacy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://healthmatchai.com/privacy"/>
+  </url>
+  <url><loc>https://healthmatchai.com/zh/privacy</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthmatchai.com/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://healthmatchai.com/zh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthmatchai.com/es/privacy"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://healthmatchai.com/hi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://healthmatchai.com/ar/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://healthmatchai.com/pt/privacy"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthmatchai.com/fr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://healthmatchai.com/ru/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://healthmatchai.com/ja/privacy"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://healthmatchai.com/de/privacy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://healthmatchai.com/privacy"/>
+  </url>
+  <url><loc>https://healthmatchai.com/es/privacy</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthmatchai.com/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://healthmatchai.com/zh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthmatchai.com/es/privacy"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://healthmatchai.com/hi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://healthmatchai.com/ar/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://healthmatchai.com/pt/privacy"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthmatchai.com/fr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://healthmatchai.com/ru/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://healthmatchai.com/ja/privacy"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://healthmatchai.com/de/privacy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://healthmatchai.com/privacy"/>
+  </url>
+  <url><loc>https://healthmatchai.com/hi/privacy</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthmatchai.com/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://healthmatchai.com/zh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthmatchai.com/es/privacy"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://healthmatchai.com/hi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://healthmatchai.com/ar/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://healthmatchai.com/pt/privacy"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthmatchai.com/fr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://healthmatchai.com/ru/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://healthmatchai.com/ja/privacy"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://healthmatchai.com/de/privacy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://healthmatchai.com/privacy"/>
+  </url>
+  <url><loc>https://healthmatchai.com/ar/privacy</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthmatchai.com/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://healthmatchai.com/zh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthmatchai.com/es/privacy"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://healthmatchai.com/hi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://healthmatchai.com/ar/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://healthmatchai.com/pt/privacy"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthmatchai.com/fr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://healthmatchai.com/ru/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://healthmatchai.com/ja/privacy"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://healthmatchai.com/de/privacy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://healthmatchai.com/privacy"/>
+  </url>
+  <url><loc>https://healthmatchai.com/pt/privacy</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthmatchai.com/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://healthmatchai.com/zh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthmatchai.com/es/privacy"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://healthmatchai.com/hi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://healthmatchai.com/ar/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://healthmatchai.com/pt/privacy"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthmatchai.com/fr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://healthmatchai.com/ru/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://healthmatchai.com/ja/privacy"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://healthmatchai.com/de/privacy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://healthmatchai.com/privacy"/>
+  </url>
+  <url><loc>https://healthmatchai.com/fr/privacy</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthmatchai.com/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://healthmatchai.com/zh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthmatchai.com/es/privacy"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://healthmatchai.com/hi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://healthmatchai.com/ar/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://healthmatchai.com/pt/privacy"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthmatchai.com/fr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://healthmatchai.com/ru/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://healthmatchai.com/ja/privacy"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://healthmatchai.com/de/privacy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://healthmatchai.com/privacy"/>
+  </url>
+  <url><loc>https://healthmatchai.com/ru/privacy</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthmatchai.com/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://healthmatchai.com/zh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthmatchai.com/es/privacy"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://healthmatchai.com/hi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://healthmatchai.com/ar/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://healthmatchai.com/pt/privacy"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthmatchai.com/fr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://healthmatchai.com/ru/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://healthmatchai.com/ja/privacy"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://healthmatchai.com/de/privacy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://healthmatchai.com/privacy"/>
+  </url>
+  <url><loc>https://healthmatchai.com/ja/privacy</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthmatchai.com/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://healthmatchai.com/zh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthmatchai.com/es/privacy"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://healthmatchai.com/hi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://healthmatchai.com/ar/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://healthmatchai.com/pt/privacy"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthmatchai.com/fr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://healthmatchai.com/ru/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://healthmatchai.com/ja/privacy"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://healthmatchai.com/de/privacy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://healthmatchai.com/privacy"/>
+  </url>
+  <url><loc>https://healthmatchai.com/de/privacy</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://healthmatchai.com/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://healthmatchai.com/zh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://healthmatchai.com/es/privacy"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://healthmatchai.com/hi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://healthmatchai.com/ar/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://healthmatchai.com/pt/privacy"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://healthmatchai.com/fr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://healthmatchai.com/ru/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://healthmatchai.com/ja/privacy"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://healthmatchai.com/de/privacy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://healthmatchai.com/privacy"/>
+  </url>
 </urlset>

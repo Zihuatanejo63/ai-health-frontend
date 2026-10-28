@@ -3,8 +3,8 @@ import { RouteBoundary } from "@/components/route-boundary";
 import { AppLayout } from "@/components/app-ui";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import "./globals.css";
-import "./editorial.css";
+import "@/app/globals.css";
+import "@/app/editorial.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://healthmatchai.com"),
@@ -34,12 +34,13 @@ export const viewport = {
 };
 
 export default function RootLayout({
-  children,
+  children, params,
 }: Readonly<{
   children: React.ReactNode;
+  params: {locale?:string};
 }>) {
   return (
-    <html lang="en">
+    <html lang={params.locale || "en"} dir={params.locale === "ar" ? "rtl" : "ltr"}>
       <body>
         <RouteBoundary>
           <AppLayout>

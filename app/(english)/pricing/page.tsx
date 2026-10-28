@@ -1,6 +1,8 @@
+import {alternates} from "@/lib/public-i18n";
 import type { Metadata } from "next";
 import { Plans, Disclaimer } from "@/components/marketing";
 export const metadata: Metadata = {
+  alternates: alternates("/pricing"),
   title: "Pricing",
   description:
     "Preview plans for report readings, longitudinal tracking, and follow-up reminders.",

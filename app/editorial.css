@@ -162,3 +162,23 @@
   .hm-editorial .hm-tabs { gap:16px; }
   .site-shell:has(.hm-editorial) .hm-footer { padding:32px 20px 20px; }
 }
+/* Public internationalization extends the same editorial system. */
+.hm-editorial, .site-shell:has(.hm-editorial) > .hm-header, .site-shell:has(.hm-editorial) > .hm-footer {
+ --ed-serif: Georgia, 'Times New Roman', 'Songti SC', 'Noto Serif CJK SC', 'Noto Naskh Arabic', 'Noto Serif Devanagari', 'Devanagari Sangam MN', serif;
+ --ed-sans: Arial, Helvetica, 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', 'Geeza Pro', 'Noto Sans Arabic', 'Noto Sans Devanagari', 'Devanagari Sangam MN', sans-serif;
+}
+.hm-locale-select { margin:0; flex:0 0 auto; }
+.hm-locale-select select { max-width:145px; min-height:44px; padding:8px; border:1px solid #53615a; border-radius:2px; background:#fffefa; color:#202f2b; font:inherit; font-size:14px; }
+.site-shell:has(.hm-editorial) .hm-nav { flex-wrap:wrap; }
+.hm-editorial h1, .hm-editorial h2, .hm-editorial h3 { overflow-wrap:break-word; }
+.hm-translation-note { font-size:14px; border-block-end:1px solid #c7cec5; padding-block:16px; }
+[dir=rtl] .hm-editorial { letter-spacing:normal; }
+[dir=rtl] .hm-editorial :is(h1,h2,h3,.hm-overline) { letter-spacing:normal; }
+[dir=rtl] .hm-editorial .hm-table :is(th,td,caption) { text-align:right; }
+[dir=rtl] .hm-editorial .hm-contents ol { padding-left:0; padding-right:28px; }
+[dir=rtl] .hm-editorial .hm-preview-note { border-left:0; border-right:2px solid var(--ed-accent); }
+[dir=rtl] .hm-editorial .hm-step + .hm-step { border-left:0; border-right:1px solid var(--ed-rule); padding-right:var(--ed-s4); }
+[dir=rtl] .hm-editorial .hm-grid > .hm-card + .hm-card { border-left:1px solid var(--ed-rule); border-right:0; }
+[dir=rtl] .hm-editorial .hm-preview svg { direction:ltr; }
+@media(max-width:1000px){.site-shell:has(.hm-editorial) .hm-nav {gap:16px}.site-shell:has(.hm-editorial) .hm-nav nav{flex-wrap:wrap}}
+@media(max-width:700px){.hm-locale-select{position:static;margin-inline-start:auto}.site-shell:has(.hm-editorial) .hm-nav nav{order:3;justify-content:flex-start;column-gap:20px;row-gap:4px}.site-shell:has(.hm-editorial) .hm-nav nav a{min-height:40px;display:flex;align-items:center}[dir=rtl] .hm-editorial .hm-step + .hm-step{border-right:0;padding-right:0}[dir=rtl] .hm-editorial .hm-grid > .hm-card + .hm-card{border-right:1px solid var(--ed-rule)}}

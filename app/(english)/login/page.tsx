@@ -1,8 +1,10 @@
 "use client";
 import { useState, useEffect, type FormEvent } from "react";
 import Link from "next/link";
-import { fetchMe, requestMagicLink } from "@/lib/auth-client";
+import { fetchMe, requestMagicLink, loginWithPassword, registerWithPassword } from "@/lib/auth-client";
 export default function Login() {
+  const [password,setPassword]=useState("");
+  const [passwordMode,setPasswordMode]=useState<"login"|"register">("login");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [localUrl, setLocalUrl] = useState("");
@@ -20,6 +22,12 @@ export default function Login() {
     setMessage(result.message);
     setLocalUrl(result.localUrl || "");
     setBusy(false);
+  }
+  async function passwordSubmit(e:FormEvent) {
+    e.preventDefault();setBusy(true);setMessage("");
+    const result=await (passwordMode === "login" ? loginWithPassword(email,password) : registerWithPassword(email,password));
+    setPassword("");setBusy(false);setMessage(result.message);
+    if(result.ok) window.location.assign("/dashboard");
   }
   return (
     <div className="hm-page hm-prose">
@@ -61,6 +69,15 @@ export default function Login() {
           </div>
         )}
       </form>
+      <details className="hm-card" style={{marginTop:24}}>
+        <summary>Use email and password</summary>
+        <form className="hp-form" onSubmit={passwordSubmit}>
+          <label>Account email<input type="email" required autoComplete="username" value={email} onChange={e=>setEmail(e.target.value)}/></label>
+          <label>Password<input type="password" required minLength={8} autoComplete={passwordMode === "login" ? "current-password" : "new-password"} value={password} onChange={e=>setPassword(e.target.value)}/></label>
+          <label>Account action<select value={passwordMode} onChange={e=>setPasswordMode(e.target.value as "login"|"register")}><option value="login">Sign in</option><option value="register">Create account</option></select></label>
+          <button className="hm-button" disabled={busy}>{passwordMode === "login" ? "Sign in with password" : "Create account with password"}</button>
+        </form>
+      </details>
       <p>
         <Link className="hm-text-link" href="/sample-report">
           Preview a fictional report without signing in →

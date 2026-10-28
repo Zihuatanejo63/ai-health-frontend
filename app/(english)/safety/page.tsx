@@ -1,9 +1,11 @@
+import {alternates} from "@/lib/public-i18n";
 import { EditorialContents } from "@/components/editorial-contents";
 import { PublicSafety } from "@/components/public-safety";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Disclaimer } from "@/components/marketing";
 export const metadata: Metadata = {
+  alternates: alternates("/safety"),
   title: "Safety & Limits",
   description:
     "The boundaries, interpretation approach, and privacy requirements for HealthMatch AI.",

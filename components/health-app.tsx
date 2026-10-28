@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useRef, type FormEvent } from "react";
 import Link from "next/link";
-import { fetchMe, type ServerUser, clearCachedMe } from "@/lib/auth-client";
+import { API_BASE, fetchMe, type ServerUser, clearCachedMe } from "@/lib/auth-client";
 import {
   healthApi,
   downloadHealth,
@@ -15,8 +15,8 @@ import type {
   LabResult,
   Profile,
   Evaluation,
-} from "../../shared/health";
-import { displayValue, emptyWorkspace } from "../../shared/health";
+} from "../shared/health";
+import { displayValue, emptyWorkspace } from "../shared/health";
 import {
   evaluate,
   rank,
@@ -24,7 +24,7 @@ import {
   redFlagQuestion,
   RULE_REVIEW,
   RULES,
-} from "../../shared/health-rules";
+} from "../shared/health-rules";
 type View =
   | "overview"
   | "import"
@@ -472,7 +472,7 @@ export function HealthApp() {
           disabled={busy}
           onClick={() =>
             run(async () => {
-              const response = await fetch("/api/auth/logout", {
+              const response = await fetch(`${API_BASE}/api/auth/logout`, {
                 method: "POST",
                 credentials: "include",
               });

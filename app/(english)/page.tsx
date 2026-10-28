@@ -1,6 +1,9 @@
+import type {Metadata} from "next";
+import {alternates} from "@/lib/public-i18n";
 import Link from "next/link";
 import { marketing } from "@/lib/marketing-content";
 import { ReportPreview, Plans, Disclaimer } from "@/components/marketing";
+export const metadata: Metadata = {alternates: alternates("/"),};
 export default function HomePage() {
   return (
     <div className="hm-page hm-editorial">

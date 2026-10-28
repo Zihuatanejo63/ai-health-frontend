@@ -1,4 +1,5 @@
-import type { Workspace, Space, Evaluation, Action } from "../../shared/health";
+import { API_BASE } from "./auth-client";
+import type { Workspace, Space, Evaluation, Action } from "../shared/health";
 export type HealthState = {
   workspace: Workspace;
   space: Space;
@@ -29,7 +30,7 @@ export async function healthApi<T>(
   method = "GET",
   body?: unknown,
 ): Promise<T> {
-  const response = await fetch(`/api/health${path}?space=${space}`, {
+  const response = await fetch(`${API_BASE}/api/health${path}?space=${space}`, {
     method,
     credentials: "include",
     cache: "no-store",
@@ -55,7 +56,7 @@ export async function healthApi<T>(
   return data as T;
 }
 export async function downloadHealth(space: Space, kind: "pdf" | "export") {
-  const response = await fetch(`/api/health/${kind}?space=${space}`, {
+  const response = await fetch(`${API_BASE}/api/health/${kind}?space=${space}`, {
     credentials: "include",
   });
   if (!response.ok) {

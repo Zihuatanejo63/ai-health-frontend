@@ -1,8 +1,10 @@
+import {alternates} from "@/lib/public-i18n";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SampleBadge, ReportPreview, Disclaimer } from "@/components/marketing";
 import { sampleResults, sampleDates } from "@/lib/marketing-content";
 export const metadata: Metadata = {
+  alternates: alternates("/sample-report"),
   title: "Sample Report & Trends",
   description:
     "Explore a complete fictional checkup reading with three years of results and a sample follow-up plan. No account required.",

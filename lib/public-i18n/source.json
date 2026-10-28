@@ -1,0 +1,4409 @@
+{
+  "pages": {
+    "home": {
+      "tag": "div",
+      "props": {
+        "className": "hm-page hm-editorial"
+      },
+      "children": [
+        {
+          "tag": "section",
+          "props": {
+            "className": "hm-hero"
+          },
+          "children": [
+            {
+              "tag": "div",
+              "props": {},
+              "children": [
+                {
+                  "tag": "p",
+                  "props": {
+                    "className": "hm-overline"
+                  },
+                  "children": [],
+                  "message": "m0001",
+                  "parts": []
+                },
+                {
+                  "tag": "h1",
+                  "props": {},
+                  "children": [],
+                  "message": "m0002",
+                  "parts": []
+                },
+                {
+                  "tag": "p",
+                  "props": {
+                    "className": "hm-lead"
+                  },
+                  "children": [],
+                  "message": "m0003",
+                  "parts": []
+                },
+                {
+                  "tag": "div",
+                  "props": {
+                    "className": "hm-actions"
+                  },
+                  "children": [
+                    {
+                      "tag": "a",
+                      "props": {
+                        "className": "hm-button",
+                        "href": "/dashboard"
+                      },
+                      "children": [],
+                      "message": "m0004",
+                      "parts": [
+                        {
+                          "tag": "span",
+                          "props": {
+                            "aria-hidden": "true"
+                          },
+                          "children": []
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "a",
+                      "props": {
+                        "className": "hm-text-link",
+                        "href": "/sample-report"
+                      },
+                      "children": [],
+                      "message": "m0005",
+                      "parts": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "props": {
+                    "className": "hm-small"
+                  },
+                  "children": [],
+                  "message": "m0006",
+                  "parts": []
+                }
+              ]
+            },
+            {
+              "tag": "article",
+              "props": {
+                "className": "hm-preview"
+              },
+              "children": [
+                {
+                  "tag": "div",
+                  "props": {
+                    "className": "hm-row"
+                  },
+                  "children": [
+                    {
+                      "tag": "span",
+                      "props": {
+                        "className": "hm-overline"
+                      },
+                      "children": [],
+                      "message": "m0007",
+                      "parts": []
+                    },
+                    {
+                      "tag": "span",
+                      "props": {
+                        "className": "hm-badge"
+                      },
+                      "children": [],
+                      "message": "m0008",
+                      "parts": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "h2",
+                  "props": {},
+                  "children": [],
+                  "message": "m0009",
+                  "parts": [
+                    {
+                      "tag": "br",
+                      "props": {},
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "props": {},
+                  "children": [],
+                  "message": "m0010",
+                  "parts": []
+                },
+                {
+                  "tag": "div",
+                  "props": {
+                    "className": "hm-row"
+                  },
+                  "children": [
+                    {
+                      "tag": "strong",
+                      "props": {
+                        "className": "hm-number"
+                      },
+                      "children": [
+                        "6.0",
+                        {
+                          "tag": "span",
+                          "props": {},
+                          "children": [
+                            "%"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "span",
+                      "props": {
+                        "className": "hm-flag"
+                      },
+                      "children": [],
+                      "message": "m0011",
+                      "parts": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "svg",
+                  "props": {
+                    "viewBox": "0 0 400 150",
+                    "role": "img",
+                    "aria-label": {
+                      "message": "m0012"
+                    }
+                  },
+                  "children": [
+                    {
+                      "tag": "path",
+                      "props": {
+                        "d": "M35 25H370 M35 75H370 M35 125H370",
+                        "stroke": "#dbe5df",
+                        "fill": "none"
+                      },
+                      "children": []
+                    },
+                    {
+                      "tag": "path",
+                      "props": {
+                        "d": "M40 85L200 45L360 25L360 125L40 125Z",
+                        "fill": "#e0ede6"
+                      },
+                      "children": []
+                    },
+                    {
+                      "tag": "path",
+                      "props": {
+                        "d": "M40 85L200 45L360 25",
+                        "fill": "none",
+                        "stroke": "#146b55",
+                        "stroke-width": "3"
+                      },
+                      "children": []
+                    },
+                    {
+                      "tag": "g",
+                      "props": {},
+                      "children": [
+                        {
+                          "tag": "circle",
+                          "props": {
+                            "cx": "40",
+                            "cy": "85",
+                            "r": "5",
+                            "fill": "#146b55"
+                          },
+                          "children": []
+                        },
+                        {
+                          "tag": "text",
+                          "props": {
+                            "x": "40",
+                            "y": "71",
+                            "text-anchor": "middle",
+                            "fill": "#26453b",
+                            "font-size": "13"
+                          },
+                          "children": [
+                            "5.4"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "g",
+                      "props": {},
+                      "children": [
+                        {
+                          "tag": "circle",
+                          "props": {
+                            "cx": "200",
+                            "cy": "45",
+                            "r": "5",
+                            "fill": "#146b55"
+                          },
+                          "children": []
+                        },
+                        {
+                          "tag": "text",
+                          "props": {
+                            "x": "200",
+                            "y": "31",
+                            "text-anchor": "middle",
+                            "fill": "#26453b",
+                            "font-size": "13"
+                          },
+                          "children": [
+                            "5.8"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "g",
+                      "props": {},
+                      "children": [
+                        {
+                          "tag": "circle",
+                          "props": {
+                            "cx": "360",
+                            "cy": "25",
+                            "r": "5",
+                            "fill": "#146b55"
+                          },
+                          "children": []
+                        },
+                        {
+                          "tag": "text",
+                          "props": {
+                            "x": "360",
+                            "y": "11",
+                            "text-anchor": "middle",
+                            "fill": "#26453b",
+                            "font-size": "13"
+                          },
+                          "children": [
+                            "6.0"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "text",
+                      "props": {
+                        "x": "40",
+                        "y": "147",
+                        "text-anchor": "middle",
+                        "font-size": "12"
+                      },
+                      "children": [
+                        "2024"
+                      ]
+                    },
+                    {
+                      "tag": "text",
+                      "props": {
+                        "x": "200",
+                        "y": "147",
+                        "text-anchor": "middle",
+                        "font-size": "12"
+                      },
+                      "children": [
+                        "2025"
+                      ]
+                    },
+                    {
+                      "tag": "text",
+                      "props": {
+                        "x": "360",
+                        "y": "147",
+                        "text-anchor": "middle",
+                        "font-size": "12"
+                      },
+                      "children": [
+                        "2026"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "div",
+                  "props": {
+                    "className": "hm-preview-note"
+                  },
+                  "children": [
+                    {
+                      "tag": "strong",
+                      "props": {},
+                      "children": [],
+                      "message": "m0013",
+                      "parts": []
+                    },
+                    {
+                      "tag": "p",
+                      "props": {},
+                      "children": [],
+                      "message": "m0014",
+                      "parts": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "a",
+                  "props": {
+                    "className": "hm-text-link",
+                    "href": "/sample-report"
+                  },
+                  "children": [],
+                  "message": "m0015",
+                  "parts": [
+                    {
+                      "tag": "span",
+                      "props": {
+                        "aria-hidden": "true"
+                      },
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "section",
+          "props": {
+            "className": "hm-strip"
+          },
+          "children": [
+            {
+              "tag": "span",
+              "props": {},
+              "children": [],
+              "message": "m0016",
+              "parts": []
+            },
+            {
+              "tag": "span",
+              "props": {},
+              "children": [],
+              "message": "m0017",
+              "parts": []
+            },
+            {
+              "tag": "span",
+              "props": {},
+              "children": [],
+              "message": "m0018",
+              "parts": []
+            }
+          ]
+        },
+        {
+          "tag": "section",
+          "props": {
+            "className": "hm-section"
+          },
+          "children": [
+            {
+              "tag": "p",
+              "props": {
+                "className": "hm-overline"
+              },
+              "children": [],
+              "message": "m0019",
+              "parts": []
+            },
+            {
+              "tag": "h2",
+              "props": {},
+              "children": [],
+              "message": "m0020",
+              "parts": []
+            },
+            {
+              "tag": "div",
+              "props": {
+                "className": "hm-grid"
+              },
+              "children": [
+                {
+                  "tag": "article",
+                  "props": {
+                    "className": "hm-step"
+                  },
+                  "children": [
+                    {
+                      "tag": "span",
+                      "props": {
+                        "className": "hm-step-number"
+                      },
+                      "children": [
+                        "01"
+                      ]
+                    },
+                    {
+                      "tag": "h3",
+                      "props": {},
+                      "children": [],
+                      "message": "m0021",
+                      "parts": []
+                    },
+                    {
+                      "tag": "p",
+                      "props": {},
+                      "children": [],
+                      "message": "m0022",
+                      "parts": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "article",
+                  "props": {
+                    "className": "hm-step"
+                  },
+                  "children": [
+                    {
+                      "tag": "span",
+                      "props": {
+                        "className": "hm-step-number"
+                      },
+                      "children": [
+                        "02"
+                      ]
+                    },
+                    {
+                      "tag": "h3",
+                      "props": {},
+                      "children": [],
+                      "message": "m0023",
+                      "parts": []
+                    },
+                    {
+                      "tag": "p",
+                      "props": {},
+                      "children": [],
+                      "message": "m0024",
+                      "parts": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "article",
+                  "props": {
+                    "className": "hm-step"
+                  },
+                  "children": [
+                    {
+                      "tag": "span",
+                      "props": {
+                        "className": "hm-step-number"
+                      },
+                      "children": [
+                        "03"
+                      ]
+                    },
+                    {
+                      "tag": "h3",
+                      "props": {},
+                      "children": [],
+                      "message": "m0025",
+                      "parts": []
+                    },
+                    {
+                      "tag": "p",
+                      "props": {},
+                      "children": [],
+                      "message": "m0026",
+                      "parts": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "section",
+          "props": {
+            "className": "hm-section"
+          },
+          "children": [
+            {
+              "tag": "p",
+              "props": {
+                "className": "hm-overline"
+              },
+              "children": [],
+              "message": "m0027",
+              "parts": []
+            },
+            {
+              "tag": "h2",
+              "props": {},
+              "children": [],
+              "message": "m0028",
+              "parts": []
+            },
+            {
+              "tag": "div",
+              "props": {
+                "className": "hm-categories"
+              },
+              "children": [
+                {
+                  "tag": "article",
+                  "props": {},
+                  "children": [
+                    {
+                      "tag": "span",
+                      "props": {},
+                      "children": [
+                        "01"
+                      ]
+                    },
+                    {
+                      "tag": "h3",
+                      "props": {},
+                      "children": [],
+                      "message": "m0029",
+                      "parts": []
+                    },
+                    {
+                      "tag": "p",
+                      "props": {},
+                      "children": [],
+                      "message": "m0030",
+                      "parts": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "article",
+                  "props": {},
+                  "children": [
+                    {
+                      "tag": "span",
+                      "props": {},
+                      "children": [
+                        "02"
+                      ]
+                    },
+                    {
+                      "tag": "h3",
+                      "props": {},
+                      "children": [],
+                      "message": "m0031",
+                      "parts": []
+                    },
+                    {
+                      "tag": "p",
+                      "props": {},
+                      "children": [],
+                      "message": "m0032",
+                      "parts": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "article",
+                  "props": {},
+                  "children": [
+                    {
+                      "tag": "span",
+                      "props": {},
+                      "children": [
+                        "03"
+                      ]
+                    },
+                    {
+                      "tag": "h3",
+                      "props": {},
+                      "children": [],
+                      "message": "m0033",
+                      "parts": []
+                    },
+                    {
+                      "tag": "p",
+                      "props": {},
+                      "children": [],
+                      "message": "m0034",
+                      "parts": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "article",
+                  "props": {},
+                  "children": [
+                    {
+                      "tag": "span",
+                      "props": {},
+                      "children": [
+                        "04"
+                      ]
+                    },
+                    {
+                      "tag": "h3",
+                      "props": {},
+                      "children": [],
+                      "message": "m0035",
+                      "parts": []
+                    },
+                    {
+                      "tag": "p",
+                      "props": {},
+                      "children": [],
+                      "message": "m0036",
+                      "parts": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "article",
+                  "props": {},
+                  "children": [
+                    {
+                      "tag": "span",
+                      "props": {},
+                      "children": [
+                        "05"
+                      ]
+                    },
+                    {
+                      "tag": "h3",
+                      "props": {},
+                      "children": [],
+                      "message": "m0037",
+                      "parts": []
+                    },
+                    {
+                      "tag": "p",
+                      "props": {},
+                      "children": [],
+                      "message": "m0038",
+                      "parts": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "p",
+              "props": {
+                "className": "hm-small"
+              },
+              "children": [],
+              "message": "m0039",
+              "parts": []
+            }
+          ]
+        },
+        {
+          "tag": "section",
+          "props": {
+            "className": "hm-section hm-split"
+          },
+          "children": [
+            {
+              "tag": "div",
+              "props": {},
+              "children": [
+                {
+                  "tag": "p",
+                  "props": {
+                    "className": "hm-overline"
+                  },
+                  "children": [],
+                  "message": "m0040",
+                  "parts": []
+                },
+                {
+                  "tag": "h2",
+                  "props": {},
+                  "children": [],
+                  "message": "m0041",
+                  "parts": [
+                    {
+                      "tag": "br",
+                      "props": {},
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "props": {
+                    "className": "hm-lead"
+                  },
+                  "children": [],
+                  "message": "m0042",
+                  "parts": []
+                },
+                {
+                  "tag": "p",
+                  "props": {},
+                  "children": [],
+                  "message": "m0043",
+                  "parts": []
+                },
+                {
+                  "tag": "a",
+                  "props": {
+                    "className": "hm-text-link",
+                    "href": "/sample-report#trends"
+                  },
+                  "children": [],
+                  "message": "m0044",
+                  "parts": []
+                }
+              ]
+            },
+            {
+              "tag": "article",
+              "props": {
+                "className": "hm-preview"
+              },
+              "children": [
+                {
+                  "tag": "div",
+                  "props": {
+                    "className": "hm-row"
+                  },
+                  "children": [
+                    {
+                      "tag": "span",
+                      "props": {
+                        "className": "hm-overline"
+                      },
+                      "children": [],
+                      "message": "m0045",
+                      "parts": []
+                    },
+                    {
+                      "tag": "span",
+                      "props": {
+                        "className": "hm-badge"
+                      },
+                      "children": [],
+                      "message": "m0046",
+                      "parts": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "h2",
+                  "props": {},
+                  "children": [],
+                  "message": "m0047",
+                  "parts": [
+                    {
+                      "tag": "br",
+                      "props": {},
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "props": {},
+                  "children": [],
+                  "message": "m0048",
+                  "parts": []
+                },
+                {
+                  "tag": "div",
+                  "props": {
+                    "className": "hm-row"
+                  },
+                  "children": [
+                    {
+                      "tag": "strong",
+                      "props": {
+                        "className": "hm-number"
+                      },
+                      "children": [
+                        "6.0",
+                        {
+                          "tag": "span",
+                          "props": {},
+                          "children": [
+                            "%"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "span",
+                      "props": {
+                        "className": "hm-flag"
+                      },
+                      "children": [],
+                      "message": "m0049",
+                      "parts": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "svg",
+                  "props": {
+                    "viewBox": "0 0 400 150",
+                    "role": "img",
+                    "aria-label": {
+                      "message": "m0050"
+                    }
+                  },
+                  "children": [
+                    {
+                      "tag": "path",
+                      "props": {
+                        "d": "M35 25H370 M35 75H370 M35 125H370",
+                        "stroke": "#dbe5df",
+                        "fill": "none"
+                      },
+                      "children": []
+                    },
+                    {
+                      "tag": "path",
+                      "props": {
+                        "d": "M40 85L200 45L360 25L360 125L40 125Z",
+                        "fill": "#e0ede6"
+                      },
+                      "children": []
+                    },
+                    {
+                      "tag": "path",
+                      "props": {
+                        "d": "M40 85L200 45L360 25",
+                        "fill": "none",
+                        "stroke": "#146b55",
+                        "stroke-width": "3"
+                      },
+                      "children": []
+                    },
+                    {
+                      "tag": "g",
+                      "props": {},
+                      "children": [
+                        {
+                          "tag": "circle",
+                          "props": {
+                            "cx": "40",
+                            "cy": "85",
+                            "r": "5",
+                            "fill": "#146b55"
+                          },
+                          "children": []
+                        },
+                        {
+                          "tag": "text",
+                          "props": {
+                            "x": "40",
+                            "y": "71",
+                            "text-anchor": "middle",
+                            "fill": "#26453b",
+                            "font-size": "13"
+                          },
+                          "children": [
+                            "5.4"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "g",
+                      "props": {},
+                      "children": [
+                        {
+                          "tag": "circle",
+                          "props": {
+                            "cx": "200",
+                            "cy": "45",
+                            "r": "5",
+                            "fill": "#146b55"
+                          },
+                          "children": []
+                        },
+                        {
+                          "tag": "text",
+                          "props": {
+                            "x": "200",
+                            "y": "31",
+                            "text-anchor": "middle",
+                            "fill": "#26453b",
+                            "font-size": "13"
+                          },
+                          "children": [
+                            "5.8"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "g",
+                      "props": {},
+                      "children": [
+                        {
+                          "tag": "circle",
+                          "props": {
+                            "cx": "360",
+                            "cy": "25",
+                            "r": "5",
+                            "fill": "#146b55"
+                          },
+                          "children": []
+                        },
+                        {
+                          "tag": "text",
+                          "props": {
+                            "x": "360",
+                            "y": "11",
+                            "text-anchor": "middle",
+                            "fill": "#26453b",
+                            "font-size": "13"
+                          },
+                          "children": [
+                            "6.0"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "text",
+                      "props": {
+                        "x": "40",
+                        "y": "147",
+                        "text-anchor": "middle",
+                        "font-size": "12"
+                      },
+                      "children": [
+                        "2024"
+                      ]
+                    },
+                    {
+                      "tag": "text",
+                      "props": {
+                        "x": "200",
+                        "y": "147",
+                        "text-anchor": "middle",
+                        "font-size": "12"
+                      },
+                      "children": [
+                        "2025"
+                      ]
+                    },
+                    {
+                      "tag": "text",
+                      "props": {
+                        "x": "360",
+                        "y": "147",
+                        "text-anchor": "middle",
+                        "font-size": "12"
+                      },
+                      "children": [
+                        "2026"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "div",
+                  "props": {
+                    "className": "hm-preview-note"
+                  },
+                  "children": [
+                    {
+                      "tag": "strong",
+                      "props": {},
+                      "children": [],
+                      "message": "m0051",
+                      "parts": []
+                    },
+                    {
+                      "tag": "p",
+                      "props": {},
+                      "children": [],
+                      "message": "m0052",
+                      "parts": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "a",
+                  "props": {
+                    "className": "hm-text-link",
+                    "href": "/sample-report"
+                  },
+                  "children": [],
+                  "message": "m0053",
+                  "parts": [
+                    {
+                      "tag": "span",
+                      "props": {
+                        "aria-hidden": "true"
+                      },
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "section",
+          "props": {
+            "className": "hm-safety"
+          },
+          "children": [
+            {
+              "tag": "p",
+              "props": {
+                "className": "hm-overline"
+              },
+              "children": [],
+              "message": "m0054",
+              "parts": []
+            },
+            {
+              "tag": "h2",
+              "props": {},
+              "children": [],
+              "message": "m0055",
+              "parts": []
+            },
+            {
+              "tag": "p",
+              "props": {
+                "className": "hm-disclaimer"
+              },
+              "children": [],
+              "message": "m0056",
+              "parts": []
+            },
+            {
+              "tag": "p",
+              "props": {},
+              "children": [],
+              "message": "m0057",
+              "parts": []
+            },
+            {
+              "tag": "a",
+              "props": {
+                "className": "hm-text-link",
+                "href": "/safety"
+              },
+              "children": [],
+              "message": "m0058",
+              "parts": []
+            }
+          ]
+        },
+        {
+          "tag": "section",
+          "props": {
+            "className": "hm-section"
+          },
+          "children": [
+            {
+              "tag": "p",
+              "props": {
+                "className": "hm-overline"
+              },
+              "children": [],
+              "message": "m0059",
+              "parts": []
+            },
+            {
+              "tag": "h2",
+              "props": {},
+              "children": [],
+              "message": "m0060",
+              "parts": []
+            },
+            {
+              "tag": "p",
+              "props": {},
+              "children": [],
+              "message": "m0061",
+              "parts": []
+            },
+            {
+              "tag": "div",
+              "props": {
+                "className": "hm-grid hm-plans"
+              },
+              "children": [
+                {
+                  "tag": "article",
+                  "props": {
+                    "className": "hm-card "
+                  },
+                  "children": [
+                    {
+                      "tag": "div",
+                      "props": {
+                        "className": "hm-row"
+                      },
+                      "children": [
+                        {
+                          "tag": "h3",
+                          "props": {},
+                          "children": [],
+                          "message": "m0062",
+                          "parts": []
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "p",
+                      "props": {
+                        "className": "hm-price"
+                      },
+                      "children": [
+                        "$0",
+                        {
+                          "tag": "span",
+                          "props": {},
+                          "children": [],
+                          "message": "m0063",
+                          "parts": []
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "p",
+                      "props": {},
+                      "children": [],
+                      "message": "m0064",
+                      "parts": []
+                    },
+                    {
+                      "tag": "ul",
+                      "props": {},
+                      "children": [
+                        {
+                          "tag": "li",
+                          "props": {},
+                          "children": [],
+                          "message": "m0065",
+                          "parts": []
+                        },
+                        {
+                          "tag": "li",
+                          "props": {},
+                          "children": [],
+                          "message": "m0066",
+                          "parts": []
+                        },
+                        {
+                          "tag": "li",
+                          "props": {},
+                          "children": [],
+                          "message": "m0067",
+                          "parts": []
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "a",
+                      "props": {
+                        "className": "hm-button hm-secondary",
+                        "href": "/sample-report"
+                      },
+                      "children": [],
+                      "message": "m0068",
+                      "parts": [
+                        {
+                          "tag": "span",
+                          "props": {
+                            "aria-hidden": "true"
+                          },
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "article",
+                  "props": {
+                    "className": "hm-card hm-featured"
+                  },
+                  "children": [
+                    {
+                      "tag": "div",
+                      "props": {
+                        "className": "hm-row"
+                      },
+                      "children": [
+                        {
+                          "tag": "h3",
+                          "props": {},
+                          "children": [],
+                          "message": "m0069",
+                          "parts": []
+                        },
+                        {
+                          "tag": "span",
+                          "props": {
+                            "className": "hm-badge"
+                          },
+                          "children": [],
+                          "message": "m0070",
+                          "parts": []
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "p",
+                      "props": {
+                        "className": "hm-price"
+                      },
+                      "children": [
+                        "$9.9",
+                        {
+                          "tag": "span",
+                          "props": {},
+                          "children": [],
+                          "message": "m0071",
+                          "parts": []
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "p",
+                      "props": {},
+                      "children": [],
+                      "message": "m0072",
+                      "parts": []
+                    },
+                    {
+                      "tag": "ul",
+                      "props": {},
+                      "children": [
+                        {
+                          "tag": "li",
+                          "props": {},
+                          "children": [],
+                          "message": "m0073",
+                          "parts": []
+                        },
+                        {
+                          "tag": "li",
+                          "props": {},
+                          "children": [],
+                          "message": "m0074",
+                          "parts": []
+                        },
+                        {
+                          "tag": "li",
+                          "props": {},
+                          "children": [],
+                          "message": "m0075",
+                          "parts": []
+                        },
+                        {
+                          "tag": "li",
+                          "props": {},
+                          "children": [],
+                          "message": "m0076",
+                          "parts": []
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "a",
+                      "props": {
+                        "className": "hm-button",
+                        "href": "/sample-report"
+                      },
+                      "children": [],
+                      "message": "m0077",
+                      "parts": [
+                        {
+                          "tag": "span",
+                          "props": {
+                            "aria-hidden": "true"
+                          },
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "article",
+                  "props": {
+                    "className": "hm-card "
+                  },
+                  "children": [
+                    {
+                      "tag": "div",
+                      "props": {
+                        "className": "hm-row"
+                      },
+                      "children": [
+                        {
+                          "tag": "h3",
+                          "props": {},
+                          "children": [],
+                          "message": "m0078",
+                          "parts": []
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "p",
+                      "props": {
+                        "className": "hm-price"
+                      },
+                      "children": [
+                        "$15",
+                        {
+                          "tag": "span",
+                          "props": {},
+                          "children": [],
+                          "message": "m0079",
+                          "parts": []
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "p",
+                      "props": {},
+                      "children": [],
+                      "message": "m0080",
+                      "parts": []
+                    },
+                    {
+                      "tag": "ul",
+                      "props": {},
+                      "children": [
+                        {
+                          "tag": "li",
+                          "props": {},
+                          "children": [],
+                          "message": "m0081",
+                          "parts": []
+                        },
+                        {
+                          "tag": "li",
+                          "props": {},
+                          "children": [],
+                          "message": "m0082",
+                          "parts": []
+                        },
+                        {
+                          "tag": "li",
+                          "props": {},
+                          "children": [],
+                          "message": "m0083",
+                          "parts": []
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "a",
+                      "props": {
+                        "className": "hm-button hm-secondary",
+                        "href": "/sample-report"
+                      },
+                      "children": [],
+                      "message": "m0084",
+                      "parts": [
+                        {
+                          "tag": "span",
+                          "props": {
+                            "aria-hidden": "true"
+                          },
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "section",
+          "props": {
+            "className": "hm-section",
+            "id": "upload-preview"
+          },
+          "children": [
+            {
+              "tag": "p",
+              "props": {
+                "className": "hm-overline"
+              },
+              "children": [],
+              "message": "m0085",
+              "parts": []
+            },
+            {
+              "tag": "h2",
+              "props": {},
+              "children": [],
+              "message": "m0086",
+              "parts": []
+            },
+            {
+              "tag": "p",
+              "props": {},
+              "children": [],
+              "message": "m0087",
+              "parts": []
+            },
+            {
+              "tag": "a",
+              "props": {
+                "className": "hm-button",
+                "href": "/dashboard"
+              },
+              "children": [],
+              "message": "m0088",
+              "parts": []
+            }
+          ]
+        },
+        {
+          "tag": "section",
+          "props": {
+            "className": "hm-section hm-faq"
+          },
+          "children": [
+            {
+              "tag": "h2",
+              "props": {},
+              "children": [],
+              "message": "m0089",
+              "parts": []
+            },
+            {
+              "tag": "details",
+              "props": {},
+              "children": [
+                {
+                  "tag": "summary",
+                  "props": {},
+                  "children": [],
+                  "message": "m0090",
+                  "parts": []
+                },
+                {
+                  "tag": "p",
+                  "props": {},
+                  "children": [],
+                  "message": "m0091",
+                  "parts": []
+                }
+              ]
+            },
+            {
+              "tag": "details",
+              "props": {},
+              "children": [
+                {
+                  "tag": "summary",
+                  "props": {},
+                  "children": [],
+                  "message": "m0092",
+                  "parts": []
+                },
+                {
+                  "tag": "p",
+                  "props": {},
+                  "children": [],
+                  "message": "m0093",
+                  "parts": []
+                }
+              ]
+            },
+            {
+              "tag": "details",
+              "props": {},
+              "children": [
+                {
+                  "tag": "summary",
+                  "props": {},
+                  "children": [],
+                  "message": "m0094",
+                  "parts": []
+                },
+                {
+                  "tag": "p",
+                  "props": {},
+                  "children": [],
+                  "message": "m0095",
+                  "parts": []
+                }
+              ]
+            },
+            {
+              "tag": "details",
+              "props": {},
+              "children": [
+                {
+                  "tag": "summary",
+                  "props": {},
+                  "children": [],
+                  "message": "m0096",
+                  "parts": []
+                },
+                {
+                  "tag": "p",
+                  "props": {},
+                  "children": [],
+                  "message": "m0097",
+                  "parts": []
+                }
+              ]
+            },
+            {
+              "tag": "details",
+              "props": {},
+              "children": [
+                {
+                  "tag": "summary",
+                  "props": {},
+                  "children": [],
+                  "message": "m0098",
+                  "parts": []
+                },
+                {
+                  "tag": "p",
+                  "props": {},
+                  "children": [],
+                  "message": "m0099",
+                  "parts": []
+                }
+              ]
+            },
+            {
+              "tag": "details",
+              "props": {},
+              "children": [
+                {
+                  "tag": "summary",
+                  "props": {},
+                  "children": [],
+                  "message": "m0100",
+                  "parts": []
+                },
+                {
+                  "tag": "p",
+                  "props": {},
+                  "children": [],
+                  "message": "m0101",
+                  "parts": []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "sample-report": {
+      "tag": "div",
+      "props": {
+        "className": "hm-page hm-editorial"
+      },
+      "children": [
+        {
+          "tag": "header",
+          "props": {
+            "className": "hm-page-heading"
+          },
+          "children": [
+            {
+              "tag": "span",
+              "props": {
+                "className": "hm-badge"
+              },
+              "children": [],
+              "message": "m0102",
+              "parts": []
+            },
+            {
+              "tag": "h1",
+              "props": {},
+              "children": [],
+              "message": "m0103",
+              "parts": [
+                {
+                  "tag": "br",
+                  "props": {},
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "p",
+              "props": {
+                "className": "hm-lead"
+              },
+              "children": [],
+              "message": "m0104",
+              "parts": []
+            },
+            {
+              "tag": "p",
+              "props": {},
+              "children": [],
+              "message": "m0105",
+              "parts": []
+            }
+          ]
+        },
+        {
+          "tag": "nav",
+          "props": {
+            "className": "hm-tabs",
+            "aria-label": {
+              "message": "m0106"
+            }
+          },
+          "children": [
+            {
+              "tag": "a",
+              "props": {
+                "href": "#overview"
+              },
+              "children": [],
+              "message": "m0107",
+              "parts": []
+            },
+            {
+              "tag": "a",
+              "props": {
+                "href": "#results"
+              },
+              "children": [],
+              "message": "m0108",
+              "parts": []
+            },
+            {
+              "tag": "a",
+              "props": {
+                "href": "#trends"
+              },
+              "children": [],
+              "message": "m0109",
+              "parts": []
+            },
+            {
+              "tag": "a",
+              "props": {
+                "href": "#follow-up"
+              },
+              "children": [],
+              "message": "m0110",
+              "parts": []
+            },
+            {
+              "tag": "a",
+              "props": {
+                "href": "#basis"
+              },
+              "children": [],
+              "message": "m0111",
+              "parts": []
+            }
+          ]
+        },
+        {
+          "tag": "section",
+          "props": {
+            "className": "hm-section",
+            "id": "overview"
+          },
+          "children": [
+            {
+              "tag": "div",
+              "props": {
+                "className": "hm-row"
+              },
+              "children": [
+                {
+                  "tag": "h2",
+                  "props": {},
+                  "children": [],
+                  "message": "m0112",
+                  "parts": []
+                },
+                {
+                  "tag": "span",
+                  "props": {
+                    "className": "hm-badge"
+                  },
+                  "children": [],
+                  "message": "m0113",
+                  "parts": []
+                }
+              ]
+            },
+            {
+              "tag": "div",
+              "props": {
+                "className": "hm-grid"
+              },
+              "children": [
+                {
+                  "tag": "article",
+                  "props": {
+                    "className": "hm-card"
+                  },
+                  "children": [
+                    {
+                      "tag": "p",
+                      "props": {
+                        "className": "hm-overline"
+                      },
+                      "children": [],
+                      "message": "m0114",
+                      "parts": []
+                    },
+                    {
+                      "tag": "h3",
+                      "props": {},
+                      "children": [],
+                      "message": "m0115",
+                      "parts": []
+                    },
+                    {
+                      "tag": "p",
+                      "props": {},
+                      "children": [],
+                      "message": "m0116",
+                      "parts": []
+                    },
+                    {
+                      "tag": "p",
+                      "props": {},
+                      "children": [],
+                      "message": "m0117",
+                      "parts": [
+                        {
+                          "tag": "br",
+                          "props": {},
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "article",
+                  "props": {
+                    "className": "hm-card"
+                  },
+                  "children": [
+                    {
+                      "tag": "p",
+                      "props": {
+                        "className": "hm-overline"
+                      },
+                      "children": [],
+                      "message": "m0118",
+                      "parts": []
+                    },
+                    {
+                      "tag": "h3",
+                      "props": {},
+                      "children": [],
+                      "message": "m0119",
+                      "parts": []
+                    },
+                    {
+                      "tag": "p",
+                      "props": {},
+                      "children": [],
+                      "message": "m0120",
+                      "parts": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "article",
+                  "props": {
+                    "className": "hm-card"
+                  },
+                  "children": [
+                    {
+                      "tag": "p",
+                      "props": {
+                        "className": "hm-overline"
+                      },
+                      "children": [],
+                      "message": "m0121",
+                      "parts": []
+                    },
+                    {
+                      "tag": "h3",
+                      "props": {},
+                      "children": [],
+                      "message": "m0122",
+                      "parts": []
+                    },
+                    {
+                      "tag": "p",
+                      "props": {},
+                      "children": [],
+                      "message": "m0123",
+                      "parts": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "section",
+          "props": {
+            "className": "hm-section",
+            "id": "results"
+          },
+          "children": [
+            {
+              "tag": "h2",
+              "props": {},
+              "children": [],
+              "message": "m0124",
+              "parts": []
+            },
+            {
+              "tag": "p",
+              "props": {},
+              "children": [],
+              "message": "m0125",
+              "parts": []
+            },
+            {
+              "tag": "div",
+              "props": {
+                "className": "hm-table-wrap",
+                "tabindex": "0",
+                "role": "region",
+                "aria-label": {
+                  "message": "m0126"
+                }
+              },
+              "children": [
+                {
+                  "tag": "table",
+                  "props": {
+                    "className": "hm-table"
+                  },
+                  "children": [
+                    {
+                      "tag": "caption",
+                      "props": {},
+                      "children": [],
+                      "message": "m0127",
+                      "parts": []
+                    },
+                    {
+                      "tag": "thead",
+                      "props": {},
+                      "children": [
+                        {
+                          "tag": "tr",
+                          "props": {},
+                          "children": [
+                            {
+                              "tag": "th",
+                              "props": {
+                                "scope": "col"
+                              },
+                              "children": [],
+                              "message": "m0128",
+                              "parts": []
+                            },
+                            {
+                              "tag": "th",
+                              "props": {
+                                "scope": "col"
+                              },
+                              "children": [],
+                              "message": "m0129",
+                              "parts": []
+                            },
+                            {
+                              "tag": "th",
+                              "props": {
+                                "scope": "col"
+                              },
+                              "children": [],
+                              "message": "m0130",
+                              "parts": []
+                            },
+                            {
+                              "tag": "th",
+                              "props": {
+                                "scope": "col"
+                              },
+                              "children": [],
+                              "message": "m0131",
+                              "parts": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "tbody",
+                      "props": {},
+                      "children": [
+                        {
+                          "tag": "tr",
+                          "props": {},
+                          "children": [
+                            {
+                              "tag": "th",
+                              "props": {
+                                "scope": "row"
+                              },
+                              "children": [],
+                              "message": "m0132",
+                              "parts": []
+                            },
+                            {
+                              "tag": "td",
+                              "props": {},
+                              "children": [
+                                "6",
+                                " ",
+                                "%"
+                              ]
+                            },
+                            {
+                              "tag": "td",
+                              "props": {},
+                              "children": [
+                                "4.0–5.6",
+                                " ",
+                                "%"
+                              ]
+                            },
+                            {
+                              "tag": "td",
+                              "props": {},
+                              "children": [
+                                {
+                                  "tag": "span",
+                                  "props": {
+                                    "className": "hm-result-flag",
+                                    "data-attention": "true"
+                                  },
+                                  "children": [],
+                                  "message": "m0133",
+                                  "parts": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "tag": "tr",
+                          "props": {},
+                          "children": [
+                            {
+                              "tag": "th",
+                              "props": {
+                                "scope": "row"
+                              },
+                              "children": [],
+                              "message": "m0134",
+                              "parts": []
+                            },
+                            {
+                              "tag": "td",
+                              "props": {},
+                              "children": [],
+                              "message": "m0135",
+                              "parts": []
+                            },
+                            {
+                              "tag": "td",
+                              "props": {},
+                              "children": [],
+                              "message": "m0136",
+                              "parts": []
+                            },
+                            {
+                              "tag": "td",
+                              "props": {},
+                              "children": [
+                                {
+                                  "tag": "span",
+                                  "props": {
+                                    "className": "hm-result-flag",
+                                    "data-attention": "false"
+                                  },
+                                  "children": [],
+                                  "message": "m0137",
+                                  "parts": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "tag": "tr",
+                          "props": {},
+                          "children": [
+                            {
+                              "tag": "th",
+                              "props": {
+                                "scope": "row"
+                              },
+                              "children": [],
+                              "message": "m0138",
+                              "parts": []
+                            },
+                            {
+                              "tag": "td",
+                              "props": {},
+                              "children": [],
+                              "message": "m0139",
+                              "parts": []
+                            },
+                            {
+                              "tag": "td",
+                              "props": {},
+                              "children": [],
+                              "message": "m0140",
+                              "parts": []
+                            },
+                            {
+                              "tag": "td",
+                              "props": {},
+                              "children": [
+                                {
+                                  "tag": "span",
+                                  "props": {
+                                    "className": "hm-result-flag",
+                                    "data-attention": "false"
+                                  },
+                                  "children": [],
+                                  "message": "m0141",
+                                  "parts": []
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "div",
+              "props": {
+                "className": "hm-grid"
+              },
+              "children": [
+                {
+                  "tag": "article",
+                  "props": {
+                    "className": "hm-card"
+                  },
+                  "children": [
+                    {
+                      "tag": "span",
+                      "props": {
+                        "className": "hm-badge"
+                      },
+                      "children": [],
+                      "message": "m0142",
+                      "parts": []
+                    },
+                    {
+                      "tag": "h3",
+                      "props": {},
+                      "children": [],
+                      "message": "m0143",
+                      "parts": []
+                    },
+                    {
+                      "tag": "p",
+                      "props": {},
+                      "children": [],
+                      "message": "m0144",
+                      "parts": []
+                    },
+                    {
+                      "tag": "span",
+                      "props": {
+                        "className": "hm-badge"
+                      },
+                      "children": [],
+                      "message": "m0145",
+                      "parts": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "article",
+                  "props": {
+                    "className": "hm-card"
+                  },
+                  "children": [
+                    {
+                      "tag": "span",
+                      "props": {
+                        "className": "hm-badge"
+                      },
+                      "children": [],
+                      "message": "m0146",
+                      "parts": []
+                    },
+                    {
+                      "tag": "h3",
+                      "props": {},
+                      "children": [],
+                      "message": "m0147",
+                      "parts": []
+                    },
+                    {
+                      "tag": "p",
+                      "props": {},
+                      "children": [],
+                      "message": "m0148",
+                      "parts": []
+                    },
+                    {
+                      "tag": "span",
+                      "props": {
+                        "className": "hm-badge"
+                      },
+                      "children": [],
+                      "message": "m0149",
+                      "parts": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "article",
+                  "props": {
+                    "className": "hm-card"
+                  },
+                  "children": [
+                    {
+                      "tag": "span",
+                      "props": {
+                        "className": "hm-badge"
+                      },
+                      "children": [],
+                      "message": "m0150",
+                      "parts": []
+                    },
+                    {
+                      "tag": "h3",
+                      "props": {},
+                      "children": [],
+                      "message": "m0151",
+                      "parts": []
+                    },
+                    {
+                      "tag": "p",
+                      "props": {},
+                      "children": [],
+                      "message": "m0152",
+                      "parts": []
+                    },
+                    {
+                      "tag": "span",
+                      "props": {
+                        "className": "hm-badge"
+                      },
+                      "children": [],
+                      "message": "m0153",
+                      "parts": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "section",
+          "props": {
+            "className": "hm-section hm-split",
+            "id": "trends"
+          },
+          "children": [
+            {
+              "tag": "div",
+              "props": {},
+              "children": [
+                {
+                  "tag": "p",
+                  "props": {
+                    "className": "hm-overline"
+                  },
+                  "children": [],
+                  "message": "m0154",
+                  "parts": []
+                },
+                {
+                  "tag": "h2",
+                  "props": {},
+                  "children": [],
+                  "message": "m0155",
+                  "parts": []
+                },
+                {
+                  "tag": "p",
+                  "props": {},
+                  "children": [],
+                  "message": "m0156",
+                  "parts": []
+                },
+                {
+                  "tag": "p",
+                  "props": {
+                    "className": "hm-small"
+                  },
+                  "children": [],
+                  "message": "m0157",
+                  "parts": []
+                }
+              ]
+            },
+            {
+              "tag": "article",
+              "props": {
+                "className": "hm-preview"
+              },
+              "children": [
+                {
+                  "tag": "div",
+                  "props": {
+                    "className": "hm-row"
+                  },
+                  "children": [
+                    {
+                      "tag": "span",
+                      "props": {
+                        "className": "hm-overline"
+                      },
+                      "children": [],
+                      "message": "m0158",
+                      "parts": []
+                    },
+                    {
+                      "tag": "span",
+                      "props": {
+                        "className": "hm-badge"
+                      },
+                      "children": [],
+                      "message": "m0159",
+                      "parts": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "h2",
+                  "props": {},
+                  "children": [],
+                  "message": "m0160",
+                  "parts": [
+                    {
+                      "tag": "br",
+                      "props": {},
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "props": {},
+                  "children": [],
+                  "message": "m0161",
+                  "parts": []
+                },
+                {
+                  "tag": "div",
+                  "props": {
+                    "className": "hm-row"
+                  },
+                  "children": [
+                    {
+                      "tag": "strong",
+                      "props": {
+                        "className": "hm-number"
+                      },
+                      "children": [
+                        "6.0",
+                        {
+                          "tag": "span",
+                          "props": {},
+                          "children": [
+                            "%"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "span",
+                      "props": {
+                        "className": "hm-flag"
+                      },
+                      "children": [],
+                      "message": "m0162",
+                      "parts": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "svg",
+                  "props": {
+                    "viewBox": "0 0 400 150",
+                    "role": "img",
+                    "aria-label": {
+                      "message": "m0163"
+                    }
+                  },
+                  "children": [
+                    {
+                      "tag": "path",
+                      "props": {
+                        "d": "M35 25H370 M35 75H370 M35 125H370",
+                        "stroke": "#dbe5df",
+                        "fill": "none"
+                      },
+                      "children": []
+                    },
+                    {
+                      "tag": "path",
+                      "props": {
+                        "d": "M40 85L200 45L360 25L360 125L40 125Z",
+                        "fill": "#e0ede6"
+                      },
+                      "children": []
+                    },
+                    {
+                      "tag": "path",
+                      "props": {
+                        "d": "M40 85L200 45L360 25",
+                        "fill": "none",
+                        "stroke": "#146b55",
+                        "stroke-width": "3"
+                      },
+                      "children": []
+                    },
+                    {
+                      "tag": "g",
+                      "props": {},
+                      "children": [
+                        {
+                          "tag": "circle",
+                          "props": {
+                            "cx": "40",
+                            "cy": "85",
+                            "r": "5",
+                            "fill": "#146b55"
+                          },
+                          "children": []
+                        },
+                        {
+                          "tag": "text",
+                          "props": {
+                            "x": "40",
+                            "y": "71",
+                            "text-anchor": "middle",
+                            "fill": "#26453b",
+                            "font-size": "13"
+                          },
+                          "children": [
+                            "5.4"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "g",
+                      "props": {},
+                      "children": [
+                        {
+                          "tag": "circle",
+                          "props": {
+                            "cx": "200",
+                            "cy": "45",
+                            "r": "5",
+                            "fill": "#146b55"
+                          },
+                          "children": []
+                        },
+                        {
+                          "tag": "text",
+                          "props": {
+                            "x": "200",
+                            "y": "31",
+                            "text-anchor": "middle",
+                            "fill": "#26453b",
+                            "font-size": "13"
+                          },
+                          "children": [
+                            "5.8"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "g",
+                      "props": {},
+                      "children": [
+                        {
+                          "tag": "circle",
+                          "props": {
+                            "cx": "360",
+                            "cy": "25",
+                            "r": "5",
+                            "fill": "#146b55"
+                          },
+                          "children": []
+                        },
+                        {
+                          "tag": "text",
+                          "props": {
+                            "x": "360",
+                            "y": "11",
+                            "text-anchor": "middle",
+                            "fill": "#26453b",
+                            "font-size": "13"
+                          },
+                          "children": [
+                            "6.0"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "text",
+                      "props": {
+                        "x": "40",
+                        "y": "147",
+                        "text-anchor": "middle",
+                        "font-size": "12"
+                      },
+                      "children": [
+                        "2024"
+                      ]
+                    },
+                    {
+                      "tag": "text",
+                      "props": {
+                        "x": "200",
+                        "y": "147",
+                        "text-anchor": "middle",
+                        "font-size": "12"
+                      },
+                      "children": [
+                        "2025"
+                      ]
+                    },
+                    {
+                      "tag": "text",
+                      "props": {
+                        "x": "360",
+                        "y": "147",
+                        "text-anchor": "middle",
+                        "font-size": "12"
+                      },
+                      "children": [
+                        "2026"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "div",
+                  "props": {
+                    "className": "hm-preview-note"
+                  },
+                  "children": [
+                    {
+                      "tag": "strong",
+                      "props": {},
+                      "children": [],
+                      "message": "m0164",
+                      "parts": []
+                    },
+                    {
+                      "tag": "p",
+                      "props": {},
+                      "children": [],
+                      "message": "m0165",
+                      "parts": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "a",
+                  "props": {
+                    "className": "hm-text-link",
+                    "href": "/sample-report"
+                  },
+                  "children": [],
+                  "message": "m0166",
+                  "parts": [
+                    {
+                      "tag": "span",
+                      "props": {
+                        "aria-hidden": "true"
+                      },
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "div",
+          "props": {
+            "className": "hm-table-wrap",
+            "tabindex": "0",
+            "role": "region",
+            "aria-label": {
+              "message": "m0167"
+            }
+          },
+          "children": [
+            {
+              "tag": "table",
+              "props": {
+                "className": "hm-table"
+              },
+              "children": [
+                {
+                  "tag": "caption",
+                  "props": {},
+                  "children": [],
+                  "message": "m0168",
+                  "parts": []
+                },
+                {
+                  "tag": "thead",
+                  "props": {},
+                  "children": [
+                    {
+                      "tag": "tr",
+                      "props": {},
+                      "children": [
+                        {
+                          "tag": "th",
+                          "props": {
+                            "scope": "col"
+                          },
+                          "children": [],
+                          "message": "m0169",
+                          "parts": []
+                        },
+                        {
+                          "tag": "th",
+                          "props": {
+                            "scope": "col"
+                          },
+                          "children": [
+                            "2024-09-12"
+                          ]
+                        },
+                        {
+                          "tag": "th",
+                          "props": {
+                            "scope": "col"
+                          },
+                          "children": [
+                            "2025-09-15"
+                          ]
+                        },
+                        {
+                          "tag": "th",
+                          "props": {
+                            "scope": "col"
+                          },
+                          "children": [
+                            "2026-09-18"
+                          ]
+                        },
+                        {
+                          "tag": "th",
+                          "props": {
+                            "scope": "col"
+                          },
+                          "children": [],
+                          "message": "m0170",
+                          "parts": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "tag": "tbody",
+                  "props": {},
+                  "children": [
+                    {
+                      "tag": "tr",
+                      "props": {},
+                      "children": [
+                        {
+                          "tag": "th",
+                          "props": {
+                            "scope": "row"
+                          },
+                          "children": [],
+                          "message": "m0171",
+                          "parts": []
+                        },
+                        {
+                          "tag": "td",
+                          "props": {},
+                          "children": [
+                            "5.4"
+                          ]
+                        },
+                        {
+                          "tag": "td",
+                          "props": {},
+                          "children": [
+                            "5.8"
+                          ]
+                        },
+                        {
+                          "tag": "td",
+                          "props": {},
+                          "children": [
+                            "6"
+                          ]
+                        },
+                        {
+                          "tag": "td",
+                          "props": {},
+                          "children": [],
+                          "message": "m0172",
+                          "parts": []
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "tr",
+                      "props": {},
+                      "children": [
+                        {
+                          "tag": "th",
+                          "props": {
+                            "scope": "row"
+                          },
+                          "children": [],
+                          "message": "m0173",
+                          "parts": []
+                        },
+                        {
+                          "tag": "td",
+                          "props": {},
+                          "children": [
+                            "48"
+                          ]
+                        },
+                        {
+                          "tag": "td",
+                          "props": {},
+                          "children": [
+                            "42"
+                          ]
+                        },
+                        {
+                          "tag": "td",
+                          "props": {},
+                          "children": [
+                            "30"
+                          ]
+                        },
+                        {
+                          "tag": "td",
+                          "props": {},
+                          "children": [],
+                          "message": "m0174",
+                          "parts": []
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "tr",
+                      "props": {},
+                      "children": [
+                        {
+                          "tag": "th",
+                          "props": {
+                            "scope": "row"
+                          },
+                          "children": [],
+                          "message": "m0175",
+                          "parts": []
+                        },
+                        {
+                          "tag": "td",
+                          "props": {},
+                          "children": [
+                            "13.2"
+                          ]
+                        },
+                        {
+                          "tag": "td",
+                          "props": {},
+                          "children": [
+                            "13.4"
+                          ]
+                        },
+                        {
+                          "tag": "td",
+                          "props": {},
+                          "children": [
+                            "13.3"
+                          ]
+                        },
+                        {
+                          "tag": "td",
+                          "props": {},
+                          "children": [],
+                          "message": "m0176",
+                          "parts": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "section",
+          "props": {
+            "className": "hm-section",
+            "id": "follow-up"
+          },
+          "children": [
+            {
+              "tag": "div",
+              "props": {
+                "className": "hm-row"
+              },
+              "children": [
+                {
+                  "tag": "h2",
+                  "props": {},
+                  "children": [],
+                  "message": "m0177",
+                  "parts": []
+                },
+                {
+                  "tag": "span",
+                  "props": {
+                    "className": "hm-badge"
+                  },
+                  "children": [],
+                  "message": "m0178",
+                  "parts": []
+                }
+              ]
+            },
+            {
+              "tag": "div",
+              "props": {
+                "className": "hm-grid"
+              },
+              "children": [
+                {
+                  "tag": "article",
+                  "props": {
+                    "className": "hm-card"
+                  },
+                  "children": [
+                    {
+                      "tag": "p",
+                      "props": {
+                        "className": "hm-overline"
+                      },
+                      "children": [],
+                      "message": "m0179",
+                      "parts": []
+                    },
+                    {
+                      "tag": "h3",
+                      "props": {},
+                      "children": [],
+                      "message": "m0180",
+                      "parts": []
+                    },
+                    {
+                      "tag": "p",
+                      "props": {},
+                      "children": [],
+                      "message": "m0181",
+                      "parts": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "article",
+                  "props": {
+                    "className": "hm-card"
+                  },
+                  "children": [
+                    {
+                      "tag": "p",
+                      "props": {
+                        "className": "hm-overline"
+                      },
+                      "children": [],
+                      "message": "m0182",
+                      "parts": []
+                    },
+                    {
+                      "tag": "h3",
+                      "props": {},
+                      "children": [],
+                      "message": "m0183",
+                      "parts": []
+                    },
+                    {
+                      "tag": "p",
+                      "props": {},
+                      "children": [],
+                      "message": "m0184",
+                      "parts": []
+                    },
+                    {
+                      "tag": "p",
+                      "props": {},
+                      "children": [],
+                      "message": "m0185",
+                      "parts": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "article",
+                  "props": {
+                    "className": "hm-card"
+                  },
+                  "children": [
+                    {
+                      "tag": "p",
+                      "props": {
+                        "className": "hm-overline"
+                      },
+                      "children": [],
+                      "message": "m0186",
+                      "parts": []
+                    },
+                    {
+                      "tag": "h3",
+                      "props": {},
+                      "children": [],
+                      "message": "m0187",
+                      "parts": []
+                    },
+                    {
+                      "tag": "p",
+                      "props": {},
+                      "children": [],
+                      "message": "m0188",
+                      "parts": []
+                    },
+                    {
+                      "tag": "p",
+                      "props": {},
+                      "children": [],
+                      "message": "m0189",
+                      "parts": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "section",
+          "props": {
+            "className": "hm-safety",
+            "id": "basis"
+          },
+          "children": [
+            {
+              "tag": "h2",
+              "props": {},
+              "children": [],
+              "message": "m0190",
+              "parts": []
+            },
+            {
+              "tag": "p",
+              "props": {},
+              "children": [],
+              "message": "m0191",
+              "parts": [
+                {
+                  "tag": "a",
+                  "props": {
+                    "href": "https://www.niddk.nih.gov/health-information/diagnostic-tests/a1c-test"
+                  },
+                  "children": []
+                },
+                {
+                  "tag": "a",
+                  "props": {
+                    "href": "https://medlineplus.gov/lab-tests/how-to-understand-your-lab-results/"
+                  },
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "p",
+              "props": {},
+              "children": [],
+              "message": "m0192",
+              "parts": []
+            },
+            {
+              "tag": "p",
+              "props": {
+                "className": "hm-disclaimer"
+              },
+              "children": [],
+              "message": "m0193",
+              "parts": []
+            },
+            {
+              "tag": "a",
+              "props": {
+                "className": "hm-text-link",
+                "href": "/safety"
+              },
+              "children": [],
+              "message": "m0194",
+              "parts": []
+            }
+          ]
+        }
+      ]
+    },
+    "pricing": {
+      "tag": "div",
+      "props": {
+        "className": "hm-page hm-editorial"
+      },
+      "children": [
+        {
+          "tag": "header",
+          "props": {
+            "className": "hm-page-heading"
+          },
+          "children": [
+            {
+              "tag": "p",
+              "props": {
+                "className": "hm-overline"
+              },
+              "children": [],
+              "message": "m0195",
+              "parts": []
+            },
+            {
+              "tag": "h1",
+              "props": {},
+              "children": [],
+              "message": "m0196",
+              "parts": [
+                {
+                  "tag": "br",
+                  "props": {},
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "p",
+              "props": {
+                "className": "hm-lead"
+              },
+              "children": [],
+              "message": "m0197",
+              "parts": []
+            },
+            {
+              "tag": "p",
+              "props": {},
+              "children": [],
+              "message": "m0198",
+              "parts": []
+            }
+          ]
+        },
+        {
+          "tag": "div",
+          "props": {
+            "className": "hm-grid hm-plans"
+          },
+          "children": [
+            {
+              "tag": "article",
+              "props": {
+                "className": "hm-card "
+              },
+              "children": [
+                {
+                  "tag": "div",
+                  "props": {
+                    "className": "hm-row"
+                  },
+                  "children": [
+                    {
+                      "tag": "h3",
+                      "props": {},
+                      "children": [],
+                      "message": "m0199",
+                      "parts": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "props": {
+                    "className": "hm-price"
+                  },
+                  "children": [
+                    "$0",
+                    {
+                      "tag": "span",
+                      "props": {},
+                      "children": [],
+                      "message": "m0200",
+                      "parts": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "props": {},
+                  "children": [],
+                  "message": "m0201",
+                  "parts": []
+                },
+                {
+                  "tag": "ul",
+                  "props": {},
+                  "children": [
+                    {
+                      "tag": "li",
+                      "props": {},
+                      "children": [],
+                      "message": "m0202",
+                      "parts": []
+                    },
+                    {
+                      "tag": "li",
+                      "props": {},
+                      "children": [],
+                      "message": "m0203",
+                      "parts": []
+                    },
+                    {
+                      "tag": "li",
+                      "props": {},
+                      "children": [],
+                      "message": "m0204",
+                      "parts": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "a",
+                  "props": {
+                    "className": "hm-button hm-secondary",
+                    "href": "/sample-report"
+                  },
+                  "children": [],
+                  "message": "m0205",
+                  "parts": [
+                    {
+                      "tag": "span",
+                      "props": {
+                        "aria-hidden": "true"
+                      },
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "article",
+              "props": {
+                "className": "hm-card hm-featured"
+              },
+              "children": [
+                {
+                  "tag": "div",
+                  "props": {
+                    "className": "hm-row"
+                  },
+                  "children": [
+                    {
+                      "tag": "h3",
+                      "props": {},
+                      "children": [],
+                      "message": "m0206",
+                      "parts": []
+                    },
+                    {
+                      "tag": "span",
+                      "props": {
+                        "className": "hm-badge"
+                      },
+                      "children": [],
+                      "message": "m0207",
+                      "parts": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "props": {
+                    "className": "hm-price"
+                  },
+                  "children": [
+                    "$9.9",
+                    {
+                      "tag": "span",
+                      "props": {},
+                      "children": [],
+                      "message": "m0208",
+                      "parts": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "props": {},
+                  "children": [],
+                  "message": "m0209",
+                  "parts": []
+                },
+                {
+                  "tag": "ul",
+                  "props": {},
+                  "children": [
+                    {
+                      "tag": "li",
+                      "props": {},
+                      "children": [],
+                      "message": "m0210",
+                      "parts": []
+                    },
+                    {
+                      "tag": "li",
+                      "props": {},
+                      "children": [],
+                      "message": "m0211",
+                      "parts": []
+                    },
+                    {
+                      "tag": "li",
+                      "props": {},
+                      "children": [],
+                      "message": "m0212",
+                      "parts": []
+                    },
+                    {
+                      "tag": "li",
+                      "props": {},
+                      "children": [],
+                      "message": "m0213",
+                      "parts": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "a",
+                  "props": {
+                    "className": "hm-button",
+                    "href": "/sample-report"
+                  },
+                  "children": [],
+                  "message": "m0214",
+                  "parts": [
+                    {
+                      "tag": "span",
+                      "props": {
+                        "aria-hidden": "true"
+                      },
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "article",
+              "props": {
+                "className": "hm-card "
+              },
+              "children": [
+                {
+                  "tag": "div",
+                  "props": {
+                    "className": "hm-row"
+                  },
+                  "children": [
+                    {
+                      "tag": "h3",
+                      "props": {},
+                      "children": [],
+                      "message": "m0215",
+                      "parts": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "props": {
+                    "className": "hm-price"
+                  },
+                  "children": [
+                    "$15",
+                    {
+                      "tag": "span",
+                      "props": {},
+                      "children": [],
+                      "message": "m0216",
+                      "parts": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "p",
+                  "props": {},
+                  "children": [],
+                  "message": "m0217",
+                  "parts": []
+                },
+                {
+                  "tag": "ul",
+                  "props": {},
+                  "children": [
+                    {
+                      "tag": "li",
+                      "props": {},
+                      "children": [],
+                      "message": "m0218",
+                      "parts": []
+                    },
+                    {
+                      "tag": "li",
+                      "props": {},
+                      "children": [],
+                      "message": "m0219",
+                      "parts": []
+                    },
+                    {
+                      "tag": "li",
+                      "props": {},
+                      "children": [],
+                      "message": "m0220",
+                      "parts": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "a",
+                  "props": {
+                    "className": "hm-button hm-secondary",
+                    "href": "/sample-report"
+                  },
+                  "children": [],
+                  "message": "m0221",
+                  "parts": [
+                    {
+                      "tag": "span",
+                      "props": {
+                        "aria-hidden": "true"
+                      },
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "section",
+          "props": {
+            "className": "hm-safety"
+          },
+          "children": [
+            {
+              "tag": "h2",
+              "props": {},
+              "children": [],
+              "message": "m0222",
+              "parts": []
+            },
+            {
+              "tag": "p",
+              "props": {},
+              "children": [],
+              "message": "m0223",
+              "parts": []
+            },
+            {
+              "tag": "p",
+              "props": {
+                "className": "hm-disclaimer"
+              },
+              "children": [],
+              "message": "m0224",
+              "parts": []
+            }
+          ]
+        }
+      ]
+    },
+    "safety": {
+      "tag": "div",
+      "props": {
+        "className": "hm-page hm-editorial hm-prose"
+      },
+      "children": [
+        {
+          "tag": "header",
+          "props": {
+            "className": "hm-page-heading"
+          },
+          "children": [
+            {
+              "tag": "p",
+              "props": {
+                "className": "hm-overline"
+              },
+              "children": [],
+              "message": "m0225",
+              "parts": []
+            },
+            {
+              "tag": "h1",
+              "props": {},
+              "children": [],
+              "message": "m0226",
+              "parts": [
+                {
+                  "tag": "br",
+                  "props": {},
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "p",
+              "props": {
+                "className": "hm-disclaimer"
+              },
+              "children": [],
+              "message": "m0227",
+              "parts": []
+            }
+          ]
+        },
+        {
+          "tag": "div",
+          "props": {
+            "className": "hm-document"
+          },
+          "children": [
+            {
+              "tag": "nav",
+              "props": {
+                "className": "hm-contents",
+                "aria-label": {
+                  "message": "m0228"
+                }
+              },
+              "children": [
+                {
+                  "tag": "p",
+                  "props": {
+                    "className": "hm-overline"
+                  },
+                  "children": [],
+                  "message": "m0229",
+                  "parts": []
+                },
+                {
+                  "tag": "ol",
+                  "props": {},
+                  "children": [
+                    {
+                      "tag": "li",
+                      "props": {},
+                      "children": [
+                        {
+                          "tag": "a",
+                          "props": {
+                            "href": "#emergency"
+                          },
+                          "children": [],
+                          "message": "m0230",
+                          "parts": []
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "li",
+                      "props": {},
+                      "children": [
+                        {
+                          "tag": "a",
+                          "props": {
+                            "href": "#urgent-check"
+                          },
+                          "children": [],
+                          "message": "m0231",
+                          "parts": []
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "li",
+                      "props": {},
+                      "children": [
+                        {
+                          "tag": "a",
+                          "props": {
+                            "href": "#information"
+                          },
+                          "children": [],
+                          "message": "m0232",
+                          "parts": []
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "li",
+                      "props": {},
+                      "children": [
+                        {
+                          "tag": "a",
+                          "props": {
+                            "href": "#rules"
+                          },
+                          "children": [],
+                          "message": "m0233",
+                          "parts": []
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "li",
+                      "props": {},
+                      "children": [
+                        {
+                          "tag": "a",
+                          "props": {
+                            "href": "#reading-basis"
+                          },
+                          "children": [],
+                          "message": "m0234",
+                          "parts": []
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "li",
+                      "props": {},
+                      "children": [
+                        {
+                          "tag": "a",
+                          "props": {
+                            "href": "#health-data"
+                          },
+                          "children": [],
+                          "message": "m0235",
+                          "parts": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "div",
+              "props": {
+                "className": "hm-document-body"
+              },
+              "children": [
+                {
+                  "tag": "section",
+                  "props": {
+                    "id": "emergency",
+                    "className": "hm-safety"
+                  },
+                  "children": [
+                    {
+                      "tag": "h2",
+                      "props": {},
+                      "children": [],
+                      "message": "m0236",
+                      "parts": []
+                    },
+                    {
+                      "tag": "p",
+                      "props": {},
+                      "children": [],
+                      "message": "m0237",
+                      "parts": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "div",
+                  "props": {
+                    "id": "urgent-check"
+                  },
+                  "children": [
+                    {
+                      "tag": "public-safety",
+                      "props": {},
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "section",
+                  "props": {
+                    "id": "information"
+                  },
+                  "children": [
+                    {
+                      "tag": "h2",
+                      "props": {},
+                      "children": [],
+                      "message": "m0238",
+                      "parts": []
+                    },
+                    {
+                      "tag": "p",
+                      "props": {},
+                      "children": [],
+                      "message": "m0239",
+                      "parts": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "section",
+                  "props": {
+                    "id": "rules"
+                  },
+                  "children": [
+                    {
+                      "tag": "h2",
+                      "props": {},
+                      "children": [],
+                      "message": "m0240",
+                      "parts": []
+                    },
+                    {
+                      "tag": "p",
+                      "props": {},
+                      "children": [],
+                      "message": "m0241",
+                      "parts": []
+                    },
+                    {
+                      "tag": "p",
+                      "props": {},
+                      "children": [],
+                      "message": "m0242",
+                      "parts": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "section",
+                  "props": {
+                    "id": "reading-basis"
+                  },
+                  "children": [
+                    {
+                      "tag": "h2",
+                      "props": {},
+                      "children": [],
+                      "message": "m0243",
+                      "parts": []
+                    },
+                    {
+                      "tag": "p",
+                      "props": {},
+                      "children": [],
+                      "message": "m0244",
+                      "parts": []
+                    },
+                    {
+                      "tag": "p",
+                      "props": {},
+                      "children": [],
+                      "message": "m0245",
+                      "parts": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "section",
+                  "props": {
+                    "id": "health-data"
+                  },
+                  "children": [
+                    {
+                      "tag": "h2",
+                      "props": {},
+                      "children": [],
+                      "message": "m0246",
+                      "parts": []
+                    },
+                    {
+                      "tag": "p",
+                      "props": {},
+                      "children": [],
+                      "message": "m0247",
+                      "parts": []
+                    },
+                    {
+                      "tag": "p",
+                      "props": {},
+                      "children": [],
+                      "message": "m0248",
+                      "parts": []
+                    },
+                    {
+                      "tag": "a",
+                      "props": {
+                        "className": "hm-text-link",
+                        "href": "/privacy"
+                      },
+                      "children": [],
+                      "message": "m0249",
+                      "parts": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "privacy": {
+      "tag": "div",
+      "props": {
+        "className": "hm-page hm-editorial hm-prose"
+      },
+      "children": [
+        {
+          "tag": "header",
+          "props": {
+            "className": "hm-page-heading"
+          },
+          "children": [
+            {
+              "tag": "p",
+              "props": {
+                "className": "hm-overline"
+              },
+              "children": [],
+              "message": "m0250",
+              "parts": []
+            },
+            {
+              "tag": "h1",
+              "props": {},
+              "children": [],
+              "message": "m0251",
+              "parts": [
+                {
+                  "tag": "br",
+                  "props": {},
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "p",
+              "props": {},
+              "children": [],
+              "message": "m0252",
+              "parts": []
+            }
+          ]
+        },
+        {
+          "tag": "div",
+          "props": {
+            "className": "hm-document"
+          },
+          "children": [
+            {
+              "tag": "nav",
+              "props": {
+                "className": "hm-contents",
+                "aria-label": {
+                  "message": "m0253"
+                }
+              },
+              "children": [
+                {
+                  "tag": "p",
+                  "props": {
+                    "className": "hm-overline"
+                  },
+                  "children": [],
+                  "message": "m0254",
+                  "parts": []
+                },
+                {
+                  "tag": "ol",
+                  "props": {},
+                  "children": [
+                    {
+                      "tag": "li",
+                      "props": {},
+                      "children": [
+                        {
+                          "tag": "a",
+                          "props": {
+                            "href": "#storage"
+                          },
+                          "children": [],
+                          "message": "m0255",
+                          "parts": []
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "li",
+                      "props": {},
+                      "children": [
+                        {
+                          "tag": "a",
+                          "props": {
+                            "href": "#model-processing"
+                          },
+                          "children": [],
+                          "message": "m0256",
+                          "parts": []
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "li",
+                      "props": {},
+                      "children": [
+                        {
+                          "tag": "a",
+                          "props": {
+                            "href": "#deletion"
+                          },
+                          "children": [],
+                          "message": "m0257",
+                          "parts": []
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "li",
+                      "props": {},
+                      "children": [
+                        {
+                          "tag": "a",
+                          "props": {
+                            "href": "#advertising"
+                          },
+                          "children": [],
+                          "message": "m0258",
+                          "parts": []
+                        }
+                      ]
+                    },
+                    {
+                      "tag": "li",
+                      "props": {},
+                      "children": [
+                        {
+                          "tag": "a",
+                          "props": {
+                            "href": "#before-production"
+                          },
+                          "children": [],
+                          "message": "m0259",
+                          "parts": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "div",
+              "props": {
+                "className": "hm-document-body"
+              },
+              "children": [
+                {
+                  "tag": "section",
+                  "props": {
+                    "id": "storage"
+                  },
+                  "children": [
+                    {
+                      "tag": "h2",
+                      "props": {},
+                      "children": [],
+                      "message": "m0260",
+                      "parts": []
+                    },
+                    {
+                      "tag": "p",
+                      "props": {},
+                      "children": [],
+                      "message": "m0261",
+                      "parts": []
+                    },
+                    {
+                      "tag": "p",
+                      "props": {},
+                      "children": [],
+                      "message": "m0262",
+                      "parts": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "section",
+                  "props": {
+                    "id": "model-processing"
+                  },
+                  "children": [
+                    {
+                      "tag": "h2",
+                      "props": {},
+                      "children": [],
+                      "message": "m0263",
+                      "parts": []
+                    },
+                    {
+                      "tag": "p",
+                      "props": {},
+                      "children": [],
+                      "message": "m0264",
+                      "parts": []
+                    },
+                    {
+                      "tag": "p",
+                      "props": {},
+                      "children": [],
+                      "message": "m0265",
+                      "parts": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "section",
+                  "props": {
+                    "id": "deletion"
+                  },
+                  "children": [
+                    {
+                      "tag": "h2",
+                      "props": {},
+                      "children": [],
+                      "message": "m0266",
+                      "parts": []
+                    },
+                    {
+                      "tag": "p",
+                      "props": {},
+                      "children": [],
+                      "message": "m0267",
+                      "parts": []
+                    },
+                    {
+                      "tag": "p",
+                      "props": {},
+                      "children": [],
+                      "message": "m0268",
+                      "parts": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "section",
+                  "props": {
+                    "id": "advertising"
+                  },
+                  "children": [
+                    {
+                      "tag": "h2",
+                      "props": {},
+                      "children": [],
+                      "message": "m0269",
+                      "parts": []
+                    },
+                    {
+                      "tag": "p",
+                      "props": {},
+                      "children": [],
+                      "message": "m0270",
+                      "parts": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "section",
+                  "props": {
+                    "id": "before-production"
+                  },
+                  "children": [
+                    {
+                      "tag": "h2",
+                      "props": {},
+                      "children": [],
+                      "message": "m0271",
+                      "parts": []
+                    },
+                    {
+                      "tag": "p",
+                      "props": {},
+                      "children": [],
+                      "message": "m0272",
+                      "parts": []
+                    },
+                    {
+                      "tag": "p",
+                      "props": {},
+                      "children": [],
+                      "message": "m0273",
+                      "parts": [
+                        {
+                          "tag": "a",
+                          "props": {
+                            "href": "mailto:support@healthmatchai.com"
+                          },
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "messages": {
+    "m0001": "MEET YOUR LONG-TERM HEALTH COMPANION",
+    "m0002": "Know your numbers. Catch changes early.",
+    "m0003": "Upload any lab or checkup report. Get a plain-language reading of every result, track what changes year over year, and never miss a follow-up again.",
+    "m0004": "Upload a report <x0>↗</x0>",
+    "m0005": "See a sample report →",
+    "m0006": "Upload, confirm, understand · Sample and manual entry always available",
+    "m0007": "YOUR HEALTH, OVER TIME",
+    "m0008": "Sample · fictional data",
+    "m0009": "A little change.<x0></x0>A clearer picture.",
+    "m0010": "HbA1c · Blood glucose",
+    "m0011": "↑ Worsening · Sample",
+    "m0012": "Sample HbA1c: 5.4 percent in 2024, 5.8 in 2025, 6.0 in 2026. Truncated vertical scale, 5.0 to 6.2 percent.",
+    "m0013": "A pattern worth a conversation",
+    "m0014": "This sample is above its report’s reference range. Bring the trend to your clinician.",
+    "m0015": "Explore the full sample <x0>↗</x0>",
+    "m0016": "Understand each result.",
+    "m0017": "Notice the pattern.",
+    "m0018": "Remember the follow-up.",
+    "m0019": "FROM A REPORT TO A ROUTINE",
+    "m0020": "Three steps. A longer view.",
+    "m0021": "Upload your reports",
+    "m0022": "Bring a PDF or photo. Add past reports together to start building your personal baseline. You’ll review and correct every extracted result before it is saved.",
+    "m0023": "Understand your numbers",
+    "m0024": "See what each result means in plain language. Trace flags and follow-up suggestions to versioned rules, with AI helping explain the findings.",
+    "m0025": "Keep an eye on change",
+    "m0026": "See new, persistent, worsening, improving, or resolved abnormalities. Keep follow-ups in view and bring a clear trend summary to your clinician.",
+    "m0027": "THE NUMBERS THAT TELL YOUR STORY",
+    "m0028": "From individual markers to the bigger picture.",
+    "m0029": "Metabolic",
+    "m0030": "Blood glucose · HbA1c",
+    "m0031": "Cardiovascular",
+    "m0032": "Cholesterol · Lipids",
+    "m0033": "Liver & kidney",
+    "m0034": "Liver enzymes · Kidney markers",
+    "m0035": "Blood count",
+    "m0036": "Red cells · White cells · Platelets",
+    "m0037": "Other markers",
+    "m0038": "Thyroid · Tumor markers",
+    "m0039": "Planned categories, not detection promises. Coverage varies by marker; tumor markers cannot independently establish or rule out cancer. Unsupported markers will be clearly labeled.",
+    "m0040": "CHANGES DESERVE CONTEXT",
+    "m0041": "A result is a moment.<x0></x0>A trend tells you more.",
+    "m0042": "Keep the small shifts in sight. See what’s new, what persists, and what has moved back into range.",
+    "m0043": "Each alert will show the result, its source, the rule behind it, and a suggested next conversation with your clinician.",
+    "m0044": "Follow the sample’s three-year trend →",
+    "m0045": "YOUR HEALTH, OVER TIME",
+    "m0046": "Sample · fictional data",
+    "m0047": "A little change.<x0></x0>A clearer picture.",
+    "m0048": "HbA1c · Blood glucose",
+    "m0049": "↑ Worsening · Sample",
+    "m0050": "Sample HbA1c: 5.4 percent in 2024, 5.8 in 2025, 6.0 in 2026. Truncated vertical scale, 5.0 to 6.2 percent.",
+    "m0051": "A pattern worth a conversation",
+    "m0052": "This sample is above its report’s reference range. Bring the trend to your clinician.",
+    "m0053": "Explore the full sample <x0>↗</x0>",
+    "m0054": "CLEAR INFORMATION. CLEAR BOUNDARIES.",
+    "m0055": "Your clinician stays at the center.",
+    "m0056": "HealthMatch AI provides health information and self-management support. It is not a diagnosis and does not replace a clinician. Do not delay care because of a result, an explanation, or the absence of an alert.",
+    "m0057": "Rules will determine severity, red flags, and follow-up intervals. AI will help with extraction and language. Critical alerts will never sit behind a paywall.",
+    "m0058": "Read Safety & Limits →",
+    "m0059": "A PLAN FOR YOUR NEXT CHAPTER",
+    "m0060": "Start with one report. Build from there.",
+    "m0061": "Preview pricing only. Plans are not on sale; final pricing will be confirmed before launch.",
+    "m0062": "Free",
+    "m0063": "first report",
+    "m0064": "A clearer starting point.",
+    "m0065": "1 report reading",
+    "m0066": "Review extracted results",
+    "m0067": "Plain-language explanations",
+    "m0068": "Explore the sample <x0>↗</x0>",
+    "m0069": "Plus",
+    "m0070": "For ongoing tracking",
+    "m0071": "/ month",
+    "m0072": "Or $79 / year. Planned for the MVP.",
+    "m0073": "Unlimited reports",
+    "m0074": "Longitudinal tracking",
+    "m0075": "Follow-up reminders",
+    "m0076": "Doctor-ready PDF export",
+    "m0077": "Explore the sample <x0>↗</x0>",
+    "m0078": "Family",
+    "m0079": "/ month",
+    "m0080": "5 profiles. Planned for a later release.",
+    "m0081": "Everything in Plus",
+    "m0082": "Up to 5 separate profiles",
+    "m0083": "Keep family reports organized",
+    "m0084": "Explore the sample <x0>↗</x0>",
+    "m0085": "WHAT’S NEXT",
+    "m0086": "Your first report is the beginning.",
+    "m0087": "Upload a PDF or image, review the extracted values, and keep the changes in view. Manual entry and a separate fictional Sample workspace are always available.",
+    "m0088": "Open my health workspace ↗",
+    "m0089": "A few things you might be wondering.",
+    "m0090": "Can I upload a report today?",
+    "m0091": "Yes, in the local application. Sign in, upload a PDF or image and confirm the extracted values. If extraction is unavailable, use manual entry or import the fictional three-year sample. In-app follow-ups and PDF export work; email reminders are not connected.",
+    "m0092": "Can it tell me whether I have a condition?",
+    "m0093": "No. HealthMatch AI is a health information and self-management tool, not a diagnostic service. A clinician must interpret results in the context of your health.",
+    "m0094": "What if I only have one report?",
+    "m0095": "The planned first-report reading helps explain individual results. Comparable results from two or more dates will unlock longitudinal trends.",
+    "m0096": "Who decides the severity and follow-up timing?",
+    "m0097": "Auditable, versioned rules will determine severity, red flags, and follow-up intervals. AI will extract results and explain those decisions; it will not make clinical judgments. You will confirm the extracted values first.",
+    "m0098": "Will every marker be interpreted?",
+    "m0099": "The local pilot covers HbA1c, glucose, potassium, ALT and hemoglobin. Other markers retain their original values and remain unclassified. A broader library of roughly 120 markers requires clinical review before release.",
+    "m0100": "What happens to my data?",
+    "m0101": "The public sample is fictional. The local app stores encrypted report data and provides export and workspace deletion. Files sent for extraction go to the configured Gemini endpoint with your consent. See Privacy for local HTTP, retention and deletion limits; this is not a production health-data service.",
+    "m0102": "Sample · fictional data",
+    "m0103": "Your numbers,<x0></x0>with a little perspective.",
+    "m0104": "A complete reading of a fictional three-marker report, with three years of context.",
+    "m0105": "No real person, laboratory, or medical record is represented. All values, flags, and actions below are static illustrations, not a clinical rules engine.",
+    "m0106": "Sample report sections",
+    "m0107": "Overview",
+    "m0108": "All results",
+    "m0109": "Trends",
+    "m0110": "Follow-up",
+    "m0111": "Reading basis",
+    "m0112": "Report overview",
+    "m0113": "Sample · fictional data",
+    "m0114": "SAMPLE PROFILE",
+    "m0115": "Adult · born 1982",
+    "m0116": "Female reference context · Sample Lab A",
+    "m0117": "Latest collection: September 18, 2026<x0></x0>3 reports · 3 comparable markers",
+    "m0118": "AT A GLANCE · SAMPLE",
+    "m0119": "1 marker above range",
+    "m0120": "HbA1c increased across the three sample dates. ALT returned to range. Hemoglobin remained within range.",
+    "m0121": "EXTRACTION REVIEW · SAMPLE",
+    "m0122": "All 3 values reviewed",
+    "m0123": "Illustration of the required confirmation step. In the app, you will compare each value with its source before saving it.",
+    "m0124": "Every result, explained.",
+    "m0125": "Sample report reference intervals only. Laboratories, methods, and personal context can change the appropriate range.",
+    "m0126": "Sample results table, scroll horizontally to see all columns",
+    "m0127": "Sample · September 18, 2026 · all results",
+    "m0128": "Marker",
+    "m0129": "Result",
+    "m0130": "Report range",
+    "m0131": "Sample flag",
+    "m0132": "HbA1c",
+    "m0133": "Above sample range",
+    "m0134": "ALT",
+    "m0135": "30 U/L",
+    "m0136": "7–35 U/L",
+    "m0137": "Within sample range",
+    "m0138": "Hemoglobin",
+    "m0139": "13.3 g/dL",
+    "m0140": "12.0–15.5 g/dL",
+    "m0141": "Within sample range",
+    "m0142": "Sample · fictional data",
+    "m0143": "HbA1c",
+    "m0144": "A measure of average blood glucose over about three months. This sample is 0.4 percentage points above its report’s upper reference limit. Discuss the upward pattern with a clinician; this result alone is not a diagnosis.",
+    "m0145": "Worsening",
+    "m0146": "Sample · fictional data",
+    "m0147": "ALT",
+    "m0148": "An enzyme commonly included in liver panels. This fictional result has returned to the report’s range. A change alone cannot establish its cause or rule out a health problem.",
+    "m0149": "Resolved",
+    "m0150": "Sample · fictional data",
+    "m0151": "Hemoglobin",
+    "m0152": "A protein in red blood cells that carries oxygen. All three fictional values fall within this report’s range; interpretation depends on the person and the laboratory.",
+    "m0153": "Stable",
+    "m0154": "THREE REPORTS. ONE TIMELINE.",
+    "m0155": "Follow the direction of change.",
+    "m0156": "HbA1c rose by 0.6 percentage points from the first sample to the latest. ALT returned to the sample range. A trend is context to discuss, not a conclusion about a condition.",
+    "m0157": "Sample assumes the same laboratory, methods, units, and reference intervals at all three dates. Chart scale: 5.0–6.2%; the vertical axis does not start at zero.",
+    "m0158": "YOUR HEALTH, OVER TIME",
+    "m0159": "Sample · fictional data",
+    "m0160": "A little change.<x0></x0>A clearer picture.",
+    "m0161": "HbA1c · Blood glucose",
+    "m0162": "↑ Worsening · Sample",
+    "m0163": "Sample HbA1c: 5.4 percent in 2024, 5.8 in 2025, 6.0 in 2026. Truncated vertical scale, 5.0 to 6.2 percent.",
+    "m0164": "A pattern worth a conversation",
+    "m0165": "This sample is above its report’s reference range. Bring the trend to your clinician.",
+    "m0166": "Explore the full sample <x0>↗</x0>",
+    "m0167": "Sample results table, scroll horizontally to see all columns",
+    "m0168": "Sample · full longitudinal values",
+    "m0169": "Marker / unit",
+    "m0170": "Latest trend",
+    "m0171": "HbA1c (%)",
+    "m0172": "Worsening",
+    "m0173": "ALT (U/L)",
+    "m0174": "Resolved",
+    "m0175": "Hemoglobin (g/dL)",
+    "m0176": "Stable",
+    "m0177": "Turn a question into a conversation.",
+    "m0178": "Sample · fictional data",
+    "m0179": "DISCUSS",
+    "m0180": "Bring the glucose trend",
+    "m0181": "Ask your primary care clinician: “How should we interpret this change in my context? Could anything affect the accuracy of the result? When should I repeat the test?”",
+    "m0182": "PLAN · SAMPLE ONLY",
+    "m0183": "A follow-up to keep in view",
+    "m0184": "Illustrative reminder: December 18, 2026. This three-month date demonstrates the interface; it is not a recommended interval. Actual timing requires a reviewed rule and clinical context.",
+    "m0185": "No email is scheduled or sent.",
+    "m0186": "SHARE",
+    "m0187": "A summary for your clinician",
+    "m0188": "HbA1c: 5.4 → 5.8 → 6.0%. ALT: 48 → 42 → 30 U/L. Hemoglobin: stable within the sample range.",
+    "m0189": "One-page PDF export is planned for the app.",
+    "m0190": "Know where the reading comes from.",
+    "m0191": "The sample intervals are fictional report values, not universal thresholds. The HbA1c explanation draws on <x0>NIDDK’s A1C overview</x0>. See <x1>MedlinePlus on reference ranges</x1> for why lab context matters.",
+    "m0192": "Sample fixture: sample-2026-10-v1. It has no validated clinical severity rules. In the planned app, each classification, red flag, and follow-up interval must show its rule ID, version, source, and applicable context. AI cannot override those outputs.",
+    "m0193": "HealthMatch AI provides health information and self-management support. It is not a diagnosis and does not replace a clinician. Do not delay care because of a result, an explanation, or the absence of an alert.",
+    "m0194": "Safety & Limits →",
+    "m0195": "PRICING PREVIEW",
+    "m0196": "A clearer picture.<x0></x0>At your own pace.",
+    "m0197": "One report to begin. A longer view when you need it.",
+    "m0198": "Placeholder prices. No purchase or checkout is available in this preview.",
+    "m0199": "Free",
+    "m0200": "first report",
+    "m0201": "A clearer starting point.",
+    "m0202": "1 report reading",
+    "m0203": "Review extracted results",
+    "m0204": "Plain-language explanations",
+    "m0205": "Explore the sample <x0>↗</x0>",
+    "m0206": "Plus",
+    "m0207": "For ongoing tracking",
+    "m0208": "/ month",
+    "m0209": "Or $79 / year. Planned for the MVP.",
+    "m0210": "Unlimited reports",
+    "m0211": "Longitudinal tracking",
+    "m0212": "Follow-up reminders",
+    "m0213": "Doctor-ready PDF export",
+    "m0214": "Explore the sample <x0>↗</x0>",
+    "m0215": "Family",
+    "m0216": "/ month",
+    "m0217": "5 profiles. Planned for a later release.",
+    "m0218": "Everything in Plus",
+    "m0219": "Up to 5 separate profiles",
+    "m0220": "Keep family reports organized",
+    "m0221": "Explore the sample <x0>↗</x0>",
+    "m0222": "Safety is part of every plan.",
+    "m0223": "Critical-value alerts will always be visible without payment. Family profiles are planned for a later release; the first application release focuses on your own reports.",
+    "m0224": "HealthMatch AI provides health information and self-management support. It is not a diagnosis and does not replace a clinician. Do not delay care because of a result, an explanation, or the absence of an alert.",
+    "m0225": "SAFETY & LIMITS",
+    "m0226": "Useful context.<x0></x0>Honest boundaries.",
+    "m0227": "HealthMatch AI provides health information and self-management support. It is not a diagnosis and does not replace a clinician. Do not delay care because of a result, an explanation, or the absence of an alert.",
+    "m0228": "On this page",
+    "m0229": "On this page",
+    "m0230": "Do not wait for an app in an emergency.",
+    "m0231": "Urgent warnings, without signing in",
+    "m0232": "Information, not a diagnosis",
+    "m0233": "Rules decide. AI explains.",
+    "m0234": "The basis of a reading",
+    "m0235": "Health data deserves careful handling.",
+    "m0236": "Do not wait for an app in an emergency.",
+    "m0237": "If a laboratory or clinician tells you a result is critical, seek urgent medical attention and follow their instructions. If you believe you are having a medical emergency, contact local emergency services. This app is not continuously monitored.",
+    "m0238": "Information, not a diagnosis",
+    "m0239": "HealthMatch AI is designed to help you understand reports and manage follow-ups. It will not provide diagnostic conclusions, prescriptions, medication advice, symptom triage, or access to a doctor marketplace. It cannot guarantee early detection or rule out illness.",
+    "m0240": "Rules decide. AI explains.",
+    "m0241": "The local application uses versioned, auditable rules for four severity levels: normal, mild deviation, significant abnormality, and critical. Separate red-flag rules show critical-value warnings at the top of the first screen, immediately and without a paywall.",
+    "m0242": "AI extracts report information or selects relevant evidence and a question topic. Answers use validated, report-specific templates. You must confirm extracted values before they enter your health record. Generated explanations must pass checks against the rule outputs before display; a safe template will replace an explanation that fails validation.",
+    "m0243": "The basis of a reading",
+    "m0244": "Readings will use the report’s own reference intervals and applicable thresholds from public guidelines. Each rule must include a source, version, population, unit, and review record. Reference intervals vary by laboratory and context; incomplete or incompatible results must not be labeled normal by default.",
+    "m0245": "Uncovered markers will show the original report value and “interpretation not yet covered.” A normal result or no alert is not an assurance of health. Five markers currently have local pilot rules: HbA1c, glucose, potassium, ALT and hemoglobin. Clinical sign-off is pending. Follow-up intervals are clinician-review targets, not universal repeat-test instructions.",
+    "m0246": "Health data deserves careful handling.",
+    "m0247": "The local app encrypts saved health payloads and separates fictional samples from personal reports. Upload extraction sends files to the configured Gemini endpoint with consent; manual entry and sample import need no model access.",
+    "m0248": "Local connections use loopback HTTP. Active workspace data can be exported or deleted, but device backups, SQLite journals and provider-retained copies are outside this control. Production privacy and deletion requirements are not complete.",
+    "m0249": "Read actual local privacy controls and limits →",
+    "m0250": "UPDATED OCTOBER 24, 2026 · LOCAL PILOT",
+    "m0251": "Your reports.<x0></x0>Your choices.",
+    "m0252": "This notice describes the local phase 2 application. It has not been deployed as a production health-data service. Use fictional data for local evaluation.",
+    "m0253": "On this page",
+    "m0254": "On this page",
+    "m0255": "Storage and processing",
+    "m0256": "Optional model processing",
+    "m0257": "Retention and deletion",
+    "m0258": "No advertising use",
+    "m0259": "Before production",
+    "m0260": "Storage and processing",
+    "m0261": "Accounts and sessions use the existing D1 data layer, running locally through Cloudflare’s emulator. Report values, source text, drafts, self-reported profiles and task state are encrypted with AES-256-GCM before being stored in the local database. Account email and technical record identifiers are not encrypted by the application. The encryption key is kept in an ignored local environment file.",
+    "m0262": "The browser and API run on this computer over loopback HTTP; this is not encrypted transport. External model requests use HTTPS. Production TLS, key management and hosting locations have not been established.",
+    "m0263": "Optional model processing",
+    "m0264": "With your permission, uploaded PDF/image bytes are sent to the configured Gemini API endpoint for extraction. With report Q&A enabled, your question and confirmed marker values are sent to select relevant evidence and an answer topic. By default personal-workspace Q&A uses templates until you opt in. Sample data is fictional and kept separate.",
+    "m0265": "The current default endpoint is Google’s Gemini API at generativelanguage.googleapis.com. An operator may configure a different endpoint. Processing locations, provider retention and contractual safeguards are not verified for production use. Model access is optional: Sample import, manual entry, rules and template answers work without it.",
+    "m0266": "Retention and deletion",
+    "m0267": "Original uploads are processed transiently and are not stored by this app. A browser preview may remain until the page closes. Saved values, source text and pending drafts remain until you delete the selected workspace. In Health profile, export all workspace data as JSON or delete its profile, reports, drafts and reminder records. Personal and Sample workspaces are deleted separately.",
+    "m0268": "Deletion removes active records; it does not erase downloaded files, device backups, SQLite journals/free pages or copies retained by an external model provider. No remote-provider deletion API or backup expiry process is implemented. These limits must be resolved before a production launch claiming complete erasure. Account/session records are managed separately by the existing login service.",
+    "m0269": "No advertising use",
+    "m0270": "The new application does not sell health data or use it for advertising. No analytics scripts are loaded by these pages. In-app reminders are available; reminder email is not connected and sends nothing. Local development login links do not send email or verify email ownership.",
+    "m0271": "Before production",
+    "m0272": "Clinical rule approval, processor contracts, processing countries, GDPR legal basis and user-rights handling, retention schedules, encrypted transport, operational security and verified complete-deletion procedures remain release requirements. This pilot makes no production compliance claim.",
+    "m0273": "Privacy contact: <x0>support@healthmatchai.com</x0>.",
+    "m0274": "Home",
+    "m0275": "Sample Report",
+    "m0276": "Pricing",
+    "m0277": "Safety & Limits",
+    "m0278": "Privacy",
+    "m0279": "Skip to content",
+    "m0280": "Open my workspace ↗",
+    "m0281": "Know your numbers. Catch changes early.",
+    "m0282": "Health information and self-management. Not a substitute for professional care.",
+    "m0283": "Product preview · Built around a longer view.",
+    "m0284": "On this page",
+    "m0285": "Language",
+    "m0286": "If a translation differs from the English version, the English version prevails.",
+    "m0287": "Urgent warnings, without signing in",
+    "m0288": "These limited checks run in your browser. Nothing entered here is saved or sent to a model. They cannot rule out an emergency or replace the laboratory’s instructions.",
+    "m0289": "A supported critical-value or symptom rule matched your entry. Check the original result and seek help now.",
+    "m0290": "Result to check",
+    "m0291": "Value",
+    "m0292": "Urgent concern (English or 中文)",
+    "m0293": "Chest pain / 胸痛",
+    "m0294": "No supported rule matched this entry. This is not an all-clear. If you feel unsafe or unwell, seek professional help.",
+    "m0295": "Potassium",
+    "m0296": "Glucose",
+    "m0297": "Hemoglobin",
+    "m0298": "Seek emergency medical care now / 请立即就医或前往急诊。 Contact local emergency services if you are in immediate danger. Do not wait for this app or a reply.",
+    "m0299": "HealthMatch AI | Know your numbers. Catch changes early.",
+    "m0300": "Understand checkup reports, follow changes over time, and keep follow-ups in view. Explore the HealthMatch AI product preview.",
+    "m0301": "Sample Report & Trends",
+    "m0302": "Explore a complete fictional checkup reading with three years of results and a sample follow-up plan. No account required.",
+    "m0303": "Preview plans for report readings, longitudinal tracking, and follow-up reminders.",
+    "m0304": "The boundaries, interpretation approach, and privacy requirements for HealthMatch AI.",
+    "m0305": "Local pilot privacy notice: storage, optional model processing, retention, deletion, and production limits.",
+    "m0306": "Main navigation",
+    "m0307": "Footer navigation"
+  },
+  "extra": {
+    "Home": "m0274",
+    "Sample Report": "m0275",
+    "Pricing": "m0276",
+    "Safety & Limits": "m0277",
+    "Privacy": "m0278",
+    "Skip to content": "m0279",
+    "Open my workspace ↗": "m0280",
+    "Know your numbers. Catch changes early.": "m0281",
+    "Health information and self-management. Not a substitute for professional care.": "m0282",
+    "Product preview · Built around a longer view.": "m0283",
+    "On this page": "m0284",
+    "Language": "m0285",
+    "If a translation differs from the English version, the English version prevails.": "m0286",
+    "Urgent warnings, without signing in": "m0287",
+    "These limited checks run in your browser. Nothing entered here is saved or sent to a model. They cannot rule out an emergency or replace the laboratory’s instructions.": "m0288",
+    "A supported critical-value or symptom rule matched your entry. Check the original result and seek help now.": "m0289",
+    "Result to check": "m0290",
+    "Value": "m0291",
+    "Urgent concern (English or 中文)": "m0292",
+    "Chest pain / 胸痛": "m0293",
+    "No supported rule matched this entry. This is not an all-clear. If you feel unsafe or unwell, seek professional help.": "m0294",
+    "Potassium": "m0295",
+    "Glucose": "m0296",
+    "Hemoglobin": "m0297",
+    "HealthMatch AI | Know your numbers. Catch changes early.": "m0299",
+    "Understand checkup reports, follow changes over time, and keep follow-ups in view. Explore the HealthMatch AI product preview.": "m0300",
+    "Sample Report & Trends": "m0301",
+    "Explore a complete fictional checkup reading with three years of results and a sample follow-up plan. No account required.": "m0302",
+    "Preview plans for report readings, longitudinal tracking, and follow-up reminders.": "m0303",
+    "The boundaries, interpretation approach, and privacy requirements for HealthMatch AI.": "m0304",
+    "Local pilot privacy notice: storage, optional model processing, retention, deletion, and production limits.": "m0305",
+    "Seek emergency medical care now / 请立即就医或前往急诊。 Contact local emergency services if you are in immediate danger. Do not wait for this app or a reply.": "m0298",
+    "Main navigation": "m0306",
+    "Footer navigation": "m0307"
+  },
+  "meta": {
+    "home": [
+      "HealthMatch AI | Know your numbers. Catch changes early.",
+      "Understand checkup reports, follow changes over time, and keep follow-ups in view. Explore the HealthMatch AI product preview."
+    ],
+    "sample-report": [
+      "Sample Report & Trends",
+      "Explore a complete fictional checkup reading with three years of results and a sample follow-up plan. No account required."
+    ],
+    "pricing": [
+      "Pricing",
+      "Preview plans for report readings, longitudinal tracking, and follow-up reminders."
+    ],
+    "safety": [
+      "Safety & Limits",
+      "The boundaries, interpretation approach, and privacy requirements for HealthMatch AI."
+    ],
+    "privacy": [
+      "Privacy",
+      "Local pilot privacy notice: storage, optional model processing, retention, deletion, and production limits."
+    ]
+  }
+}

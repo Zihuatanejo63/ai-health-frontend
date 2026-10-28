@@ -1,4 +1,7 @@
+import type {Metadata} from "next";
+import {alternates} from "@/lib/public-i18n";
 import { EditorialContents } from "@/components/editorial-contents";
+export const metadata: Metadata = {alternates: alternates("/privacy"),title:"Privacy",description:"Local pilot privacy notice: storage, optional model processing, retention, deletion, and production limits."};
 export default function Privacy() {
   return (
     <div className="hm-page hm-editorial hm-prose">
