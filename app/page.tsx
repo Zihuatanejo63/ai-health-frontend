@@ -3,7 +3,7 @@ import { marketing } from "@/lib/marketing-content";
 import { ReportPreview, Plans, Disclaimer } from "@/components/marketing";
 export default function HomePage() {
   return (
-    <div className="hm-page">
+    <div className="hm-page hm-editorial">
       <section className="hm-hero">
         <div>
           <p className="hm-overline">MEET YOUR LONG-TERM HEALTH COMPANION</p>
@@ -81,15 +81,6 @@ export default function HomePage() {
         </div>
         <ReportPreview />
       </section>
-      <section className="hm-section">
-        <p className="hm-overline">A PLAN FOR YOUR NEXT CHAPTER</p>
-        <h2>Start with one report. Build from there.</h2>
-        <p>
-          Preview pricing only. Plans are not on sale; final pricing will be
-          confirmed before launch.
-        </p>
-        <Plans />
-      </section>
       <section className="hm-safety">
         <p className="hm-overline">CLEAR INFORMATION. CLEAR BOUNDARIES.</p>
         <h2>Your clinician stays at the center.</h2>
@@ -102,6 +93,15 @@ export default function HomePage() {
         <Link className="hm-text-link" href="/safety">
           Read Safety &amp; Limits →
         </Link>
+      </section>
+      <section className="hm-section">
+        <p className="hm-overline">A PLAN FOR YOUR NEXT CHAPTER</p>
+        <h2>Start with one report. Build from there.</h2>
+        <p>
+          Preview pricing only. Plans are not on sale; final pricing will be
+          confirmed before launch.
+        </p>
+        <Plans />
       </section>
       <section className="hm-section" id="upload-preview">
         <p className="hm-overline">WHAT’S NEXT</p>

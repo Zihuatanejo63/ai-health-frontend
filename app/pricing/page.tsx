@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 };
 export default function Pricing() {
   return (
-    <div className="hm-page">
+    <div className="hm-page hm-editorial">
       <header className="hm-page-heading">
         <p className="hm-overline">PRICING PREVIEW</p>
         <h1>

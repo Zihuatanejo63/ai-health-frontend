@@ -4,6 +4,7 @@ import { AppLayout } from "@/components/app-ui";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import "./globals.css";
+import "./editorial.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://healthmatchai.com"),

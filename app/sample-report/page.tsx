@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 };
 export default function SampleReport() {
   return (
-    <div className="hm-page">
+    <div className="hm-page hm-editorial">
       <header className="hm-page-heading">
         <SampleBadge />
         <h1>
@@ -99,7 +99,7 @@ export default function SampleReport() {
                   <td>
                     {r.range} {r.unit}
                   </td>
-                  <td>{r.flag}</td>
+                  <td><span className="hm-result-flag" data-attention={r.flag === "Above sample range"}>{r.flag}</span></td>
                 </tr>
               ))}
             </tbody>
