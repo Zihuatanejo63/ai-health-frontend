@@ -1,0 +1,3 @@
+import Link from 'next/link';
+export const metadata={title:'Fictional preview access',robots:{index:false,follow:false}};
+export default function PreviewLogin(){return <div className="hm-page hm-prose hp-preview-login"><p className="hm-overline">ISOLATED PREVIEW · FICTIONAL DATA ONLY</p><h1>Explore the workspace.</h1><p>Real registration and sign-in are disabled in this preview. Open a fictional, in-memory demonstration; do not enter health information or passwords.</p><Link className="hm-button" href="/dashboard?space=sample">Open the fictional demo →</Link><p className="hp-emergency">If you are experiencing a medical emergency, contact local emergency services. Do not wait for an application.</p></div>}

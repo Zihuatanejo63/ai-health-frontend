@@ -14,7 +14,7 @@ export function MarketingPage({locale,page}:{locale:Locale;page:keyof typeof sou
  if(page==='home'){
   const nodes=(source.pages.home as unknown as Node).children;
   return <div className="hm-page hm-editorial hm-upgrade" lang={locale} dir={locale==='ar'?'rtl':'ltr'}>
-   <HomeIntro locale={locale}/>{render(nodes[3],3)}<ReportAnatomy locale={locale}/><TrendBand locale={locale}/><Audience locale={locale}/>{render(nodes[5],5)}{render(nodes[6],6)}{render(nodes[8],8)}
+   <HomeIntro locale={locale}/><div className="hm-category-field">{render(nodes[3],3)}</div><ReportAnatomy locale={locale}/><TrendBand locale={locale}/><Audience locale={locale}/><div className="hm-safety-field">{render(nodes[5],5)}</div><div className="hm-plan-field">{render(nodes[6],6)}</div><div className="hm-faq-field">{render(nodes[8],8)}</div>
   </div>;
  }
  return <Fragment>{render(source.pages[page] as unknown as Node,0)}</Fragment>;

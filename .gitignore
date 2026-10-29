@@ -6,3 +6,7 @@ out
 *.tsbuildinfo
 
 .marketing-build
+.full-preview-build
+.full-preview-out
+.full-candidate-build
+.full-candidate-out

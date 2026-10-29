@@ -41,7 +41,7 @@ export const marketing = {
     },
     {
       name: "Plus",
-      price: "$9.9",
+      price: "$9.90",
       period: "/ month",
       note: "Or $79 / year. Planned for the MVP.",
       features: [
