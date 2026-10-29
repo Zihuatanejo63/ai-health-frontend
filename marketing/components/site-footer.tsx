@@ -10,7 +10,7 @@ export function SiteFooter() {
       <div className="hm-footer-inner">
         <div>
           <Link href={localizedHref("/",locale)} className="hm-brand">
-            HealthMatch <b>AI</b>
+            <span aria-hidden="true">✳</span> HealthMatch <b>AI</b>
           </Link>
           <p>{t("Know your numbers. Catch changes early.")}</p>
           <p className="hm-small">
@@ -18,6 +18,7 @@ export function SiteFooter() {
           </p>
         </div>
         <nav aria-label={t("Footer navigation")}>
+          <Link href={localizedHref("/",locale)}>{t("Home")}</Link>
           <Link href={localizedHref("/sample-report",locale)}>{t("Sample Report")}</Link>
           <Link href={localizedHref("/pricing",locale)}>{t("Pricing")}</Link>
           <Link href={localizedHref("/safety",locale)}>{t("Safety & Limits")}</Link>

@@ -1,5 +1,6 @@
 import {createElement, Fragment, type ReactNode} from 'react';
 import {catalogs,localizedHref,source,textFor,type Locale} from '@/lib/public-i18n';
+import {Audience, HomeIntro, PricingComparison, ReportAnatomy, TrendBand} from './design-sections';
 type Node={tag:string;props:Record<string,string|{message:string}>;children:(Node|string)[];message?:string;parts?:Node[]};
 const names:Record<string,string>={'tabindex':'tabIndex','stroke-width':'strokeWidth','text-anchor':'textAnchor','font-size':'fontSize','viewbox':'viewBox','colspan':'colSpan','rowspan':'rowSpan'};
 export function MarketingPage({locale,page}:{locale:Locale;page:keyof typeof source.pages}){
@@ -8,7 +9,13 @@ export function MarketingPage({locale,page}:{locale:Locale;page:keyof typeof sou
  const render=(node:Node|string,key:number):ReactNode=>{if(typeof node==='string')return node;
   if(node.tag==='public-safety')return <section className="hm-card" key={key}><h2>{catalogs[locale].m0287}</h2><p>{catalogs[locale].m0288}</p></section>;
   const props=propsFor(node),children=node.message?format(catalogs[locale][node.message],node.parts||[]):node.children.map(render);
-  if(String(props.className||'').includes('hm-editorial')){props.lang=locale;props.dir=locale==='ar'?'rtl':'ltr';if((page==='safety'||page==='privacy')&&locale!=='en')children.splice(1,0,<p key="precedence" className="hm-translation-note">{textFor(locale,'If a translation differs from the English version, the English version prevails.')} <a href={`/${page}`} lang="en">English</a></p>);}
+  if(String(props.className||'').includes('hm-editorial')){props.lang=locale;props.dir=locale==='ar'?'rtl':'ltr';if((page==='safety'||page==='privacy')&&locale!=='en')children.splice(1,0,<p key="precedence" className="hm-translation-note">{textFor(locale,'If a translation differs from the English version, the English version prevails.')} <a href={`/${page}`} lang="en">English</a></p>);if(page==='sample-report')children.splice(1,0,<ReportAnatomy locale={locale} guide key="report-guide"/>);if(page==='pricing')children.splice(2,0,<PricingComparison locale={locale} key="comparison"/>);}
   return createElement(node.tag,{...props,key},...children);};
+ if(page==='home'){
+  const nodes=(source.pages.home as unknown as Node).children;
+  return <div className="hm-page hm-editorial hm-upgrade" lang={locale} dir={locale==='ar'?'rtl':'ltr'}>
+   <HomeIntro locale={locale}/>{render(nodes[3],3)}<ReportAnatomy locale={locale}/><TrendBand locale={locale}/><Audience locale={locale}/>{render(nodes[5],5)}{render(nodes[6],6)}{render(nodes[8],8)}
+  </div>;
+ }
  return <Fragment>{render(source.pages[page] as unknown as Node,0)}</Fragment>;
 }
