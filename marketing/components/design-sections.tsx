@@ -83,11 +83,14 @@ export function Audience({locale}:{locale:Locale}) {
 
 export function PricingComparison({locale}:{locale:Locale}) {
  const t=(id:string)=>plain(locale,id),copy=designCopy[locale];
+ const labels=[copy.compareRows[0],t('m0203'),t('m0204'),...copy.compareRows.slice(1)];
  const rows:ReactNode[][]=[
    [t('m0202'),t('m0210'),t('m0218')],
+   [t('m0203'),copy.notListed,copy.notListed],
+   [t('m0204'),copy.notListed,copy.notListed],
    [copy.notListed,<>{t('m0211')}<br/>{t('m0212')}</>,t('m0218')],
    [copy.notListed,t('m0213'),t('m0218')],
    [copy.notListed,copy.notListed,t('m0219')]
  ];
- return <section className="hm-design-section hm-comparison" data-reveal><p className="hm-section-index"><span>02</span> {t('m0195')}</p><h2>{copy.compareTitle}</h2><p>{t('m0198')}</p><div className="hm-table-wrap" role="region" tabIndex={0} aria-label={copy.compareTitle}><table className="hm-table"><thead><tr><th scope="col">&nbsp;</th><th scope="col">{t('m0199')}</th><th scope="col" className="hm-compare-featured">{t('m0206')}</th><th scope="col">{t('m0215')}</th></tr></thead><tbody>{rows.map((cells,i)=><tr key={copy.compareRows[i]}><th scope="row">{copy.compareRows[i]}</th>{cells.map((cell,j)=><td key={j} className={j===1?'hm-compare-featured':undefined}>{cell}</td>)}</tr>)}</tbody></table></div></section>;
+ return <section className="hm-design-section hm-comparison" data-reveal><p className="hm-section-index"><span>02</span> {t('m0195')}</p><h2>{copy.compareTitle}</h2><p>{t('m0198')}</p><span className="hm-table-scroll-cue" aria-hidden="true">↔</span><div className="hm-table-wrap" role="region" tabIndex={0} aria-label={copy.compareTitle}><table className="hm-table"><thead><tr><th scope="col">&nbsp;</th><th scope="col">{t('m0199')}</th><th scope="col" className="hm-compare-featured">{t('m0206')}</th><th scope="col">{t('m0215')}</th></tr></thead><tbody>{rows.map((cells,i)=><tr key={labels[i]}><th scope="row">{labels[i]}</th>{cells.map((cell,j)=><td key={j} className={j===1?'hm-compare-featured':undefined}>{cell}</td>)}</tr>)}</tbody></table></div></section>;
 }
