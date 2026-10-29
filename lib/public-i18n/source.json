@@ -1272,7 +1272,7 @@
                         "className": "hm-price"
                       },
                       "children": [
-                        "$9.9",
+                        "$9.90",
                         {
                           "tag": "span",
                           "props": {},
@@ -3199,7 +3199,7 @@
                     "className": "hm-price"
                   },
                   "children": [
-                    "$9.9",
+                    "$9.90",
                     {
                       "tag": "span",
                       "props": {},
