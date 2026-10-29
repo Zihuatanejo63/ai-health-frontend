@@ -140,6 +140,7 @@
 .hm-editorial .hm-table th,.hm-editorial .hm-table td { vertical-align:top; }
 .hm-editorial .hm-table .hm-compare-featured { background:#e8f1e6; }
 .hm-editorial .hm-comparison { padding-top:90px; }
+.hm-table-scroll-cue { display:none; }
 .hm-editorial .hm-document { gap:clamp(48px,7vw,105px); }
 .hm-editorial .hm-contents { top:110px; background:#eef2ea; border:1px solid #d9e3d7; border-top:3px solid #347a57; border-radius:9px; padding:19px; }
 .hm-editorial .hm-document-body > section { padding-top:30px; }
@@ -205,6 +206,7 @@
  .hm-editorial #results .hm-table { min-width:0; table-layout:fixed; font-size:11px; }
  .hm-editorial #results .hm-table :is(th,td) { padding:12px 7px; overflow-wrap:anywhere; }
  .hm-editorial .hm-comparison { padding-top:60px; }
+ .hm-table-scroll-cue { display:block; color:#315e47; font-size:24px; line-height:1; text-align:end; margin-bottom:-12px; }
  .site-shell:has(.hm-editorial) .hm-footer-inner { grid-template-columns:1fr; gap:25px; }
  [dir=rtl] .hm-timeline li { padding-inline-start:22px; padding-left:0; }
 }
