@@ -23,5 +23,7 @@ const index=path.join(build,'lib/public-i18n/index.ts');if(!fs.existsSync(index)
 fs.writeFileSync(path.join(build,'package.json'),JSON.stringify({name:'healthmatch-marketing-only',private:true,version:'1.0.0',dependencies:{next:'^14.2.5',react:'^18.3.1','react-dom':'^18.3.1'}}));
 const r=spawnSync(process.execPath,[require.resolve('next/dist/bin/next'),'build'],{cwd:build,stdio:'inherit',env:{...process.env,HEALTHMATCH_LOCAL_API:''}});if(r.status!==0)process.exit(r.status||1);
 for(const code of locales){const f=path.join(build,'out',code+'.html'),p=path.join(build,'out',code,'index.html');fs.mkdirSync(path.dirname(p),{recursive:true});fs.copyFileSync(f,p);}
+// Force revalidation of all static responses, including HTML. Avoid long-lived stale pages.
+fs.copyFileSync(path.join(root,'marketing/_headers'),path.join(build,'out/_headers'));
 // A generated Next export is disposable output; no user documents or credentials live here.
 fs.rmSync(out,{recursive:true,force:true});fs.cpSync(path.join(build,'out'),out,{recursive:true});console.log('PASS: isolated marketing export written to frontend/out');
